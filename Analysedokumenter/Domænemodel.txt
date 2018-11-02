@@ -23,6 +23,9 @@ Stolpe : højde
 Stolpe : materiale
 Stolpe : mtrPris
 
+object Tømrer
+Tømrer -- Carport : kan bygge
+
 object Dør
 Dør : materiale
 Dør : pris
@@ -48,6 +51,11 @@ Tag : erPlastic
 Tag : materiale
 Tag : kvmPris
 Tag : hældning
+Tag : tagrendeType
+
+object Tilbehørspakke
+Carport -- Tilbehørspakke : Kan have
+
 
 object Tilbud
 Tilbud : pris
