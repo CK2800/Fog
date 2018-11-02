@@ -1,0 +1,79 @@
+@startuml
+
+title Fog domænemodel
+
+object Carport
+Carport : længde
+Carport : bredde
+Carport : højde
+
+
+object Rem
+Rem : materiale
+Rem : mtrPris
+
+object Spær
+Spær : materiale
+Spær : mtrPris
+
+object Stolpe
+Stolpe : længde
+Stolpe : bredde
+Stolpe : højde
+Stolpe : materiale
+Stolpe : mtrPris
+
+object Dør
+Dør : materiale
+Dør : pris
+
+object Beslag
+Beslag : type
+Beslag : pris
+
+object Skur
+Skur : bredde
+Skur : længde
+
+object Gulv
+Gulv : materiale
+Gulv : kvmPris
+
+object Beklædning
+Beklædning : materiale
+Beklædning : mtrPris
+
+object Tag
+Tag : erPlastic
+Tag : materiale
+Tag : kvmPris
+Tag : hældning
+
+object Tilbud
+Tilbud : pris
+
+object Kunde
+
+object Stykliste
+
+object Plukliste
+
+object Samlevejledning
+
+Samlevejledning -- Carport : gælder for
+Carport *-- Tag
+Carport *-- Stolpe
+Carport *-- Beslag
+Rem -- Spær : bærer
+Rem -- Stolpe : monteres på
+Spær -- Tag : < er monteret på
+Carport *-- Skur
+Skur *-- Beklædning
+Skur *-- Gulv
+Skur *-- Dør
+Kunde -- Tilbud : modtager
+Tilbud -- Carport : gælder for
+Stykliste -- Carport : gælder for
+Plukliste -- Carport : gælder for
+
+@enduml
