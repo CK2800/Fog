@@ -75,7 +75,7 @@ Carport *-- Beslag
 Rem -- Spær : bærer
 Rem -- Stolpe : monteres på
 Spær -- Tag : < er monteret på
-Carport *-- Skur
+Carport o-- Skur
 Skur *-- Beklædning
 Skur *-- Gulv
 Skur *-- Dør
