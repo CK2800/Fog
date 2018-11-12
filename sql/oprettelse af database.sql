@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS Fog;
 CREATE DATABASE Fog;
 USE Fog;
 
+DROP TABLE IF EXISTS kunder;
+DROP TABLE IF EXISTS postnummer;
 DROP TABLE IF EXISTS Vare;
 DROP TABLE IF EXISTS Varetype;
 
@@ -20,4 +22,56 @@ CONSTRAINT fk_Vare_Varetype
 FOREIGN KEY (varetypeId)
 REFERENCES Varetype(id)
 ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
+);
+
+
+create table postnummer(
+	postnr smallint primary key not null,
+    bynavn varchar(150) not null
+);
+
+CREATE TABLE kunder(
+	id int primary key auto_increment,
+    navn varchar(200) not null,
+    postnr smallint not null,
+    telefon int not null,
+    email varchar(200) not null,
+    CONSTRAINT fk_kunder_postnr
+    FOREIGN KEY (postnr)
+	REFERENCES postnummer(postnr)
+	ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
+);
+
+CREATE TABLE Tag(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    vareId int NOT NULL,
+    haeldning int NOT NULL,
+    CONSTRAINT fk_Tag_Vare
+    FOREIGN KEY(vareId)
+    REFERENCES Vare(id)
+    ON DELETE NO ACTION -- vare som indgår i tag, må ikke slettes.    
+);
+
+CREATE TABLE Skur(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    laengde int NOT NULL,
+    bredde int NOT NULL
+);
+
+CREATE TABLE Forespoergsel(
+id int PRIMARY KEY AUTO_INCREMENT,
+tagId int NOT NULL,
+skurId int NOT NULL,
+bredde int NOT NULL,
+hoejde int NOT NULL,
+laengde int NOT NULL,
+bemaerkning text,
+CONSTRAINT fk_Forespoergsel_Tag
+FOREIGN KEY(tagId)
+REFERENCES Tag(id)
+ON DELETE NO ACTION, -- tag refereret her, må ikke slettes.
+CONSTRAINT fk_Forespoergsel_Skur
+FOREIGN KEY(skurId)
+REFERENCES Skur(id)
+ON DELETE NO ACTION -- skur refereret her, må ikke slettes.
 );
