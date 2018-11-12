@@ -1,0 +1,26 @@
+Få styr på flg.
+1. Spærkonstruktion - hvordan ser de ud, hvad er reglerne mht. adskillelse.
+2. Konstruktion under fladt tag  - hvad er reglerne for adskillelse af strøer ? Se evt. stykliste og tegning i materialet. Modul 5 - klik på div. links.
+3. Trælængder - hvad er standard målene, Kasper nævner '4-2' eller '3-3' - i carport konfiguratoren: hvor kommer tallene fra? Måske fremgår det af styklisterne i materialet eller på fogs hjemmeside.
+
+pseudo:
+Beregn carport
+-> beregn tag
+Hvis fladt tag:
+Tjek regel for afstand mellem strøer
+Tjek regel for udhæng
+Beregn antal strøer og deres længde
+Beregn kvadratmeter for tag
+Udregn 
+
+Hvis tag med rejsning:
+Tjek regel for afstand mellem bjælker
+Tjek regel for udhæng
+Beregn antal spær og deres længde
+Beregn kvadratmeter for tag
+Beregn antal mtr. tagrende hvis tilvalgt
+Beregn antal mtr. nedløbsrør
+
+
+-> beregn stolper
+-> beregn skur 
