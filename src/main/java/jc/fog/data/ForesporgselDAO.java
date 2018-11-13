@@ -1,8 +1,10 @@
-package jc.fog.logic;
+package jc.fog.data;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import jc.fog.presentation.ForesporgselDTO;
+import jc.fog.logic.ForesporgselDTO;
 
 /**
  *
@@ -10,7 +12,7 @@ import jc.fog.presentation.ForesporgselDTO;
  */
 public class ForesporgselDAO {
     
-    //private static Connection connection;
+    private static Connection connection;
     
     final static String singleForesporgsel = "SELECT * FROM Forespoergsel WHERE id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
@@ -23,22 +25,22 @@ public class ForesporgselDAO {
     public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId)
     {
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
-       try{
-            //connection = DBConnection.getConnection();
-            PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
-            pstm.setInt(1, getForesporgselId);
-            
-            //try with ressources.
-            try(ResultSet rs = pstm.executeQuery())
-            {
-                //Hvad skal der være her?
-            }
-       } 
-       catch(Exception e)
-       {
-           //Der er sket en fejl her
-           System.out.println("Error:" + e.getMessage());
-       }
+        try{
+             connection = DBConnection.getConnection();
+             PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
+             pstm.setInt(1, getForesporgselId);
+
+             //try with ressources.
+             try(ResultSet rs = pstm.executeQuery())
+             {
+                 //Hvad skal der være her?
+             }
+        } 
+        catch(Exception e)
+        {
+            //Der er sket en fejl her
+            System.out.println("Error:" + e.getMessage());
+        }
        
        return foresporgsel;
     }
@@ -52,7 +54,7 @@ public class ForesporgselDAO {
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         
         try{
-            //connection = DBConnection.getConnection();
+            connection = DBConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
             
             //try with ressources.
