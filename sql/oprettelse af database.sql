@@ -21,7 +21,7 @@ CREATE TABLE Vare(
 	varetypeId int NOT NULL,
 	navn VARCHAR(100) NOT NULL,
 	hjaelpetekst VARCHAR(255) NOT NULL,
-	pris decimal(8) NOT NULL,
+	pris decimal(6,2) NOT NULL,
 	CONSTRAINT fk_Vare_Varetype
 	FOREIGN KEY (varetypeId)
 	REFERENCES Varetype(id)
