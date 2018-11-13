@@ -1,4 +1,4 @@
-package jc.fog.presentation;
+package jc.fog.logic;
 
 /**
  *
