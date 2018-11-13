@@ -44,15 +44,15 @@ public class DbConnection
             {
                 Class.forName( DRIVER_CLASS );
 
-                // Read the properties of the database connection from src/main/resources/db.properties
+                // Read the properties of the database connection from target/classes/db.properties
                 Properties dbProperties = new Properties();
-                InputStream inputStream = DbConnection.class.getResourceAsStream("db.properties");
+                InputStream inputStream = DbConnection.class.getResourceAsStream("/db.properties");
                 dbProperties.load(inputStream);                
                 connection = DriverManager.getConnection(dbProperties.getProperty("URL"), 
                                                          dbProperties.getProperty("USERNAME"), 
                                                          dbProperties.getProperty("PASSWORD"));                
             }
-            catch(IOException | ClassNotFoundException | SQLException e)
+            catch(Exception e)
             {
                 System.out.println("Fejl v. etablering af db. forbindelse: " + e.getMessage());
             }
