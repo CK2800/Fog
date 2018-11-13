@@ -46,6 +46,7 @@ CREATE TABLE Kunde(
 	ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
 );
 
+/*
 CREATE TABLE Tag(
 	id int PRIMARY KEY AUTO_INCREMENT,
     vareId int NOT NULL,
@@ -55,7 +56,7 @@ CREATE TABLE Tag(
     REFERENCES Vare(id)
     ON DELETE NO ACTION -- vare som indgår i tag, må ikke slettes.    
 );
-
+*/
 CREATE TABLE Skur(
 	id int PRIMARY KEY AUTO_INCREMENT,
     laengde int NOT NULL,
@@ -64,16 +65,18 @@ CREATE TABLE Skur(
 
 CREATE TABLE Forespoergsel(
 	id int PRIMARY KEY AUTO_INCREMENT,
-	tagId int NOT NULL, -- carport har altid et tag.
+    vareId int NOT NULL, -- id for tagbelægningen (i vare tabel)
+	/*tagId int NOT NULL, -- carport har altid et tag.*/
+    haeldning int NOT NULL default 0, -- hældning er 0 hvis intet andet angives.
 	skurId int, -- carport har ikke altid et skur.
 	bredde int NOT NULL,
 	hoejde int NOT NULL,
 	laengde int NOT NULL,
 	bemaerkning text,
-	CONSTRAINT fk_Forespoergsel_Tag
+	/*CONSTRAINT fk_Forespoergsel_Tag
 	FOREIGN KEY(tagId)
 	REFERENCES Tag(id)
-	ON DELETE NO ACTION, -- tag refereret her, må ikke slettes.
+	ON DELETE NO ACTION, -- tag refereret her, må ikke slettes.*/
 	CONSTRAINT fk_Forespoergsel_Skur
 	FOREIGN KEY(skurId)
 	REFERENCES Skur(id)

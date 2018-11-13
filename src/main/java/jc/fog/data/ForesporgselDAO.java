@@ -16,7 +16,7 @@ public class ForesporgselDAO {
     
     final static String singleForesporgsel = "SELECT * FROM Forespoergsel WHERE id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
-    final static String createForesporgsel = "INSerT INTO Forespoergsel(tagId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?)";
+    final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?)";
     
     /*
         *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
@@ -74,7 +74,7 @@ public class ForesporgselDAO {
     /*
         * Skal opret forspørgsel til databasen
     */
-    public static boolean createForesporgsel(int tagId, int bredde, int hoejde, int laengde, String bemaerkning){
+    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, String bemaerkning){
         //Den "space removed" i siderne
         bemaerkning = bemaerkning.trim();
         
@@ -82,11 +82,12 @@ public class ForesporgselDAO {
         {
             connection = DBConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(createForesporgsel);
-            pstm.setInt(1, tagId);
-            pstm.setInt(2, bredde);
-            pstm.setInt(3, hoejde);
-            pstm.setInt(4, laengde);
-            pstm.setString(5, bemaerkning);
+            pstm.setInt(1, vareId);
+            pstm.setInt(2, haeldning);
+            pstm.setInt(3, bredde);
+            pstm.setInt(4, hoejde);
+            pstm.setInt(5, laengde);
+            pstm.setString(6, bemaerkning);
             
             // If exactly one row was affected, return true.
             return pstm.executeUpdate() == 1;
