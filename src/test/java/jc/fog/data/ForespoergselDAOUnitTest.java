@@ -6,10 +6,10 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import jc.fog.logic.ForesporgselDAO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -71,10 +71,12 @@ public class ForespoergselDAOUnitTest
             System.out.println("DB forbindelse OK");
         assertNotNull(connection);
     }
-//    @Test
-//    public void testForespoergselMedSkur()
-//    {
-//        // Mangler den korrekte signatur, afv.
-//        //ForesporgselDAO.createForesporgsel(0, 0, 0, 0, bemaerkning)
-//    }
+    @Test
+    public void testForespoergselMedSkur()
+    {
+        
+        boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, "Det bliver spændende");
+        assertTrue(success);
+        
+    }
 }
