@@ -11,5 +11,12 @@ package jc.fog.presentation;
  * @author Jespe
  */
 public class ForesporgselDTO {
+    private int Id, tagId, skurId, bredde, hoejde, laengde, dimensionerId;
+    private String bemaerkning;
+    
+
+
+    
+    
     
 }
