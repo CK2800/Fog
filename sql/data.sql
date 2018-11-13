@@ -15,3 +15,29 @@ INSERT INTO Vare(varetypeId, navn, hjaelpetekst, pris) VALUES(5,'test stolpe', '
 INSERT INTO Vare(varetypeId, navn, hjaelpetekst, pris) VALUES(6,'test brædt', 'dette er et brædt', 4);
 INSERT INTO Vare(varetypeId, navn, hjaelpetekst, pris) VALUES(7,'test tagbeklædning - fladt tag', 'dette er en tagbeklædning til fladt tag', 3);
 INSERT INTO Vare(varetypeId, navn, hjaelpetekst, pris) VALUES(8,'test tagbeklædning - tag m rejsning', 'dette er en tagbeklædning til tag med rejsning', 3);
+
+INSERT INTO Dimensioner(laengde) VALUES(100);
+INSERT INTO Dimensioner(laengde) VALUES(130);
+INSERT INTO Dimensioner(laengde) VALUES(120);
+INSERT INTO Dimensioner(laengde) VALUES(150);
+INSERT INTO Dimensioner(laengde) VALUES(170);
+INSERT INTO Dimensioner(laengde) VALUES(200);
+INSERT INTO Dimensioner(laengde) VALUES(230);
+INSERT INTO Dimensioner(laengde) VALUES(430);
+INSERT INTO Dimensioner(laengde) VALUES(550);
+INSERT INTO Dimensioner(laengde) VALUES(580);
+INSERT INTO Dimensioner(laengde) VALUES(670);
+INSERT INTO Dimensioner(laengde) VALUES(720);
+
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,1);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,2);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,3);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,4);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,5);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(3,1);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(3,2);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(3,3);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,1);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,1);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,1);
+INSERT INTO VareDimensioner(vareId, dimensionerId) VALUES(2,1);
