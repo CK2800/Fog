@@ -26,7 +26,7 @@ public class ForesporgselDAO {
     {
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         try{
-             connection = DBConnection.getConnection();
+             connection = DbConnection.getConnection();
              PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
              pstm.setInt(1, getForesporgselId);
 
@@ -49,6 +49,7 @@ public class ForesporgselDAO {
     /*
         * Den skal hente alle de foresporgsel der er i databasen.
     */
+
     public static ArrayList<ForesporgselDTO> getForesporgsel(){
         
         //kan være den skal laves om.
@@ -68,14 +69,17 @@ public class ForesporgselDAO {
        {
            //Der er sket en fejl her
            System.out.println("Error:" + e.getMessage());
-       }        
+       }   
+       return foresporgsel;
     }
+
     
     
     /*
         * Skal opret forspørgsel til databasen
     */
-    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, String bemaerkning){
+    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, String bemaerkning)
+    {
         //Den "space removed" i siderne
         bemaerkning = bemaerkning.trim();
         
@@ -98,6 +102,5 @@ public class ForesporgselDAO {
             System.out.println("Kunne ikke opret pga " + e.getMessage());
         }
         return false;
-        
     }
 }
