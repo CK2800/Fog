@@ -7,6 +7,7 @@ package jc.fog.logic;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,7 @@ public class VareDTO
      */
     private String hjaelpetekst;    
     private float pris; // decimal (6,2) i db.
+    private List<DimensionerDTO> dimensioner;
     
     /**
      * Konstruktør hvor alle argumenter kendes.
@@ -46,6 +48,7 @@ public class VareDTO
     public String getNavn() { return navn; }
     public String getHjaelpetekst() { return hjaelpetekst; }
     public float getPris() { return pris; }
+    public List<DimensionerDTO> getDimensioner() { return dimensioner; }
     
     // setters
     public void setId(int value) { id = value; }
@@ -53,10 +56,11 @@ public class VareDTO
     public void setNavn(String value) { navn = value; }
     public void setHjaelpetekst(String value) { hjaelpetekst = value; }
     public void setPris(float value) { pris = value; }
+    public void setDimensioner(List<DimensionerDTO> value) { dimensioner = value; }
     
     /**
      * Mapper værdier fra ResultSet tuple til VareDTO.
-     * @param rs ResultSet med tupel.
+     * @param rs ResultSet med tuple.
      * @return VareDTO
      * @throws SQLException 
      */
