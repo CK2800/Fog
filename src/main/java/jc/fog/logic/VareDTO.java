@@ -66,6 +66,7 @@ public class VareDTO
      */
     public static VareDTO mapVare(ResultSet rs) throws SQLException
     {
+        // NOTE TO SELF: Skal i dao. Kald kostruktør med fuld signatur.
         return new VareDTO
         (
                 rs.getInt("id"), 
