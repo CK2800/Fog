@@ -6,6 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +21,7 @@ import org.junit.Test;
  */
 public class ForespoergselDAOUnitTest
 {
-    Connection connection = null;
+    static Connection connection = null;
     public ForespoergselDAOUnitTest()
     {
     }
@@ -33,6 +34,15 @@ public class ForespoergselDAOUnitTest
     @AfterClass
     public static void tearDownClass()
     {
+        try
+        {
+            connection.close();
+            System.out.println("Db forbindelse lukket.");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Database connection was not closed: " + e.getMessage());
+        }
     }
     
     @Before
@@ -40,7 +50,7 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection();
+            connection = DbConnection.getConnection();         
         }
         catch(Exception e)
         {
@@ -50,33 +60,33 @@ public class ForespoergselDAOUnitTest
     
     @After
     public void tearDown()
-    {
-        try
-        {
-            connection.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println("Database connection was not closed: " + e.getMessage());
-        }
+    {        
     }
 
     /**
      * Test connection is established.
      */
     @Test
-    public void testConnection()
+    public void testConnection() throws SQLException
     {
         if (connection != null)
-            System.out.println("DB forbindelse OK");
+        {
+            String tilstand = connection.isClosed() ? "lukket" : "åben";
+            System.out.println("DB forbindelse OK. DB forbindelsen er ?.".replace("?", tilstand));
+        }
         assertNotNull(connection);
     }
     @Test
-    public void testForespoergselMedSkur()
+    public void testForespoergselMedSkur() throws SQLException
+    {        
+        boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        assertTrue(success);        
+    }
+    
+    @Test
+    public void testForespoergselUdenSkur() throws SQLException
     {
-        
-        boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, "Det bliver spændende");
+        boolean success = ForesporgselDAO.createForesporgsel(2, 30, 500, 125, 300,0,0,"Uden skur");
         assertTrue(success);
-        
     }
 }

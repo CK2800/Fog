@@ -5,6 +5,8 @@
  */
 package jc.fog.data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import jc.fog.logic.VareDTO;
 
@@ -29,5 +31,24 @@ public class VareDAO
     public static List<VareDTO> VarerTilBeregning()
     {
         
+        return null;
+    }
+    
+    /**
+     * Mapper værdier fra ResultSet tuple til VareDTO.
+     * @param rs ResultSet med tuple.
+     * @return VareDTO
+     * @throws SQLException 
+     */
+    private static VareDTO mapVare(ResultSet rs) throws SQLException
+    {        
+        return new VareDTO
+        (
+                rs.getInt("id"), 
+                rs.getInt("varetypeId"), 
+                rs.getString("navn"), 
+                rs.getString("hjaelpetekst"), 
+                rs.getFloat("pris")
+        );
     }
 }

@@ -57,23 +57,4 @@ public class VareDTO
     public void setHjaelpetekst(String value) { hjaelpetekst = value; }
     public void setPris(float value) { pris = value; }
     public void setDimensioner(List<DimensionerDTO> value) { dimensioner = value; }
-    
-    /**
-     * Mapper værdier fra ResultSet tuple til VareDTO.
-     * @param rs ResultSet med tuple.
-     * @return VareDTO
-     * @throws SQLException 
-     */
-    public static VareDTO mapVare(ResultSet rs) throws SQLException
-    {
-        // NOTE TO SELF: Skal i dao. Kald kostruktør med fuld signatur.
-        return new VareDTO
-        (
-                rs.getInt("id"), 
-                rs.getInt("varetypeId"), 
-                rs.getString("navn"), 
-                rs.getString("hjaelpetekst"), 
-                rs.getFloat("pris")
-        );
-    }
 }
