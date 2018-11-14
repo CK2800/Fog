@@ -39,6 +39,7 @@ public class ForesporgselDAO {
         catch(Exception e)
         {
             //Der er sket en fejl her
+            // Her skal vi have vores egen exception handling...
             System.out.println("Error:" + e.getMessage());
         }
        
@@ -54,7 +55,7 @@ public class ForesporgselDAO {
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         
         try{
-            connection = DBConnection.getConnection();
+            connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
             
             //try with ressources.
@@ -80,7 +81,7 @@ public class ForesporgselDAO {
         
         try
         {
-            connection = DBConnection.getConnection();
+            connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(createForesporgsel);
             pstm.setInt(1, vareId);
             pstm.setInt(2, haeldning);
@@ -96,6 +97,7 @@ public class ForesporgselDAO {
         {
             System.out.println("Kunne ikke opret pga " + e.getMessage());
         }
+        return false;
         
     }
 }
