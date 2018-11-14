@@ -80,4 +80,11 @@ public class ForespoergselDAOUnitTest
         assertTrue(success);
         
     }
+    
+    @Test
+    public void testForespoergselUdenSkur() throws SQLException
+    {
+        boolean success = ForesporgselDAO.createForesporgsel(2, 30, 500, 125, 300,0,0,"Uden skur");
+        assertTrue(success);
+    }
 }
