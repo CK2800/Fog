@@ -6,6 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertNotNull;
@@ -53,7 +54,7 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            connection.close();
+            //connection.close();
         }
         catch(Exception e)
         {
@@ -72,10 +73,10 @@ public class ForespoergselDAOUnitTest
         assertNotNull(connection);
     }
     @Test
-    public void testForespoergselMedSkur()
+    public void testForespoergselMedSkur() throws SQLException
     {
-        
-        boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, "Det bliver spændende");
+        System.out.println("connection is open ?" + !connection.isClosed());
+        boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);
         
     }
