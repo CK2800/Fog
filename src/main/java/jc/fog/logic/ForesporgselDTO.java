@@ -5,18 +5,21 @@ package jc.fog.logic;
  * @author Jesper
  */
 public class ForesporgselDTO {
-    private int Id, tagId, skurId, bredde, hoejde, laengde, dimensionerId;
+    private int Id, vareId, skurId, bredde, hoejde, laengde, dimensionerId, haeldning;
     private String bemaerkning;
 
-    public ForesporgselDTO(int Id, int tagId, int skurId, int bredde, int hoejde, int laengde, String bemaerkning) {
+    public ForesporgselDTO(int Id, int vareId, int skurId, int bredde, int hoejde, int laengde, int haeldning, String bemaerkning) {
         this.Id = Id;
-        this.tagId = tagId;
+        this.vareId = vareId;
         this.skurId = skurId;
         this.bredde = bredde;
         this.hoejde = hoejde;
         this.laengde = laengde;
+        this.haeldning = haeldning;
         this.bemaerkning = bemaerkning;
     }
+
+    
     
     
     public int getId() {
@@ -27,12 +30,12 @@ public class ForesporgselDTO {
         this.Id = Id;
     }
 
-    public int getTagId() {
-        return tagId;
+    public int getVareId() {
+        return vareId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setVareId(int vareId) {
+        this.vareId = vareId;
     }
 
     public int getSkurId() {
@@ -75,6 +78,14 @@ public class ForesporgselDTO {
         this.dimensionerId = dimensionerId;
     }
 
+    public int getHaeldning() {
+        return haeldning;
+    }
+
+    public void setHaeldning(int haeldning) {
+        this.haeldning = haeldning;
+    }
+
     public String getBemaerkning() {
         return bemaerkning;
     }
@@ -82,6 +93,8 @@ public class ForesporgselDTO {
     public void setBemaerkning(String bemaerkning) {
         this.bemaerkning = bemaerkning;
     }
+    
+    
     
     
 }
