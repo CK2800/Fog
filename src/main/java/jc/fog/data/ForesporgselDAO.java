@@ -27,7 +27,7 @@ public class ForesporgselDAO {
      * @param getForesporgselId - Skal være angivet en værdi for, at kunne hente den enkelt.
      * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
      */
-    public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId) throws FogException
+    public static ForesporgselDTO getForesporgselSingle(int getForesporgselId) throws FogException
     {
         ForesporgselDTO foresporgsel = null;
         try{
@@ -38,7 +38,7 @@ public class ForesporgselDAO {
              //try with ressources.
              try(ResultSet rs = pstm.executeQuery())
              {
-                 if(rs.next() && rs.getInt("id") > 0)
+                 if(rs.next())
                  {
                      System.out.println("rs:" + rs.toString());
                      foresporgsel = new ForesporgselDTO(
@@ -115,7 +115,7 @@ public class ForesporgselDAO {
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
+    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws FogException
     {
         //Den "space removed" i siderne
         bemaerkning = bemaerkning.trim();
@@ -160,9 +160,8 @@ public class ForesporgselDAO {
         // Her skal vi have egen exception handling
         catch(Exception e)
         {
-            System.out.println("Kunne ikke opret pga " + e.getMessage());
-        }
-        return false;
+            throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+        }        
     }
     
     /**

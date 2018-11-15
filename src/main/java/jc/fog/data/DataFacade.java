@@ -6,6 +6,7 @@
 package jc.fog.data;
 
 import java.util.List;
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 
 /**
@@ -19,12 +20,12 @@ public class DataFacade
      * Get all requests (forespørgsler).
      * @return List of ForesporgselDTO objects.
      */
-    public static List<ForesporgselDTO> getRequests()
+    public static List<ForesporgselDTO> getRequests() throws FogException
     {
         return ForesporgselDAO.getForesporgsel();
     }
     
-    public static ForesporgselDTO getRequest(int id)
+    public static ForesporgselDTO getRequest(int id) throws FogException
     {
         return ForesporgselDAO.getForesporgselSingle(id);
     }

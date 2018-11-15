@@ -29,10 +29,42 @@ public class ShowRequestsCommand extends Command
         // Get the list of requests.
         List<ForesporgselDTO> requests = DataFacade.getRequests();
         
-        // Save the list on request.
-        request.setAttribute("requests", requests);
+        // Convert the requests to a nicely formattet HTML table and save on request.
+        request.setAttribute("requestsTable", requestsToHtml(requests));
         
         // Return the page showing all requests.
         return Pages.ALL_REQUESTS;
+    }
+    
+    /**
+     * Hjælpemetode til formattering af en samling af ForesporgselDTO objekter til html tabel.
+     * @param requests Samling af ForesporgselDTO objekter.
+     * @return String En html tabel.
+     */
+    private String requestsToHtml(List<ForesporgselDTO> requests)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        String table = "<table><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th></tr></thead><tbody>$body</tbody></table>";        
+        
+        table = table.replace("$1", "ID");
+        table = table.replace("$2", "BREDDE");
+        table = table.replace("$3", "H&Oslash;JDE");
+        table = table.replace("$4", "L&AElig;NGDE");
+        
+        for(ForesporgselDTO item : requests)
+        {
+            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td></tr>";
+            row = row.replace("$1", String.valueOf(item.getId()));
+            row = row.replace("$2", String.valueOf(item.getBredde()));
+            row = row.replace("$3", String.valueOf(item.getHoejde()));
+            row = row.replace("$4", String.valueOf(item.getLaengde()));
+            stringBuilder.append(row);
+        }
+        
+        return table.replace("$body", stringBuilder.toString());
+        
+        
+        
+        
     }
 }

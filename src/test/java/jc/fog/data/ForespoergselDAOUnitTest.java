@@ -8,6 +8,7 @@ package jc.fog.data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -75,23 +76,22 @@ public class ForespoergselDAOUnitTest
         assertNotNull(connection);
     }
     @Test
-    public void testOpretForespoergselMedSkur() throws SQLException
-    {
-        System.out.println("connection is open ?" + !connection.isClosed());
+    public void testOpretForespoergselMedSkur() throws FogException
+    {        
         boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);
         
     }
     
     @Test
-    public void testOpretForespoergselUdenSkur() throws SQLException
+    public void testOpretForespoergselUdenSkur() throws FogException
     {
         boolean success = ForesporgselDAO.createForesporgsel(2, 30, 500, 125, 300,0,0,"Uden skur");
         assertTrue(success);
     }
     
     @Test
-    public void testHentAlleForespoergsler() throws SQLException
+    public void testHentAlleForespoergsler() throws FogException
     {        
         ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         List<ForesporgselDTO> requests = DataFacade.getRequests();
@@ -99,7 +99,7 @@ public class ForespoergselDAOUnitTest
     }
     
     @Test
-    public void testHentEnkeltForespørgsel() throws SQLException
+    public void testHentEnkeltForespørgsel() throws FogException
     {
         ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         ForesporgselDTO request = DataFacade.getRequest(1);
