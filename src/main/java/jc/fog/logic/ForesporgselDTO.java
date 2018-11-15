@@ -7,8 +7,10 @@ package jc.fog.logic;
 public class ForesporgselDTO {
     private int Id, vareId, skurId, bredde, hoejde, laengde, dimensionerId, haeldning;
     private String bemaerkning;
+    private SkurDTO skurDTO;
 
-    public ForesporgselDTO(int Id, int vareId, int haeldning, int skurId, int bredde, int hoejde, int laengde, String bemaerkning) {
+    public ForesporgselDTO(int Id, int vareId, int haeldning, int skurId, int bredde, 
+                           int hoejde, int laengde, String bemaerkning, int skurLaengde, int skurBredde) {
         this.Id = Id;
         this.vareId = vareId;
         this.haeldning = haeldning;
@@ -17,6 +19,9 @@ public class ForesporgselDTO {
         this.hoejde = hoejde;
         this.laengde = laengde;
         this.bemaerkning = bemaerkning;
+        
+        if (skurId != 0)
+            this.skurDTO = new SkurDTO(skurId, skurLaengde, skurBredde);
     }
 
     public ForesporgselDTO(int Id, int bredde, int hoejde, int laengde) {
@@ -101,6 +106,15 @@ public class ForesporgselDTO {
         this.bemaerkning = bemaerkning;
     }
     
+    public SkurDTO getSkurDTO()
+    {
+        return skurDTO;
+    }
+    
+    public void setSkurDTO(SkurDTO value)
+    {
+        this.skurDTO = value;
+    }
     
     
     

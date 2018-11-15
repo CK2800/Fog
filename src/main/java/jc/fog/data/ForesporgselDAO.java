@@ -17,7 +17,9 @@ public class ForesporgselDAO {
     
     private static Connection connection;
     
-    final static String singleForesporgsel = "SELECT * FROM Forespoergsel WHERE id = ?";
+    final static String singleForesporgsel = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
+                                           + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
+                                           + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id WHERE f.id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
     final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
@@ -40,7 +42,7 @@ public class ForesporgselDAO {
              {
                  if(rs.next())
                  {
-                     System.out.println("rs:" + rs.toString());
+                     //System.out.println("rs:" + rs.toString());
                      foresporgsel = new ForesporgselDTO(
                                 rs.getInt("id"),
                                 rs.getInt("vareId"),
@@ -49,8 +51,11 @@ public class ForesporgselDAO {
                                 rs.getInt("bredde"),
                                 rs.getInt("hoejde"),
                                 rs.getInt("laengde"),
-                                rs.getString("bemaerkning")
+                                rs.getString("bemaerkning"),
+                                rs.getInt("skurLaengde"),
+                                rs.getInt("skurBredde")
                      );
+                     
                  }
              }
         } 
