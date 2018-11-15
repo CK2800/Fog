@@ -1,4 +1,4 @@
-package exceptions;
+package jc.fog.exceptions;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

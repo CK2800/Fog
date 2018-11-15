@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 
 /**
@@ -26,7 +27,7 @@ public class ForesporgselDAO {
         *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
         *Skal som udgangspunkt vise det indhold som fx nr 1 har her.
     */
-public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId)
+public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId) throws FogException
     {
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         try{
@@ -41,10 +42,10 @@ public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgs
              }
         } 
         catch(Exception e)
-        {
+        {            
             //Der er sket en fejl her
             // Her skal vi have vores egen exception handling...
-            System.out.println("Error:" + e.getMessage());
+            throw new FogException("Carport forespørgsel ej fundet.", e.getMessage());
         }
        
        return foresporgsel;
