@@ -113,12 +113,15 @@ public class ForesporgselDAO {
      * @param bredde
      * @param hoejde
      * @param laengde
-     * @param skurLaengde - 
+     * @param skurLaengde
      * @param skurBredde
      * @param bemaerkning - den kan evt være kommentar til Fog.
      * @return
      * @throws SQLException 
+     * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
+    
+    
     public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
     {
         //Den "space removed" i siderne
@@ -167,5 +170,31 @@ public class ForesporgselDAO {
             System.out.println("Kunne ikke opret pga " + e.getMessage());
         }
         return false;
+    }
+    
+    /**
+     * Få det lavet hele i en html table.
+     * @return 
+     */
+    public static String getForesporgselTable(){
+        String html = "<table class='table table-striped'><tr><th>id</th><th>Bredde</th><th>Højde</th><th>Længde</th></tr>";
+        ArrayList<ForesporgselDTO> foresporgselList = getForesporgsel();
+        for(ForesporgselDTO value : foresporgselList)
+        {
+            html += getListToTable(value);
+        }
+        html += "</table>";
+        return html;
+    }
+    
+    /**
+     * Den fremviser Id, bredde, højde og længde på en pæn måde i html
+     * @param foresporgselDTO - Den modtager værdi som kommer fra "For" og ligger det ind de angivet steder her.
+     * @return Den returner indholdet på en pæn måde som gør det læsbar fra bruger.
+     */
+    public static String getListToTable(ForesporgselDTO foresporgselDTO){
+        String html = "<tr><td>" +  foresporgselDTO.getId() + "</a></td><td>" + foresporgselDTO.getBredde()+ 
+                      "</a></td><td>"+ foresporgselDTO.getHoejde()+ "</a></td><td>" + foresporgselDTO.getLaengde()+ "</a></td></tr>";;
+        return html;
     }
 }

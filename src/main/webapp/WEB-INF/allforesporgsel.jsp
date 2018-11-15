@@ -1,9 +1,9 @@
-<%-- 
-    Document   : allforesporgsel
-    Created on : 15-11-2018, 14:29:27
-    Author     : Jespe
---%>
-
+<%@page import="jc.fog.data.ForesporgselDAO"%>
+<%
+    String title = "Alle Forespørgsel"; //Den kan fremkomme i title efter hvilken kunde der laver forespørgsel.
+    String tableView = ForesporgselDAO.getForesporgselTable();
+    
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%= tableView %>
     </body>
 </html>
