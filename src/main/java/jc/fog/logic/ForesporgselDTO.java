@@ -18,6 +18,15 @@ public class ForesporgselDTO {
         this.laengde = laengde;
         this.bemaerkning = bemaerkning;
     }
+
+    public ForesporgselDTO(int Id, int bredde, int hoejde, int laengde) {
+        this.Id = Id;
+        this.bredde = bredde;
+        this.hoejde = hoejde;
+        this.laengde = laengde;
+    }
+    
+    
     
     
     public int getId() {
