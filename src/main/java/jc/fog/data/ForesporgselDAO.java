@@ -19,14 +19,9 @@ public class ForesporgselDAO {
     
     final static String singleForesporgsel = "SELECT * FROM Forespoergsel WHERE id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
-<<<<<<< Updated upstream
     final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
-=======
-    final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?)";
-    final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
-    
->>>>>>> Stashed changes
+
     /*
         *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
         *Skal som udgangspunkt vise det indhold som fx nr 1 har her.
