@@ -16,5 +16,5 @@ public final class Pages
     private Pages(){}
     
     public static final String ALL_REQUESTS = "all_requests.jsp";
-    public static final String SINGLE_REQUEST = "single_request.jsp"
+    public static final String SINGLE_REQUEST = "single_request.jsp";
 }
