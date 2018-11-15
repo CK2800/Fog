@@ -64,7 +64,7 @@ public class ForesporgselDAO {
     }
     
     /**
-     * 
+     * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
     public static ArrayList<ForesporgselDTO> getForesporgsel(){
@@ -101,11 +101,6 @@ public class ForesporgselDAO {
        return foresporgsel;
     }
 
-    
-    
-    /*
-        * Skal opret forspørgsel til databasen
-    */
     /**
      * Skal kun opret forespørgsel.
      * @param vareId
@@ -120,8 +115,6 @@ public class ForesporgselDAO {
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    
-    
     public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
     {
         //Den "space removed" i siderne
