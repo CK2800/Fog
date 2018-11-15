@@ -1,5 +1,4 @@
 package jc.fog.data;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,13 +22,14 @@ public class ForesporgselDAO {
     final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
-    /*
-        *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
-        *Skal som udgangspunkt vise det indhold som fx nr 1 har her.
-    */
-public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId) throws FogException
+    /**
+     * Den skal hente den enkelt forespørgsel.
+     * @param getForesporgselId - Skal være angivet en værdi for, at kunne hente den enkelt.
+     * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
+     */
+    public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId) throws FogException
     {
-        ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
+        ForesporgselDTO foresporgsel = null;
         try{
              connection = DbConnection.getConnection();
              PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
@@ -38,12 +38,24 @@ public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgs
              //try with ressources.
              try(ResultSet rs = pstm.executeQuery())
              {
-                 //Hvad skal der være her?
+                 if(rs.next() && rs.getInt("id") > 0)
+                 {
+                     System.out.println("rs:" + rs.toString());
+                     foresporgsel = new ForesporgselDTO(
+                                rs.getInt("id"),
+                                rs.getInt("vareId"),
+                                rs.getInt("haeldning"),
+                                rs.getInt("skurId"),
+                                rs.getInt("bredde"),
+                                rs.getInt("hoejde"),
+                                rs.getInt("laengde"),
+                                rs.getString("bemaerkning")
+                     );
+                 }
              }
         } 
         catch(Exception e)
-        {            
-            //Der er sket en fejl her
+        {
             // Her skal vi have vores egen exception handling...
             throw new FogException("Carport forespørgsel ej fundet.", e.getMessage());
         }
@@ -51,23 +63,34 @@ public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgs
        return foresporgsel;
     }
     
-    /*
-        * Den skal hente alle de foresporgsel der er i databasen.
-    */
-
+    /**
+     * 
+     * @return - Alle de forespørgsel der findes i databasen.
+     */
     public static ArrayList<ForesporgselDTO> getForesporgsel(){
         
         //kan være den skal laves om.
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         
         try{
+            //laver connection
             connection = DbConnection.getConnection();
+            //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
             
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())
             {
-                //skal hente disse værdier
+                while(rs.next())//Løber alle igennem
+                {
+                    System.out.println("rs:" + rs.toString());
+                     foresporgsel.add(new ForesporgselDTO(
+                                rs.getInt("id"),
+                                rs.getInt("bredde"),
+                                rs.getInt("hoejde"),
+                                rs.getInt("laengde"))
+                     );
+                }
             }
        } 
        catch(Exception e)
@@ -83,6 +106,19 @@ public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgs
     /*
         * Skal opret forspørgsel til databasen
     */
+    /**
+     * Skal kun opret forespørgsel.
+     * @param vareId
+     * @param haeldning
+     * @param bredde
+     * @param hoejde
+     * @param laengde
+     * @param skurLaengde - 
+     * @param skurBredde
+     * @param bemaerkning - den kan evt være kommentar til Fog.
+     * @return
+     * @throws SQLException 
+     */
     public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
     {
         //Den "space removed" i siderne

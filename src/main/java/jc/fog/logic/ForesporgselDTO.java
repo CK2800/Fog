@@ -8,18 +8,16 @@ public class ForesporgselDTO {
     private int Id, vareId, skurId, bredde, hoejde, laengde, dimensionerId, haeldning;
     private String bemaerkning;
 
-    public ForesporgselDTO(int Id, int vareId, int skurId, int bredde, int hoejde, int laengde, int haeldning, String bemaerkning) {
+    public ForesporgselDTO(int Id, int vareId, int haeldning, int skurId, int bredde, int hoejde, int laengde, String bemaerkning) {
         this.Id = Id;
         this.vareId = vareId;
+        this.haeldning = haeldning;
         this.skurId = skurId;
         this.bredde = bredde;
         this.hoejde = hoejde;
         this.laengde = laengde;
-        this.haeldning = haeldning;
         this.bemaerkning = bemaerkning;
     }
-
-    
     
     
     public int getId() {
