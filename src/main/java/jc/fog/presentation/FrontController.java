@@ -6,12 +6,15 @@
 package jc.fog.presentation;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jc.fog.exceptions.FogException;
+import jc.fog.presentation.command.Command;
+import jc.fog.presentation.constants.Fields;
+import jc.fog.presentation.constants.Pages;
 
 /**
  *
@@ -33,20 +36,26 @@ public class FrontController extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
+        String view;
+        try
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FrontController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FrontController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            // get the command from the request.
+            Command command = Command.from(request);
+            
+            // Get the view by executing the command.
+            view = command.execute(request, response);
+            // Forward the request to the resulting servlet that must reside in WEB-INF folder.             
+            // Remember, jsp is compiled, run and the result sent to browser.
+            request.getRequestDispatcher(view).forward(request, response);
         }
+        catch(FogException e)
+        {
+            // save error message in request.
+            request.setAttribute(Fields.ERROR_TEXT, e.getMessage());
+        }
+        // If we are here, a FogException has happened, attributes are set in request, go to INDEX.
+        view = Pages.INDEX;
+        request.getRequestDispatcher(view).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
