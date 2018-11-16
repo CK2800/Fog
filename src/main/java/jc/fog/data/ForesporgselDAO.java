@@ -17,12 +17,12 @@ public class ForesporgselDAO {
     
     private static Connection connection;
     
-    final static String singleForesporgsel = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
+    final static String GET_SINGLE_FORESPORGSEL_SQL = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
                                            + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
                                            + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id WHERE f.id = ?";
-    final static String allForesporgsel = "SELECT * FROM Forespoergsel";
-    final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
+    final static String GET_ALL_FORESPORGSEL_SQL = "SELECT * FROM Forespoergsel";
+    final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
     /**
      * Den skal hente den enkelt forespørgsel.
@@ -34,7 +34,7 @@ public class ForesporgselDAO {
         ForesporgselDTO foresporgsel = null;
         try{
              connection = DbConnection.getConnection();
-             PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
+             PreparedStatement pstm = connection.prepareStatement(GET_SINGLE_FORESPORGSEL_SQL);
              pstm.setInt(1, getForesporgselId);
 
              //try with ressources.
@@ -81,7 +81,7 @@ public class ForesporgselDAO {
             //laver connection
             connection = DbConnection.getConnection();
             //Forsøg at hente forespørgsel ud fra Sql'en
-            PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
+            PreparedStatement pstm = connection.prepareStatement(GET_ALL_FORESPORGSEL_SQL);
             
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())
@@ -133,7 +133,7 @@ public class ForesporgselDAO {
             // Først oprettes skur, hvis det ønskes.
             if (skurLaengde > 0 && skurBredde > 0) // skur ønskes.
             {
-                pstm = connection.prepareStatement(createSkur, Statement.RETURN_GENERATED_KEYS );
+                pstm = connection.prepareStatement(GET_CREATE_SKUR_FORESPORGSEL_SQL, Statement.RETURN_GENERATED_KEYS );
                 pstm.setInt(1, skurLaengde);
                 pstm.setInt(2, skurBredde);
                 pstm.executeUpdate();
@@ -144,7 +144,7 @@ public class ForesporgselDAO {
                 skurId = rs.getInt(1);
             }
             // Opret forespørgsel, evt. med skur.
-            pstm = connection.prepareStatement(createForesporgsel);
+            pstm = connection.prepareStatement(GET_CREATE_FORESPORGSEL_SQL);
             pstm.setInt(1, vareId);
             pstm.setInt(2, haeldning);           
             

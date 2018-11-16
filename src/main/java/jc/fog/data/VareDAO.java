@@ -33,6 +33,8 @@ public class VareDAO
                                                             "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
                                                             "ORDER BY v.id ASC, laengde ASC;";
     
+    public static final String GET_ALL_PRODUCT_SQL = "";
+    
     public static List<VareDTO> VarerTilBeregning() throws FogException
     {
         /*
@@ -86,5 +88,19 @@ public class VareDAO
             rs.getString("hjaelpetekst"), 
             rs.getFloat("pris")
         );
+    }
+    
+    public static VareDTO getAllProducts() throws FogException
+    {
+        try
+        {
+            
+            
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Fik desværre lavet fejl ved at hente alle vare. - ", e.getMessage());
+        }
+        return null;
     }
 }
