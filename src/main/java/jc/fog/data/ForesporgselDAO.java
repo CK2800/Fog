@@ -72,7 +72,7 @@ public class ForesporgselDAO {
      * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
-    public static ArrayList<ForesporgselDTO> getForesporgsel(){
+    public static ArrayList<ForesporgselDTO> getForesporgsel() throws FogException{
         
         //kan være den skal laves om.
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
@@ -101,7 +101,7 @@ public class ForesporgselDAO {
        catch(Exception e)
        {
            //Der er sket en fejl her
-           System.out.println("Error:" + e.getMessage());
+           throw new FogException("Error:" + e.getMessage());
        }   
        return foresporgsel;
     }
