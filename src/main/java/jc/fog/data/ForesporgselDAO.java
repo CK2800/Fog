@@ -21,24 +21,15 @@ public class ForesporgselDAO {
                                            + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
                                            + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id WHERE f.id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
-
     final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
-<<<<<<< HEAD
-    /*
-        *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
-        *Skal som udgangspunkt vise det indhold som fx nr 1 har her.
-    */
-    public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId)
-=======
     /**
      * Den skal hente den enkelt forespørgsel.
      * @param getForesporgselId - Skal være angivet en værdi for, at kunne hente den enkelt.
      * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
      */
     public static ForesporgselDTO getForesporgselSingle(int getForesporgselId) throws FogException
->>>>>>> FeatureClaus
     {
         ForesporgselDTO foresporgsel = null;
         try{
@@ -77,31 +68,17 @@ public class ForesporgselDAO {
        return foresporgsel;
     }
     
-<<<<<<< HEAD
-    /*
-        * Den skal hente alle de foresporgsel der er i databasen.
-    */
-
-
-    public static ArrayList<ForesporgselDTO> getForesporgsel()
-    {        
-=======
     /**
      * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
     public static ArrayList<ForesporgselDTO> getForesporgsel(){
         
->>>>>>> FeatureClaus
         //kan være den skal laves om.
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         
         try{
-<<<<<<< HEAD
-
-=======
             //laver connection
->>>>>>> FeatureClaus
             connection = DbConnection.getConnection();
             //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
@@ -125,35 +102,10 @@ public class ForesporgselDAO {
        {
            //Der er sket en fejl her
            System.out.println("Error:" + e.getMessage());
-
        }   
-
        return foresporgsel;
     }
 
-<<<<<<< HEAD
-    
-    
-    /*
-        * Skal opret forspørgsel til databasen
-    */
-
-    
-    /**
-     * Metode som opretter forespørsel i databasen.
-     * @param vareId
-     * @param haeldning Fladt tag angives med 0 grader.
-     * @param bredde
-     * @param hoejde
-     * @param laengde
-     * @param skurLaengde 
-     * @param skurBredde
-     * @param bemaerkning
-     * @return boolean true hvis forespørgsel oprettes, ellers false.
-     */
-    
-    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
-=======
     /**
      * Skal kun opret forespørgsel.
      * @param vareId
@@ -169,24 +121,13 @@ public class ForesporgselDAO {
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
     public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws FogException
->>>>>>> FeatureClaus
     {
-
         //Den "space removed" i siderne
         bemaerkning = bemaerkning.trim();
-        
-        /*
-        PSEUDO:
-        Opret skur hvis det ønskes
-        Hent skurets id
-        opret forespørgsel med skurets id hvis det blev oprettet.
-        
-        */
         
         try
         {
             connection = DbConnection.getConnection();
-
             PreparedStatement pstm;
             int skurId = 0;
             // Først oprettes skur, hvis det ønskes.
@@ -204,7 +145,6 @@ public class ForesporgselDAO {
             }
             // Opret forespørgsel, evt. med skur.
             pstm = connection.prepareStatement(createForesporgsel);
-
             pstm.setInt(1, vareId);
             pstm.setInt(2, haeldning);           
             
