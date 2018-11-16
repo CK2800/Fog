@@ -30,7 +30,12 @@ public class VareDAO
     
     public static List<VareDTO> VarerTilBeregning()
     {
-        
+        /*
+        Pseudo:
+        Hent varer og deres dimensioner
+        Hent første vare fra recordset
+        Sålænge vareid er ens, tilføj til dimensioner
+        */ 
         return null;
     }
     
@@ -44,11 +49,11 @@ public class VareDAO
     {        
         return new VareDTO
         (
-                rs.getInt("id"), 
-                rs.getInt("varetypeId"), 
-                rs.getString("navn"), 
-                rs.getString("hjaelpetekst"), 
-                rs.getFloat("pris")
+            rs.getInt("id"), 
+            rs.getInt("varetypeId"), 
+            rs.getString("navn"), 
+            rs.getString("hjaelpetekst"), 
+            rs.getFloat("pris")
         );
     }
 }

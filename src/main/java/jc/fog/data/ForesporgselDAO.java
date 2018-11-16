@@ -1,5 +1,4 @@
 package jc.fog.data;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 
 /**
@@ -17,19 +17,30 @@ public class ForesporgselDAO {
     
     private static Connection connection;
     
-    final static String singleForesporgsel = "SELECT * FROM Forespoergsel WHERE id = ?";
+    final static String singleForesporgsel = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
+                                           + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
+                                           + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id WHERE f.id = ?";
     final static String allForesporgsel = "SELECT * FROM Forespoergsel";
 
     final static String createForesporgsel = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     final static String createSkur = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
+<<<<<<< HEAD
     /*
         *Henter den enkelt forespørgsel fx nr 1 eller et andet nr
         *Skal som udgangspunkt vise det indhold som fx nr 1 har her.
     */
     public static ArrayList<ForesporgselDTO> getForesporgselSingle(int getForesporgselId)
+=======
+    /**
+     * Den skal hente den enkelt forespørgsel.
+     * @param getForesporgselId - Skal være angivet en værdi for, at kunne hente den enkelt.
+     * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
+     */
+    public static ForesporgselDTO getForesporgselSingle(int getForesporgselId) throws FogException
+>>>>>>> FeatureClaus
     {
-        ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
+        ForesporgselDTO foresporgsel = null;
         try{
              connection = DbConnection.getConnection();
              PreparedStatement pstm = connection.prepareStatement(singleForesporgsel);
@@ -38,19 +49,35 @@ public class ForesporgselDAO {
              //try with ressources.
              try(ResultSet rs = pstm.executeQuery())
              {
-                 //Hvad skal der være her?
+                 if(rs.next())
+                 {
+                     //System.out.println("rs:" + rs.toString());
+                     foresporgsel = new ForesporgselDTO(
+                                rs.getInt("id"),
+                                rs.getInt("vareId"),
+                                rs.getInt("haeldning"),
+                                rs.getInt("skurId"),
+                                rs.getInt("bredde"),
+                                rs.getInt("hoejde"),
+                                rs.getInt("laengde"),
+                                rs.getString("bemaerkning"),
+                                rs.getInt("skurLaengde"),
+                                rs.getInt("skurBredde")
+                     );
+                     
+                 }
              }
         } 
         catch(Exception e)
         {
-            //Der er sket en fejl her
             // Her skal vi have vores egen exception handling...
-            System.out.println("Error:" + e.getMessage());
+            throw new FogException("Carport forespørgsel ej fundet.", e.getMessage());
         }
        
        return foresporgsel;
     }
     
+<<<<<<< HEAD
     /*
         * Den skal hente alle de foresporgsel der er i databasen.
     */
@@ -58,18 +85,40 @@ public class ForesporgselDAO {
 
     public static ArrayList<ForesporgselDTO> getForesporgsel()
     {        
+=======
+    /**
+     * Den henter alt i databasen hvor alt sammen bliver brugt senere.
+     * @return - Alle de forespørgsel der findes i databasen.
+     */
+    public static ArrayList<ForesporgselDTO> getForesporgsel(){
+        
+>>>>>>> FeatureClaus
         //kan være den skal laves om.
         ArrayList<ForesporgselDTO> foresporgsel = new ArrayList<ForesporgselDTO>();
         
         try{
+<<<<<<< HEAD
 
+=======
+            //laver connection
+>>>>>>> FeatureClaus
             connection = DbConnection.getConnection();
+            //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(allForesporgsel);
             
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())
             {
-                //skal hente disse værdier
+                while(rs.next())//Løber alle igennem
+                {
+                    System.out.println("rs:" + rs.toString());
+                     foresporgsel.add(new ForesporgselDTO(
+                                rs.getInt("id"),
+                                rs.getInt("bredde"),
+                                rs.getInt("hoejde"),
+                                rs.getInt("laengde"))
+                     );
+                }
             }
        } 
        catch(Exception e)
@@ -82,6 +131,7 @@ public class ForesporgselDAO {
        return foresporgsel;
     }
 
+<<<<<<< HEAD
     
     
     /*
@@ -103,6 +153,23 @@ public class ForesporgselDAO {
      */
     
     public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws SQLException
+=======
+    /**
+     * Skal kun opret forespørgsel.
+     * @param vareId
+     * @param haeldning
+     * @param bredde
+     * @param hoejde
+     * @param laengde
+     * @param skurLaengde
+     * @param skurBredde
+     * @param bemaerkning - den kan evt være kommentar til Fog.
+     * @return
+     * @throws SQLException 
+     * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
+     */
+    public static boolean createForesporgsel(int vareId, int haeldning, int bredde, int hoejde, int laengde, int skurLaengde, int skurBredde, String bemaerkning) throws FogException
+>>>>>>> FeatureClaus
     {
 
         //Den "space removed" i siderne
@@ -158,8 +225,33 @@ public class ForesporgselDAO {
         // Her skal vi have egen exception handling
         catch(Exception e)
         {
-            System.out.println("Kunne ikke opret pga " + e.getMessage());
+            throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+        }        
+    }
+    
+    /**
+     * Få det lavet hele i en html table.
+     * @return 
+     */
+    public static String getForesporgselTable(){
+        String html = "<table class='table table-striped'><tr><th>id</th><th>Bredde</th><th>Højde</th><th>Længde</th></tr>";
+        ArrayList<ForesporgselDTO> foresporgselList = getForesporgsel();
+        for(ForesporgselDTO value : foresporgselList)
+        {
+            html += getListToTable(value);
         }
-        return false;
+        html += "</table>";
+        return html;
+    }
+    
+    /**
+     * Den fremviser Id, bredde, højde og længde på en pæn måde i html
+     * @param foresporgselDTO - Den modtager værdi som kommer fra "For" og ligger det ind de angivet steder her.
+     * @return Den returner indholdet på en pæn måde som gør det læsbar fra bruger.
+     */
+    public static String getListToTable(ForesporgselDTO foresporgselDTO){
+        String html = "<tr><td>" +  foresporgselDTO.getId() + "</a></td><td>" + foresporgselDTO.getBredde()+ 
+                      "</a></td><td>"+ foresporgselDTO.getHoejde()+ "</a></td><td>" + foresporgselDTO.getLaengde()+ "</a></td></tr>";;
+        return html;
     }
 }

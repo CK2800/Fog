@@ -5,18 +5,33 @@ package jc.fog.logic;
  * @author Jesper
  */
 public class ForesporgselDTO {
-    private int Id, tagId, skurId, bredde, hoejde, laengde, dimensionerId;
+    private int Id, vareId, skurId, bredde, hoejde, laengde, dimensionerId, haeldning;
     private String bemaerkning;
+    private SkurDTO skurDTO;
 
-    public ForesporgselDTO(int Id, int tagId, int skurId, int bredde, int hoejde, int laengde, String bemaerkning) {
+    public ForesporgselDTO(int Id, int vareId, int haeldning, int skurId, int bredde, 
+                           int hoejde, int laengde, String bemaerkning, int skurLaengde, int skurBredde) {
         this.Id = Id;
-        this.tagId = tagId;
+        this.vareId = vareId;
+        this.haeldning = haeldning;
         this.skurId = skurId;
         this.bredde = bredde;
         this.hoejde = hoejde;
         this.laengde = laengde;
         this.bemaerkning = bemaerkning;
+        
+        if (skurId != 0)
+            this.skurDTO = new SkurDTO(skurId, skurLaengde, skurBredde);
     }
+
+    public ForesporgselDTO(int Id, int bredde, int hoejde, int laengde) {
+        this.Id = Id;
+        this.bredde = bredde;
+        this.hoejde = hoejde;
+        this.laengde = laengde;
+    }
+    
+    
     
     
     public int getId() {
@@ -27,12 +42,12 @@ public class ForesporgselDTO {
         this.Id = Id;
     }
 
-    public int getTagId() {
-        return tagId;
+    public int getVareId() {
+        return vareId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setVareId(int vareId) {
+        this.vareId = vareId;
     }
 
     public int getSkurId() {
@@ -75,6 +90,14 @@ public class ForesporgselDTO {
         this.dimensionerId = dimensionerId;
     }
 
+    public int getHaeldning() {
+        return haeldning;
+    }
+
+    public void setHaeldning(int haeldning) {
+        this.haeldning = haeldning;
+    }
+
     public String getBemaerkning() {
         return bemaerkning;
     }
@@ -82,6 +105,17 @@ public class ForesporgselDTO {
     public void setBemaerkning(String bemaerkning) {
         this.bemaerkning = bemaerkning;
     }
+    
+    public SkurDTO getSkurDTO()
+    {
+        return skurDTO;
+    }
+    
+    public void setSkurDTO(SkurDTO value)
+    {
+        this.skurDTO = value;
+    }
+    
     
     
 }

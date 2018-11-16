@@ -5,8 +5,7 @@
  */
 package jc.fog.logic;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +39,19 @@ public class VareDTO
         this.navn = navn;
         this.hjaelpetekst = hjaelpetekst;
         this.pris = pris;
+    }
+    
+    /**
+     * Tilføj en dimension til varens samling af dimensioner.
+     * @param dimensionId
+     * @param laengde 
+     */
+    public void addDimension(int dimensionId, int laengde)
+    {
+        if (dimensioner == null)
+            dimensioner = new ArrayList<DimensionerDTO>();
+        
+        dimensioner.add(new DimensionerDTO(dimensionId, laengde));
     }
     
     // getters
