@@ -44,20 +44,22 @@ public class ShowRequestsCommand extends Command
     private String requestsToHtml(List<ForesporgselDTO> requests)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        String table = "<table><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th></tr></thead><tbody>$body</tbody></table>";        
+        String table = "<table><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "ID");
         table = table.replace("$2", "BREDDE");
         table = table.replace("$3", "H&Oslash;JDE");
         table = table.replace("$4", "L&AElig;NGDE");
+        table = table.replace("$5", "Se forespørgsel");
         
         for(ForesporgselDTO item : requests)
         {
-            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td></tr>";
+            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
             row = row.replace("$1", String.valueOf(item.getId()));
             row = row.replace("$2", String.valueOf(item.getBredde()));
             row = row.replace("$3", String.valueOf(item.getHoejde()));
             row = row.replace("$4", String.valueOf(item.getLaengde()));
+            row = row.replace("$5", "<a href=\"FrontController?command=showsinglerequest&id=" + item.getId() + "\">Se her</a>");
             stringBuilder.append(row);
         }
         

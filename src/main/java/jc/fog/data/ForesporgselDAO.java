@@ -169,29 +169,4 @@ public class ForesporgselDAO {
         }        
     }
     
-    /**
-     * Få det lavet hele i en html table.
-     * @return 
-     */
-    public static String getForesporgselTable(){
-        String html = "<table class='table table-striped'><tr><th>id</th><th>Bredde</th><th>Højde</th><th>Længde</th></tr>";
-        ArrayList<ForesporgselDTO> foresporgselList = getForesporgsel();
-        for(ForesporgselDTO value : foresporgselList)
-        {
-            html += getListToTable(value);
-        }
-        html += "</table>";
-        return html;
-    }
-    
-    /**
-     * Den fremviser Id, bredde, højde og længde på en pæn måde i html
-     * @param foresporgselDTO - Den modtager værdi som kommer fra "For" og ligger det ind de angivet steder her.
-     * @return Den returner indholdet på en pæn måde som gør det læsbar fra bruger.
-     */
-    public static String getListToTable(ForesporgselDTO foresporgselDTO){
-        String html = "<tr><td>" +  foresporgselDTO.getId() + "</a></td><td>" + foresporgselDTO.getBredde()+ 
-                      "</a></td><td>"+ foresporgselDTO.getHoejde()+ "</a></td><td>" + foresporgselDTO.getLaengde()+ "</a></td></tr>";;
-        return html;
-    }
 }
