@@ -44,7 +44,7 @@ public class ShowRequestsCommand extends Command
     private String requestsToHtml(List<ForesporgselDTO> requests)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        String table = "<table><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
+        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "ID");
         table = table.replace("$2", "BREDDE");

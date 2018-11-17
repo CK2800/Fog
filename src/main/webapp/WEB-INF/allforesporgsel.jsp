@@ -8,8 +8,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <jsp:include page="./bootstrap/csscdn.jsp"></jsp:include>
     </head>
     <body>
+        <div class="container">
         <%= tableView %>
+        </div>
+        <jsp:include page="./bootstrap/jscdn.jsp"></jsp:include>
     </body>
 </html>

@@ -33,7 +33,7 @@ public class VareDAO
                                                             "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
                                                             "ORDER BY v.id ASC, laengde ASC;";
     
-    public static final String GET_ALL_PRODUCT_SQL = "";
+    public static final String GET_ALL_PRODUCT_SQL = "SELECT ";
     
     public static List<VareDTO> VarerTilBeregning() throws FogException
     {
@@ -94,8 +94,7 @@ public class VareDAO
     {
         try
         {
-            
-            
+                        
         }
         catch(Exception e)
         {

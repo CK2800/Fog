@@ -46,25 +46,25 @@ public class ShowSingleRequestCommand extends Command
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         
-        stringBuilder.append("Id:<br /><input type=\"text\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" value=\"").append(item.getBredde()).append("\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" name=\"hoejde\" value=\"").append(item.getHoejde()).append("\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" name=\"haeldning\" value=\"").append(item.getHaeldning()).append("\" /><br />");
+        stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLaengde()).append("\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHoejde()).append("\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"").append(item.getHaeldning()).append("\" /><br />");
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\"").append(item.getSkurDTO() != null ? " checked" : "").append(" /><br />");
         
         if(item.getSkurDTO() == null)
         {
-            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" value=\"0\" /><br />");
-            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" value=\"0\" /><br />");
+            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"0\" /><br />");
+            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" class=\"form-control\" name=\"bredde\" value=\"0\" /><br />");
         }
         else
         {
-            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
-            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" value=\"").append(item.getBredde()).append("\" /><br />");
+            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
+            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
         }
         stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Gem\" />");
+        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success\" />");
         stringBuilder.append("</form>");
         
         return stringBuilder.toString();
