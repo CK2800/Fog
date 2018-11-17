@@ -64,7 +64,7 @@ public class ShowSingleRequestCommand extends Command
             stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
         }
         stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success\" />");
+        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form>");
         
         return stringBuilder.toString();

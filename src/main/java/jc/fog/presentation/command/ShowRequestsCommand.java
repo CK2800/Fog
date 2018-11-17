@@ -59,7 +59,7 @@ public class ShowRequestsCommand extends Command
             row = row.replace("$2", String.valueOf(item.getBredde()));
             row = row.replace("$3", String.valueOf(item.getHoejde()));
             row = row.replace("$4", String.valueOf(item.getLaengde()));
-            row = row.replace("$5", "<a href=\"FrontController?command=showsinglerequest&id=" + item.getId() + "\">Se her</a>");
+            row = row.replace("$5", "<a href=\"FrontController?command=showsinglerequest&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }
         
