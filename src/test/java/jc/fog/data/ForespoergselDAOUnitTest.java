@@ -80,11 +80,7 @@ public class ForespoergselDAOUnitTest
         assertNotNull(connection);
     }
     @Test
-<<<<<<< HEAD
-    public void testForespoergselMedSkur() throws SQLException
-=======
     public void testOpretForespoergselMedSkur() throws FogException
->>>>>>> FeatureClaus
     {        
         boolean success = ForesporgselDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);        
