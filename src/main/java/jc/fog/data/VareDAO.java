@@ -33,13 +33,13 @@ public class VareDAO
                                                             "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
                                                             "ORDER BY v.id ASC, laengde ASC;";
     
-<<<<<<< HEAD
-    public static final String GET_ALL_PRODUCT_SQL = "SELECT ";
+    public static final String GET_ALL_PRODUCT_SQL = "SELECT * FROM Materiale";
     
-    public static List<VareDTO> VarerTilBeregning() throws FogException
-=======
+    //Få lavet en SQL TIl, at gemme materiale i db.
+    
+    public static final String GET_SINGLE_PRODUCT_SQL = "SElECT * FROM Materiale WHERE id = ?";
+    
     public static List<MaterialeDTO> materialerTilBeregning() throws FogException
->>>>>>> FeatureClaus
     {
         /*
         Pseudo:
@@ -91,16 +91,39 @@ public class VareDAO
         );
     }
     
-    public static VareDTO getAllProducts() throws FogException
+//    public static VareDTO getAllProducts() throws FogException
+//    {
+//        try
+//        {
+//                        
+//        }
+//        catch(Exception e)
+//        {
+//            throw new FogException("Fik desværre lavet fejl ved at hente alle vare. - ", e.getMessage());
+//        }
+//        return null;
+//    }
+    
+    public static List<MaterialeDTO> getAllMateriale() throws FogException
     {
-        try
-        {
-                        
+        try {
+            
         }
         catch(Exception e)
         {
-            throw new FogException("Fik desværre lavet fejl ved at hente alle vare. - ", e.getMessage());
+            throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
         }
         return null;
+    }
+    
+    public static MaterialeDTO getSingleMateriale(int getMaterialeId)
+    {
+        try {
+            
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
+        }
     }
 }
