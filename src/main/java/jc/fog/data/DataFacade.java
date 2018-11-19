@@ -31,12 +31,12 @@ public class DataFacade
         return ForesporgselDAO.getForesporgselSingle(id);
     }
     
-    public static MaterialeDTO getRequestMateriale(int id) throws FogException
+    public static MaterialeDTO getMateriale(int id) throws FogException
     {
         return VareDAO.getSingleMateriale(id);
     }
     
-    public static List<MaterialeDTO> getRequestMateriale() throws FogException
+    public static List<MaterialeDTO> getMateriale() throws FogException
     {
         return VareDAO.getAllMateriale();
     }

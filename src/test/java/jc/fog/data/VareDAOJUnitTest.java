@@ -73,17 +73,10 @@ public class VareDAOJUnitTest
 //    }
     
     @Test
-    public void getSingleMateriale() throws FogException
-    {
-        boolean getSingle = Boolean.parseBoolean(VareDAO.getSingleMateriale(1).toString());
-        assertTrue(getSingle);
-    }
-    
-    @Test
     public void testGetSingleMateriale() throws FogException
     {
         VareDAO.createMateriale(1, "2x2 mm", 6, "stk");
-        MaterialeDTO request = DataFacade.getRequestMateriale(1);
+        MaterialeDTO request = DataFacade.getMateriale(1);
         assertTrue(request != null);
     }
     
@@ -91,7 +84,7 @@ public class VareDAOJUnitTest
     public void testGetAllMateriale() throws FogException
     {
         VareDAO.createMateriale(1, "2x2 mm", 6, "stk");
-        List<MaterialeDTO> request = DataFacade.getRequestMateriale();
+        List<MaterialeDTO> request = DataFacade.getMateriale();
         assertTrue(request.size() > 0);
     }
 }
