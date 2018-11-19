@@ -64,11 +64,34 @@ public class VareDAOJUnitTest
     {
     }
 
+//    @Test
+//    public void hentVarerTilBeregneren() throws FogException
+//    {
+//        List<MaterialeDTO> varer = VareDAO.materialerTilBeregning();
+//        System.out.println("Antal varer fudnet: " + varer.size());
+//        assertTrue(varer.size() > 0);
+//    }
+    
     @Test
-    public void hentVarerTilBeregneren() throws FogException
+    public void getSingleMateriale() throws FogException
     {
-        List<MaterialeDTO> varer = VareDAO.materialerTilBeregning();
-        System.out.println("Antal varer fudnet: " + varer.size());
-        assertTrue(varer.size() > 0);
+        boolean getSingle = Boolean.parseBoolean(VareDAO.getSingleMateriale(1).toString());
+        assertTrue(getSingle);
+    }
+    
+    @Test
+    public void testGetSingleMateriale() throws FogException
+    {
+        VareDAO.createMateriale(1, "2x2 mm", 6, "stk");
+        MaterialeDTO request = DataFacade.getRequestMateriale(1);
+        assertTrue(request != null);
+    }
+    
+    @Test
+    public void testGetAllMateriale() throws FogException
+    {
+        VareDAO.createMateriale(1, "2x2 mm", 6, "stk");
+        List<MaterialeDTO> request = DataFacade.getRequestMateriale();
+        assertTrue(request.size() > 0);
     }
 }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -35,7 +36,7 @@ public class VareDAO
     
     public static final String GET_ALL_PRODUCT_SQL = "SELECT * FROM Materiale";
     
-    //Få lavet en SQL TIl, at gemme materiale i db.
+    public static final String GET_CREATE_MATERIALE_SQL = "INSERT INTO Materiale(materialeTypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
     
     public static final String GET_SINGLE_PRODUCT_SQL = "SElECT * FROM Materiale WHERE id = ?";
     
@@ -139,6 +140,33 @@ public class VareDAO
             throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
         }
         return getAll;
+    }
+    
+    public static boolean createMateriale(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
+    {
+        //Den "space removed" i siderne
+        navn = navn.trim();
+        enhed = enhed.trim();
+        
+        try
+        {
+            //laver connection
+            connection = DbConnection.getConnection();
+            
+            //Forsøg at hente forespørgsel ud fra Sql'en
+            PreparedStatement pstm = connection.prepareStatement(GET_CREATE_MATERIALE_SQL, Statement.RETURN_GENERATED_KEYS);
+            
+            pstm.setInt(1, materialeTypeId);
+            pstm.setString(2, navn);
+            pstm.setInt(3, laengde);
+            pstm.setString(4, enhed);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+        }
     }
     
     public static MaterialeDTO getSingleMateriale(int getMaterialeId) throws FogException
