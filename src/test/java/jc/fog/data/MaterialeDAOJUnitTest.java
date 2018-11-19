@@ -20,10 +20,10 @@ import org.junit.Test;
  *
  * @author Claus
  */
-public class VareDAOJUnitTest
+public class MaterialeDAOJUnitTest
 {
     
-    public VareDAOJUnitTest()
+    public MaterialeDAOJUnitTest()
     {
     }
     
@@ -67,7 +67,7 @@ public class VareDAOJUnitTest
     @Test
     public void hentVarerTilBeregneren() throws FogException
     {
-        List<MaterialeDTO> varer = VareDAO.materialerTilBeregning();
+        List<MaterialeDTO> varer = MaterialeDAO.materialerTilBeregning();
         System.out.println("Antal varer fudnet: " + varer.size());
         assertTrue(varer.size() > 0);
     }

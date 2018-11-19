@@ -18,7 +18,7 @@ import jc.fog.logic.MaterialeDTO;
  *
  * @author Claus
  */
-public class VareDAO
+public class MaterialeDAO
 {
     private static Connection connection;
     /**
@@ -51,11 +51,9 @@ public class VareDAO
             try(ResultSet rs = pstm.executeQuery())
             {
                 while(rs.next())
-                {
-                    
-                        materialer.add(mapMateriale(rs));
-                }
-                
+                {                    
+                    materialer.add(mapMateriale(rs));
+                }                
             }
             return materialer;
         }
@@ -63,8 +61,6 @@ public class VareDAO
         {
             throw new FogException("Systemet kan ikke finde varer til styklisteberegning.", e.getMessage());
         }
-        
-        
     }
     
     /**
