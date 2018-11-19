@@ -21,9 +21,10 @@ public class StyklisteItem
     public int getCount(){return count;}
     public String getHjaelpetekst(){return hjaelpetekst;}
     
-    public StyklisteItem(MaterialeDTO materiale, String hjaelpetekst)
+    public StyklisteItem(MaterialeDTO materiale, int count, String hjaelpetekst)
     {
         this.materiale = materiale;
+        this.count = count;
         this.hjaelpetekst = hjaelpetekst;
     }
     

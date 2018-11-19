@@ -74,6 +74,7 @@ public class CalculatorRuleJUnitTest
     {
         List<MaterialeDTO> materialer = MaterialeDAO.materialerTilBeregning();
         ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+        forespoergsel.setLaengde(1501);
         List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
         
         RemCalculatorRule calc = new RemCalculatorRule();

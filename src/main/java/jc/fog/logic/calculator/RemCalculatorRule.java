@@ -36,17 +36,21 @@ public class RemCalculatorRule implements CalculatorRule
             // Sorter på laengde, faldende.
             Collections.sort(spaerTraeList, Comparator.comparing(MaterialeDTO::getLaengde));
             Collections.reverse(spaerTraeList);
-            
-            // Find spærtræ med krævet længde.
-            int divisor = 1; // Ideelt kan vi dække længden med 1 brædt.
-            
-            do
+            // Hent længste træ.
+            MaterialeDTO materiale = spaerTraeList.get(0);
+            // Hvor mange stk. træ skal der min. bruges?
+            int antal = (int)Math.ceil((float)remLength/materiale.getLaengde());            
+            // Find korteste spærtræ med krævet længde.            
+            for(MaterialeDTO m : spaerTraeList)            
             {
-                
+                if (m.getLaengde() * antal >= remLength)                    
+                    materiale = m;
+                else 
+                    break;                    
             }
-            while();
-
             
+            stykliste.add(new StyklisteItem(materiale, antal, "blabla"));
+                        
             return stykliste;
 
         }        
