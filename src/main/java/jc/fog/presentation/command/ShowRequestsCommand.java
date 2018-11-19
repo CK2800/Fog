@@ -64,9 +64,5 @@ public class ShowRequestsCommand extends Command
         }
         
         return table.replace("$body", stringBuilder.toString());
-        
-        
-        
-        
     }
 }
