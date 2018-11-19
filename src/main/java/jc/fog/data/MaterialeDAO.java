@@ -33,6 +33,9 @@ public class MaterialeDAO
                                                             "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
                                                             "ORDER BY v.id ASC, laengde ASC;";
     
+    public static final String GET_MATERIALE_TIL_BEREGNING_SQL = "SELECT m.id, materialetypeId, m.navn, mt.type, laengde, enhed " +
+                                                                 "FROM Materiale m INNER JOIN Materialetype mt ON m.materialetypeId = mt.id";
+    
     public static List<MaterialeDTO> materialerTilBeregning() throws FogException
     {
         /*
@@ -44,7 +47,7 @@ public class MaterialeDAO
         try
         {
             connection = DbConnection.getConnection();
-            PreparedStatement pstm = connection.prepareStatement(GET_VARER_TIL_BEREGNING_SQL);
+            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALE_TIL_BEREGNING_SQL);
             ArrayList<MaterialeDTO> materialer = new ArrayList<MaterialeDTO>();
             MaterialeDTO vareDTO = null;
             // try with ressources
@@ -74,10 +77,11 @@ public class MaterialeDAO
         return new MaterialeDTO
         (
             rs.getInt("id"), 
-            rs.getInt("varetypeId"), 
+            rs.getInt("materialetypeId"), 
             rs.getString("navn"), 
             rs.getInt("laengde"),
-            rs.getString("enhed")             
+            rs.getString("enhed"),
+            rs.getString("type")
         );
     }
 }
