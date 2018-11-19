@@ -73,6 +73,13 @@ public class VareDAOJUnitTest
 //    }
     
     @Test
+    public void testCreateMateriale() throws FogException
+    {
+        boolean succes = VareDAO.createMateriale(2, "5x5 mm", 6, "stk");
+        assertTrue(succes);
+    }
+    
+    @Test
     public void testGetSingleMateriale() throws FogException
     {
         VareDAO.createMateriale(1, "2x2 mm", 6, "stk");
