@@ -8,7 +8,7 @@ package jc.fog.data;
 import java.util.List;
 import static jc.fog.data.ForespoergselDAOUnitTest.connection;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.VareDTO;
+import jc.fog.logic.MaterialeDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
@@ -67,7 +67,7 @@ public class VareDAOJUnitTest
     @Test
     public void hentVarerTilBeregneren() throws FogException
     {
-        List<VareDTO> varer = VareDAO.VarerTilBeregning();
+        List<MaterialeDTO> varer = VareDAO.materialerTilBeregning();
         System.out.println("Antal varer fudnet: " + varer.size());
         assertTrue(varer.size() > 0);
     }
