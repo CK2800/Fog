@@ -104,26 +104,71 @@ public class VareDAO
 //        return null;
 //    }
     
-    public static List<MaterialeDTO> getAllMateriale() throws FogException
+    /**
+     * Den henter alt i databasen hvor alt sammen.
+     * @return Alle de "Materiale" der findes i db.
+     * @throws FogException 
+     */
+    public static ArrayList<MaterialeDTO> getAllMateriale() throws FogException
     {
-        try {
+        ArrayList<MaterialeDTO> getAll = new ArrayList<MaterialeDTO>();
+        try
+        {
+            //laver connection
+            connection = DbConnection.getConnection();
             
+            //Forsøg at hente forespørgsel ud fra Sql'en
+            PreparedStatement pstm = connection.prepareStatement(GET_ALL_PRODUCT_SQL);
+            
+            try(ResultSet rs = pstm.executeQuery())
+            {
+                while(rs.next())//Løber alle igennem
+                {
+                    getAll.add(new MaterialeDTO(
+                            rs.getInt("id"),
+                            rs.getInt("materialetypeId"),
+                            rs.getString("navn"),
+                            rs.getInt("laengde"),
+                            rs.getString("enhed")
+                    ));
+                }
+            }
         }
         catch(Exception e)
         {
             throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
         }
-        return null;
+        return getAll;
     }
     
-    public static MaterialeDTO getSingleMateriale(int getMaterialeId)
+    public static MaterialeDTO getSingleMateriale(int getMaterialeId) throws FogException
     {
-        try {
-            
+        MaterialeDTO getSingle = null;
+        try
+        {
+            connection = DbConnection.getConnection();
+            PreparedStatement pstm = connection.prepareStatement(GET_SINGLE_PRODUCT_SQL);
+            pstm.setInt(1, getMaterialeId);
+
+            //try with ressources.
+            try(ResultSet rs = pstm.executeQuery())
+            {
+                if(rs.next())
+                {
+                    getSingle = new MaterialeDTO(
+                            rs.getInt("id"),
+                            rs.getInt("materialetypeId"),
+                            rs.getString("navn"),
+                            rs.getInt("laengde"),
+                            rs.getString("enhed")
+                    );
+                }
+            }
         }
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
+            throw new FogException("Systemet kan ikke finde den enkelte varer.", e.getMessage());
         }
+        return getSingle;
     }
 }
