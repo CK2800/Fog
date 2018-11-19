@@ -6,7 +6,7 @@
 package jc.fog.logic.calcrules;
 
 import java.util.List;
-import jc.fog.logic.VareDTO;
+import jc.fog.logic.MaterialeDTO;
 
 /**
  *
@@ -14,6 +14,6 @@ import jc.fog.logic.VareDTO;
  */
 public interface CalcRule
 {
-    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> varer, List<StyklisteItem> stykliste);
+    //public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> varer, List<StyklisteItem> stykliste);
             
 }
