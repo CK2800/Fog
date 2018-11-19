@@ -32,7 +32,7 @@ public class ShowMaterialeCommand extends Command {
     private String requestsToHtml(List<MaterialeDTO> requests)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
+        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th><th>$6</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "ID");
         table = table.replace("$2", "MaterialetypeId");
@@ -49,7 +49,7 @@ public class ShowMaterialeCommand extends Command {
             row = row.replace("$3", String.valueOf(item.getNavn()));
             row = row.replace("$4", String.valueOf(item.getLaengde()));
             row = row.replace("$5", String.valueOf(item.getEnhed()));
-            row = row.replace("$6", "<a href=\"FrontController?command=showsinglerequest&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
+            row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }
         

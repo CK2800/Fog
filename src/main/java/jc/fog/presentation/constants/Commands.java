@@ -22,4 +22,5 @@ public final class Commands
     public static final String SHOWREQUESTS = "showrequests";
     public static final String SHOWSINGLEREQUEST = "showsinglerequest";
     public static final String SHOWSINGLEMATERIALE = "showsinglemateriale";
+    public static final String SHOWMATERIALE = "showmateriale";
 }

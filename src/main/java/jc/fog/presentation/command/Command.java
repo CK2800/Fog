@@ -44,6 +44,7 @@ public abstract class Command
         commands.put(Commands.SHOWREQUESTS, new ShowRequestsCommand());
         commands.put(Commands.SHOWSINGLEREQUEST, new ShowSingleRequestCommand());
         commands.put(Commands.SHOWMATERIALE, new ShowMaterialeCommand());
+        commands.put(Commands.SHOWSINGLEMATERIALE, new ShowSingleMaterialeCommand());
         
     }
     
