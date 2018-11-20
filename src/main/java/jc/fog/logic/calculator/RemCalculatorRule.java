@@ -22,7 +22,7 @@ import jc.fog.logic.StyklisteItem;
 public class RemCalculatorRule implements CalculatorRule
 {    
     @Override
-    public List<StyklisteItem> calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {
         try
         {
@@ -49,10 +49,9 @@ public class RemCalculatorRule implements CalculatorRule
                     break;                    
             }
             
-            stykliste.add(new StyklisteItem(materiale, antal, "blabla"));
-                        
-            return stykliste;
-
+            stykliste.add(new StyklisteItem(materiale, antal, "spær instruks"));
+            // 1 nyt item på styklisten.
+            return 1;            
         }        
         catch(Exception e)
         {

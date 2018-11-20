@@ -17,6 +17,5 @@ import jc.fog.logic.StyklisteItem;
  */
 public interface CalculatorRule
 {
-    public List<StyklisteItem> calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> varer, List<StyklisteItem> stykliste) throws FogException;
-            
+    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException;            
 }

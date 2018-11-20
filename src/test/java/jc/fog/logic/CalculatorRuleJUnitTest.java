@@ -12,7 +12,9 @@ import jc.fog.data.DbConnection;
 import jc.fog.data.ForesporgselDAO;
 import jc.fog.data.MaterialeDAO;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.calculator.Calculator;
 import jc.fog.logic.calculator.RemCalculatorRule;
+import jc.fog.logic.calculator.StolpeCalculatorRule;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
@@ -40,15 +42,15 @@ public class CalculatorRuleJUnitTest
     @AfterClass
     public static void tearDownClass()
     {
-//        try
-//        {
-//            connection.close();
-//            System.out.println("Db forbindelse lukket.");
-//        }
-//        catch(Exception e)
-//        {
-//            System.out.println("Database connection was not closed: " + e.getMessage());
-//        }
+        try
+        {
+            DbConnection.closeConnection();            
+            System.out.println("Db forbindelse lukket.");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Database connection was not closed: " + e.getMessage());
+        }
     }
     
     @Before
@@ -57,7 +59,7 @@ public class CalculatorRuleJUnitTest
         try
         {
             connection = DbConnection.getConnection(); 
-            System.out.println("Db åbnet");
+            System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)
         {
@@ -69,18 +71,44 @@ public class CalculatorRuleJUnitTest
     public void tearDown()
     {
     }
-
+    
     @Test
-    public void CalculateRem() throws FogException
+    public void TestCalculator() throws FogException
     {
-        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
+        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();        
         ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
-        forespoergsel.setLaengde(1501);
-        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
-        
-        RemCalculatorRule calc = new RemCalculatorRule();
-        stykliste = calc.calculate(forespoergsel, materialer, stykliste);
-        
-        assertTrue(stykliste != null);
+        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
+        forespoergsel.setHaeldning(0);
+        forespoergsel.setLaengde(1000);
+        List<StyklisteItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
+        assertTrue(stykliste.size() > 0);
     }
+    
+//    @Test
+//    public void CalculateStolper() throws FogException
+//    {
+//        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
+//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde()); // skur og carport lige brede.
+//        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
+//        
+//        StolpeCalculatorRule calc = new StolpeCalculatorRule();
+//        calc.calculate(forespoergsel, materialer, stykliste);
+//        
+//        assertTrue(stykliste.size() == 1);
+//    }
+//    
+//    @Test
+//    public void CalculateRem() throws FogException
+//    {
+//        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
+//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        forespoergsel.setLaengde(1501);
+//        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
+//        
+//        RemCalculatorRule calc = new RemCalculatorRule();
+//        calc.calculate(forespoergsel, materialer, stykliste);
+//        
+//        assertTrue(stykliste.size() == 1);
+//    }
 }
