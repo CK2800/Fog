@@ -78,7 +78,7 @@ public class CalculatorRuleJUnitTest
         List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();        
         ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
         forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
-        forespoergsel.setHaeldning(0);
+        //forespoergsel.setHaeldning(0); fladt tag.
         forespoergsel.setLaengde(1000);
         List<StyklisteItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
         assertTrue(stykliste.size() > 0);

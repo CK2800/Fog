@@ -6,7 +6,6 @@
 package jc.fog.logic.calculator;
 
 import java.util.List;
-import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
@@ -17,15 +16,15 @@ import jc.fog.logic.StyklisteItem;
  *
  * @author Claus
  */
-public class StolpeCalculatorRule implements CalculatorRule
+public class StolpeCalculatorRule extends CalculatorRule
 {
 
     @Override
-    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> varer, List<StyklisteItem> stykliste) throws FogException
+    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {
         // Find materialet.
-        Stream<MaterialeDTO> materiale = varer.stream().filter(m -> m.getMaterialetypeDTO().getId() == 20);
-        MaterialeDTO stolpe = (MaterialeDTO)materiale.toArray()[0];
+        List<MaterialeDTO> stolper = filter(materialer, 20);        
+        MaterialeDTO stolpe = stolper.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;
         // Skal der bygges skur, kræves flere stolper.

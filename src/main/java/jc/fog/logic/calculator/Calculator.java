@@ -27,6 +27,8 @@ public class Calculator
         rules.add(new RemCalculatorRule());
         rules.add(new StolpeCalculatorRule());
         rules.add(new SpaerCalculatorRule());
+        rules.add(new SkurCalculatorRule());
+        rules.add(new TagLaegteCalculatorRule());
     }
     
     public static List<StyklisteItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
@@ -44,3 +46,4 @@ public class Calculator
 
         return stykliste;
     }
+}
