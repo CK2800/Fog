@@ -1,7 +1,7 @@
 -- hjælpetekster.
 INSERT INTO Hjaelpetekst(tekst) VALUES('Beklædning af skur 1 på 2');
 INSERT INTO Hjaelpetekst(tekst) VALUES('beklædning af gavle 1 på 2');
-INSERT INTO Hjaelpetekst(tekst) VALUES('byg-selv spær (skal samles) 8 stk.');
+INSERT INTO Hjaelpetekst(tekst) VALUES('byg-selv spær (skal samles) ? stk.');
 
 INSERT INTO Hjaelpetekst(tekst) VALUES('løsholter til skur gavle');
 INSERT INTO Hjaelpetekst(tekst) VALUES('løsholter til skur sider');
@@ -84,6 +84,7 @@ INSERT INTO Materialetype(type) VALUES('bræddebolt'); -- 20
 INSERT INTO Materialetype(type) VALUES('firkantskiver');
 INSERT INTO Materialetype(type) VALUES('bundskruer');
 INSERT INTO Materialetype(type) VALUES('hulbånd');
+INSERT INTO Materialetype(type) VALUES('byg-selv spær'); 
 
 
 -- trykimprægnerede brædder.
@@ -155,4 +156,5 @@ INSERT INTO Materiale(materialetypeId, navn, enhed) VALUES (21, '40x40x11 mm.', 
 INSERT INTO Materiale(materialetypeId, navn, enhed) VALUES (22, '200 stk Plastmo', 'pakke');
 -- hulbånd
 INSERT INTO Materiale(materialetypeId, navn, enhed) VALUES (23, '1x20 mm., 10 mtr', 'rulle');
-
+-- byg-selv spær
+INSERT INTO Materiale(materialetypeId, navn, enhed) VALUES (24, 'færdigskåret spær', 'sæt');

@@ -5,7 +5,11 @@
  */
 package jc.fog.logic.calculator;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
@@ -15,8 +19,43 @@ import jc.fog.logic.StyklisteItem;
  *
  * @author Claus
  */
-public interface CalculatorRule
+public abstract class CalculatorRule
 {
-    public List<StyklisteItem> calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> varer, List<StyklisteItem> stykliste) throws FogException;
-            
+    public abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException;            
+    
+    /**
+     * Filters a List<MaterialeDTO> collection on the type id.
+     * @param list
+     * @param typeId
+     * @return 
+     */
+    protected List<MaterialeDTO> filter(List<MaterialeDTO> list, int typeId)
+    {
+        Stream<MaterialeDTO> stream = list.stream().filter(m -> m.getMaterialetypeDTO().getId() == typeId);
+        List<MaterialeDTO> result = stream.collect(Collectors.toList());
+        return result;
+    }
+    
+    /**
+     * Sorts the List<MaterialeDTO> collection on laengde in descending order.
+     * @param list     
+     */
+    protected void sortLengthDesc(List<MaterialeDTO> list)
+    {
+        Collections.sort(list, Comparator.comparing(MaterialeDTO::getLaengde));
+        Collections.reverse(list);
+    }
+    
+    protected MaterialeDTO findShortest(List<MaterialeDTO> list, int count, int length)
+    {
+        MaterialeDTO materialeDTO = null;
+        for(MaterialeDTO m : list)
+        {
+            if (m.getLaengde() * count >= length)
+                materialeDTO = m;
+            else 
+                break;
+        }
+        return materialeDTO;
+    }
 }
