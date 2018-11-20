@@ -43,7 +43,7 @@ public class ShowMaterialeCommand extends Command {
         
         for(MaterialeDTO item : requests)
         {
-            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
+            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td><td>$6</td></tr>";
             row = row.replace("$1", String.valueOf(item.getId()));
             row = row.replace("$2", String.valueOf(item.getMaterialetypeDTO().getType()));
             row = row.replace("$3", String.valueOf(item.getNavn()));

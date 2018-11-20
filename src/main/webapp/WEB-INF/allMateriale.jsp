@@ -1,17 +1,20 @@
-<%-- 
-    Document   : AllMateriale
-    Created on : 19-11-2018, 23:19:00
-    Author     : Jespe
---%>
-
+<%
+    String title = "Alle materiale";
+    String tableView = (String)request.getAttribute("materialeTable");
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%= title %></title>
+        <jsp:include page="./bootstrap/csscdn.jsp"></jsp:include>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <h1><%= title %></h1>
+            <%= tableView %>
+        </div>
+        <jsp:include page="./bootstrap/jscdn.jsp"></jsp:include>
     </body>
 </html>
