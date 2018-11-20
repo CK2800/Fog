@@ -36,10 +36,10 @@ public class ShowSingleMaterialeCommand extends Command {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
-        stringBuilder.append("Navn:<br /><input type=\"text\" class=\"form-control\" name=\"id\" readonly value=\"").append(item.getNavn()).append("\" /><br />");
-        stringBuilder.append("Enhed:<br /><input type=\"text\" class=\"form-control\" name=\"id\" readonly value=\"").append(item.getEnhed()).append("\" /><br />");
-        stringBuilder.append("Materiale Type:<br /><input type=\"text\" class=\"form-control\" name=\"id\" readonly value=\"").append(item.getMaterialetypeDTO().getType()).append("\" /><br />");
-        stringBuilder.append("Længde:<br /><input type=\"text\" class=\"form-control\" name=\"id\" readonly value=\"").append(item.getLaengde()).append("\" /><br />");
+        stringBuilder.append("Navn:<br /><input type=\"text\" class=\"form-control\" name=\"navn\" value=\"").append(item.getNavn()).append("\" /><br />");
+        stringBuilder.append("Enhed:<br /><input type=\"text\" class=\"form-control\" name=\"enhed\" value=\"").append(item.getEnhed()).append("\" /><br />");
+        stringBuilder.append("Materiale Type:<br /><input type=\"text\" class=\"form-control\" name=\"materialeType\" value=\"").append(item.getMaterialetypeDTO().getType()).append("\" /><br />");
+        stringBuilder.append("Længde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
 
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
