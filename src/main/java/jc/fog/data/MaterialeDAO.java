@@ -104,45 +104,7 @@ public class MaterialeDAO
 //        }
 //        return null;
 //    }
-    
-    /**
-     * Den henter alt i databasen hvor alt sammen.
-     * @return Alle de "Materiale" der findes i db.
-     * @throws FogException 
-     */
-//    public static ArrayList<MaterialeDTO> getMaterialer() throws FogException
-//    {
-//        ArrayList<MaterialeDTO> materialer = new ArrayList<MaterialeDTO>();
-//        try
-//        {
-//            //laver connection
-//            connection = DbConnection.getConnection();
-//            
-//            //Forsøg at hente forespørgsel ud fra Sql'en
-//            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALER_SQL);
-//            
-//            try(ResultSet rs = pstm.executeQuery())
-//            {
-//                while(rs.next())//Løber alle igennem
-//                {
-//                    materialer.add(new MaterialeDTO(
-//                            rs.getInt("id"),
-//                            rs.getInt("materialetypeId"),
-//                            rs.getString("navn"),
-//                            rs.getInt("laengde"),
-//                            rs.getString("enhed"),
-//                            rs.getString("materialetype")
-//                    ));
-//                }
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            throw new FogException("Systemet kan ikke finde varer.", e.getMessage());
-//        }
-//        return materialer;
-//    }
-    
+        
     public static boolean createMateriale(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
     {
         //Den "space removed" i siderne

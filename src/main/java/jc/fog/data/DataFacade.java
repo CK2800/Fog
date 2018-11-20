@@ -41,5 +41,8 @@ public class DataFacade
         return MaterialeDAO.getMaterialer();
     }
     
-    // her skal der være nogle kald til materiale dao -> create metoder også. 
+    public static boolean createMateriale(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
+    {
+        return MaterialeDAO.createMateriale(materialeTypeId, navn, laengde, enhed);
+    }
 }
