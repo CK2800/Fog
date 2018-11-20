@@ -40,15 +40,15 @@ public class CalculatorRuleJUnitTest
     @AfterClass
     public static void tearDownClass()
     {
-        try
-        {
-            connection.close();
-            System.out.println("Db forbindelse lukket.");
-        }
-        catch(Exception e)
-        {
-            System.out.println("Database connection was not closed: " + e.getMessage());
-        }
+//        try
+//        {
+//            connection.close();
+//            System.out.println("Db forbindelse lukket.");
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println("Database connection was not closed: " + e.getMessage());
+//        }
     }
     
     @Before
@@ -56,7 +56,8 @@ public class CalculatorRuleJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection();         
+            connection = DbConnection.getConnection(); 
+            System.out.println("Db åbnet");
         }
         catch(Exception e)
         {
@@ -72,7 +73,7 @@ public class CalculatorRuleJUnitTest
     @Test
     public void CalculateRem() throws FogException
     {
-        List<MaterialeDTO> materialer = MaterialeDAO.materialerTilBeregning();
+        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
         ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
         forespoergsel.setLaengde(1501);
         List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();

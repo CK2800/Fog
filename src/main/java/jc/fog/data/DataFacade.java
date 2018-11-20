@@ -8,6 +8,7 @@ package jc.fog.data;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.MaterialeDTO;
 
 /**
  * Facade to expose subsystem methods to clients.
@@ -29,4 +30,16 @@ public class DataFacade
     {
         return ForesporgselDAO.getForesporgselSingle(id);
     }
+    
+    public static MaterialeDTO getMateriale(int id) throws FogException
+    {
+        return MaterialeDAO.getSingleMateriale(id);        
+    }
+    
+    public static List<MaterialeDTO> getMaterialer() throws FogException
+    {
+        return MaterialeDAO.getMaterialer();
+    }
+    
+    // her skal der være nogle kald til materiale dao -> create metoder også. 
 }

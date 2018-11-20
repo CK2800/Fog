@@ -37,15 +37,15 @@ public class ForespoergselDAOUnitTest
     @AfterClass
     public static void tearDownClass()
     {
-        try
-        {
-            connection.close();
-            System.out.println("Db forbindelse lukket.");
-        }
-        catch(Exception e)
-        {
-            System.out.println("Database connection was not closed: " + e.getMessage());
-        }
+//        try
+//        {
+//            connection.close();
+//            System.out.println("Db forbindelse lukket.");
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println("Database connection was not closed: " + e.getMessage());
+//        }
     }
     
     @Before
@@ -53,7 +53,8 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection();         
+            connection = DbConnection.getConnection(); 
+            System.out.println("Db åbnet");
         }
         catch(Exception e)
         {

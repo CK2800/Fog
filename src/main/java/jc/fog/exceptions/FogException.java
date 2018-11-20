@@ -17,6 +17,10 @@ public class FogException extends Exception
      * A detailed message for the developers.
      */
     private String detailedMessage;
+
+    public FogException(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public String getDetailedMessage(){ return detailedMessage; }
     
     /**

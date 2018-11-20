@@ -15,6 +15,8 @@ public final class Pages
     // private constructor to avoid instantiation.
     private Pages(){}
     public static final String INDEX = "index.jsp";
-    public static final String ALL_REQUESTS = "/WEB-INF/allforesporgsel.jsp";
-    public static final String SINGLE_REQUEST = "/WEB-INF/foresporgsel.jsp";
+    public static final String ALL_REQUESTS = "/WEB-INF/allForesporgsel.jsp";
+    public static final String SINGLE_REQUEST = "/WEB-INF/singleForesporgsel.jsp";
+    public static final String ALL_MATERIALE = "/WEB-INF/allMateriale.jsp";
+    public static final String SINGLE_MATERIALE = "/WEB-INF/singleMateriale.jsp";
 }
