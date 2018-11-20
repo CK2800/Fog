@@ -45,6 +45,8 @@ public class ShowSingleMaterialeCommand extends Command {
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form>");
         
+        stringBuilder.append("<a href=\"FrontController?command=showmateriale\">Tilbage..</a>");
+        
         return stringBuilder.toString();
     }
 }
