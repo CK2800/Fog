@@ -19,4 +19,5 @@ public final class Pages
     public static final String SINGLE_REQUEST = "/WEB-INF/singleForesporgsel.jsp";
     public static final String ALL_MATERIALE = "/WEB-INF/allMateriale.jsp";
     public static final String SINGLE_MATERIALE = "/WEB-INF/singleMateriale.jsp";
+    public static final String STYKLISTE = "/WEB-INF/stykliste.jsp";
 }

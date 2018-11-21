@@ -22,8 +22,8 @@ public class StolpeCalculatorRule extends CalculatorRule
     @Override
     public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {
-        // Find materialet.
-        List<MaterialeDTO> stolper = filter(materialer, 20);        
+        // Find materialet.       
+        List<MaterialeDTO> stolper = filter(materialer, 5);        
         MaterialeDTO stolpe = stolper.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;

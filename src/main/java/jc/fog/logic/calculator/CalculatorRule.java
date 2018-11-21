@@ -25,6 +25,10 @@ public abstract class CalculatorRule
     
     /**
      * Filters a List<MaterialeDTO> collection on the type id.
+    protected abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException;            
+    
+    /**
+     * Filters a List of MaterialeDTO on the type id.
      * @param list
      * @param typeId
      * @return 
@@ -38,6 +42,7 @@ public abstract class CalculatorRule
     
     /**
      * Sorts the List<MaterialeDTO> collection on laengde in descending order.
+     * Sorts the List of MaterialeDTO on laengde in descending order.
      * @param list     
      */
     protected void sortLengthDesc(List<MaterialeDTO> list)
