@@ -30,7 +30,7 @@ public class HeadCalculatorRule extends CalculatorRule
             MaterialeDTO materiale = spaerTraeList.get(0);
             
             // Remmen bærer taget, udhæng 30 cm i hver ende.
-            int remLength = forespoergsel.getLaengde() - 60;                        
+            int remLength = forespoergsel.getLaengde() - 2 * BusinessRules.OVERHANG;                        
             // Hvor mange stk. træ skal der min. bruges?
             int antal = (int)Math.ceil((float)remLength/materiale.getLaengde());            
             // Find korteste spærtræ med krævet længde.

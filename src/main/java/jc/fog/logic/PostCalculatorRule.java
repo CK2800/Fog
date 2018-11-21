@@ -9,7 +9,7 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.SkurDTO;
+import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -28,14 +28,14 @@ public class PostCalculatorRule extends CalculatorRule
         // en stolpe i hvert hjørne.
         int count = 4;
         // Skal der bygges skur, kræves flere stolper.
-        SkurDTO skur = forespoergsel.getSkurDTO();
+        ShedDTO skur = forespoergsel.getSkurDTO();
         if (skur != null)
         {            
             // Er skuret i fuld bredde?
             if (skur.getBredde() == forespoergsel.getBredde())
-                count += 3;
+                count += BusinessRules.POSTS_SHED_FULL_WIDTH;
             else
-                count += 4;                
+                count += BusinessRules.POSTS_SHED;                
         }
         
         stykliste.add(new BillItem(stolpe, count, "stolpetekst"));

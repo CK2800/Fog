@@ -32,7 +32,7 @@ public class BattensCalculatorRule extends CalculatorRule
         int halvCarportBredde = forespoergsel.getBredde()/2;
         int hypotenuse = (int)Math.ceil(halvCarportBredde / Math.cos(Math.toRadians(forespoergsel.getHaeldning())));
         // Business rule: ca. 30 cm ml. lægter.
-        int antalLaegteRaekker = (int)Math.floor(hypotenuse / 30F);
+        int antalLaegteRaekker = (int)Math.floor(hypotenuse / BusinessRules.BATTENS_SPACING);
         stykliste.add(new BillItem(materiale, count * antalLaegteRaekker * 2, "lægte tekst"));
         return 1;
     }    

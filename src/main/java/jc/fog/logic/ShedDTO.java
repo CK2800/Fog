@@ -9,7 +9,7 @@ package jc.fog.logic;
  *
  * @author Claus
  */
-public class SkurDTO
+public class ShedDTO
 {
     private int id;
     private int laengde;
@@ -25,7 +25,7 @@ public class SkurDTO
     public void setLaengde(int value) { laengde = value; }
     public void setBredde(int value) { bredde = value; }
     
-    public SkurDTO(int id, int laengde, int bredde)
+    public ShedDTO(int id, int laengde, int bredde)
     {
         this.id = id;
         this.laengde = laengde;

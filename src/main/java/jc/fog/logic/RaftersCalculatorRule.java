@@ -25,9 +25,9 @@ public class RaftersCalculatorRule extends CalculatorRule
         if (forespoergsel.getHaeldning() > 0) 
         {
             // udhæng er 30 cm i hver ende.
-            int tagLaengde = forespoergsel.getLaengde() - 60; // skal udhæng medregnes her? 
+            int tagLaengde = forespoergsel.getLaengde() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
             // Spær placeres højst 0,89 m fra hinanden.
-            int antalSpaer = (int)Math.ceil(tagLaengde / 89F);
+            int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
             MaterialeDTO materiale = null;
             for(MaterialeDTO m : materialer)
             {
@@ -60,10 +60,10 @@ public class RaftersCalculatorRule extends CalculatorRule
             // Find korteste spærtræ med krævet længde.            
             materiale = findShortest(spaerTraeList, antalBraedder, spaerBredde);
                         
-            // spær skal dække fuld taglængde minus 10 cm.
-            int tagLaengde = forespoergsel.getLaengde() - 10;
+            
+            int tagLaengde = forespoergsel.getLaengde();
             // Spær placeres højst 0,55 cm fra hinanden.
-            int antalSpaer = (int)Math.ceil(tagLaengde / 55F);                        
+            int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING);                        
             
             stykliste.add(new BillItem(materiale, antalSpaer*antalBraedder, "spær fladt tag"));
             
