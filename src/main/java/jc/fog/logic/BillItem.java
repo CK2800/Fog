@@ -11,7 +11,7 @@ import java.util.List;
  * A pure fabrication of a collection of data comprising a line in the bill of goods.
  * @author Claus
  */
-public class StyklisteItem
+public class BillItem
 {
     private MaterialeDTO materiale;
     private int count;
@@ -21,7 +21,7 @@ public class StyklisteItem
     public int getCount(){return count;}
     public String getHjaelpetekst(){return hjaelpetekst;}
     
-    public StyklisteItem(MaterialeDTO materiale, int count, String hjaelpetekst)
+    public BillItem(MaterialeDTO materiale, int count, String hjaelpetekst)
     {
         this.materiale = materiale;
         this.count = count;

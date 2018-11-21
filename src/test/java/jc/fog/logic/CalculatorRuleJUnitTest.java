@@ -77,7 +77,7 @@ public class CalculatorRuleJUnitTest
         forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
         //forespoergsel.setHaeldning(0); fladt tag.
         forespoergsel.setLaengde(1000);
-        List<StyklisteItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
+        List<BillItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
         assertTrue(stykliste.size() > 0);
     }
     

@@ -9,16 +9,16 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
- *
+ * Udvidelse af CalculatorRule for udregning af rem.
  * @author Claus
  */
-public class RemCalculatorRule extends CalculatorRule
+public class HeadCalculatorRule extends CalculatorRule
 {    
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         try
         {
@@ -36,7 +36,7 @@ public class RemCalculatorRule extends CalculatorRule
             // Find korteste spærtræ med krævet længde.
             materiale = findShortest(spaerTraeList, antal, remLength);
                         
-            stykliste.add(new StyklisteItem(materiale, antal, "spær instruks"));
+            stykliste.add(new BillItem(materiale, antal, "spær instruks"));
             // 1 nyt item på styklisten.
             return 1;            
         }        

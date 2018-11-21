@@ -10,7 +10,7 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
  *
@@ -24,19 +24,19 @@ public class Calculator
     {
         rules = new ArrayList<CalculatorRule>();
         
-        rules.add(new RemCalculatorRule());
-        rules.add(new StolpeCalculatorRule());
-        rules.add(new SpaerCalculatorRule());
-        rules.add(new SkurCalculatorRule());
-        rules.add(new TagLaegteCalculatorRule());
+        rules.add(new HeadCalculatorRule());
+        rules.add(new PostCalculatorRule());
+        rules.add(new RaftersCalculatorRule());
+        rules.add(new ShedCalculatorRule());
+        rules.add(new BattensCalculatorRule());
     }
     
-    protected static List<StyklisteItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
+    protected static List<BillItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
     {
         if (rules == null)
             initializeRules();
         
-        ArrayList<StyklisteItem> stykliste = new ArrayList<>();
+        ArrayList<BillItem> stykliste = new ArrayList<>();
         
         
         for(CalculatorRule rule : rules)

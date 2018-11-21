@@ -14,7 +14,7 @@ import jc.fog.exceptions.FogException;
  */
 public class LogicFacade
 {
-    public static List<StyklisteItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
+    public static List<BillItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
     {
         return Calculator.beregnStykliste(forespoergsel, materialer);
     }

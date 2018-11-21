@@ -9,17 +9,17 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
- *
+ * Udvidelse af CalculatorRule for udregning af spær.
  * @author Claus
  */
-public class SpaerCalculatorRule extends CalculatorRule
+public class RaftersCalculatorRule extends CalculatorRule
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // er taget med rejsning?
         if (forespoergsel.getHaeldning() > 0) 
@@ -39,7 +39,7 @@ public class SpaerCalculatorRule extends CalculatorRule
             }
             if (materiale != null)
             {
-                stykliste.add(new StyklisteItem(materiale, antalSpaer, "byg selv spær"));
+                stykliste.add(new BillItem(materiale, antalSpaer, "byg selv spær"));
                 // 1 nyt item i stykliste.
                 return 1;
             }
@@ -65,7 +65,7 @@ public class SpaerCalculatorRule extends CalculatorRule
             // Spær placeres højst 0,55 cm fra hinanden.
             int antalSpaer = (int)Math.ceil(tagLaengde / 55F);                        
             
-            stykliste.add(new StyklisteItem(materiale, antalSpaer*antalBraedder, "spær fladt tag"));
+            stykliste.add(new BillItem(materiale, antalSpaer*antalBraedder, "spær fladt tag"));
             
             // Et item tilføjet stykliste.
             return 1;            

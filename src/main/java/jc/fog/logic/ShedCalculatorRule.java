@@ -10,17 +10,17 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.SkurDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
- *
+ * Udvidelse af CalculatorRule for udregning af skurets beklædning.
  * @author Claus
  */
-public class SkurCalculatorRule extends CalculatorRule
+public class ShedCalculatorRule extends CalculatorRule
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {        
         SkurDTO skur = forespoergsel.getSkurDTO();
         if (skur != null)
@@ -37,7 +37,7 @@ public class SkurCalculatorRule extends CalculatorRule
             // antal brædder i skurets bredde med overlap på 1 cm i hver side.
             int breddeAntal = (int)Math.ceil(bredde / 16.0) * 2;
             
-            stykliste.add(new StyklisteItem(materiale, laengdeAntal + breddeAntal, "skur brædder 1 på 2"));
+            stykliste.add(new BillItem(materiale, laengdeAntal + breddeAntal, "skur brædder 1 på 2"));
             return 1; // 1 nyt item på styklisten.
         }
         else 

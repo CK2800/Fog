@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
  *
@@ -21,7 +21,7 @@ import jc.fog.logic.StyklisteItem;
  */
 public abstract class CalculatorRule
 {
-    protected abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException;            
+    protected abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException;            
     
     /**
      * Filters a List of MaterialeDTO on the type id.

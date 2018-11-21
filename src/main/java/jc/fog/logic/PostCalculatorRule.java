@@ -10,17 +10,17 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.SkurDTO;
-import jc.fog.logic.StyklisteItem;
+import jc.fog.logic.BillItem;
 
 /**
- *
+ * Udvidelse af CalculatorRule for udregning af stolper.
  * @author Claus
  */
-public class StolpeCalculatorRule extends CalculatorRule
+public class PostCalculatorRule extends CalculatorRule
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // Find materialet.
         List<MaterialeDTO> stolper = filter(materialer, 5);        
@@ -38,7 +38,7 @@ public class StolpeCalculatorRule extends CalculatorRule
                 count += 4;                
         }
         
-        stykliste.add(new StyklisteItem(stolpe, count, "stolpetekst"));
+        stykliste.add(new BillItem(stolpe, count, "stolpetekst"));
         
         // 1 nyt item på styklisten.
         return 1;        
