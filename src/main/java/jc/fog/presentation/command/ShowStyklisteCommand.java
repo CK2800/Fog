@@ -14,6 +14,7 @@ import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.LogicFacade;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.StyklisteItem;
+import jc.fog.presentation.constants.Commands;
 import jc.fog.presentation.constants.Pages;
 
 /**
@@ -48,6 +49,7 @@ public class ShowStyklisteCommand extends Command
     private String styklisteToHtml(List<StyklisteItem> stykliste)
     {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");
@@ -68,6 +70,8 @@ public class ShowStyklisteCommand extends Command
             //row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }
+        
+       
         
         return table.replace("$body", stringBuilder.toString());
     }

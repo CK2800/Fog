@@ -13,7 +13,6 @@
     <body>
         <div class="container">
         <h1>Indhold her.</h1>
-        <a href="FrontController?command=showrequests" class="btn btn-secondary">Tilbage</a>
         <%= requestForm %>
         </div>
         <jsp:include page="./bootstrap/jscdn.jsp"></jsp:include>
