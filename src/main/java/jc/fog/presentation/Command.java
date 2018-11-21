@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation.command;
+package jc.fog.presentation;
 
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.exceptions.FogException;
-import jc.fog.presentation.constants.Commands;
 
 /**
  * Command class to be extended into specific commands accepted by the front controller.

@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.exceptions.FogException;
-import jc.fog.presentation.command.Command;
-import jc.fog.presentation.constants.Fields;
-import jc.fog.presentation.constants.Pages;
 
 /**
  *

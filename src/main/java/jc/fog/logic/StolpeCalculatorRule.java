@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic.calculator;
+package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -20,7 +20,7 @@ public class StolpeCalculatorRule extends CalculatorRule
 {
 
     @Override
-    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {
         // Find materialet.
         List<MaterialeDTO> stolper = filter(materialer, 5);        

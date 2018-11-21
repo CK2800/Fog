@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation.constants;
+package jc.fog.presentation;
 
 /**
  * Non-extendable class with String constants for pages in web application.  

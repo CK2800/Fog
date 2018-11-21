@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation.command;
+package jc.fog.presentation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
-import jc.fog.presentation.constants.Pages;
 
 /**
  * Use this command to show a page with the details

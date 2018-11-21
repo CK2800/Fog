@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation.command;
+package jc.fog.presentation;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,6 @@ import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.LogicFacade;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.StyklisteItem;
-import jc.fog.presentation.constants.Pages;
 
 /**
  * Use this Command to display the bill of materials of a carport request.

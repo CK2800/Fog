@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic.calculator;
+package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -19,14 +19,14 @@ public class SpaerCalculatorRule extends CalculatorRule
 {
 
     @Override
-    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {
         // er taget med rejsning?
         if (forespoergsel.getHaeldning() > 0) 
         {
             // udhæng er 30 cm i hver ende.
-            int tagLaengde = forespoergsel.getLaengde() - 60;
-            // Spær placeres højst 0,89 cm fra hinanden.
+            int tagLaengde = forespoergsel.getLaengde() - 60; // skal udhæng medregnes her? 
+            // Spær placeres højst 0,89 m fra hinanden.
             int antalSpaer = (int)Math.ceil(tagLaengde / 89F);
             MaterialeDTO materiale = null;
             for(MaterialeDTO m : materialer)

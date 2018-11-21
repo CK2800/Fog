@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic.calculator;
+package jc.fog.logic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Calculator
         rules.add(new TagLaegteCalculatorRule());
     }
     
-    public static List<StyklisteItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
+    protected static List<StyklisteItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
     {
         if (rules == null)
             initializeRules();

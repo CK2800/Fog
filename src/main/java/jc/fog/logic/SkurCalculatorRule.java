@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic.calculator;
+package jc.fog.logic;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
@@ -24,7 +20,7 @@ public class SkurCalculatorRule extends CalculatorRule
 {
 
     @Override
-    public int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
+    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<StyklisteItem> stykliste) throws FogException
     {        
         SkurDTO skur = forespoergsel.getSkurDTO();
         if (skur != null)

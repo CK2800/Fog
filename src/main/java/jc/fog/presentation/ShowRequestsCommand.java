@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation.command;
+package jc.fog.presentation;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
-import jc.fog.presentation.constants.Pages;
 
 /**
  * This command is used to retrieve all carport requests in the database 
