@@ -13,10 +13,10 @@ import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
 
 /**
- * Udvidelse af CalculatorRule for udregning af stolper.
+ * Udvidelse af RuleCalculator for udregning af stolper.
  * @author Claus
  */
-public class PostCalculatorRule extends CalculatorRule
+public class RuleCalculatorPost extends RuleCalculator
 {
 
     @Override

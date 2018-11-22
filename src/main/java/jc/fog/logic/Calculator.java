@@ -18,17 +18,17 @@ import jc.fog.logic.BillItem;
  */
 public class Calculator
 {
-    private static ArrayList<CalculatorRule> rules;
+    private static ArrayList<RuleCalculator> rules;
     
     private static void initializeRules()
     {
-        rules = new ArrayList<CalculatorRule>();
+        rules = new ArrayList<RuleCalculator>();
         
-        rules.add(new HeadCalculatorRule());
-        rules.add(new PostCalculatorRule());
-        rules.add(new RaftersCalculatorRule());
-        rules.add(new ShedCalculatorRule());
-        rules.add(new BattensCalculatorRule());
+        rules.add(new RuleCalculatorHead());
+        rules.add(new RuleCalculatorPost());
+        rules.add(new RuleCalculatorRafters());
+        rules.add(new RuleCalculatorShed());
+        rules.add(new RuleCalculatorBattens());
     }
     
     protected static List<BillItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
@@ -39,7 +39,7 @@ public class Calculator
         ArrayList<BillItem> stykliste = new ArrayList<>();
         
         
-        for(CalculatorRule rule : rules)
+        for(RuleCalculator rule : rules)
         {
             rule.calculate(forespoergsel, materialer, stykliste);
         }

@@ -12,10 +12,10 @@ import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
 
 /**
- * Udvidelse af CalculatorRule for udregning af rem.
+ * Udvidelse af RuleCalculator for udregning af rem.
  * @author Claus
  */
-public class HeadCalculatorRule extends CalculatorRule
+public class RuleCalculatorHead extends RuleCalculator
 {    
     @Override
     protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException

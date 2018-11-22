@@ -12,10 +12,10 @@ import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
 
 /**
- * Udvidelse af CalculatorRule for udregning af spær.
+ * Udvidelse af RuleCalculator for udregning af spær.
  * @author Claus
  */
-public class RaftersCalculatorRule extends CalculatorRule
+public class RuleCalculatorRafters extends RuleCalculator
 {
 
     @Override

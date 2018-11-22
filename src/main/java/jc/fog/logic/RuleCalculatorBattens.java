@@ -12,10 +12,10 @@ import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
 
 /**
- * Udvidelse af CalculatorRule for udregning af lægter.
+ * Udvidelse af RuleCalculator for udregning af lægter.
  * @author Claus
  */
-public class BattensCalculatorRule extends CalculatorRule
+public class RuleCalculatorBattens extends RuleCalculator
 {
 
     @Override

@@ -29,8 +29,7 @@ public class ForesporgselDTO {
         this.bredde = bredde;
         this.hoejde = hoejde;
         this.laengde = laengde;
-    }
-    
+    } 
     
     
     

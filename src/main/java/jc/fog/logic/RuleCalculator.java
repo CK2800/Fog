@@ -19,7 +19,7 @@ import jc.fog.logic.BillItem;
  *
  * @author Claus
  */
-public abstract class CalculatorRule
+public abstract class RuleCalculator
 {
     protected abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException;            
     

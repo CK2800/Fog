@@ -17,13 +17,20 @@ public class ForesporgselDAO {
     
     private static Connection connection;
     
-    final static String GET_SINGLE_FORESPORGSEL_SQL = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
+    final static String GET_CPREQUEST_SQL = "SELECT f.id, f.vareId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
                                            + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
                                            + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id WHERE f.id = ?";
-    final static String GET_ALL_FORESPORGSEL_SQL = "SELECT * FROM Forespoergsel";
-    final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
-
+    final static String GET_CPREQUESTS_SQL = "SELECT * FROM Forespoergsel";
+    
+    final static String CREATE_CPREQUEST_SQL = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
+    
+    final static String CREATE_SHED_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
+    
+    // Hvad laver denne forespørgsel Get ELLER create ??
+    //final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(vareId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    // Det her navn er da helt i skoven... Henter den eller opretter den og er det skur eller forespørgsel?
+    // final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
+    
     /**
      * Den skal hente den enkelt forespørgsel.
      * @param getForesporgselId - Skal være angivet en værdi for, at kunne hente den enkelt.
@@ -34,7 +41,7 @@ public class ForesporgselDAO {
         ForesporgselDTO foresporgsel = null;
         try{
              connection = DbConnection.getConnection();
-             PreparedStatement pstm = connection.prepareStatement(GET_SINGLE_FORESPORGSEL_SQL);
+             PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL);
              pstm.setInt(1, getForesporgselId);
 
              //try with ressources.
@@ -81,7 +88,7 @@ public class ForesporgselDAO {
             //laver connection
             connection = DbConnection.getConnection();
             //Forsøg at hente forespørgsel ud fra Sql'en
-            PreparedStatement pstm = connection.prepareStatement(GET_ALL_FORESPORGSEL_SQL);
+            PreparedStatement pstm = connection.prepareStatement(GET_CPREQUESTS_SQL);
             
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())

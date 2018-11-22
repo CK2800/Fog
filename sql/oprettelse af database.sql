@@ -4,6 +4,8 @@ USE Fog;
 
 
 DROP TABLE IF EXISTS Forespoergsel;
+DROP TABLE IF EXISTS RooftypeMaterial;
+DROP TABLE IF EXISTS Rooftype;
 DROP TABLE IF EXISTS Skur;
 DROP TABLE IF EXISTS Kunde;
 DROP TABLE IF EXISTS Postnummer;
@@ -55,10 +57,36 @@ CREATE TABLE Skur(
     laengde int NOT NULL,
     bredde int NOT NULL
 );
+-- F.eks. rødt tegltag, sort tegltag, paptag, plasttag.
+CREATE TABLE Rooftype(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    `type` VARCHAR(50) NOT NULL
+);
+-- Info om hvilke materialer der indgår i en tagtype. F.eks. røde rygningssten og røde belægningssten til rødt tegltag. 
+CREATE TABLE RooftypeMaterial(
+	rooftypeId int,
+    materialId int,
+    materialTypeId int NOT NULL,
+    slope boolean,    
+    -- PRIMARY KEY(rooftypeId, materialTypeId), -- kombination af tagets type og materialets type sikrer, at der eks. kun er 1 belægningstype for hver tagtype. Duer ikke v. plasttag mv. pga flere dimensioner for samme materialetype.
+    PRIMARY KEY(rooftypeId, materialId), -- kun 
+    CONSTRAINT fk_RooftypeMaterial_Rooftype
+    FOREIGN KEY(rooftypeId)
+    REFERENCES Rooftype(id)
+    ON DELETE CASCADE, -- Hvis tagtype slettes, slettes information om tagtypens materialer også.
+    CONSTRAINT fk_RooftypeMaterial_Materialetype
+    FOREIGN KEY(materialTypeId)
+    REFERENCES Materialetype(id)
+    ON DELETE CASCADE, -- Hvis materialetypen slettes, skal information om tagtypens materiale også slettes.
+    CONSTRAINT fk_RooftypeMaterial_Materiale
+    FOREIGN KEY(materialId)
+    REFERENCES Materiale(id)
+    ON DELETE CASCADE -- Hvis materialet slettes, skal denne information også slettes.
+);
 
 CREATE TABLE Forespoergsel(
 	id int PRIMARY KEY AUTO_INCREMENT,
-    vareId int NOT NULL, -- id for tagbelægningen (i vare tabel)
+    roofTypeId int NOT NULL, -- id for tagtypen.
 	/*tagId int NOT NULL, -- carport har altid et tag.*/
     haeldning int NOT NULL default 0, -- hældning er 0 hvis intet andet angives.
 	skurId int, -- carport har ikke altid et skur.

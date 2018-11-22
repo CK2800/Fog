@@ -17,8 +17,7 @@ import jc.fog.exceptions.FogException;
  * @author Claus
  */
 public class DbConnection
-{
-    
+{    
     /**
     * Class of the database driver.
     */
@@ -66,5 +65,4 @@ public class DbConnection
             connection.close();
         connection = null;
     }
-
 }

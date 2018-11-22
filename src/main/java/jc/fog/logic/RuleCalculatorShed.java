@@ -13,10 +13,10 @@ import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
 
 /**
- * Udvidelse af CalculatorRule for udregning af skurets beklædning.
+ * Udvidelse af RuleCalculator for udregning af skurets beklædning.
  * @author Claus
  */
-public class ShedCalculatorRule extends CalculatorRule
+public class RuleCalculatorShed extends RuleCalculator
 {
 
     @Override

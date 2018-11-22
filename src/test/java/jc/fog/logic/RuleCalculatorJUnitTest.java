@@ -6,11 +6,10 @@
 package jc.fog.logic;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
+import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnection;
 import jc.fog.data.ForesporgselDAO;
-import jc.fog.data.MaterialeDAO;
 import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,11 +22,12 @@ import org.junit.Test;
  *
  * @author Claus
  */
-public class CalculatorRuleJUnitTest
+public class RuleCalculatorJUnitTest
 {
     static Connection connection = null;
+    static List<MaterialeDTO> materialer;
     
-    public CalculatorRuleJUnitTest()
+    public RuleCalculatorJUnitTest()
     {
     }
     
@@ -57,10 +57,15 @@ public class CalculatorRuleJUnitTest
         {
             connection = DbConnection.getConnection(); 
             System.out.println("Db forbindelse åbnet");
+            
+            if (materialer == null)
+                materialer = DataFacade.getMaterialer();
+            
+            
         }
         catch(Exception e)
         {
-            System.out.println("No database connection established: " + e.getMessage());
+            System.out.println("setUp not completed: " + e.getMessage());
         }
     }
     
@@ -72,7 +77,7 @@ public class CalculatorRuleJUnitTest
     @Test
     public void TestCalculator() throws FogException
     {
-        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();        
+        
         ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
         forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
         //forespoergsel.setHaeldning(0); fladt tag.
@@ -80,6 +85,11 @@ public class CalculatorRuleJUnitTest
         List<BillItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
         assertTrue(stykliste.size() > 0);
     }
+    
+//    public void TestRuleCalculatorBattens() throws FogException
+//    {
+//        ForesporgselDTO forespoergsel = new ForesporgselDTO(0, 0, 0, 0)
+//    }
     
 //    @Test
 //    public void CalculateStolper() throws FogException
