@@ -21,28 +21,28 @@ public class DataFacade
      * Get all requests (forespørgsler).
      * @return List of ForesporgselDTO objects.
      */
-    public static List<ForesporgselDTO> getRequests() throws FogException
+    public static List<ForesporgselDTO> getCarPorts() throws FogException
     {
-        return ForesporgselDAO.getForesporgsel();
+        return CarPortDAO.getCarPorts();
     }
     
-    public static ForesporgselDTO getRequest(int id) throws FogException
+    public static ForesporgselDTO getCarPort(int id) throws FogException
     {
-        return ForesporgselDAO.getForesporgselSingle(id);
+        return CarPortDAO.getCarPortSingle(id);
     }
     
-    public static MaterialeDTO getMateriale(int id) throws FogException
+    public static MaterialeDTO getMaterial(int id) throws FogException
     {
-        return MaterialeDAO.getSingleMateriale(id);        
+        return MaterialDAO.getSingleMaterial(id);        
     }
     
-    public static List<MaterialeDTO> getMaterialer() throws FogException
+    public static List<MaterialeDTO> getMaterials() throws FogException
     {
-        return MaterialeDAO.getMaterialer();
+        return MaterialDAO.getMaterials();
     }
     
-    public static boolean createMateriale(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
+    public static boolean createMaterial(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
     {
-        return MaterialeDAO.createMateriale(materialeTypeId, navn, laengde, enhed);
+        return MaterialDAO.createMaterial(materialeTypeId, navn, laengde, enhed);
     }
 }

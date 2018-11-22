@@ -23,13 +23,6 @@ public class ForesporgselDTO {
         if (skurId != 0)
             this.skurDTO = new SkurDTO(skurId, skurLaengde, skurBredde);
     }
-
-    public ForesporgselDTO(int Id, int bredde, int hoejde, int laengde) {
-        this.Id = Id;
-        this.bredde = bredde;
-        this.hoejde = hoejde;
-        this.laengde = laengde;
-    }
     
     
     

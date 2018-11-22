@@ -5,12 +5,16 @@
  */
 package jc.fog.presentation.command;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.Rectangle;
+import jc.fog.presentation.Drawing;
 import jc.fog.presentation.constants.Pages;
 
 /**
@@ -25,10 +29,13 @@ public class ShowSingleMaterialeCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         int getId = Integer.parseInt(request.getParameter("id"));
-        MaterialeDTO materialeDTO = DataFacade.getMateriale(getId);
+        MaterialeDTO materialeDTO = DataFacade.getMaterial(getId);
         request.setAttribute("materialeForm", requestToForm(materialeDTO));
         
-        return Pages.SINGLE_MATERIALE;
+        
+        //request.setAttribute("", Drawing.drawSvg(rectangles, 200, 500));
+        
+        return Pages.SINGLE_MATERIAL;
     }
     
     private String requestToForm(MaterialeDTO item)
@@ -49,4 +56,6 @@ public class ShowSingleMaterialeCommand extends Command {
         
         return stringBuilder.toString();
     }
+    
+    
 }

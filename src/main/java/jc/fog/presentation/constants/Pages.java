@@ -15,9 +15,9 @@ public final class Pages
     // private constructor to avoid instantiation.
     private Pages(){}
     public static final String INDEX = "index.jsp";
-    public static final String ALL_REQUESTS = "/WEB-INF/allCarports.jsp";
-    public static final String SINGLE_REQUEST = "/WEB-INF/singleCarPort.jsp";
-    public static final String ALL_MATERIALE = "/WEB-INF/allMaterials.jsp";
-    public static final String SINGLE_MATERIALE = "/WEB-INF/singleMaterial.jsp";
-    public static final String STYKLISTE = "/WEB-INF/stykliste.jsp"; // <---- Hvad skal vi kalde den?
+    public static final String ALL_CARPORTS = "/WEB-INF/allCarports.jsp";
+    public static final String SINGLE_CARPORT = "/WEB-INF/singleCarPort.jsp";
+    public static final String ALL_MATERIALS = "/WEB-INF/allMaterials.jsp";
+    public static final String SINGLE_MATERIAL = "/WEB-INF/singleMaterial.jsp";
+    public static final String BILL = "/WEB-INF/bill.jsp";
 }

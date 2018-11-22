@@ -9,8 +9,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.data.DbConnection;
-import jc.fog.data.ForesporgselDAO;
-import jc.fog.data.MaterialeDAO;
+import jc.fog.data.CarPortDAO;
+import jc.fog.data.MaterialDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.calculator.Calculator;
 import jc.fog.logic.calculator.RemCalculatorRule;
@@ -75,8 +75,8 @@ public class CalculatorRuleJUnitTest
     @Test
     public void TestCalculator() throws FogException
     {
-        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();        
-        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+        List<MaterialeDTO> materialer = MaterialDAO.getMaterials();        
+        ForesporgselDTO forespoergsel = CarPortDAO.getForesporgselSingle(1);
         forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
         //forespoergsel.setHaeldning(0); fladt tag.
         forespoergsel.setLaengde(1000);

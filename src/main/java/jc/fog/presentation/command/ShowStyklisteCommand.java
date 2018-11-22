@@ -31,9 +31,9 @@ public class ShowStyklisteCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        ForesporgselDTO foresporgselDTO = DataFacade.getRequest(id);
+        ForesporgselDTO foresporgselDTO = DataFacade.getCarPort(id);
         // get materials.
-        List<MaterialeDTO> materialer = DataFacade.getMaterialer();
+        List<MaterialeDTO> materialer = DataFacade.getMaterials();
         // Calculate the bill of materials.
         List<StyklisteItem> stykliste = LogicFacade.beregnStykliste(foresporgselDTO, materialer);
         // Calculate string with carport dimensions.
@@ -43,7 +43,7 @@ public class ShowStyklisteCommand extends Command
         request.setAttribute("stykliste", styklisteToHtml(stykliste));
         request.setAttribute("carportDimensioner", carportDimensioner);
         
-        return Pages.STYKLISTE;
+        return Pages.BILL;
     }
     
     private String styklisteToHtml(List<StyklisteItem> stykliste)

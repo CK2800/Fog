@@ -28,13 +28,13 @@ public class ShowSingleRequestCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        ForesporgselDTO foresporgselDTO = DataFacade.getRequest(id);
+        ForesporgselDTO foresporgselDTO = DataFacade.getCarPort(id);
         // Create HTML form with request's data and set it on http request.
         request.setAttribute("requestForm", requestToForm(foresporgselDTO));
         request.setAttribute("ForesporgselDTO", foresporgselDTO);
         
         // return the page.
-        return Pages.SINGLE_REQUEST;
+        return Pages.SINGLE_CARPORT;
     }
     
     /**

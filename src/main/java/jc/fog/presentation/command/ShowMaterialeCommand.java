@@ -23,10 +23,10 @@ public class ShowMaterialeCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        List<MaterialeDTO> getListMateriale = DataFacade.getMaterialer();
+        List<MaterialeDTO> getListMateriale = DataFacade.getMaterials();
         request.setAttribute("materialeTable", requestsToHtml(getListMateriale));
         
-        return Pages.ALL_MATERIALE;
+        return Pages.ALL_MATERIALS;
     }
     
     private String requestsToHtml(List<MaterialeDTO> requests)

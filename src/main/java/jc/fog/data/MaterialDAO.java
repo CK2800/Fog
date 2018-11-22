@@ -19,13 +19,13 @@ import jc.fog.logic.MaterialeDTO;
  *
  * @author Claus
  */
-public class MaterialeDAO
+public class MaterialDAO
 {
     private static Connection connection;
     /**
      * Sql som henter alle de materialer i varetabellen der har dimensioner.
      * Således skelnes mellem materialer der indgår i carport beregningen og øvrige materialer.
- Sortering sker på Vare.id ASC, Dimensioner.laengde ASC.
+     * Sortering sker på Vare.id ASC, Dimensioner.laengde ASC.
      */
     public static final String GET_VARER_TIL_BEREGNING_SQL = "SELECT v.id, v.varetypeId, v.navn, v.hjaelpetekst, v.pris, " + 
                                                             "d.laengde, d.id AS dimensionId, vt.type " +
@@ -33,17 +33,23 @@ public class MaterialeDAO
                                                             "INNER JOIN VareDimensioner vd ON v.id = vd.vareId " +
                                                             "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
                                                             "ORDER BY v.id ASC, laengde ASC;";
-    
 
-    public static final String GET_MATERIALER_SQL = "SELECT m.id, materialetypeId, m.navn, mt.type, laengde, enhed " +
+    //det er for, at fremvise de enkelt værdier.
+    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialetypeId, m.navn, mt.type, laengde, enhed " +
                                                                  "FROM Materiale m INNER JOIN Materialetype mt ON m.materialetypeId = mt.id";
-        
+    
+    //Det er til, at opret i databasen.
     public static final String GET_CREATE_MATERIALE_SQL = "INSERT INTO Materiale(materialeTypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
     
-    public static final String GET_MATERIALE_SQL = GET_MATERIALER_SQL + " WHERE m.id = ?";
+    //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
+    public static final String GET_MATERIAL_SQL = GET_MATERIALS_SQL + " WHERE m.id = ?";
 
-    
-    public static List<MaterialeDTO> getMaterialer() throws FogException
+    /**
+     * Skal træk alt fra databasen ud i listen så det giver bruger/FOG mulighed for, at se materialer.
+     * @return
+     * @throws FogException 
+     */
+    public static List<MaterialeDTO> getMaterials() throws FogException
     {
         /*
         Pseudo:
@@ -54,18 +60,19 @@ public class MaterialeDAO
         try
         {
             connection = DbConnection.getConnection();
-            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALER_SQL);
-            ArrayList<MaterialeDTO> materialer = new ArrayList<MaterialeDTO>();
-            MaterialeDTO vareDTO = null;
+            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
+            ArrayList<MaterialeDTO> materials = new ArrayList<MaterialeDTO>();
+            MaterialeDTO vareDTO = null;//Skal vi ikke bare slet det her?
+            
             // try with ressources
             try(ResultSet rs = pstm.executeQuery())
             {
                 while(rs.next())
                 {                    
-                    materialer.add(mapMateriale(rs));
+                    materials.add(mapMaterial(rs));
                 }                
             }
-            return materialer;
+            return materials;
         }
         catch(Exception e)
         {
@@ -79,7 +86,7 @@ public class MaterialeDAO
      * @return MaterialeDTO
      * @throws SQLException 
      */
-    private static MaterialeDTO mapMateriale(ResultSet rs) throws SQLException
+    private static MaterialeDTO mapMaterial(ResultSet rs) throws SQLException
     {        
         return new MaterialeDTO
         (
@@ -92,24 +99,20 @@ public class MaterialeDAO
         );
     }
     
-//    public static VareDTO getAllProducts() throws FogException
-//    {
-//        try
-//        {
-//                        
-//        }
-//        catch(Exception e)
-//        {
-//            throw new FogException("Fik desværre lavet fejl ved at hente alle vare. - ", e.getMessage());
-//        }
-//        return null;
-//    }
-        
-    public static boolean createMateriale(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
+    /**
+     * Skal opret Materiale med navn, længde, enhed og hvilke materialType man har valgt.
+     * @param materialTypeId
+     * @param name
+     * @param length
+     * @param unit
+     * @return - Skal bare fortælle om man har opret eller ej?
+     * @throws FogException 
+     */
+    public static boolean createMaterial(int materialTypeId, String name, int length, String unit) throws FogException
     {
         //Den "space removed" i siderne
-        navn = navn.trim();
-        enhed = enhed.trim();
+        name = name.trim();
+        unit = unit.trim();
         
         try
         {
@@ -118,11 +121,10 @@ public class MaterialeDAO
             
             //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(GET_CREATE_MATERIALE_SQL, Statement.RETURN_GENERATED_KEYS);
-            
-            pstm.setInt(1, materialeTypeId);
-            pstm.setString(2, navn);
-            pstm.setInt(3, laengde);
-            pstm.setString(4, enhed);
+            pstm.setInt(1, materialTypeId);
+            pstm.setString(2, name);
+            pstm.setInt(3, length);
+            pstm.setString(4, unit);
             
             return pstm.executeUpdate() == 1;
         }
@@ -132,21 +134,28 @@ public class MaterialeDAO
         }
     }
     
-    public static MaterialeDTO getSingleMateriale(int getMaterialeId) throws FogException
+    
+    /**
+     * Skal hente dens angivet indhold ud fra det som passer med getMaterialId.
+     * @param getMaterialId
+     * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
+     * @throws FogException 
+     */
+    public static MaterialeDTO getSingleMaterial(int getMaterialId) throws FogException
     {
         MaterialeDTO materiale = null;
         try
         {
             connection = DbConnection.getConnection();
-            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALE_SQL);
-            pstm.setInt(1, getMaterialeId);
+            PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);
+            pstm.setInt(1, getMaterialId);
 
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())
             {
                 if(rs.next())
                 {
-                    materiale = mapMateriale(rs);                                        
+                    materiale = mapMaterial(rs);                                        
                 }
             }
         }
