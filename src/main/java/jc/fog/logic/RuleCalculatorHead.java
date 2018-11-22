@@ -22,8 +22,8 @@ public class RuleCalculatorHead extends RuleCalculator
     {
         try
         {
-            // Remmen laves af spærtræ som har varetypeid 4
-            List<MaterialeDTO> spaerTraeList = filter(materialer, 4);
+            // Remmen laves af spærtræ, varetypeid står i business rules.
+            List<MaterialeDTO> spaerTraeList = filter(materialer, BusinessRules.HEAD_TYPE_ID);
             // Sorter på laengde, faldende.
             sortLengthDesc(spaerTraeList);
             // Hent længste træ.

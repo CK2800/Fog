@@ -20,8 +20,20 @@ public class BusinessRules
     protected static int PLANK_SPACING = 6;
     protected static int PLANK_WIDTH = 10; // bør hentes fra db.
     /**
-     * Byg selv spær har materiale type 23 i databasen.
+     * Materiale type id for stolper.
      */
-    protected static int PRE_FAB_RAFTERS_ID = 23;
+    protected static int POST_TYPE_ID = 5;
+    /**
+     * Materiale type id for spær træ.
+     */
+    protected static int HEAD_TYPE_ID = 4;
+    /**
+     * Materiale type id for byg selv spær.
+     */
+    protected static int PRE_FAB_RAFTERS_TYPE_ID = 23;
+    /**
+     * Materiale type id for lægter.
+     */
+    protected static int BATTENS_TYPE_ID = 6;
     
 }

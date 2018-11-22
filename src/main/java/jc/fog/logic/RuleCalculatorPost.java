@@ -23,7 +23,7 @@ public class RuleCalculatorPost extends RuleCalculator
     protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // Find materialet.       
-        List<MaterialeDTO> stolper = filter(materialer, 5);        
+        List<MaterialeDTO> stolper = filter(materialer, BusinessRules.POST_TYPE_ID);        
         MaterialeDTO stolpe = stolper.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;

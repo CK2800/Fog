@@ -31,7 +31,7 @@ public class RuleCalculatorRafters extends RuleCalculator
             MaterialeDTO materiale = null;
             for(MaterialeDTO m : materialer)
             {
-                if (m.getMaterialetypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_ID) // byg selv spær
+                if (m.getMaterialetypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_TYPE_ID) // byg selv spær
                 {
                     materiale = m;
                     break;

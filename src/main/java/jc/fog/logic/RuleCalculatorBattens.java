@@ -7,9 +7,6 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
-import jc.fog.logic.MaterialeDTO;
-import jc.fog.logic.BillItem;
 
 /**
  * Udvidelse af RuleCalculator for udregning af lægter.
@@ -22,7 +19,7 @@ public class RuleCalculatorBattens extends RuleCalculator
     protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // Find materialer - typen har id 7
-        List<MaterialeDTO> laegter = filter(materialer, 7);
+        List<MaterialeDTO> laegter = filter(materialer, BusinessRules.BATTENS_TYPE_ID);
         // Sorter 
         sortLengthDesc(laegter);
         int count = (int)Math.ceil((float)forespoergsel.getLaengde() / laegter.get(0).getLaengde());
