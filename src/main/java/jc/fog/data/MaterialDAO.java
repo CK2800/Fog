@@ -27,7 +27,7 @@ public class MaterialDAO
      * Således skelnes mellem materialer der indgår i carport beregningen og øvrige materialer.
      * Sortering sker på Vare.id ASC, Dimensioner.laengde ASC.
      */
-    public static final String GET_VARER_TIL_BEREGNING_SQL = "SELECT v.id, v.varetypeId, v.navn, v.hjaelpetekst, v.pris, " + 
+    public static final String GET_PRODUCT_TO_CALCULATION_SQL = "SELECT v.id, v.varetypeId, v.navn, v.hjaelpetekst, v.pris, " + 
                                                             "d.laengde, d.id AS dimensionId, vt.type " +
                                                             "FROM Vare v INNER JOIN Varetype vt ON v.varetypeId = vt.id " +
                                                             "INNER JOIN VareDimensioner vd ON v.id = vd.vareId " +
@@ -39,7 +39,7 @@ public class MaterialDAO
                                                                  "FROM Materiale m INNER JOIN Materialetype mt ON m.materialetypeId = mt.id";
     
     //Det er til, at opret i databasen.
-    public static final String GET_CREATE_MATERIALE_SQL = "INSERT INTO Materiale(materialeTypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
+    public static final String GET_CREATE_MATERIAL_SQL = "INSERT INTO Materiale(materialeTypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
     
     //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     public static final String GET_MATERIAL_SQL = GET_MATERIALS_SQL + " WHERE m.id = ?";
@@ -120,7 +120,7 @@ public class MaterialDAO
             connection = DbConnection.getConnection();
             
             //Forsøg at hente forespørgsel ud fra Sql'en
-            PreparedStatement pstm = connection.prepareStatement(GET_CREATE_MATERIALE_SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstm = connection.prepareStatement(GET_CREATE_MATERIAL_SQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, materialTypeId);
             pstm.setString(2, name);
             pstm.setInt(3, length);
