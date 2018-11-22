@@ -12,6 +12,10 @@ import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
 
+import jc.fog.presentation.Commands;
+import jc.fog.presentation.Pages;
+
+
 /**
  * This command is used to retrieve all carport requests in the database 
  * and show them on the webpage named all_requests.jsp.
@@ -26,13 +30,13 @@ public class ShowRequestsCommand extends Command
         // Later we will validate a logged in user
         
         // Get the list of requests.
-        List<ForesporgselDTO> requests = DataFacade.getRequests();
+        List<ForesporgselDTO> requests = DataFacade.getCarPorts();
         
         // Convert the requests to a nicely formattet HTML table and save on request.
         request.setAttribute("requestsTable", requestsToHtml(requests));
         
         // Return the page showing all requests.
-        return Pages.ALL_REQUESTS;
+        return Pages.ALL_CARPORTS;
     }
     
     /**
@@ -58,8 +62,10 @@ public class ShowRequestsCommand extends Command
             row = row.replace("$2", String.valueOf(item.getBredde()));
             row = row.replace("$3", String.valueOf(item.getHoejde()));
             row = row.replace("$4", String.valueOf(item.getLaengde()));
-            row = row.replace("$5", "<a href=\"FrontController?command=showsinglerequest&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
+            row = row.replace("$5", "<a href=\"FrontController?command=" + Commands.SHOWSINGLEREQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a> - "
+                    + "<a href=\"FrontController?command=" + Commands.STYKLISTE + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Styklist</a>");
             stringBuilder.append(row);
+            
         }
         
         return table.replace("$body", stringBuilder.toString());

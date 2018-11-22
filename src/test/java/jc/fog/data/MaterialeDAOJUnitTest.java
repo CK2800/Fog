@@ -76,18 +76,14 @@ public class MaterialeDAOJUnitTest
     @Test
     public void testCreateMateriale() throws FogException
     {
-        // Husk at bruge datafacaden.
-        //boolean succes = DataFacade.createMateriale(...)
-        boolean succes = MaterialeDAO.createMateriale(2, "5x5 mm", 6, "stk");
+        boolean succes = DataFacade.createMaterial(2, "5x5 mm", 6, "stk");
         assertTrue(succes);
     }
     
     @Test
     public void testGetSingleMateriale() throws FogException
     {
-        
-        // ikke nødvendig her: MaterialeDAO.createMateriale(1, "2x2 mm", 6, "stk");
-        MaterialeDTO request = DataFacade.getMateriale(1);
+        MaterialeDTO request = DataFacade.getMaterial(1);
         assertTrue(request != null);
     }
     
@@ -95,13 +91,9 @@ public class MaterialeDAOJUnitTest
     public void testGetAllMateriale() throws FogException
     {
         // Her hentes først alle materialer og så oprettes en ny - hvad er det?
-        List<MaterialeDTO> varer = MaterialeDAO.getMaterialer();
+        List<MaterialeDTO> varer = MaterialDAO.getMaterials();
         System.out.println("Antal varer fudnet: " + varer.size());
         assertTrue(varer.size() > 0);
-
-//        MaterialeDAO.createMateriale(1, "2x2 mm", 6, "stk");
-//        List<MaterialeDTO> request = DataFacade.getMaterialer();
-//        assertTrue(request.size() > 0);
 
     }
 }

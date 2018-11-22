@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.util.List;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnection;
-import jc.fog.data.ForesporgselDAO;
+
+import jc.fog.data.CarPortDAO;
+import jc.fog.data.MaterialDAO;
+
 import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -59,7 +62,7 @@ public class RuleCalculatorJUnitTest
             System.out.println("Db forbindelse åbnet");
             
             if (materialer == null)
-                materialer = DataFacade.getMaterialer();
+                materialer = DataFacade.getMaterials();
             
             
         }
@@ -77,8 +80,10 @@ public class RuleCalculatorJUnitTest
     @Test
     public void TestCalculator() throws FogException
     {
-        
-        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+
+        materialer = MaterialDAO.getMaterials();        
+        ForesporgselDTO forespoergsel = CarPortDAO.getCarportRequest(1);
+
         forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
         //forespoergsel.setHaeldning(0); fladt tag.
         forespoergsel.setLaengde(1000);

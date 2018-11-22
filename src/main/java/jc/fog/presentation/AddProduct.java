@@ -28,6 +28,6 @@ public class AddProduct extends Command
         
         
         // Return the page showing all requests.
-        return Pages.ALL_REQUESTS;
+        return Pages.ALL_CARPORTS;
     }
 }

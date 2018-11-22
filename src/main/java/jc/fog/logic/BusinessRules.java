@@ -19,6 +19,9 @@ public class BusinessRules
     protected static float RAFTER_SPACING = 55F;
     protected static int PLANK_SPACING = 6;
     protected static int PLANK_WIDTH = 10; // bør hentes fra db.
-    
+    /**
+     * Byg selv spær har materiale type 23 i databasen.
+     */
+    protected static int PRE_FAB_RAFTERS_ID = 23;
     
 }

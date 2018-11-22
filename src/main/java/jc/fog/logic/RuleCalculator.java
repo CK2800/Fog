@@ -21,6 +21,7 @@ import jc.fog.logic.BillItem;
  */
 public abstract class RuleCalculator
 {
+
     protected abstract int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException;            
     
     /**
@@ -37,6 +38,7 @@ public abstract class RuleCalculator
     }
     
     /**
+     * Sorts the List<MaterialeDTO> collection on laengde in descending order.
      * Sorts the List of MaterialeDTO on laengde in descending order.
      * @param list     
      */

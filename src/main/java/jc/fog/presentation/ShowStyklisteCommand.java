@@ -29,9 +29,9 @@ public class ShowStyklisteCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        ForesporgselDTO foresporgselDTO = DataFacade.getRequest(id);
+        ForesporgselDTO foresporgselDTO = DataFacade.getCarPort(id);
         // get materials.
-        List<MaterialeDTO> materialer = DataFacade.getMaterialer();
+        List<MaterialeDTO> materialer = DataFacade.getMaterials();
         // Calculate the bill of materials.
         List<BillItem> stykliste = LogicFacade.beregnStykliste(foresporgselDTO, materialer);
         // Calculate string with carport dimensions.
@@ -41,12 +41,13 @@ public class ShowStyklisteCommand extends Command
         request.setAttribute("stykliste", styklisteToHtml(stykliste));
         request.setAttribute("carportDimensioner", carportDimensioner);
         
-        return Pages.STYKLISTE;
+        return Pages.BILL;
     }
     
     private String styklisteToHtml(List<BillItem> stykliste)
     {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");
@@ -67,6 +68,8 @@ public class ShowStyklisteCommand extends Command
             //row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }
+        
+       
         
         return table.replace("$body", stringBuilder.toString());
     }
