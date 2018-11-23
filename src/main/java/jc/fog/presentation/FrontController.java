@@ -49,10 +49,11 @@ public class FrontController extends HttpServlet
         {
             // save error message in request.
             request.setAttribute(Fields.ERROR_TEXT, e.getMessage());
+        
+            // If we are here, a FogException has happened, attributes are set in request, go to INDEX.
+            view = Pages.INDEX;
+            request.getRequestDispatcher(view).forward(request, response);
         }
-        // If we are here, a FogException has happened, attributes are set in request, go to INDEX.
-        view = Pages.INDEX;
-        request.getRequestDispatcher(view).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

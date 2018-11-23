@@ -25,7 +25,7 @@ public class Rectangle {
         rect = rect.replace("$2", String.valueOf(this.y));
         rect = rect.replace("$3", String.valueOf(this.width));
         rect = rect.replace("$4", String.valueOf(this.height));
-        
+        rect += "</rect>";
         return rect;
     }
     

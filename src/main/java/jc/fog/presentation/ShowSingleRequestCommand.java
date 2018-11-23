@@ -5,11 +5,14 @@
  */
 package jc.fog.presentation;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.Rectangle;
 
 /**
  * Use this command to show a page with the details
@@ -21,7 +24,7 @@ import jc.fog.logic.ForesporgselDTO;
  */
 public class ShowSingleRequestCommand extends Command
 {
-    @Override
+@Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         // get request's id from request.
@@ -31,6 +34,12 @@ public class ShowSingleRequestCommand extends Command
         // Create HTML form with request's data and set it on http request.
         request.setAttribute("requestForm", requestToForm(foresporgselDTO));
         request.setAttribute("ForesporgselDTO", foresporgselDTO);
+        
+        List<Rectangle> rectangles = new ArrayList<Rectangle>();
+        rectangles.add(new Rectangle(5, 7, 250, 400, "333333"));
+        rectangles.add(new Rectangle(15, 120, 125, 140, "333333"));
+        
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500));
         
         // return the page.
         return Pages.SINGLE_CARPORT;
