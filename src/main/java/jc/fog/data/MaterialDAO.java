@@ -47,7 +47,7 @@ public class MaterialDAO
     /**
      * SQL som opretter materiale i databasen.
      */
-    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materiale(materialeTypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
+    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materiale(materialetypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
     
     //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     
@@ -88,7 +88,7 @@ public class MaterialDAO
         }
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde varer til styklisteberegning.", e.getMessage());
+            throw new FogException("Systemet kan ikke finde materialer.", e.getMessage());
         }
     }
     
@@ -113,14 +113,14 @@ public class MaterialDAO
     
     /**
      * Skal opret Materiale med navn, længde, enhed og hvilke materialType man har valgt.
-     * @param materialTypeId
+     * @param materialtypeId
      * @param name
      * @param length
      * @param unit
      * @return - Skal bare fortælle om man har opret eller ej?
      * @throws FogException 
      */
-    public static boolean createMaterial(int materialTypeId, String name, int length, String unit) throws FogException
+    public static boolean createMaterial(int materialtypeId, String name, int length, String unit) throws FogException
     {
         //Den "space removed" i siderne
         name = name.trim();
@@ -133,7 +133,7 @@ public class MaterialDAO
             
             //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(CREATE_MATERIAL_SQL, Statement.RETURN_GENERATED_KEYS);
-            pstm.setInt(1, materialTypeId);
+            pstm.setInt(1, materialtypeId);
             pstm.setString(2, name);
             pstm.setInt(3, length);
             pstm.setString(4, unit);
@@ -142,7 +142,7 @@ public class MaterialDAO
         }
         catch(Exception e)
         {
-            throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+            throw new FogException("Materiale blev ikke oprettet.", e.getMessage());
         }
     }
     
@@ -173,7 +173,7 @@ public class MaterialDAO
         }
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde den enkelte varer.", e.getMessage());
+            throw new FogException("Systemet kan ikke finde det ønskede materiale.", e.getMessage());
         }
         return materiale;
     }

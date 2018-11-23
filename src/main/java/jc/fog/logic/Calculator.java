@@ -8,7 +8,7 @@ package jc.fog.logic;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
 
@@ -31,7 +31,7 @@ public class Calculator
         rules.add(new RuleCalculatorBattens());
     }
     
-    protected static List<BillItem> beregnStykliste(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
+    protected static List<BillItem> beregnStykliste(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
     {
         if (rules == null)
             initializeRules();

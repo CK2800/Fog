@@ -7,7 +7,7 @@ package jc.fog.data;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
 
 /**
@@ -19,14 +19,14 @@ public class DataFacade
 {
     /**
      * Get all requests (forespørgsler).
-     * @return List of ForesporgselDTO objects.
+     * @return List of CarportRequestDTO objects.
      */
-    public static List<ForesporgselDTO> getCarPorts() throws FogException
+    public static List<CarportRequestDTO> getCarPorts() throws FogException
     {
         return CarPortDAO.getCarPorts();
     }
     
-    public static ForesporgselDTO getCarPort(int id) throws FogException
+    public static CarportRequestDTO getCarPort(int id) throws FogException
     {
         return CarPortDAO.getCarportRequest(id);
     }

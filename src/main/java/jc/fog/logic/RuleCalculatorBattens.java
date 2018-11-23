@@ -16,18 +16,18 @@ public class RuleCalculatorBattens extends RuleCalculator
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // Find materialer - typen har id 7
         List<MaterialeDTO> laegter = filter(materialer, BusinessRules.BATTENS_TYPE_ID);
         // Sorter 
         sortLengthDesc(laegter);
-        int count = (int)Math.ceil((float)forespoergsel.getLaengde() / laegter.get(0).getLaengde());
+        int count = (int)Math.ceil((float)forespoergsel.getLength() / laegter.get(0).getLaengde());
         // Find korteste lægte
-        MaterialeDTO materiale = findShortest(laegter, count, forespoergsel.getLaengde());
+        MaterialeDTO materiale = findShortest(laegter, count, forespoergsel.getLength());
         // Find tagets længde:
-        int halvCarportBredde = forespoergsel.getBredde()/2;
-        int hypotenuse = (int)Math.ceil(halvCarportBredde / Math.cos(Math.toRadians(forespoergsel.getHaeldning())));
+        int halvCarportBredde = forespoergsel.getWidth()/2;
+        int hypotenuse = (int)Math.ceil(halvCarportBredde / Math.cos(Math.toRadians(forespoergsel.getSlope())));
         // Business rule: ca. 30 cm ml. lægter.
         int antalLaegteRaekker = (int)Math.floor(hypotenuse / BusinessRules.BATTENS_SPACING);
         stykliste.add(new BillItem(materiale, count * antalLaegteRaekker * 2, "lægte tekst"));

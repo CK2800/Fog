@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertNotNull;
@@ -98,7 +98,7 @@ public class ForespoergselDAOUnitTest
     public void testHentAlleForespoergsler() throws FogException
     {        
         CarPortDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
-        List<ForesporgselDTO> requests = DataFacade.getCarPorts();
+        List<CarportRequestDTO> requests = DataFacade.getCarPorts();
         assertTrue(requests.size() > 0);        
     }
     
@@ -106,7 +106,7 @@ public class ForespoergselDAOUnitTest
     public void testHentEnkeltForespørgsel() throws FogException
     {
         CarPortDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
-        ForesporgselDTO request = DataFacade.getCarPort(1);
+        CarportRequestDTO request = DataFacade.getCarPort(1);
         assertTrue(request != null);
     }
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.LogicFacade;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
@@ -29,13 +29,13 @@ public class ShowStyklisteCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        ForesporgselDTO foresporgselDTO = DataFacade.getCarPort(id);
+        CarportRequestDTO foresporgselDTO = DataFacade.getCarPort(id);
         // get materials.
         List<MaterialeDTO> materialer = DataFacade.getMaterials();
         // Calculate the bill of materials.
         List<BillItem> stykliste = LogicFacade.beregnStykliste(foresporgselDTO, materialer);
         // Calculate string with carport dimensions.
-        String carportDimensioner = String.valueOf(foresporgselDTO.getBredde()) + " x " + String.valueOf(foresporgselDTO.getLaengde()) + " cm.";
+        String carportDimensioner = String.valueOf(foresporgselDTO.getWidth()) + " x " + String.valueOf(foresporgselDTO.getLength()) + " cm.";
         
         // Format the bill of materials nicely for view.
         request.setAttribute("stykliste", styklisteToHtml(stykliste));

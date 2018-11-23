@@ -7,7 +7,7 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
@@ -20,7 +20,7 @@ public class RuleCalculatorPost extends RuleCalculator
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // Find materialet.       
         List<MaterialeDTO> stolper = filter(materialer, BusinessRules.POST_TYPE_ID);        
@@ -28,11 +28,11 @@ public class RuleCalculatorPost extends RuleCalculator
         // en stolpe i hvert hjørne.
         int count = 4;
         // Skal der bygges skur, kræves flere stolper.
-        ShedDTO skur = forespoergsel.getSkurDTO();
+        ShedDTO skur = forespoergsel.getShedDTO();
         if (skur != null)
         {            
             // Er skuret i fuld bredde?
-            if (skur.getBredde() == forespoergsel.getBredde())
+            if (skur.getBredde() == forespoergsel.getWidth())
                 count += BusinessRules.POSTS_SHED_FULL_WIDTH;
             else
                 count += BusinessRules.POSTS_SHED;                

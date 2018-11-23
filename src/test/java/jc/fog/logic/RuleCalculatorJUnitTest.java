@@ -82,25 +82,25 @@ public class RuleCalculatorJUnitTest
     {
 
         materialer = MaterialDAO.getMaterials();        
-        ForesporgselDTO forespoergsel = CarPortDAO.getCarportRequest(1);
+        CarportRequestDTO forespoergsel = CarPortDAO.getCarportRequest(1);
 
-        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
+        forespoergsel.getShedDTO().setBredde(forespoergsel.getWidth());
         //forespoergsel.setHaeldning(0); fladt tag.
-        forespoergsel.setLaengde(1000);
+        forespoergsel.setLength(1000);
         List<BillItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
         assertTrue(stykliste.size() > 0);
     }
     
-//    public void TestRuleCalculatorBattens() throws FogException
-//    {
-//        ForesporgselDTO forespoergsel = new ForesporgselDTO(0, 0, 0, 0)
-//    }
+    public void TestRuleCalculatorBattens() throws FogException
+    {
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
+    }
     
 //    @Test
 //    public void CalculateStolper() throws FogException
 //    {
 //        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
 //        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde()); // skur og carport lige brede.
 //        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
 //        
@@ -114,7 +114,7 @@ public class RuleCalculatorJUnitTest
 //    public void CalculateRem() throws FogException
 //    {
 //        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
 //        forespoergsel.setLaengde(1501);
 //        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
 //        

@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 
 /**
  *
@@ -18,17 +18,17 @@ public class CarPortDAO {
     private static Connection connection;
     
 
-    final static String GET_CPREQUESTS_SQL = "SELECT f.id, f.roofTypeId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
+    final static String GET_CPREQUESTS_SQL = "SELECT f.id, f.rooftypeId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
                                            + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
                                            + "FROM Forespoergsel f LEFT OUTER JOIN Skur s ON f.skurId = s.id";
     final static String GET_CPREQUEST_SQL = GET_CPREQUESTS_SQL + " WHERE f.id = ?";
     
-    final static String CREATE_CPREQUEST_SQL = "INSERT INTO Forespoergsel(roofTypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
+    final static String CREATE_CPREQUEST_SQL = "INSERT INTO Forespoergsel(rooftypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
     
     final static String CREATE_SHED_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
     
     // Hvad laver denne forespørgsel Get ELLER create ??
-    //final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(roofTypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    //final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(rooftypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
     // Det her navn er da helt i skoven... Henter den eller opretter den og er det skur eller forespørgsel?
     // final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
@@ -38,9 +38,9 @@ public class CarPortDAO {
      * @param id - Skal være angivet en værdi for, at kunne hente den enkelt.
      * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
      */
-    public static ForesporgselDTO getCarportRequest(int id) throws FogException
+    public static CarportRequestDTO getCarportRequest(int id) throws FogException
     {
-        ForesporgselDTO carportRequest = null;
+        CarportRequestDTO carportRequest = null;
         try{
              connection = DbConnection.getConnection();
 
@@ -54,9 +54,9 @@ public class CarPortDAO {
                  if(rs.next())
                  {
                      //System.out.println("rs:" + rs.toString());
-                     carportRequest = new ForesporgselDTO(
+                     carportRequest = new CarportRequestDTO(
                                 rs.getInt("id"),
-                                rs.getInt("roofTypeId"),
+                                rs.getInt("rooftypeId"),
                                 rs.getInt("haeldning"),
                                 rs.getInt("skurId"),
                                 rs.getInt("bredde"),
@@ -83,10 +83,10 @@ public class CarPortDAO {
      * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
-    public static ArrayList<ForesporgselDTO> getCarPorts() throws FogException{
+    public static ArrayList<CarportRequestDTO> getCarPorts() throws FogException{
         
         //kan være den skal laves om.
-        ArrayList<ForesporgselDTO> carPorts = new ArrayList<ForesporgselDTO>();
+        ArrayList<CarportRequestDTO> carPorts = new ArrayList<CarportRequestDTO>();
         
         try{
             //laver connection
@@ -100,9 +100,9 @@ public class CarPortDAO {
                 while(rs.next())//Løber alle igennem
                 {
                     System.out.println("rs:" + rs.toString());
-                     carPorts.add(new ForesporgselDTO(
+                     carPorts.add(new CarportRequestDTO(
                                 rs.getInt("id"),
-                                rs.getInt("roofTypeId"),
+                                rs.getInt("rooftypeId"),
                                 rs.getInt("haeldning"),
                                 rs.getInt("skurId"),
                                 rs.getInt("bredde"),

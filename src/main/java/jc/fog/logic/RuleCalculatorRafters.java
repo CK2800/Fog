@@ -7,7 +7,7 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.BillItem;
 
@@ -19,13 +19,13 @@ public class RuleCalculatorRafters extends RuleCalculator
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {
         // er taget med rejsning?
-        if (forespoergsel.getHaeldning() > 0) 
+        if (forespoergsel.getSlope() > 0) 
         {
             // udhæng er 30 cm i hver ende.
-            int tagLaengde = forespoergsel.getLaengde() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
+            int tagLaengde = forespoergsel.getLength() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
             // Spær placeres højst 0,89 m fra hinanden.
             int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
             MaterialeDTO materiale = null;
@@ -55,13 +55,13 @@ public class RuleCalculatorRafters extends RuleCalculator
             // Hent længste træ.
             MaterialeDTO materiale = spaerTraeList.get(0);
             // Hvor mange stk. træ skal der min. bruges?
-            int spaerBredde = forespoergsel.getBredde();
+            int spaerBredde = forespoergsel.getWidth();
             int antalBraedder = (int)Math.ceil((float)spaerBredde/materiale.getLaengde());            
             // Find korteste spærtræ med krævet længde.            
             materiale = findShortest(spaerTraeList, antalBraedder, spaerBredde);
                         
             
-            int tagLaengde = forespoergsel.getLaengde();
+            int tagLaengde = forespoergsel.getLength();
             // Spær placeres højst 0,55 cm fra hinanden.
             int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING);                        
             

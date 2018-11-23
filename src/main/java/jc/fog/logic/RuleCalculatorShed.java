@@ -7,7 +7,7 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
@@ -20,9 +20,9 @@ public class RuleCalculatorShed extends RuleCalculator
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
     {        
-        ShedDTO skur = forespoergsel.getSkurDTO();
+        ShedDTO skur = forespoergsel.getShedDTO();
         if (skur != null)
         {
             // Find materiale til skuret => trykimp. brædder, 19x100mm i 210 cm (id 9)                        
