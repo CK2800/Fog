@@ -36,8 +36,8 @@ public class ShowSingleRequestCommand extends Command
         request.setAttribute("ForesporgselDTO", foresporgselDTO);
         
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
-        rectangles.add(new Rectangle(5, 7, 250, 400, "333333"));
-        rectangles.add(new Rectangle(15, 120, 125, 140, "333333"));
+        rectangles.add(new Rectangle(0, 0, 170, 450, "7FFF00"));
+        rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
         
         request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500));
         
@@ -53,7 +53,7 @@ public class ShowSingleRequestCommand extends Command
     private String requestToForm(ForesporgselDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        
+        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a><br/>");
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLaengde()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
@@ -75,7 +75,7 @@ public class ShowSingleRequestCommand extends Command
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form>");
         
-        stringBuilder.append("<a href=\"FrontController?command=showrequest\">Tilbage..</a>");
+        
         
         return stringBuilder.toString();
     }
