@@ -29,8 +29,6 @@ public class ShowSingleMaterialeCommand extends Command {
         request.setAttribute("materialeForm", requestToForm(materialeDTO));
         
         
-        //request.setAttribute("", Drawing.drawSvg(rectangles, 200, 500));
-        
         return Pages.SINGLE_MATERIAL;
     }
     

@@ -66,13 +66,13 @@ public class CarportRequestDTO {
     }
     
     
-//    public int getId() {
-//        return id;
-//    }
+    public int getId() {
+        return id;
+    }
 
-//    public void setId(int value) {
-//        this.id = value;
-//    }
+    public void setId(int value) {
+        this.id = value;
+    }
 
     public int getRooftypeId() {
         return rooftypeId;
