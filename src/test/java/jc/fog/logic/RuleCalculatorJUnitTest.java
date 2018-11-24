@@ -93,7 +93,7 @@ public class RuleCalculatorJUnitTest
     
     public void TestRuleCalculatorBattens() throws FogException
     {
-        CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
+        //CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
     }
     
 //    @Test

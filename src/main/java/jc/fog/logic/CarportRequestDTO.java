@@ -114,13 +114,13 @@ public class CarportRequestDTO {
         this.length = length;
     }
 
-    public int getDimensionerId() {
-        return dimensionerId;
-    }
-
-    public void setDimensionerId(int dimensionerId) {
-        this.dimensionerId = dimensionerId;
-    }
+//    public int getDimensionerId() {
+//        return dimensionerId;
+//    }
+//
+//    public void setDimensionerId(int dimensionerId) {
+//        this.dimensionerId = dimensionerId;
+//    }
 
     public int getSlope() {
         return slope;
