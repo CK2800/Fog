@@ -84,8 +84,8 @@ public class RuleCalculatorJUnitTest
         materialer = MaterialDAO.getMaterials();        
         CarportRequestDTO forespoergsel = CarPortDAO.getCarportRequest(1);
 
-        forespoergsel.getShedDTO().setBredde(forespoergsel.getWidth());
-        //forespoergsel.setHaeldning(0); fladt tag.
+        //forespoergsel.getShedDTO().setBredde(forespoergsel.getWidth());
+        forespoergsel.setSlope(0); //fladt tag.
         forespoergsel.setLength(1000);
         List<BillItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
         assertTrue(stykliste.size() > 0);
