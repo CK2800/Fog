@@ -20,6 +20,7 @@
                     <%= requestForm%>
                     </div>
                     <div class="col-md-4">
+                        <h2>Tegning</h2>
                     <%= svg%>
                     </div>
                 </div>

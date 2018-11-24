@@ -14,6 +14,7 @@
         <div class="container">
             <jsp:include page="./nav/nav.jsp"></jsp:include>
             <h1><%= title %></h1>
+            <input type="button" value="Print" onclick="window.print()" /> <br/><br/>
             <%= svg %>
         </div>
     </body>
