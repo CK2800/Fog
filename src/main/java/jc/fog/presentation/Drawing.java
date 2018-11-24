@@ -25,7 +25,7 @@ public class Drawing {
     }
     
     /**
-     * Her kommer et par bevingede ord fra Jespe
+     * Her kommer et par bevingede ord fra Jesper
      * @param rectangles
      * @param svgWidth
      * @param svgHeight

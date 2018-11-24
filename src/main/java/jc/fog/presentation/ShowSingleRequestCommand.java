@@ -35,6 +35,7 @@ public class ShowSingleRequestCommand extends Command
         request.setAttribute("requestForm", requestToForm(foresporgselDTO));
         request.setAttribute("ForesporgselDTO", foresporgselDTO);
         
+        //Laver en list over hvordan svg skal blive fremvist på siden.
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
         rectangles.add(new Rectangle(0, 0, 170, 450, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
@@ -53,7 +54,8 @@ public class ShowSingleRequestCommand extends Command
     private String requestToForm(ForesporgselDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a><br/>");
+        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"
+                + "<a class=\"btn btn-info btn-xs pull-right\" href=\"FrontController?command=" + Commands.SINGLEDREW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLaengde()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");

@@ -9,10 +9,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= title%></title>
-        <jsp:include page="./bootstrap/csscdn.jsp"></jsp:include>
+        <jsp:include page="./bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
         </head>
         <body>
             <div class="container">
+                <jsp:include page="./nav/nav.jsp"></jsp:include>
                 <h1><%= title%></h1>
                 <div class="row">
                     <div class="col-md-8">
@@ -23,6 +24,5 @@
                     </div>
                 </div>
             </div>
-        <jsp:include page="./bootstrap/jscdn.jsp"></jsp:include>
     </body>
 </html>

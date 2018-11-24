@@ -15,9 +15,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <jsp:include page="./bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
     </head>
     <body>
-        <h1>Stykliste for forespørgsel <%= id %>, <%= carportDimensioner %></h1>
-        <%= tabel %>        
+        <div class="container">
+            <h1>Stykliste for forespørgsel <%= id %>, <%= carportDimensioner %></h1>
+            <%= tabel %>     
+        </div>
+            
     </body>
 </html>
