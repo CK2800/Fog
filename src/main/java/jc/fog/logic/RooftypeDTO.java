@@ -14,7 +14,8 @@ import java.util.List;
 public class RooftypeDTO
 {
     private int id;
-    private String type;
+    private String type;    
+    
     /**
      * Liste af MaterialeDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
      * @return 
@@ -36,11 +37,17 @@ public class RooftypeDTO
      * @return 
      */
     public List<MaterialeDTO> getMaterials(){return materials;}
-    
+        
+    /**
+     * Initialiserer et RooftypeDTO objekt.
+     * @param id
+     * @param type
+     * @param materials 
+     */
     public RooftypeDTO(int id, String type, List<MaterialeDTO> materials)
     {
         this.id = id;
-        this.type = type;        
+        this.type = type;                
         this.materials = materials;
     }
     

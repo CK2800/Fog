@@ -9,6 +9,7 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.RooftypeDTO;
 
 /**
  * Facade to expose subsystem methods to clients.
@@ -44,5 +45,10 @@ public class DataFacade
     public static boolean createMaterial(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
     {
         return MaterialDAO.createMaterial(materialeTypeId, navn, laengde, enhed);
+    }
+    
+    public static List<RooftypeDTO> getRooftypes() throws FogException
+    {
+        return RooftypeDAO.getRooftypes();
     }
 }
