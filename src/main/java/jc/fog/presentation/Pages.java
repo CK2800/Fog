@@ -20,4 +20,5 @@ public final class Pages
     public static final String ALL_MATERIALS = "/WEB-INF/allMaterials.jsp";
     public static final String SINGLE_MATERIAL = "/WEB-INF/singleMaterial.jsp";
     public static final String BILL = "/WEB-INF/bill.jsp";
+    public static final String SINGLE_DREW = "/WEB-INF/singleDrew.jsp";
 }

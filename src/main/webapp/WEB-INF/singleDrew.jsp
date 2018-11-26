@@ -1,6 +1,6 @@
 <%
-    String title = "Alle Forespørgsel"; //Den kan fremkomme i title efter hvilken kunde der laver forespørgsel.
-    String tableView = (String)request.getAttribute("requestsTable");    
+    String title = "Fremvis tegning på carport";
+    String svg = (String) request.getAttribute("svg");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,11 +11,11 @@
         <jsp:include page="./bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
     </head>
     <body>
-        
         <div class="container">
             <jsp:include page="./nav/nav.jsp"></jsp:include>
             <h1><%= title %></h1>
-        <%= tableView %>
+            <input type="button" value="Print" onclick="window.print()" /> <br/><br/>
+            <%= svg %>
         </div>
     </body>
 </html>

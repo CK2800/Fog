@@ -3,8 +3,9 @@
     Created on : 15-11-2018, 17:48:35
     Author     : Claus
 --%>
-<%@page import="jc.fog.presentation.constants.Fields"%>
+<%@page import="jc.fog.presentation.Fields"%>
 <%
+    String title = "Velkommen til FOG";
     String errorText = request.getAttribute(Fields.ERROR_TEXT) != null ? (String)request.getAttribute(Fields.ERROR_TEXT): "No errors!";
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,10 +13,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><%= title %></title>
+        <jsp:include page="WEB-INF/bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <div><%= errorText %></div>
+        
+        <div class="container">
+            <jsp:include page="WEB-INF/nav/nav.jsp"></jsp:include>
+            <h1><%= title %></h1>
+            <div><%= errorText %></div> 
+        </div>
     </body>
 </html>
