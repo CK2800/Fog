@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 
 
 
@@ -25,22 +25,22 @@ public class ShowSingleMaterialeCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         int getId = Integer.parseInt(request.getParameter("id"));
-        MaterialeDTO materialeDTO = DataFacade.getMaterial(getId);
+        MaterialDTO materialeDTO = DataFacade.getMaterial(getId);
         request.setAttribute("materialeForm", requestToForm(materialeDTO));
         
         
         return Pages.SINGLE_MATERIAL;
     }
     
-    private String requestToForm(MaterialeDTO item)
+    private String requestToForm(MaterialDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
-        stringBuilder.append("Navn:<br /><input type=\"text\" class=\"form-control\" name=\"navn\" value=\"").append(item.getNavn()).append("\" /><br />");
-        stringBuilder.append("Enhed:<br /><input type=\"text\" class=\"form-control\" name=\"enhed\" value=\"").append(item.getEnhed()).append("\" /><br />");
-        stringBuilder.append("Materiale Type:<br /><input type=\"text\" class=\"form-control\" name=\"materialeType\" value=\"").append(item.getMaterialetypeDTO().getType()).append("\" /><br />");
-        stringBuilder.append("Længde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
+        stringBuilder.append("Navn:<br /><input type=\"text\" class=\"form-control\" name=\"navn\" value=\"").append(item.getName()).append("\" /><br />");
+        stringBuilder.append("Enhed:<br /><input type=\"text\" class=\"form-control\" name=\"enhed\" value=\"").append(item.getUnit()).append("\" /><br />");
+        stringBuilder.append("Materiale Type:<br /><input type=\"text\" class=\"form-control\" name=\"materialeType\" value=\"").append(item.getMaterialtypeDTO().getType()).append("\" /><br />");
+        stringBuilder.append("Længde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
 
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");

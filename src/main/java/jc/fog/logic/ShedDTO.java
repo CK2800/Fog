@@ -12,23 +12,23 @@ package jc.fog.logic;
 public class ShedDTO
 {
     private int id;
-    private int laengde;
-    private int bredde;
+    private int length;
+    private int width;
     
     // getters
     public int getId(){ return id; }
-    public int getLaengde() { return laengde; }
-    public int getBredde() { return bredde; }
+    public int getLength() { return length; }
+    public int getWidth() { return width; }
     
     // setters
     public void setId(int value) { id = value; }
-    public void setLaengde(int value) { laengde = value; }
-    public void setBredde(int value) { bredde = value; }
+    public void setLength(int value) { length = value; }
+    public void setWidth(int value) { width = value; }
     
-    public ShedDTO(int id, int laengde, int bredde)
+    public ShedDTO(int id, int length, int width)
     {
         this.id = id;
-        this.laengde = laengde;
-        this.bredde = bredde;
+        this.length = length;
+        this.width = width;
     }
 }

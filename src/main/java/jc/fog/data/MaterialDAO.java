@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 
 /**
  *
@@ -48,7 +48,7 @@ public class MaterialDAO
      * @return
      * @throws FogException 
      */
-    public static List<MaterialeDTO> getMaterials() throws FogException
+    public static List<MaterialDTO> getMaterials() throws FogException
     {
         /*
         Pseudo:
@@ -60,7 +60,7 @@ public class MaterialDAO
         {
             connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
-            ArrayList<MaterialeDTO> materials = new ArrayList<MaterialeDTO>();            
+            ArrayList<MaterialDTO> materials = new ArrayList<MaterialDTO>();            
             
             // try with ressources
             try(ResultSet rs = pstm.executeQuery())
@@ -79,14 +79,14 @@ public class MaterialDAO
     }
     
     /**
-     * Mapper værdier fra ResultSet tuple til MaterialeDTO.
+     * Mapper værdier fra ResultSet tuple til MaterialDTO.
      * @param rs ResultSet med tuple.
-     * @return MaterialeDTO
+     * @return MaterialDTO
      * @throws SQLException 
      */
-    private static MaterialeDTO mapMaterial(ResultSet rs) throws SQLException
+    private static MaterialDTO mapMaterial(ResultSet rs) throws SQLException
     {        
-        return new MaterialeDTO
+        return new MaterialDTO
         (
             rs.getInt("id"), 
             rs.getInt("materialetypeId"), 
@@ -139,9 +139,9 @@ public class MaterialDAO
      * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
      * @throws FogException 
      */
-    public static MaterialeDTO getMaterial(int materialId) throws FogException
+    public static MaterialDTO getMaterial(int materialId) throws FogException
     {
-        MaterialeDTO material = null;
+        MaterialDTO material = null;
         try
         {
             connection = DbConnection.getConnection();

@@ -8,7 +8,7 @@ package jc.fog.data;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.RooftypeDTO;
 
 /**
@@ -32,12 +32,12 @@ public class DataFacade
         return CarportDAO.getCarportRequest(id);
     }
     
-    public static MaterialeDTO getMaterial(int id) throws FogException
+    public static MaterialDTO getMaterial(int id) throws FogException
     {
         return MaterialDAO.getMaterial(id);        
     }
     
-    public static List<MaterialeDTO> getMaterials() throws FogException
+    public static List<MaterialDTO> getMaterials() throws FogException
     {
         return MaterialDAO.getMaterials();
     }

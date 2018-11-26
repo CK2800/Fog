@@ -12,7 +12,7 @@ import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.LogicFacade;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -31,9 +31,9 @@ public class ShowStyklisteCommand extends Command
         // get request.
         CarportRequestDTO foresporgselDTO = DataFacade.getCarport(id);
         // get materials.
-        List<MaterialeDTO> materialer = DataFacade.getMaterials();
+        List<MaterialDTO> materialer = DataFacade.getMaterials();
         // Calculate the bill of materials.
-        List<BillItem> stykliste = LogicFacade.beregnStykliste(foresporgselDTO, materialer);
+        List<BillItem> stykliste = LogicFacade.calculateBill(foresporgselDTO, materialer);
         // Calculate string with carport dimensions.
         String carportDimensioner = String.valueOf(foresporgselDTO.getWidth()) + " x " + String.valueOf(foresporgselDTO.getLength()) + " cm.";
         
@@ -60,10 +60,10 @@ public class ShowStyklisteCommand extends Command
         for(BillItem item : stykliste)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
-            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialDTO().getEnhed()));
-            row = row.replace("$2", String.valueOf(item.getMaterialDTO().getNavn()));
-            row = row.replace("$3", String.valueOf(item.getMaterialDTO().getMaterialetypeDTO().getType()));
-            row = row.replace("$4", String.valueOf(item.getMaterialDTO().getLaengde()));
+            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialDTO().getUnit()));
+            row = row.replace("$2", String.valueOf(item.getMaterialDTO().getName()));
+            row = row.replace("$3", String.valueOf(item.getMaterialDTO().getMaterialtypeDTO().getType()));
+            row = row.replace("$4", String.valueOf(item.getMaterialDTO().getLength()));
             row = row.replace("$5", String.valueOf(item.getRemarks()));
             //row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);

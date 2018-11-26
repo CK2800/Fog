@@ -8,7 +8,7 @@ package jc.fog.data;
 import java.util.List;
 import static jc.fog.data.ForespoergselDAOUnitTest.connection;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
@@ -83,7 +83,7 @@ public class MaterialeDAOJUnitTest
     @Test
     public void testGetSingleMateriale() throws FogException
     {
-        MaterialeDTO request = DataFacade.getMaterial(1);
+        MaterialDTO request = DataFacade.getMaterial(1);
         assertTrue(request != null);
     }
     
@@ -91,7 +91,7 @@ public class MaterialeDAOJUnitTest
     public void testGetAllMateriale() throws FogException
     {
         // Her hentes først alle materialer og så oprettes en ny - hvad er det?
-        List<MaterialeDTO> varer = MaterialDAO.getMaterials();
+        List<MaterialDTO> varer = MaterialDAO.getMaterials();
         System.out.println("Antal varer fudnet: " + varer.size());
         assertTrue(varer.size() > 0);
 

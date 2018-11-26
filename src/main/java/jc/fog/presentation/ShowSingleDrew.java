@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.Rectangle;
 
 /**

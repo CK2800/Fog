@@ -28,7 +28,7 @@ import org.junit.Test;
 public class RuleCalculatorJUnitTest
 {
     static Connection connection = null;
-    static List<MaterialeDTO> materialer;
+    static List<MaterialDTO> materialer;
     
     public RuleCalculatorJUnitTest()
     {

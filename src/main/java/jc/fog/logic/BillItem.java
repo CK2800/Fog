@@ -13,15 +13,15 @@ import java.util.List;
  */
 public class BillItem
 {
-    private MaterialeDTO material;
+    private MaterialDTO material;
     private int count;
     private String remarks;
     
-    public MaterialeDTO getMaterialDTO(){return material;}
+    public MaterialDTO getMaterialDTO(){return material;}
     public int getCount(){return count;}
     public String getRemarks(){return remarks;}
     
-    public BillItem(MaterialeDTO material, int count, String remarks)
+    public BillItem(MaterialDTO material, int count, String remarks)
     {
         this.material = material;
         this.count = count;

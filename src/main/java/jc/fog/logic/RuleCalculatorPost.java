@@ -8,7 +8,7 @@ package jc.fog.logic;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
 
@@ -20,25 +20,25 @@ public class RuleCalculatorPost extends RuleCalculator
 {
 
     @Override
-    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
     {
         // Find materialet.       
-        List<MaterialeDTO> stolper = filter(materialer, BusinessRules.POST_TYPE_ID);        
-        MaterialeDTO stolpe = stolper.get(0);
+        List<MaterialDTO> posts = filter(materials, BusinessRules.POST_TYPE_ID);        
+        MaterialDTO post = posts.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;
         // Skal der bygges skur, kræves flere stolper.
-        ShedDTO skur = forespoergsel.getShedDTO();
-        if (skur != null)
+        ShedDTO shed = carportRequest.getShedDTO();
+        if (shed != null)
         {            
             // Er skuret i fuld bredde?
-            if (skur.getBredde() == forespoergsel.getWidth())
+            if (shed.getWidth() == carportRequest.getWidth())
                 count += BusinessRules.POSTS_SHED_FULL_WIDTH;
             else
                 count += BusinessRules.POSTS_SHED;                
         }
         
-        stykliste.add(new BillItem(stolpe, count, "stolpetekst"));
+        bill.add(new BillItem(post, count, "stolpetekst"));
         
         // 1 nyt item på styklisten.
         return 1;        

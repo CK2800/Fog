@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.RooftypeDTO;
 
 /**
@@ -69,7 +69,7 @@ public class RooftypeDAO
     {
         RooftypeDTO rooftype = null;
         List<RooftypeDTO> rooftypes = new ArrayList<>();
-        List<MaterialeDTO> materials = null;
+        List<MaterialDTO> materials = null;
                 
         while(rs.next())
         {
@@ -81,7 +81,7 @@ public class RooftypeDAO
                 rooftypes.add(rooftype);
             }
             // Tilføj materiale til listen i den aktuelle rooftype.
-            materials.add(new MaterialeDTO(
+            materials.add(new MaterialDTO(
                     rs.getInt("materialeId"), 
                     rs.getInt("materialetypeId"), 
                     rs.getString("navn"),
