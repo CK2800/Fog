@@ -1,26 +1,5 @@
-FRA PO 23-11-2018:
-Husk at tagpap kan findes for begge typer tag.
-LAv side så medarbejder kan indtaste carportdata og skyde til beregner.
-FREDAG: Flere unit tests som tester for korrekt indhold. OG hardcoded tegning.
-Integration tests som tester commands...
-Brugergrænsefladetest...på papir - hvis jeg gør dit, så forventer ejg dat. Evt 
-
----
-
-FRa review 21-11-18:
-Opdel liste af materialer i hashmap af lists på hver varetypeid.
-Ved udtræk af 1 materiale, hent øvrige med samme type og dan liste over dimensioner i entiteten, så kan det ene materiale give den rette størrelse.
-
-Rule vedr tagbelægning skal med. 
-Pris skal udregnes.
-
-Indhold i projekt:
-formular til Forespørgselsdetaljer, tegning, pris, stykliste
-Unit tests - husk at teste det forventede resultat og husk at database skal oprettes / nedlægges korrekt.
-Arkitektur
-Session
-MVC
-----
+1. ForesporgselDAO.createForespoergsel SKAL IKKE oprette skuret selv. Lav en metode til det. SOLID princippet.
+2. Rename DK->Engelsk.
 
 Få styr på flg.
 1. Spærkonstruktion - hvordan ser de ud, hvad er reglerne mht. adskillelse. 55 cm mellem hvert spær. stolpe for hver 4 mtr ca.
