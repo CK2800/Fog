@@ -82,6 +82,26 @@ public class ForespoergselDAOUnitTest
         assertNotNull(connection);
     }
     
+    @Test
+    public void testGetCarportsIntegration() throws FogException
+    {
+        DataFacade df = new DataFacade(DbConnector.getConnection());
+        List<CarportRequestDTO> carports = df.getCarports();
+        assertTrue(carports.size() > 0);
+        
+    }
+    
+    @Test(expected = FogException.class)
+    public void testGetCarportsIntegrationFails() throws Exception
+    {
+        
+        DataFacade df = new DataFacade(DbConnector.getConnection());
+        DbConnector.closeConnection();
+        List<CarportRequestDTO> carports = df.getCarports();
+        assertTrue(carports.size() > 0);
+        
+    }
+    
     @Test(expected = FogException.class)    
     public void testCreateCarportRequestFailure() throws Exception
     {

@@ -114,14 +114,16 @@ public class CarportRequestDAO extends AbstractDAO{
                                 rs.getInt("skurBredde")
                      ));
                 }
-            }
+            }            
+            
+            return carportRequests;
        } 
        catch(Exception e)
        {
            //Der er sket en fejl her
-           throw new FogException("Error:" + e.getMessage());
-       }   
-       return carportRequests;
+           throw new FogException("Error:" + e.getMessage(), e.getMessage());
+       }  
+       
     }
 
     /**
