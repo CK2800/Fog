@@ -19,7 +19,7 @@ import jc.fog.logic.MaterialDTO;
  *
  * @author Claus
  */
-public class MaterialDAO
+public class MaterialDAO extends AbstractDAO
 {
     private static Connection connection;
        
@@ -38,11 +38,17 @@ public class MaterialDAO
     
     //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     
+    
     /**
      * SQL som henter et enkelt materiale baseret på id.
      */
     public static final String GET_MATERIAL_SQL = GET_MATERIALS_SQL + " WHERE m.id = ?";
 
+    public MaterialDAO(DbConnection con) throws FogException
+    {
+       super(con);
+    }
+    
     /**
      * Skal træk alt fra databasen ud i listen så det giver bruger/FOG mulighed for, at se materialer.
      * @return
@@ -58,7 +64,6 @@ public class MaterialDAO
         */ 
         try
         {
-            connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
             ArrayList<MaterialDTO> materials = new ArrayList<MaterialDTO>();            
             
@@ -113,10 +118,7 @@ public class MaterialDAO
         unit = unit.trim();
         
         try
-        {
-            //laver connection
-            connection = DbConnection.getConnection();
-            
+        {            
             //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(CREATE_MATERIAL_SQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, materialtypeId);
@@ -144,7 +146,6 @@ public class MaterialDAO
         MaterialDTO material = null;
         try
         {
-            connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);
             pstm.setInt(1, materialId);
 

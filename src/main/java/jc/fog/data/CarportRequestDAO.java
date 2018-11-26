@@ -13,10 +13,9 @@ import jc.fog.logic.CarportRequestDTO;
  *
  * @author Jesper
  */
-public class CarportDAO {
+public class CarportRequestDAO extends AbstractDAO{
     
-    private static Connection connection;
-    
+       
 
     final static String GET_CPREQUESTS_SQL = "SELECT f.id, f.rooftypeId, f.haeldning, f.skurId, f.bredde, f.hoejde, f.laengde, f.bemaerkning, "
                                            + "s.laengde AS skurLaengde, s.bredde AS skurBredde "
@@ -32,21 +31,29 @@ public class CarportDAO {
     // Det her navn er da helt i skoven... Henter den eller opretter den og er det skur eller forespørgsel?
     // final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
 
+    /**
+     * Konstruktør som fordrer en DbConnection instans.     
+     * @param dbConnection
+     * @throws FogException 
+     */
+    public CarportRequestDAO(DbConnection dbConnection) throws FogException
+    {          
+        super(dbConnection);        
+    }
     
     /**
      * Den skal hente den enkelt forespørgsel.
      * @param id - Skal være angivet en værdi for, at kunne hente den enkelt.
      * @return Den henter enkelt forespørgsel. Det kan være fx nr 1.
      */
-    public static CarportRequestDTO getCarportRequest(int id) throws FogException
+    public CarportRequestDTO getCarportRequest(int id) throws FogException
     {
         CarportRequestDTO carportRequest = null;
-        try{
-             connection = DbConnection.getConnection();
-
+        try
+        {          
+            
              PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL);
              pstm.setInt(1, id);
-
 
              //try with ressources.
              try(ResultSet rs = pstm.executeQuery())
@@ -83,14 +90,13 @@ public class CarportDAO {
      * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
-    public static ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
+    public ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
         
         //kan være den skal laves om.
         ArrayList<CarportRequestDTO> carportRequests = new ArrayList<CarportRequestDTO>();
         
         try{
-            //laver connection
-            connection = DbConnection.getConnection();
+            
             //Forsøg at hente forespørgsel ud fra Sql'en
             PreparedStatement pstm = connection.prepareStatement(GET_CPREQUESTS_SQL);
             
@@ -137,14 +143,14 @@ public class CarportDAO {
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    public static boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
+    public boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {
         //Den "space removed" i siderne
         remark = remark.trim();
         
         try
         {
-            connection = DbConnection.getConnection();
+
             PreparedStatement pstm;
             int shedId = 0;
             // Først oprettes skur, hvis det ønskes.

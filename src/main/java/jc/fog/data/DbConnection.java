@@ -23,13 +23,11 @@ public class DbConnection
     */
     public final static String DRIVER_CLASS = "com.mysql.jdbc.Driver";        
 
-    
+    /**
+     * Statisk, deles på tværs af alle instanser af DbConnection.
+     */
     private static Connection connection;
-
-    public static void setConnection( Connection con ) {
-        connection = con;
-    }
-
+    
     /**
      * Establishes the connection to the database with the connection properties
      * read from db.properties ressource file.
@@ -37,7 +35,8 @@ public class DbConnection
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public static Connection getConnection() throws FogException {
+    public Connection getConnection() throws FogException 
+    {
         if ( connection == null ) {
             try
             {
@@ -59,7 +58,7 @@ public class DbConnection
         return connection;
     }
     
-    public static void closeConnection() throws SQLException
+    public void closeConnection() throws SQLException
     {
         if (connection != null)
             connection.close();

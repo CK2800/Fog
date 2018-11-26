@@ -6,12 +6,12 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class ForespoergselDAOUnitTest
 {
-    static Connection connection = null;
+    static DbConnection dbConnection = null;
     public ForespoergselDAOUnitTest()
     {
     }
@@ -38,8 +38,8 @@ public class ForespoergselDAOUnitTest
     public static void tearDownClass()
     {
         try
-        {
-            DbConnection.closeConnection();
+        {          
+            dbConnection.closeConnection();            
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -53,7 +53,7 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection(); 
+            dbConnection = new DbConnection();            
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)
@@ -71,8 +71,9 @@ public class ForespoergselDAOUnitTest
      * Test connection is established.
      */
     @Test
-    public void testConnection() throws SQLException
+    public void testConnection() throws Exception
     {
+        Connection connection = dbConnection.getConnection();
         if (connection != null)
         {
             String tilstand = connection.isClosed() ? "lukket" : "åben";
@@ -80,33 +81,49 @@ public class ForespoergselDAOUnitTest
         }
         assertNotNull(connection);
     }
+   @Test(expected = FogException.class)
+   public void testCreateCarportRequestFailure() throws Exception
+   {
+       // Opret carportdao.
+        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+         // luk forbindelsen så vi får fejl.
+        dbConnection.closeConnection();
+        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");        
+        assertFalse(success);        
+   }
+    
     @Test
-    public void testOpretForespoergselMedSkur() throws FogException
-    {        
-        boolean success = CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+    public void testOpretForespoergselMedSkur() throws Exception
+    {   
+        // Opret carportdao som opretter forbindelse, hvis den mangler.
+        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);         
+        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);        
     }
     
     @Test
     public void testOpretForespoergselUdenSkur() throws FogException
     {
-        boolean success = CarportDAO.createCarportRequest(2, 30, 500, 125, 300,0,0,"Uden skur");
+        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        boolean success = carportDAO.createCarportRequest(2, 30, 500, 125, 300,0,0,"Uden skur");
         assertTrue(success);
     }
     
     @Test
     public void testHentAlleForespoergsler() throws FogException
     {        
-        CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
-        List<CarportRequestDTO> requests = DataFacade.getCarports();
+        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        List<CarportRequestDTO> requests = carportDAO.getCarportRequests();
         assertTrue(requests.size() > 0);        
     }
     
     @Test
     public void testHentEnkeltForespørgsel() throws FogException
     {
-        CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
-        CarportRequestDTO request = DataFacade.getCarport(1);
+        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        CarportRequestDTO request = carportDAO.getCarportRequest(1);
         assertTrue(request != null);
     }
 }

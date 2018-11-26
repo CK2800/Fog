@@ -19,7 +19,7 @@ import jc.fog.logic.RooftypeDTO;
  *
  * @author Claus
  */
-public class RooftypeDAO
+public class RooftypeDAO extends AbstractDAO
 {
     private static Connection connection;
     
@@ -33,6 +33,11 @@ public class RooftypeDAO
                                                     "INNER JOIN Materiale m ON rm.materialId = m.id " + 
                                                     "INNER JOIN Materialetype mt ON m.materialetypeId = mt.id " +
                                                     "ORDER BY rt.id ASC"; 
+    
+    public RooftypeDAO(DbConnection con) throws FogException
+    {
+        super(con);        
+    }
     
     /**
      * Henter tagtyper fra databasen.
