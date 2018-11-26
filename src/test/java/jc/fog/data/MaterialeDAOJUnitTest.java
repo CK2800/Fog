@@ -5,10 +5,10 @@
  */
 package jc.fog.data;
 
+import java.sql.Connection;
 import java.util.List;
-import static jc.fog.data.ForespoergselDAOUnitTest.connection;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class MaterialeDAOJUnitTest
 {
-    
+    static Connection connection = null;
     public MaterialeDAOJUnitTest()
     {
     }
@@ -37,7 +37,7 @@ public class MaterialeDAOJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();
+            DbConnector.closeConnection();
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -51,7 +51,7 @@ public class MaterialeDAOJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection();
+            connection = DbConnector.getConnection();
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)
@@ -65,35 +65,37 @@ public class MaterialeDAOJUnitTest
     {
     }
 
-//    @Test
-//    public void hentVarerTilBeregneren() throws FogException
-//    {
-//        List<MaterialeDTO> varer = VareDAO.getMaterialer();
-//        System.out.println("Antal varer fudnet: " + varer.size());
-//        assertTrue(varer.size() > 0);
-//    }
     
     @Test
     public void testCreateMateriale() throws FogException
     {
-        boolean succes = DataFacade.createMaterial(2, "5x5 mm", 6, "stk");
+        MaterialDAO dao = new MaterialDAO(connection);
+        boolean succes = dao.createMaterial(2, "5x5 mm", 6, "stk");
         assertTrue(succes);
     }
     
     @Test
     public void testGetSingleMateriale() throws FogException
     {
-        MaterialeDTO request = DataFacade.getMaterial(1);
+        MaterialDAO dao = new MaterialDAO(connection);
+        MaterialDTO request = dao.getMaterial(1);
         assertTrue(request != null);
     }
     
     @Test
     public void testGetAllMateriale() throws FogException
-    {
-        // Her hentes først alle materialer og så oprettes en ny - hvad er det?
-        List<MaterialeDTO> varer = MaterialDAO.getMaterials();
-        System.out.println("Antal varer fudnet: " + varer.size());
+    {   
+        MaterialDAO dao = new MaterialDAO(connection);
+        List<MaterialDTO> varer = dao.getMaterials();        
         assertTrue(varer.size() > 0);
-
+    }
+    
+    @Test(expected = FogException.class)
+    public void testGetMaterialsFails() throws Exception
+    {
+        MaterialDAO dao = new MaterialDAO(connection);
+        connection.close();
+        List<MaterialDTO> varer = dao.getMaterials();
+        assertTrue(varer.size() > 0);
     }
 }

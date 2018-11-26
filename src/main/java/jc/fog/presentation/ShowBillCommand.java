@@ -9,10 +9,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.LogicFacade;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -20,7 +21,7 @@ import jc.fog.logic.BillItem;
  * 
  * @author Claus
  */
-public class ShowStyklisteCommand extends Command
+public class ShowBillCommand extends Command
 {
 
     @Override
@@ -28,23 +29,25 @@ public class ShowStyklisteCommand extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+        // Create DataFacade
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         // get request.
-        CarportRequestDTO foresporgselDTO = DataFacade.getCarPort(id);
+        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // get materials.
-        List<MaterialeDTO> materialer = DataFacade.getMaterials();
+        List<MaterialDTO> materials = dataFacade.getMaterials();
         // Calculate the bill of materials.
-        List<BillItem> stykliste = LogicFacade.beregnStykliste(foresporgselDTO, materialer);
+        List<BillItem> bill = LogicFacade.calculateBill(carportRequestDTO, materials);
         // Calculate string with carport dimensions.
-        String carportDimensioner = String.valueOf(foresporgselDTO.getWidth()) + " x " + String.valueOf(foresporgselDTO.getLength()) + " cm.";
+        String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
         
         // Format the bill of materials nicely for view.
-        request.setAttribute("stykliste", styklisteToHtml(stykliste));
-        request.setAttribute("carportDimensioner", carportDimensioner);
+        request.setAttribute("stykliste", billToHtml(bill));
+        request.setAttribute("carportDimensioner", carportDimensions);
         
         return Pages.BILL;
     }
     
-    private String styklisteToHtml(List<BillItem> stykliste)
+    private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
@@ -57,14 +60,14 @@ public class ShowStyklisteCommand extends Command
         table = table.replace("$5", "Instruks");
         
         
-        for(BillItem item : stykliste)
+        for(BillItem item : bill)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
-            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialeDTO().getEnhed()));
-            row = row.replace("$2", String.valueOf(item.getMaterialeDTO().getNavn()));
-            row = row.replace("$3", String.valueOf(item.getMaterialeDTO().getMaterialetypeDTO().getType()));
-            row = row.replace("$4", String.valueOf(item.getMaterialeDTO().getLaengde()));
-            row = row.replace("$5", String.valueOf(item.getHjaelpetekst()));
+            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialDTO().getUnit()));
+            row = row.replace("$2", String.valueOf(item.getMaterialDTO().getName()));
+            row = row.replace("$3", String.valueOf(item.getMaterialDTO().getMaterialtypeDTO().getType()));
+            row = row.replace("$4", String.valueOf(item.getMaterialDTO().getLength()));
+            row = row.replace("$5", String.valueOf(item.getRemarks()));
             //row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }

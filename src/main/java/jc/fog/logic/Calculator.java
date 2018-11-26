@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -31,19 +31,19 @@ public class Calculator
         rules.add(new RuleCalculatorBattens());
     }
     
-    protected static List<BillItem> beregnStykliste(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer) throws FogException
+    protected static List<BillItem> beregnStykliste(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
         if (rules == null)
             initializeRules();
         
-        ArrayList<BillItem> stykliste = new ArrayList<>();
+        ArrayList<BillItem> bill = new ArrayList<>();
         
         
         for(RuleCalculator rule : rules)
         {
-            rule.calculate(forespoergsel, materialer, stykliste);
+            rule.calculate(carportRequest, materials, bill);
         }
 
-        return stykliste;
+        return bill;
     }
 }

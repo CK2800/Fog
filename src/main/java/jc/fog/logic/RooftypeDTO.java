@@ -17,10 +17,10 @@ public class RooftypeDTO
     private String type;    
     
     /**
-     * Liste af MaterialeDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
+     * Liste af MaterialDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
      * @return 
      */
-    List<MaterialeDTO> materials;
+    List<MaterialDTO> materials;
     
     /**
      * Tagtypens id.
@@ -33,10 +33,10 @@ public class RooftypeDTO
      */    
     public String getType(){return type;}
     /**
-     * Liste af MaterialeDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
+     * Liste af MaterialDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
      * @return 
      */
-    public List<MaterialeDTO> getMaterials(){return materials;}
+    public List<MaterialDTO> getMaterials(){return materials;}
         
     /**
      * Initialiserer et RooftypeDTO objekt.
@@ -44,7 +44,7 @@ public class RooftypeDTO
      * @param type
      * @param materials 
      */
-    public RooftypeDTO(int id, String type, List<MaterialeDTO> materials)
+    public RooftypeDTO(int id, String type, List<MaterialDTO> materials)
     {
         this.id = id;
         this.type = type;                

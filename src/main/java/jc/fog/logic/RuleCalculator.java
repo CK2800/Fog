@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -22,38 +22,38 @@ import jc.fog.logic.BillItem;
 public abstract class RuleCalculator
 {
 
-    protected abstract int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException;            
+    protected abstract int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException;            
     
     /**
-     * Filters a List of MaterialeDTO on the type id.
+     * Filters a List of MaterialDTO on the type id.
      * @param list
      * @param typeId
      * @return 
      */
-    protected List<MaterialeDTO> filter(List<MaterialeDTO> list, int typeId)
+    protected List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
     {
-        Stream<MaterialeDTO> stream = list.stream().filter(m -> m.getMaterialetypeDTO().getId() == typeId);
-        List<MaterialeDTO> result = stream.collect(Collectors.toList());
+        Stream<MaterialDTO> stream = list.stream().filter(m -> m.getMaterialtypeDTO().getId() == typeId);
+        List<MaterialDTO> result = stream.collect(Collectors.toList());
         return result;
     }
     
     /**
      * Sorts the List<MaterialeDTO> collection on laengde in descending order.
-     * Sorts the List of MaterialeDTO on laengde in descending order.
+     * Sorts the List of MaterialDTO on laengde in descending order.
      * @param list     
      */
-    protected void sortLengthDesc(List<MaterialeDTO> list)
+    protected void sortLengthDesc(List<MaterialDTO> list)
     {
-        Collections.sort(list, Comparator.comparing(MaterialeDTO::getLaengde));
+        Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
         Collections.reverse(list);
     }
     
-    protected MaterialeDTO findShortest(List<MaterialeDTO> list, int count, int length)
+    protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
     {
-        MaterialeDTO materialeDTO = null;
-        for(MaterialeDTO m : list)
+        MaterialDTO materialeDTO = null;
+        for(MaterialDTO m : list)
         {
-            if (m.getLaengde() * count >= length)
+            if (m.getLength() * count >= length)
                 materialeDTO = m;
             else 
                 break;

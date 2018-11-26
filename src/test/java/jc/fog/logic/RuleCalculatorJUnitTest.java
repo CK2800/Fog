@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnection;
+import jc.fog.data.DbConnector;
 
 import jc.fog.data.MaterialDAO;
 
@@ -27,8 +27,7 @@ import org.junit.Test;
  */
 public class RuleCalculatorJUnitTest
 {
-    static Connection connection = null;
-    static List<MaterialeDTO> materialer;
+    static Connection connection = null;    
     
     public RuleCalculatorJUnitTest()
     {
@@ -44,7 +43,7 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();            
+            DbConnector.closeConnection();            
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -58,12 +57,9 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection(); 
+            connection = DbConnector.getConnection(); 
             System.out.println("Db forbindelse åbnet");
-            
-            if (materialer == null)
-                materialer = DataFacade.getMaterials();
-            
+                                    
             
         }
         catch(Exception e)
@@ -85,7 +81,8 @@ public class RuleCalculatorJUnitTest
     public void testPostCalculator() throws FogException
     {
         // Arrange
-        materialer = MaterialDAO.getMaterials();        
+        MaterialDAO dao = new MaterialDAO(connection);
+        List<MaterialDTO> materials = dao.getMaterials();        
         ArrayList<BillItem> stykliste = new ArrayList<>();
         // Skur i fuld vidde af carport, 500 cm.
         int shedWidth = 500;
@@ -94,7 +91,7 @@ public class RuleCalculatorJUnitTest
         RuleCalculatorPost postCalculator = new RuleCalculatorPost();
         
         // Act
-        int items = postCalculator.calculate(forespoergsel, materialer, stykliste);        
+        int items = postCalculator.calculate(forespoergsel, materials, stykliste);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert

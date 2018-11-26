@@ -35,7 +35,7 @@ public class RooftypeDAOJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();
+            DbConnector.closeConnection();
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -49,7 +49,7 @@ public class RooftypeDAOJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection(); 
+            connection = DbConnector.getConnection(); 
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)
@@ -65,7 +65,8 @@ public class RooftypeDAOJUnitTest
     @Test
     public void testGetRooftypes() throws FogException
     {
-        List<RooftypeDTO> rooftypes = DataFacade.getRooftypes();
+        RooftypeDAO dao = new RooftypeDAO(connection);
+        List<RooftypeDTO> rooftypes = dao.getRooftypes();
         Assert.assertTrue(rooftypes != null && rooftypes.size() > 0);
     }
 }

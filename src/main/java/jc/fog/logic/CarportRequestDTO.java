@@ -7,7 +7,7 @@ package jc.fog.logic;
 public class CarportRequestDTO {
     private int id, rooftypeId, shedId, width, height, length, slope;
     //private int dimensionerId;
-    private String remarks;
+    private String remark;
     private ShedDTO shedDTO;
 
     /**
@@ -19,12 +19,12 @@ public class CarportRequestDTO {
      * @param width
      * @param height
      * @param length
-     * @param remarks
+     * @param remark
      * @param shedLength
      * @param shedWidth 
      */
     public CarportRequestDTO(int id, int rooftypeId, int slope, int shedId, int width, 
-                           int height, int length, String remarks, int shedLength, int shedWidth) {
+                           int height, int length, String remark, int shedLength, int shedWidth) {
         this.id = id;
         this.rooftypeId = rooftypeId;
         this.slope = slope;
@@ -32,7 +32,7 @@ public class CarportRequestDTO {
         this.width = width;
         this.height = height;
         this.length = length;
-        this.remarks = remarks;
+        this.remark = remark;
         
         if (shedId != 0)
             this.shedDTO = new ShedDTO(shedId, shedLength, shedWidth);
@@ -46,19 +46,19 @@ public class CarportRequestDTO {
      * @param width
      * @param height
      * @param length
-     * @param remarks
+     * @param remark
      * @param shedLength
      * @param shedWidth 
      */
     public CarportRequestDTO(int rooftypeId, int slope, int width, 
-                           int height, int length, String remarks, int shedLength, int shedWidth)
+                           int height, int length, String remark, int shedLength, int shedWidth)
     {
         this.rooftypeId = rooftypeId;
         this.slope = slope;
         this.width = width;
         this.height = height;
         this.length = length;
-        this.remarks = remarks;
+        this.remark = remark;
         
         // Since shed id is unknown, if sheds width and length are provided, pass in zero as id.
         if (shedLength > 0 && shedWidth > 0)
@@ -130,12 +130,12 @@ public class CarportRequestDTO {
         this.slope = slope;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
     
     public ShedDTO getShedDTO()

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.Rectangle;
@@ -30,15 +31,18 @@ public class ShowSingleRequestCommand extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+        // Get DataFacade.
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         // get request.
-        CarportRequestDTO foresporgselDTO = DataFacade.getCarPort(id);
+        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // Create HTML form with request's data and set it on http request.
-        request.setAttribute("requestForm", requestToForm(foresporgselDTO));
-        request.setAttribute("ForesporgselDTO", foresporgselDTO);
+        request.setAttribute("requestForm", carportRequestToForm(carportRequestDTO));
+        //request.setAttribute("ForesporgselDTO", carportRequestDTO);
         
+        //Laver en list over hvordan svg skal blive fremvist på siden.
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
-        rectangles.add(new Rectangle(5, 7, 250, 400, "333333"));
-        rectangles.add(new Rectangle(15, 120, 125, 140, "333333"));
+        rectangles.add(new Rectangle(0, 0, 170, 210, "7FFF00"));
+        rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
         
         request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500));
         
@@ -51,10 +55,11 @@ public class ShowSingleRequestCommand extends Command
      * @param item
      * @return 
      */
-    private String requestToForm(CarportRequestDTO item)
+    private String carportRequestToForm(CarportRequestDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        
+        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"
+                + "<a class=\"btn btn-info btn-xs pull-right\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
@@ -76,7 +81,7 @@ public class ShowSingleRequestCommand extends Command
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form>");
         
-        stringBuilder.append("<a href=\"FrontController?command=showrequest\">Tilbage..</a>");
+        
         
         return stringBuilder.toString();
     }

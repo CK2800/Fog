@@ -8,7 +8,7 @@ package jc.fog.logic;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.ShedDTO;
 import jc.fog.logic.BillItem;
 
@@ -20,24 +20,24 @@ public class RuleCalculatorShed extends RuleCalculator
 {
 
     @Override
-    protected int calculate(CarportRequestDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
     {        
-        ShedDTO skur = forespoergsel.getShedDTO();
-        if (skur != null)
+        ShedDTO shed = carportRequest.getShedDTO();
+        if (shed != null)
         {
             // Find materiale til skuret => trykimp. brædder, 19x100mm i 210 cm (id 9)                        
-            MaterialeDTO materiale = materialer.get(8);
+            MaterialDTO material = materials.get(8);
                         
             // Find dimensioner for skur.
-            int laengde = skur.getLaengde();
-            int bredde = skur.getBredde();                        
+            int length = shed.getLength();
+            int width = shed.getWidth();                        
             
             // antal brædder i skurets længderetning, inderste brædder placeres med 6 cm mellemrum.
-            int laengdeAntal = (int)Math.ceil(laengde / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
+            int noLength = (int)Math.ceil(length / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
             // antal brædder i skurets bredde med overlap på 1 cm i hver side.
-            int breddeAntal = (int)Math.ceil(bredde / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
+            int noWidth = (int)Math.ceil(width / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
             
-            stykliste.add(new BillItem(materiale, laengdeAntal + breddeAntal, "skur brædder 1 på 2"));
+            bill.add(new BillItem(material, noLength + noWidth, "skur brædder 1 på 2"));
             return 1; // 1 nyt item på styklisten.
         }
         else 
