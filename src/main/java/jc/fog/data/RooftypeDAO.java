@@ -26,10 +26,10 @@ public class RooftypeDAO extends AbstractDAO
      * Tupler sorteres på Rooftype.id så ResultSet kan gennemløbes og liste af
      * MaterialDTO objekter dannes til hvert RooftypeDTO objekt.
      */
-    private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialeId, m.materialetypeId, m.navn, m.laengde, m.enhed, mt.type as materialeType " +
-                                                    "FROM Rooftype rt INNER JOIN RooftypeMaterial rm ON rt.id = rm.rooftypeId " + 
-                                                    "INNER JOIN Materiale m ON rm.materialId = m.id " + 
-                                                    "INNER JOIN Materialetype mt ON m.materialetypeId = mt.id " +
+    private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialId, m.materialtypeId, m.name, m.length, m.unit, mt.type as materialType " +
+                                                    "FROM Rooftypes rt INNER JOIN RooftypeMaterials rm ON rt.id = rm.rooftypeId " + 
+                                                    "INNER JOIN Materials m ON rm.materialId = m.id " + 
+                                                    "INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id " +
                                                     "ORDER BY rt.id ASC"; 
     
     public RooftypeDAO(Connection connection) throws FogException
@@ -84,12 +84,12 @@ public class RooftypeDAO extends AbstractDAO
             }
             // Tilføj materiale til listen i den aktuelle rooftype.
             materials.add(new MaterialDTO(
-                    rs.getInt("materialeId"), 
-                    rs.getInt("materialetypeId"), 
-                    rs.getString("navn"),
-                    rs.getInt("laengde"),
-                    rs.getString("enhed"),
-                    rs.getString("materialeType")
+                    rs.getInt("materialId"), 
+                    rs.getInt("materialtypeId"), 
+                    rs.getString("name"),
+                    rs.getInt("length"),
+                    rs.getString("unit"),
+                    rs.getString("materialType")
             ));                
         }
         return rooftypes;                    
