@@ -7,8 +7,8 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.BillItem;
 
 /**
@@ -19,27 +19,27 @@ public class RuleCalculatorRafters extends RuleCalculator
 {
 
     @Override
-    protected int calculate(ForesporgselDTO forespoergsel, List<MaterialeDTO> materialer, List<BillItem> stykliste) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
     {
         // er taget med rejsning?
-        if (forespoergsel.getHaeldning() > 0) 
+        if (carportRequest.getSlope() > 0) 
         {
             // udhæng er 30 cm i hver ende.
-            int tagLaengde = forespoergsel.getLaengde() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
+            int roofLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
             // Spær placeres højst 0,89 m fra hinanden.
-            int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
-            MaterialeDTO materiale = null;
-            for(MaterialeDTO m : materialer)
+            int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
+            MaterialDTO material = null;
+            for(MaterialDTO m : materials)
             {
-                if (m.getMaterialetypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_TYPE_ID) // byg selv spær
+                if (m.getMaterialtypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_TYPE_ID) // byg selv spær
                 {
-                    materiale = m;
+                    material = m;
                     break;
                 }
             }
-            if (materiale != null)
+            if (material != null)
             {
-                stykliste.add(new BillItem(materiale, antalSpaer, "byg selv spær"));
+                bill.add(new BillItem(material, noRafters, "byg selv spær"));
                 // 1 nyt item i stykliste.
                 return 1;
             }
@@ -49,23 +49,22 @@ public class RuleCalculatorRafters extends RuleCalculator
         else // fladt tag.
         {
             // spær laves af spærtræ som har varetypeid 4
-            List<MaterialeDTO> spaerTraeList = filter(materialer, 4);
-            sortLengthDesc(spaerTraeList);
+            List<MaterialDTO> rafters = filter(materials, 4);
+            sortLengthDesc(rafters);
             
             // Hent længste træ.
-            MaterialeDTO materiale = spaerTraeList.get(0);
+            MaterialDTO material = rafters.get(0);
             // Hvor mange stk. træ skal der min. bruges?
-            int spaerBredde = forespoergsel.getBredde();
-            int antalBraedder = (int)Math.ceil((float)spaerBredde/materiale.getLaengde());            
+            int raftersWidth = carportRequest.getWidth();
+            int noRequired = (int)Math.ceil((float)raftersWidth/material.getLength());            
             // Find korteste spærtræ med krævet længde.            
-            materiale = findShortest(spaerTraeList, antalBraedder, spaerBredde);
-                        
+            material = findShortest(rafters, noRequired, raftersWidth);                        
             
-            int tagLaengde = forespoergsel.getLaengde();
+            int roofLength = carportRequest.getLength();
             // Spær placeres højst 0,55 cm fra hinanden.
-            int antalSpaer = (int)Math.ceil(tagLaengde / BusinessRules.RAFTER_SPACING);                        
+            int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING);                        
             
-            stykliste.add(new BillItem(materiale, antalSpaer*antalBraedder, "spær fladt tag"));
+            bill.add(new BillItem(material, noRafters*noRequired, "spær fladt tag"));
             
             // Et item tilføjet stykliste.
             return 1;            

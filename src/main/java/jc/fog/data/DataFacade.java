@@ -5,10 +5,12 @@
  */
 package jc.fog.data;
 
+import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
-import jc.fog.logic.MaterialeDTO;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.RooftypeDTO;
 
 /**
  * Facade to expose subsystem methods to clients.
@@ -17,32 +19,54 @@ import jc.fog.logic.MaterialeDTO;
  */
 public class DataFacade
 {
+    private CarportRequestDAO carportRequestDAO;
+    private MaterialDAO materialDAO;
+    private RooftypeDAO rooftypeDAO;
+    
+    public DataFacade(Connection connection) throws FogException
+    {        
+        carportRequestDAO = new CarportRequestDAO(connection);
+        materialDAO = new MaterialDAO(connection);
+        rooftypeDAO = new RooftypeDAO(connection);
+    }
     /**
      * Get all requests (forespørgsler).
-     * @return List of ForesporgselDTO objects.
+     * @return List of CarportRequestDTO objects.
      */
-    public static List<ForesporgselDTO> getCarPorts() throws FogException
+    public List<CarportRequestDTO> getCarports() throws FogException
     {
-        return CarPortDAO.getCarPorts();
+        try
+        {
+            return carportRequestDAO.getCarportRequests();
+        }
+        catch(FogException f)
+        {
+            throw f;
+        }
     }
     
-    public static ForesporgselDTO getCarPort(int id) throws FogException
+    public CarportRequestDTO getCarport(int id) throws FogException
     {
-        return CarPortDAO.getCarportRequest(id);
+        return carportRequestDAO.getCarportRequest(id);
     }
     
-    public static MaterialeDTO getMaterial(int id) throws FogException
+    public MaterialDTO getMaterial(int id) throws FogException
     {
-        return MaterialDAO.getSingleMaterial(id);        
+        return materialDAO.getMaterial(id);        
     }
     
-    public static List<MaterialeDTO> getMaterials() throws FogException
+    public List<MaterialDTO> getMaterials() throws FogException
     {
-        return MaterialDAO.getMaterials();
+        return materialDAO.getMaterials();
     }
     
-    public static boolean createMaterial(int materialeTypeId, String navn, int laengde, String enhed) throws FogException
+    public boolean createMaterial(int materialeTypeId, String name, int length, String unit) throws FogException
     {
-        return MaterialDAO.createMaterial(materialeTypeId, navn, laengde, enhed);
+        return materialDAO.createMaterial(materialeTypeId, name, length, unit);
+    }
+    
+    public List<RooftypeDTO> getRooftypes() throws FogException
+    {
+        return rooftypeDAO.getRooftypes();
     }
 }

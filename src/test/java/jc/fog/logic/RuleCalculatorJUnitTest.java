@@ -6,17 +6,17 @@
 package jc.fog.logic;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnection;
+import jc.fog.data.DbConnector;
 
-import jc.fog.data.CarPortDAO;
 import jc.fog.data.MaterialDAO;
 
 import jc.fog.exceptions.FogException;
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,8 +27,7 @@ import org.junit.Test;
  */
 public class RuleCalculatorJUnitTest
 {
-    static Connection connection = null;
-    static List<MaterialeDTO> materialer;
+    static Connection connection = null;    
     
     public RuleCalculatorJUnitTest()
     {
@@ -44,7 +43,7 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();            
+            DbConnector.closeConnection();            
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -58,12 +57,9 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection(); 
+            connection = DbConnector.getConnection(); 
             System.out.println("Db forbindelse åbnet");
-            
-            if (materialer == null)
-                materialer = DataFacade.getMaterials();
-            
+                                    
             
         }
         catch(Exception e)
@@ -77,30 +73,42 @@ public class RuleCalculatorJUnitTest
     {
     }
     
+    
+    /**
+     * Tester stolpe udregning hvor skuret er i samme bredde som carporten.
+     */
     @Test
-    public void TestCalculator() throws FogException
+    public void testPostCalculator() throws FogException
     {
-
-        materialer = MaterialDAO.getMaterials();        
-        ForesporgselDTO forespoergsel = CarPortDAO.getCarportRequest(1);
-
-        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde());
-        //forespoergsel.setHaeldning(0); fladt tag.
-        forespoergsel.setLaengde(1000);
-        List<BillItem> stykliste = Calculator.beregnStykliste(forespoergsel, materialer);
-        assertTrue(stykliste.size() > 0);
+        // Arrange
+        MaterialDAO dao = new MaterialDAO(connection);
+        List<MaterialDTO> materials = dao.getMaterials();        
+        ArrayList<BillItem> stykliste = new ArrayList<>();
+        // Skur i fuld vidde af carport, 500 cm.
+        int shedWidth = 500;
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(
+                2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);        
+        RuleCalculatorPost postCalculator = new RuleCalculatorPost();
+        
+        // Act
+        int items = postCalculator.calculate(forespoergsel, materials, stykliste);        
+        BillItem billItem = stykliste.get(0);
+                
+        // Assert
+        int expected = 7;
+        Assert.assertEquals(expected, billItem.getCount());
     }
     
-//    public void TestRuleCalculatorBattens() throws FogException
-//    {
-//        ForesporgselDTO forespoergsel = new ForesporgselDTO(0, 0, 0, 0)
-//    }
+    public void TestRuleCalculatorBattens() throws FogException
+    {
+        //CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
+    }
     
 //    @Test
 //    public void CalculateStolper() throws FogException
 //    {
 //        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
 //        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde()); // skur og carport lige brede.
 //        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
 //        
@@ -114,7 +122,7 @@ public class RuleCalculatorJUnitTest
 //    public void CalculateRem() throws FogException
 //    {
 //        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        ForesporgselDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
+//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
 //        forespoergsel.setLaengde(1501);
 //        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
 //        

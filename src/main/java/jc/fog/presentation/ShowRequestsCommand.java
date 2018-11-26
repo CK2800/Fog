@@ -9,8 +9,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 
 import jc.fog.presentation.Commands;
 import jc.fog.presentation.Pages;
@@ -28,9 +29,10 @@ public class ShowRequestsCommand extends Command
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         // Later we will validate a logged in user
-        
+                
         // Get the list of requests.
-        List<ForesporgselDTO> requests = DataFacade.getCarPorts();
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        List<CarportRequestDTO> requests = dataFacade.getCarports();
         
         // Convert the requests to a nicely formattet HTML table and save on request.
         request.setAttribute("requestsTable", requestsToHtml(requests));
@@ -40,11 +42,11 @@ public class ShowRequestsCommand extends Command
     }
     
     /**
-     * Hjælpemetode til formattering af en samling af ForesporgselDTO objekter til html tabel.
-     * @param requests Samling af ForesporgselDTO objekter.
+     * Hjælpemetode til formattering af en samling af CarportRequestDTO objekter til html tabel.
+     * @param requests Samling af CarportRequestDTO objekter.
      * @return String En html tabel.
      */
-    private String requestsToHtml(List<ForesporgselDTO> requests)
+    private String requestsToHtml(List<CarportRequestDTO> requests)
     {
         StringBuilder stringBuilder = new StringBuilder();
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
@@ -55,15 +57,15 @@ public class ShowRequestsCommand extends Command
         table = table.replace("$4", "L&AElig;NGDE");
         table = table.replace("$5", "Se forespørgsel");
         
-        for(ForesporgselDTO item : requests)
+        for(CarportRequestDTO item : requests)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
             row = row.replace("$1", String.valueOf(item.getId()));
-            row = row.replace("$2", String.valueOf(item.getBredde()));
-            row = row.replace("$3", String.valueOf(item.getHoejde()));
-            row = row.replace("$4", String.valueOf(item.getLaengde()));
+            row = row.replace("$2", String.valueOf(item.getWidth()));
+            row = row.replace("$3", String.valueOf(item.getHeight()));
+            row = row.replace("$4", String.valueOf(item.getLength()));
             row = row.replace("$5", "<a href=\"FrontController?command=" + Commands.SHOWSINGLEREQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a> - "
-                    + "<a href=\"FrontController?command=" + Commands.STYKLISTE + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Styklist</a>");
+                    + "<a href=\"FrontController?command=" + Commands.STYKLISTE + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a>");
             stringBuilder.append(row);
             
         }

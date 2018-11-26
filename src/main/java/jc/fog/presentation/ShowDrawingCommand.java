@@ -9,16 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialeDTO;
 import jc.fog.logic.Rectangle;
 
 /**
  *
  * @author Jespe
  */
-public class ShowSingleDrew extends Command{
+public class ShowDrawingCommand extends Command{
     
     
     @Override
@@ -36,6 +34,6 @@ public class ShowSingleDrew extends Command{
         request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250));
         
         
-        return Pages.SINGLE_DREW;
+        return Pages.SINGLE_DRAW;
     }
 }

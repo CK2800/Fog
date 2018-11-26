@@ -1,6 +1,6 @@
 <%
-    String title = "Alle materiale";
-    String tableView = (String)request.getAttribute("materialeTable");
+    String title = "Alle materialer";
+    String tableView = (String)request.getAttribute("materialTable");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

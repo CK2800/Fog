@@ -66,7 +66,7 @@ CREATE TABLE Rooftype(
 CREATE TABLE RooftypeMaterial(
 	rooftypeId int,
     materialId int,
-    materialTypeId int NOT NULL,
+    materialtypeId int NOT NULL,
     slope boolean,    
     -- PRIMARY KEY(rooftypeId, materialTypeId), -- kombination af tagets type og materialets type sikrer, at der eks. kun er 1 belægningstype for hver tagtype. Duer ikke v. plasttag mv. pga flere dimensioner for samme materialetype.
     PRIMARY KEY(rooftypeId, materialId), -- kun 
@@ -75,7 +75,7 @@ CREATE TABLE RooftypeMaterial(
     REFERENCES Rooftype(id)
     ON DELETE CASCADE, -- Hvis tagtype slettes, slettes information om tagtypens materialer også.
     CONSTRAINT fk_RooftypeMaterial_Materialetype
-    FOREIGN KEY(materialTypeId)
+    FOREIGN KEY(materialtypeId)
     REFERENCES Materialetype(id)
     ON DELETE CASCADE, -- Hvis materialetypen slettes, skal information om tagtypens materiale også slettes.
     CONSTRAINT fk_RooftypeMaterial_Materiale
@@ -86,7 +86,7 @@ CREATE TABLE RooftypeMaterial(
 
 CREATE TABLE Forespoergsel(
 	id int PRIMARY KEY AUTO_INCREMENT,
-    roofTypeId int NOT NULL, -- id for tagtypen.
+    rooftypeId int NOT NULL, -- id for tagtypen.
 	/*tagId int NOT NULL, -- carport har altid et tag.*/
     haeldning int NOT NULL default 0, -- hældning er 0 hvis intet andet angives.
 	skurId int, -- carport har ikke altid et skur.

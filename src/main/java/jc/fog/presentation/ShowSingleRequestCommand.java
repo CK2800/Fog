@@ -10,9 +10,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ForesporgselDTO;
+import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.Rectangle;
+
 
 /**
  * Use this command to show a page with the details
@@ -29,11 +31,13 @@ public class ShowSingleRequestCommand extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+        // Get DataFacade.
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         // get request.
-        ForesporgselDTO foresporgselDTO = DataFacade.getCarPort(id);
+        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // Create HTML form with request's data and set it on http request.
-        request.setAttribute("requestForm", requestToForm(foresporgselDTO));
-        request.setAttribute("ForesporgselDTO", foresporgselDTO);
+        request.setAttribute("requestForm", carportRequestToForm(carportRequestDTO));
+        //request.setAttribute("ForesporgselDTO", carportRequestDTO);
         
         //Laver en list over hvordan svg skal blive fremvist på siden.
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
@@ -47,31 +51,31 @@ public class ShowSingleRequestCommand extends Command
     }
     
     /**
-     * Hjælpemetode som danner HTML formular baseret på ForesporgselDTO.
+     * Hjælpemetode som danner HTML formular baseret på CarportRequestDTO.
      * @param item
      * @return 
      */
-    private String requestToForm(ForesporgselDTO item)
+    private String carportRequestToForm(CarportRequestDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"
-                + "<a class=\"btn btn-info btn-xs pull-right\" href=\"FrontController?command=" + Commands.SINGLEDREW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
+                + "<a class=\"btn btn-info btn-xs pull-right\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLaengde()).append("\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHoejde()).append("\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"").append(item.getHaeldning()).append("\" /><br />");
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\"").append(item.getSkurDTO() != null ? " checked" : "").append(" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHeight()).append("\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"").append(item.getSlope()).append("\" /><br />");
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\"").append(item.getShedDTO() != null ? " checked" : "").append(" /><br />");
         
-        if(item.getSkurDTO() == null)
+        if(item.getShedDTO() == null)
         {
             stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"0\" /><br />");
             stringBuilder.append("Skur Bredde:<br /><input type=\"text\" class=\"form-control\" name=\"bredde\" value=\"0\" /><br />");
         }
         else
         {
-            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLaengde()).append("\" /><br />");
-            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getBredde()).append("\" /><br />");
+            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
+            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
         }
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");

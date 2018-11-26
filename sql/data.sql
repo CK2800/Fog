@@ -151,7 +151,7 @@ INSERT INTO Rooftype(type) VALUES('Plast tag');
 INSERT INTO Rooftype(type) VALUES('Pap tag');
 
 -- roof type materials
-INSERT INTO RooftypeMaterial(rooftypeId, materialTypeId, slope, materialId) VALUES (2, 7, true, 25); -- tagsten sort
-INSERT INTO RooftypeMaterial(rooftypeId, materialTypeId, slope, materialId) VALUES (2, 8, true, 26); -- rygsten sort
-INSERT INTO RooftypeMaterial(rooftypeId, materialTypeId, slope, materialId) VALUES (3, 7, false, 24); -- plast tag 360 cm
-INSERT INTO RooftypeMaterial(rooftypeId, materialTypeId, slope, materialId) VALUES (3, 7, false, 23); -- plast tag 600 cm
+INSERT INTO RooftypeMaterial(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 7, true, 25); -- tagsten sort
+INSERT INTO RooftypeMaterial(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 8, true, 26); -- rygsten sort
+INSERT INTO RooftypeMaterial(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 24); -- plast tag 360 cm
+INSERT INTO RooftypeMaterial(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 23); -- plast tag 600 cm

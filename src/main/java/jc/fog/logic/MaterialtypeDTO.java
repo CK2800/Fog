@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author Claus
  */
-public class MaterialetypeDTO
+public class MaterialtypeDTO
 {
     private int id;
     private String type;
@@ -30,21 +30,21 @@ public class MaterialetypeDTO
      * @param id
      * @param type 
      */
-    public MaterialetypeDTO(int id, String type)
+    public MaterialtypeDTO(int id, String type)
     {
         this.id = id;
         this.type = type;
     }
     
     /**
-     * Mapper værdier fra ResultSet tuple til VareDTO.
+     * Mapper værdier fra ResultSet tuple til MaterialtypeDTO.
      * @param rs ResultSet med tuple.
-     * @return MaterialetypeDTO
+     * @return MaterialtypeDTO
      * @throws SQLException 
      */
-    public static MaterialetypeDTO mapVaretype(ResultSet rs) throws SQLException
+    public static MaterialtypeDTO mapMaterialtype(ResultSet rs) throws SQLException
     {
-        return new MaterialetypeDTO(rs.getInt("id"), rs.getString("type"));
+        return new MaterialtypeDTO(rs.getInt("id"), rs.getString("type"));
     }
     
 }
