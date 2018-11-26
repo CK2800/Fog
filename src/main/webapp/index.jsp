@@ -14,14 +14,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= title %></title>
-        <jsp:include page="WEB-INF/bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
+        <jsp:include page="WEB-INF/css/cdnfilesBootstrap.jsp"></jsp:include>
     </head>
     <body>
         
-        <div class="container">
+        <div class="container" style="margin-top: 55px;">
             <jsp:include page="WEB-INF/nav/nav.jsp"></jsp:include>
             <h1><%= title %></h1>
-            <div><%= errorText %></div> 
+            <div><%= errorText %></div>
         </div>
+        <jsp:include page="WEB-INF/footer/footer.jsp"></jsp:include>
     </body>
 </html>

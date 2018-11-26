@@ -17,7 +17,7 @@ public class Drawing {
     
     private static String initializeSvg(int width, int height) // viewport
     {
-        String svg = "<svg viewBox=\"0 0 $1 $2\" width=\"$1\" height=\"$2\">$body</svg>";
+        String svg = "<svg width=\"$1\" height=\"$2\" style=\"overflow:visible;\">$body</svg>";
         svg = svg.replace("$1", String.valueOf(width));
         svg = svg.replace("$2", String.valueOf(height));       
         return svg;
@@ -25,7 +25,8 @@ public class Drawing {
     
     public static String drawSvg(List<Rectangle> rectangles, int svgWidth, int svgHeight)
     {
-        //rectangles skal tjek op på om den har en værdi som en større end svgWidth & svgHeight.
+        //rectangles must check if it has a value greater than svgWidth & svgHeight.
+        //HERE
         
         // Initialiser <svg> element.
         String svg = initializeSvg(svgWidth, svgHeight);

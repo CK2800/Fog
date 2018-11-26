@@ -32,6 +32,7 @@ public class ShowSingleDrew extends Command{
         rectangles.add(new Rectangle(0, 0, 170, 180, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 825, 140, "D2691E"));
         
+        //Her bliver højde og bredde til svg filen angivet.
         request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250));
         
         
