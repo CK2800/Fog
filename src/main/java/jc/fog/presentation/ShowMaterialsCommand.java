@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
 
@@ -21,7 +22,8 @@ public class ShowMaterialsCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        List<MaterialDTO> materials = DataFacade.getMaterials();
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        List<MaterialDTO> materials = dataFacade.getMaterials();
         request.setAttribute("materialTable", materialsToHtml(materials));
         
         return Pages.ALL_MATERIALS;

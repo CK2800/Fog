@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.LogicFacade;
@@ -28,10 +29,12 @@ public class ShowBillCommand extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+        // Create DataFacade
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         // get request.
-        CarportRequestDTO carportRequestDTO = DataFacade.getCarport(id);
+        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // get materials.
-        List<MaterialDTO> materials = DataFacade.getMaterials();
+        List<MaterialDTO> materials = dataFacade.getMaterials();
         // Calculate the bill of materials.
         List<BillItem> bill = LogicFacade.calculateBill(carportRequestDTO, materials);
         // Calculate string with carport dimensions.

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.Rectangle;
@@ -30,8 +31,10 @@ public class ShowSingleRequestCommand extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+        // Get DataFacade.
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         // get request.
-        CarportRequestDTO carportRequestDTO = DataFacade.getCarport(id);
+        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // Create HTML form with request's data and set it on http request.
         request.setAttribute("requestForm", carportRequestToForm(carportRequestDTO));
         //request.setAttribute("ForesporgselDTO", carportRequestDTO);
