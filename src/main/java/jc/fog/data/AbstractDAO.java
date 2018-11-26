@@ -14,7 +14,7 @@ import jc.fog.exceptions.FogException;
  */
 public class AbstractDAO
 {    
-    protected static Connection connection;
+    protected static Connection connection = null;
     
     public AbstractDAO(Connection connection) throws FogException
     {

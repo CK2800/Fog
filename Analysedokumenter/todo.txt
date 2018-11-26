@@ -1,7 +1,7 @@
 Fra 26-11-18:
-Husk at ændre i DAO'er - se CarportDAO for detaljer, vedr. db forbindelse.
-Skriv kommentarer for hvordan forbindelsen oprettes.
-Dvs. ingen statiske metoder i DAO'erne heller.
+OK: Husk at ændre i DAO'er - se CarportDAO for detaljer, vedr. db forbindelse.
+OK: Skriv kommentarer for hvordan forbindelsen oprettes.
+OK: Dvs. ingen statiske metoder i DAO'erne heller.
 Og der er unit tests der skal laves lidt om.
 Facader skal ikke være statiske.
 

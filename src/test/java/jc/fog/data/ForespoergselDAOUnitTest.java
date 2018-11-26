@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class ForespoergselDAOUnitTest
 {
-    static DbConnector dbConnection = null;
+    static Connection connection = null;
     public ForespoergselDAOUnitTest()
     {
     }
@@ -38,8 +38,8 @@ public class ForespoergselDAOUnitTest
     public static void tearDownClass()
     {
         try
-        {          
-            dbConnection.closeConnection();            
+        {   
+            DbConnector.closeConnection();            
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -53,7 +53,7 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            dbConnection = new DbConnector();            
+            connection = DbConnector.getConnection();
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)
@@ -73,7 +73,7 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testConnection() throws Exception
     {
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DbConnector.getConnection();
         if (connection != null)
         {
             String tilstand = connection.isClosed() ? "lukket" : "åben";
@@ -81,22 +81,23 @@ public class ForespoergselDAOUnitTest
         }
         assertNotNull(connection);
     }
-   @Test(expected = FogException.class)
-   public void testCreateCarportRequestFailure() throws Exception
-   {
+    
+    @Test(expected = FogException.class)    
+    public void testCreateCarportRequestFailure() throws Exception
+    {
        // Opret carportdao.
-        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
          // luk forbindelsen så vi får fejl.
-        dbConnection.closeConnection();
+        DbConnector.closeConnection();
         boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");        
         assertFalse(success);        
-   }
+    }
     
     @Test
     public void testOpretForespoergselMedSkur() throws Exception
     {   
         // Opret carportdao som opretter forbindelse, hvis den mangler.
-        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);         
+        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());         
         boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);        
     }
@@ -104,7 +105,7 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testOpretForespoergselUdenSkur() throws FogException
     {
-        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
         boolean success = carportDAO.createCarportRequest(2, 30, 500, 125, 300,0,0,"Uden skur");
         assertTrue(success);
     }
@@ -112,7 +113,7 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testHentAlleForespoergsler() throws FogException
     {        
-        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
         carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         List<CarportRequestDTO> requests = carportDAO.getCarportRequests();
         assertTrue(requests.size() > 0);        
@@ -121,7 +122,7 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testHentEnkeltForespørgsel() throws FogException
     {
-        CarportRequestDAO carportDAO = new CarportRequestDAO(dbConnection);
+        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
         carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         CarportRequestDTO request = carportDAO.getCarportRequest(1);
         assertTrue(request != null);

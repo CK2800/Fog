@@ -35,7 +35,7 @@ public class DbConnector
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public Connection getConnection() throws FogException 
+    public static Connection getConnection() throws FogException 
     {
         if ( connection == null ) {
             try
@@ -58,7 +58,7 @@ public class DbConnector
         return connection;
     }
     
-    public void closeConnection() throws SQLException
+    public static void closeConnection() throws SQLException
     {
         if (connection != null)
             connection.close();

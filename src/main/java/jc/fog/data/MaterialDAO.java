@@ -42,6 +42,12 @@ public class MaterialDAO extends AbstractDAO
      */
     public static final String GET_MATERIAL_SQL = GET_MATERIALS_SQL + " WHERE m.id = ?";
 
+    /**
+     * Konstruktør som kræver et Connection objekt.
+     * Connection objektet gemmes i AbstractDAO.
+     * @param connection
+     * @throws FogException 
+     */
     public MaterialDAO(Connection connection) throws FogException
     {
        super(connection);
@@ -63,17 +69,9 @@ public class MaterialDAO extends AbstractDAO
         try
         {
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
-            ArrayList<MaterialDTO> materials = new ArrayList<MaterialDTO>();            
+            ResultSet rs = pstm.executeQuery();
             
-            // try with ressources
-            try(ResultSet rs = pstm.executeQuery())
-            {
-                while(rs.next())
-                {                    
-                    materials.add(mapMaterial(rs));
-                }                
-            }
-            return materials;
+            return mapMaterials(rs);
         }
         catch(Exception e)
         {
@@ -98,6 +96,26 @@ public class MaterialDAO extends AbstractDAO
             rs.getString("enhed"),
             rs.getString("type")
         );
+    }
+    
+    /**
+     * Henter værdier fra ResultSet tuples til liste af MaterialDTO.
+     * @param rs
+     * @return
+     * @throws SQLException 
+     */
+    private List<MaterialDTO> mapMaterials(ResultSet rs) throws SQLException
+    {
+        List<MaterialDTO> materials = new ArrayList<MaterialDTO>();
+        
+        while(rs.next())
+        {
+            materials.add(mapMaterial(rs));
+        }
+        
+        if (materials.isEmpty())
+            return null;
+        return materials;
     }
     
     /**
