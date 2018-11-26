@@ -15,14 +15,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= title %></title>
         <jsp:include page="WEB-INF/css/cdnfilesBootstrap.jsp"></jsp:include>
+        <link href="WEB-INF/css/css.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         
-        <div class="container" style="margin-top: 55px;">
-            <jsp:include page="WEB-INF/nav/nav.jsp"></jsp:include>
-            <h1><%= title %></h1>
-            <div><%= errorText %></div>
-        </div>
-        <jsp:include page="WEB-INF/footer/footer.jsp"></jsp:include>
+            
+            <jsp:include page="WEB-INF/view/logo/logo.jsp"></jsp:include> <%-- Logo her ---%>
+            <jsp:include page="WEB-INF/view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
+            
+            <div class="container" style="min-height: 500px;">
+                <%= errorText %>
+            </div>
+            
+            <jsp:include page="WEB-INF/view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
     </body>
 </html>
