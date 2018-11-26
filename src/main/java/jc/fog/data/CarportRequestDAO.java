@@ -152,25 +152,16 @@ public class CarportRequestDAO extends AbstractDAO{
             int shedId = 0;
             // Først oprettes skur, hvis det ønskes.
             if (shedLength > 0 && shedWidth > 0) // skur ønskes.
-            {
-                pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );
-                pstm.setInt(1, shedLength);
-                pstm.setInt(2, shedWidth);
-                pstm.executeUpdate();
-                ResultSet rs = pstm.getGeneratedKeys();
-                // Move the cursor to first record.
-                rs.next();
-                //Q&D - her skal vi have noget error checking...
-                shedId = rs.getInt(1);
-            }
+                shedId = createShed(shedLength, shedWidth);                
+            
             // Opret forespørgsel, evt. med skur.
             pstm = connection.prepareStatement(CREATE_CPREQUEST_SQL);
             pstm.setInt(1, productId);
             pstm.setInt(2, slope);           
-            
+            // Hvis skur ønskes, sættes dets id i sql...
             if (shedId != 0)
                 pstm.setInt(3, shedId);                
-            else
+            else // ... intet skur medfører null i sql.
                 pstm.setNull(3, Types.INTEGER);
             
             pstm.setInt(4, width);
@@ -187,5 +178,31 @@ public class CarportRequestDAO extends AbstractDAO{
         {
             throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
         }        
-    }    
+    }
+
+    /**
+     * Hjælpemetode som opretter skuret. 
+     * @param length skurets længde.
+     * @param width skurets bredde.
+     * @return id på det nyoprettede skur.
+     * @throws FogException 
+     */
+    private int createShed(int length, int width) throws FogException
+    {
+        try
+        {
+            PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );
+            pstm.setInt(1, length);
+            pstm.setInt(2, width);
+            pstm.executeUpdate();
+            ResultSet rs = pstm.getGeneratedKeys();
+            // Move the cursor to first record.
+            rs.next();            
+            return rs.getInt(1); 
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Skur blev ikke oprettet.", e.getMessage());
+        }
+    }
 }

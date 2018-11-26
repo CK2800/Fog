@@ -1,4 +1,4 @@
-1. ForesporgselDAO.createForespoergsel SKAL IKKE oprette skuret selv. Lav en metode til det. SOLID princippet.
+OK: 1. ForesporgselDAO.createForespoergsel SKAL IKKE oprette skuret selv. Lav en metode til det. SOLID princippet.
 OK: 2. Rename DK->Engelsk.
 =======
 Fra 26-11-18:
