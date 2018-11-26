@@ -153,7 +153,7 @@ public class MaterialDAO
      * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
      * @throws FogException 
      */
-    public static MaterialeDTO getSingleMaterial(int getMaterialId) throws FogException
+    public static MaterialeDTO getMaterial(int getMaterialId) throws FogException
     {
         MaterialeDTO materiale = null;
         try

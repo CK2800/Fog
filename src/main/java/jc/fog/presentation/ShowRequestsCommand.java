@@ -30,7 +30,7 @@ public class ShowRequestsCommand extends Command
         // Later we will validate a logged in user
         
         // Get the list of requests.
-        List<CarportRequestDTO> requests = DataFacade.getCarPorts();
+        List<CarportRequestDTO> requests = DataFacade.getCarports();
         
         // Convert the requests to a nicely formattet HTML table and save on request.
         request.setAttribute("requestsTable", requestsToHtml(requests));

@@ -22,19 +22,19 @@ public class DataFacade
      * Get all requests (forespørgsler).
      * @return List of CarportRequestDTO objects.
      */
-    public static List<CarportRequestDTO> getCarPorts() throws FogException
+    public static List<CarportRequestDTO> getCarports() throws FogException
     {
         return CarportDAO.getCarportRequests();
     }
     
-    public static CarportRequestDTO getCarPort(int id) throws FogException
+    public static CarportRequestDTO getCarport(int id) throws FogException
     {
         return CarportDAO.getCarportRequest(id);
     }
     
     public static MaterialeDTO getMaterial(int id) throws FogException
     {
-        return MaterialDAO.getSingleMaterial(id);        
+        return MaterialDAO.getMaterial(id);        
     }
     
     public static List<MaterialeDTO> getMaterials() throws FogException

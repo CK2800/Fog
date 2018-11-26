@@ -29,7 +29,7 @@ public class ShowStyklisteCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        CarportRequestDTO foresporgselDTO = DataFacade.getCarPort(id);
+        CarportRequestDTO foresporgselDTO = DataFacade.getCarport(id);
         // get materials.
         List<MaterialeDTO> materialer = DataFacade.getMaterials();
         // Calculate the bill of materials.
