@@ -13,7 +13,7 @@ import jc.fog.logic.CarportRequestDTO;
  *
  * @author Jesper
  */
-public class CarPortDAO {
+public class CarportDAO {
     
     private static Connection connection;
     
@@ -83,7 +83,7 @@ public class CarPortDAO {
      * Den henter alt i databasen hvor alt sammen bliver brugt senere.
      * @return - Alle de forespørgsel der findes i databasen.
      */
-    public static ArrayList<CarportRequestDTO> getCarPorts() throws FogException{
+    public static ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
         
         //kan være den skal laves om.
         ArrayList<CarportRequestDTO> carPorts = new ArrayList<CarportRequestDTO>();
@@ -137,7 +137,7 @@ public class CarPortDAO {
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    public static boolean createForesporgsel(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String Remark) throws FogException
+    public static boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String Remark) throws FogException
     {
         //Den "space removed" i siderne
         Remark = Remark.trim();

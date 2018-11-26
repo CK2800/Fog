@@ -83,21 +83,21 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testOpretForespoergselMedSkur() throws FogException
     {        
-        boolean success = CarPortDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        boolean success = CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         assertTrue(success);        
     }
     
     @Test
     public void testOpretForespoergselUdenSkur() throws FogException
     {
-        boolean success = CarPortDAO.createForesporgsel(2, 30, 500, 125, 300,0,0,"Uden skur");
+        boolean success = CarportDAO.createCarportRequest(2, 30, 500, 125, 300,0,0,"Uden skur");
         assertTrue(success);
     }
     
     @Test
     public void testHentAlleForespoergsler() throws FogException
     {        
-        CarPortDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         List<CarportRequestDTO> requests = DataFacade.getCarPorts();
         assertTrue(requests.size() > 0);        
     }
@@ -105,7 +105,7 @@ public class ForespoergselDAOUnitTest
     @Test
     public void testHentEnkeltForespørgsel() throws FogException
     {
-        CarPortDAO.createForesporgsel(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        CarportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         CarportRequestDTO request = DataFacade.getCarPort(1);
         assertTrue(request != null);
     }

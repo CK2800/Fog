@@ -24,12 +24,12 @@ public class DataFacade
      */
     public static List<CarportRequestDTO> getCarPorts() throws FogException
     {
-        return CarPortDAO.getCarPorts();
+        return CarportDAO.getCarportRequests();
     }
     
     public static CarportRequestDTO getCarPort(int id) throws FogException
     {
-        return CarPortDAO.getCarportRequest(id);
+        return CarportDAO.getCarportRequest(id);
     }
     
     public static MaterialeDTO getMaterial(int id) throws FogException
