@@ -16,15 +16,8 @@ public class AbstractDAO
 {    
     protected static Connection connection;
     
-    public AbstractDAO(DbConnection dbConnection) throws FogException
+    public AbstractDAO(Connection connection) throws FogException
     {
-       try
-       {
-           connection = dbConnection.getConnection();
-       }
-       catch(Exception e)
-       {
-           throw new FogException("Databaseforbindelse kunne ikke oprettes.", e.getMessage());
-       }
+        this.connection = connection;
     }   
 }

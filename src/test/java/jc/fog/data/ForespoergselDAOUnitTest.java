@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class ForespoergselDAOUnitTest
 {
-    static DbConnection dbConnection = null;
+    static DbConnector dbConnection = null;
     public ForespoergselDAOUnitTest()
     {
     }
@@ -53,7 +53,7 @@ public class ForespoergselDAOUnitTest
     {
         try
         {
-            dbConnection = new DbConnection();            
+            dbConnection = new DbConnector();            
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)

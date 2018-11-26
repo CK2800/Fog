@@ -25,20 +25,15 @@ public class CarportRequestDAO extends AbstractDAO{
     final static String CREATE_CPREQUEST_SQL = "INSERT INTO Forespoergsel(rooftypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
     
     final static String CREATE_SHED_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
-    
-    // Hvad laver denne forespørgsel Get ELLER create ??
-    //final static String GET_CREATE_FORESPORGSEL_SQL = "INSERT INTO Forespoergsel(rooftypeId, haeldning, skurId, bredde, hoejde, laengde, bemaerkning) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    // Det her navn er da helt i skoven... Henter den eller opretter den og er det skur eller forespørgsel?
-    // final static String GET_CREATE_SKUR_FORESPORGSEL_SQL = "INSERT INTO Skur(laengde, bredde) VALUES(?,?)";
-
+        
     /**
-     * Konstruktør som fordrer en DbConnection instans.     
-     * @param dbConnection
+     * Konstruktør som fordrer en DbConnector instans.     
+     * @param connection
      * @throws FogException 
      */
-    public CarportRequestDAO(DbConnection dbConnection) throws FogException
+    public CarportRequestDAO(Connection connection) throws FogException
     {          
-        super(dbConnection);        
+        super(connection);        
     }
     
     /**
@@ -190,6 +185,5 @@ public class CarportRequestDAO extends AbstractDAO{
         {
             throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
         }        
-    }
-    
+    }    
 }

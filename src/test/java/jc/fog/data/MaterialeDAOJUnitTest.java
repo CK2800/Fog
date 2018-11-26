@@ -37,7 +37,7 @@ public class MaterialeDAOJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();
+            DbConnector.closeConnection();
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -51,7 +51,7 @@ public class MaterialeDAOJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection();
+            connection = DbConnector.getConnection();
             System.out.println("Db forbindelse åbnet");
         }
         catch(Exception e)

@@ -31,10 +31,10 @@ public class ShowSingleRequestCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        CarportRequestDTO foresporgselDTO = DataFacade.getCarport(id);
+        CarportRequestDTO carportRequestDTO = DataFacade.getCarport(id);
         // Create HTML form with request's data and set it on http request.
-        request.setAttribute("requestForm", requestToForm(foresporgselDTO));
-        request.setAttribute("ForesporgselDTO", foresporgselDTO);
+        request.setAttribute("requestForm", carportRequestToForm(carportRequestDTO));
+        //request.setAttribute("ForesporgselDTO", carportRequestDTO);
         
         //Laver en list over hvordan svg skal blive fremvist på siden.
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
@@ -52,7 +52,7 @@ public class ShowSingleRequestCommand extends Command
      * @param item
      * @return 
      */
-    private String requestToForm(CarportRequestDTO item)
+    private String carportRequestToForm(CarportRequestDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"

@@ -16,7 +16,7 @@ import jc.fog.exceptions.FogException;
  *
  * @author Claus
  */
-public class DbConnection
+public class DbConnector
 {    
     /**
     * Class of the database driver.
@@ -24,7 +24,7 @@ public class DbConnection
     public final static String DRIVER_CLASS = "com.mysql.jdbc.Driver";        
 
     /**
-     * Statisk, deles på tværs af alle instanser af DbConnection.
+     * Statisk, deles på tværs af alle instanser af DbConnector.
      */
     private static Connection connection;
     
@@ -44,7 +44,7 @@ public class DbConnection
 
                 // Read the properties of the database connection from target/classes/db.properties
                 Properties dbProperties = new Properties();
-                InputStream inputStream = DbConnection.class.getResourceAsStream("/db.properties");
+                InputStream inputStream = DbConnector.class.getResourceAsStream("/db.properties");
                 dbProperties.load(inputStream);                
                 connection = DriverManager.getConnection(dbProperties.getProperty("URL"), 
                                                          dbProperties.getProperty("USERNAME"), 

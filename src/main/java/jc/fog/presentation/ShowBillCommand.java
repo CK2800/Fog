@@ -20,7 +20,7 @@ import jc.fog.logic.BillItem;
  * 
  * @author Claus
  */
-public class ShowStyklisteCommand extends Command
+public class ShowBillCommand extends Command
 {
 
     @Override
@@ -29,22 +29,22 @@ public class ShowStyklisteCommand extends Command
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
         // get request.
-        CarportRequestDTO foresporgselDTO = DataFacade.getCarport(id);
+        CarportRequestDTO carportRequestDTO = DataFacade.getCarport(id);
         // get materials.
-        List<MaterialDTO> materialer = DataFacade.getMaterials();
+        List<MaterialDTO> materials = DataFacade.getMaterials();
         // Calculate the bill of materials.
-        List<BillItem> stykliste = LogicFacade.calculateBill(foresporgselDTO, materialer);
+        List<BillItem> bill = LogicFacade.calculateBill(carportRequestDTO, materials);
         // Calculate string with carport dimensions.
-        String carportDimensioner = String.valueOf(foresporgselDTO.getWidth()) + " x " + String.valueOf(foresporgselDTO.getLength()) + " cm.";
+        String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
         
         // Format the bill of materials nicely for view.
-        request.setAttribute("stykliste", styklisteToHtml(stykliste));
-        request.setAttribute("carportDimensioner", carportDimensioner);
+        request.setAttribute("stykliste", billToHtml(bill));
+        request.setAttribute("carportDimensioner", carportDimensions);
         
         return Pages.BILL;
     }
     
-    private String styklisteToHtml(List<BillItem> stykliste)
+    private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
@@ -57,7 +57,7 @@ public class ShowStyklisteCommand extends Command
         table = table.replace("$5", "Instruks");
         
         
-        for(BillItem item : stykliste)
+        for(BillItem item : bill)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
             row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialDTO().getUnit()));

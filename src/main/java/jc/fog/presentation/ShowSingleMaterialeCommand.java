@@ -25,14 +25,14 @@ public class ShowSingleMaterialeCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         int getId = Integer.parseInt(request.getParameter("id"));
-        MaterialDTO materialeDTO = DataFacade.getMaterial(getId);
-        request.setAttribute("materialeForm", requestToForm(materialeDTO));
+        MaterialDTO materialDTO = DataFacade.getMaterial(getId);
+        request.setAttribute("materialeForm", materialToForm(materialDTO));
         
         
         return Pages.SINGLE_MATERIAL;
     }
     
-    private String requestToForm(MaterialDTO item)
+    private String materialToForm(MaterialDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         

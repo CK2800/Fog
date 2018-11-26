@@ -20,9 +20,7 @@ import jc.fog.logic.RooftypeDTO;
  * @author Claus
  */
 public class RooftypeDAO extends AbstractDAO
-{
-    private static Connection connection;
-    
+{   
     /**
      * Henter tupler i Rooftype og relateret data fra Materiale og Materialetype.
      * Tupler sorteres på Rooftype.id så ResultSet kan gennemløbes og liste af
@@ -34,20 +32,19 @@ public class RooftypeDAO extends AbstractDAO
                                                     "INNER JOIN Materialetype mt ON m.materialetypeId = mt.id " +
                                                     "ORDER BY rt.id ASC"; 
     
-    public RooftypeDAO(DbConnection con) throws FogException
+    public RooftypeDAO(Connection connection) throws FogException
     {
-        super(con);        
+        super(connection);        
     }
     
     /**
      * Henter tagtyper fra databasen.
      * @return 
      */
-    protected static List<RooftypeDTO> getRooftypes() throws FogException
+    protected List<RooftypeDTO> getRooftypes() throws FogException
     {
         try
-        {
-            connection = DbConnection.getConnection();
+        {            
             List<RooftypeDTO> rooftypes = new ArrayList<RooftypeDTO>();
             // Opret sql og kør.
             PreparedStatement pstm = connection.prepareStatement(GET_ROOFTYPES_SQL);
@@ -70,7 +67,7 @@ public class RooftypeDAO extends AbstractDAO
      * @return
      * @throws SQLException 
      */
-    private static List<RooftypeDTO> mapRooftypes(ResultSet rs) throws SQLException
+    private List<RooftypeDTO> mapRooftypes(ResultSet rs) throws SQLException
     {
         RooftypeDTO rooftype = null;
         List<RooftypeDTO> rooftypes = new ArrayList<>();

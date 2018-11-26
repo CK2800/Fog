@@ -5,18 +5,15 @@
  */
 package jc.fog.presentation;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
 
 /**
  *
  * @author Jesper
  */
-public class AddProduct extends Command
+public class AddProductCommand extends Command
 {
     
     

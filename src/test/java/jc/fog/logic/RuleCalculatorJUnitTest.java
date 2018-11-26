@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnection;
+import jc.fog.data.DbConnector;
 
 import jc.fog.data.MaterialDAO;
 
@@ -44,7 +44,7 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            DbConnection.closeConnection();            
+            DbConnector.closeConnection();            
             System.out.println("Db forbindelse lukket.");
         }
         catch(Exception e)
@@ -58,7 +58,7 @@ public class RuleCalculatorJUnitTest
     {
         try
         {
-            connection = DbConnection.getConnection(); 
+            connection = DbConnector.getConnection(); 
             System.out.println("Db forbindelse åbnet");
             
             if (materialer == null)

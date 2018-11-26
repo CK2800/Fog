@@ -20,9 +20,7 @@ import jc.fog.logic.MaterialDTO;
  * @author Claus
  */
 public class MaterialDAO extends AbstractDAO
-{
-    private static Connection connection;
-       
+{      
     /**
      * SQL som henter materialer og deres materialetyper.
      */
@@ -44,9 +42,9 @@ public class MaterialDAO extends AbstractDAO
      */
     public static final String GET_MATERIAL_SQL = GET_MATERIALS_SQL + " WHERE m.id = ?";
 
-    public MaterialDAO(DbConnection con) throws FogException
+    public MaterialDAO(Connection connection) throws FogException
     {
-       super(con);
+       super(connection);
     }
     
     /**
@@ -54,7 +52,7 @@ public class MaterialDAO extends AbstractDAO
      * @return
      * @throws FogException 
      */
-    public static List<MaterialDTO> getMaterials() throws FogException
+    public List<MaterialDTO> getMaterials() throws FogException
     {
         /*
         Pseudo:
@@ -89,7 +87,7 @@ public class MaterialDAO extends AbstractDAO
      * @return MaterialDTO
      * @throws SQLException 
      */
-    private static MaterialDTO mapMaterial(ResultSet rs) throws SQLException
+    private MaterialDTO mapMaterial(ResultSet rs) throws SQLException
     {        
         return new MaterialDTO
         (
@@ -111,7 +109,7 @@ public class MaterialDAO extends AbstractDAO
      * @return - Skal bare fortælle om man har opret eller ej?
      * @throws FogException 
      */
-    public static boolean createMaterial(int materialtypeId, String name, int length, String unit) throws FogException
+    public boolean createMaterial(int materialtypeId, String name, int length, String unit) throws FogException
     {
         //Den "space removed" i siderne
         name = name.trim();
@@ -141,7 +139,7 @@ public class MaterialDAO extends AbstractDAO
      * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
      * @throws FogException 
      */
-    public static MaterialDTO getMaterial(int materialId) throws FogException
+    public MaterialDTO getMaterial(int materialId) throws FogException
     {
         MaterialDTO material = null;
         try

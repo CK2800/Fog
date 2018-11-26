@@ -10,25 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialDTO;
 
 /**
  *
  * @author Jespe
  */
-public class ShowMaterialeCommand extends Command {
+public class ShowMaterialsCommand extends Command {
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        List<MaterialDTO> getListMateriale = DataFacade.getMaterials();
-        request.setAttribute("materialeTable", requestsToHtml(getListMateriale));
+        List<MaterialDTO> materials = DataFacade.getMaterials();
+        request.setAttribute("materialTable", materialsToHtml(materials));
         
         return Pages.ALL_MATERIALS;
     }
     
-    private String requestsToHtml(List<MaterialDTO> requests)
+    private String materialsToHtml(List<MaterialDTO> materials)
     {
         StringBuilder stringBuilder = new StringBuilder();
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th><th>$6</th></tr></thead><tbody>$body</tbody></table>";        
@@ -40,7 +39,7 @@ public class ShowMaterialeCommand extends Command {
         table = table.replace("$5", "Enhed");
         table = table.replace("$6", "Se forespørgsel");
         
-        for(MaterialDTO item : requests)
+        for(MaterialDTO item : materials)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td><td>$6</td></tr>";
             row = row.replace("$1", String.valueOf(item.getId()));
