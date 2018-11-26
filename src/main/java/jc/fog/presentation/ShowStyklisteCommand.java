@@ -60,11 +60,11 @@ public class ShowStyklisteCommand extends Command
         for(BillItem item : stykliste)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
-            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialeDTO().getEnhed()));
-            row = row.replace("$2", String.valueOf(item.getMaterialeDTO().getNavn()));
-            row = row.replace("$3", String.valueOf(item.getMaterialeDTO().getMaterialetypeDTO().getType()));
-            row = row.replace("$4", String.valueOf(item.getMaterialeDTO().getLaengde()));
-            row = row.replace("$5", String.valueOf(item.getHjaelpetekst()));
+            row = row.replace("$1", String.valueOf(item.getCount()).concat(" ").concat(item.getMaterialDTO().getEnhed()));
+            row = row.replace("$2", String.valueOf(item.getMaterialDTO().getNavn()));
+            row = row.replace("$3", String.valueOf(item.getMaterialDTO().getMaterialetypeDTO().getType()));
+            row = row.replace("$4", String.valueOf(item.getMaterialDTO().getLaengde()));
+            row = row.replace("$5", String.valueOf(item.getRemarks()));
             //row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }

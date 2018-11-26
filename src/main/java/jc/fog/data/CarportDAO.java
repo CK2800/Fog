@@ -86,7 +86,7 @@ public class CarportDAO {
     public static ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
         
         //kan være den skal laves om.
-        ArrayList<CarportRequestDTO> carPorts = new ArrayList<CarportRequestDTO>();
+        ArrayList<CarportRequestDTO> carportRequests = new ArrayList<CarportRequestDTO>();
         
         try{
             //laver connection
@@ -100,7 +100,7 @@ public class CarportDAO {
                 while(rs.next())//Løber alle igennem
                 {
                     System.out.println("rs:" + rs.toString());
-                     carPorts.add(new CarportRequestDTO(
+                     carportRequests.add(new CarportRequestDTO(
                                 rs.getInt("id"),
                                 rs.getInt("rooftypeId"),
                                 rs.getInt("haeldning"),
@@ -120,7 +120,7 @@ public class CarportDAO {
            //Der er sket en fejl her
            throw new FogException("Error:" + e.getMessage());
        }   
-       return carPorts;
+       return carportRequests;
     }
 
     /**
@@ -132,15 +132,15 @@ public class CarportDAO {
      * @param length
      * @param shedLength
      * @param shedWidth
-     * @param Remark - den kan evt være kommentar til Fog.
+     * @param remark - den kan evt være kommentar til Fog.
      * @return
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    public static boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String Remark) throws FogException
+    public static boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {
         //Den "space removed" i siderne
-        Remark = Remark.trim();
+        remark = remark.trim();
         
         try
         {
@@ -173,7 +173,7 @@ public class CarportDAO {
             pstm.setInt(4, width);
             pstm.setInt(5, height);
             pstm.setInt(6, length);
-            pstm.setString(7, Remark);
+            pstm.setString(7, remark);
                             
             // If exactly one row was affected, return true.
             return pstm.executeUpdate() == 1;                

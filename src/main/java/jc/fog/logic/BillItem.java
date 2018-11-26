@@ -13,19 +13,19 @@ import java.util.List;
  */
 public class BillItem
 {
-    private MaterialeDTO materiale;
+    private MaterialeDTO material;
     private int count;
-    private String hjaelpetekst;
+    private String remarks;
     
-    public MaterialeDTO getMaterialeDTO(){return materiale;}
+    public MaterialeDTO getMaterialDTO(){return material;}
     public int getCount(){return count;}
-    public String getHjaelpetekst(){return hjaelpetekst;}
+    public String getRemarks(){return remarks;}
     
-    public BillItem(MaterialeDTO materiale, int count, String hjaelpetekst)
+    public BillItem(MaterialeDTO material, int count, String remarks)
     {
-        this.materiale = materiale;
+        this.material = material;
         this.count = count;
-        this.hjaelpetekst = hjaelpetekst;
+        this.remarks = remarks;
     }
     
     /**

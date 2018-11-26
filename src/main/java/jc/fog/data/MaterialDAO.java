@@ -22,20 +22,7 @@ import jc.fog.logic.MaterialeDTO;
 public class MaterialDAO
 {
     private static Connection connection;
-    /**
-     * Sql som henter alle de materialer i varetabellen der har dimensioner.
-     * Således skelnes mellem materialer der indgår i carport beregningen og øvrige materialer.
-     * Sortering sker på Vare.id ASC, Dimensioner.laengde ASC.
-     */
-//    public static final String GET_PRODUCT_TO_CALCULATION_SQL = "SELECT v.id, v.varetypeId, v.navn, v.hjaelpetekst, v.pris, " + 
-//                                                            "d.laengde, d.id AS dimensionId, vt.type " +
-//                                                            "FROM Vare v INNER JOIN Varetype vt ON v.varetypeId = vt.id " +
-//                                                            "INNER JOIN VareDimensioner vd ON v.id = vd.vareId " +
-//                                                            "INNER JOIN Dimensioner d ON vd.dimensionerId = d.id    " +
-//                                                            "ORDER BY v.id ASC, laengde ASC;";
-
-    //det er for, at fremvise de enkelt værdier.
-    
+       
     /**
      * SQL som henter materialer og deres materialetyper.
      */
@@ -73,8 +60,7 @@ public class MaterialDAO
         {
             connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
-            ArrayList<MaterialeDTO> materials = new ArrayList<MaterialeDTO>();
-            MaterialeDTO vareDTO = null;//Skal vi ikke bare slet det her?
+            ArrayList<MaterialeDTO> materials = new ArrayList<MaterialeDTO>();            
             
             // try with ressources
             try(ResultSet rs = pstm.executeQuery())
@@ -149,25 +135,25 @@ public class MaterialDAO
     
     /**
      * Skal hente dens angivet indhold ud fra det som passer med getMaterialId.
-     * @param getMaterialId
+     * @param materialId
      * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
      * @throws FogException 
      */
-    public static MaterialeDTO getMaterial(int getMaterialId) throws FogException
+    public static MaterialeDTO getMaterial(int materialId) throws FogException
     {
-        MaterialeDTO materiale = null;
+        MaterialeDTO material = null;
         try
         {
             connection = DbConnection.getConnection();
             PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);
-            pstm.setInt(1, getMaterialId);
+            pstm.setInt(1, materialId);
 
             //try with ressources.
             try(ResultSet rs = pstm.executeQuery())
             {
                 if(rs.next())
                 {
-                    materiale = mapMaterial(rs);                                        
+                    material = mapMaterial(rs);                                        
                 }
             }
         }
@@ -175,6 +161,6 @@ public class MaterialDAO
         {
             throw new FogException("Systemet kan ikke finde det ønskede materiale.", e.getMessage());
         }
-        return materiale;
+        return material;
     }
 }
