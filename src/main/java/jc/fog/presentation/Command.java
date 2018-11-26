@@ -45,7 +45,7 @@ public abstract class Command
         commands.put(Commands.SHOWMATERIALE, new ShowMaterialsCommand());
         commands.put(Commands.SHOWSINGLEMATERIALE, new ShowSingleMaterialeCommand());
         commands.put(Commands.STYKLISTE, new ShowBillCommand());
-        commands.put(Commands.SINGLEDREW, new ShowDrawingCommand());
+        commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
     }
     
     /**
