@@ -42,9 +42,9 @@ public abstract class Command
         //commands.put(Commands.LOGOUT, new LogoutCommand());
         commands.put(Commands.SHOWREQUESTS, new ShowRequestsCommand());
         commands.put(Commands.SHOWSINGLEREQUEST, new ShowSingleRequestCommand());
-        commands.put(Commands.SHOWMATERIALE, new ShowMaterialsCommand());
-        commands.put(Commands.SHOWSINGLEMATERIALE, new ShowSingleMaterialeCommand());
-        commands.put(Commands.STYKLISTE, new ShowBillCommand());
+        commands.put(Commands.SHOWMATERIALS, new ShowMaterialsCommand());
+        commands.put(Commands.SHOWSINGLEMATERIAL, new ShowSingleMaterialeCommand());
+        commands.put(Commands.BILL, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
     }
     

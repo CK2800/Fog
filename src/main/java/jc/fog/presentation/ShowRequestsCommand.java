@@ -65,7 +65,7 @@ public class ShowRequestsCommand extends Command
             row = row.replace("$3", String.valueOf(item.getHeight()));
             row = row.replace("$4", String.valueOf(item.getLength()));
             row = row.replace("$5", "<a href=\"FrontController?command=" + Commands.SHOWSINGLEREQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a> - "
-                    + "<a href=\"FrontController?command=" + Commands.STYKLISTE + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a>");
+                    + "<a href=\"FrontController?command=" + Commands.BILL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a>");
             stringBuilder.append(row);
             
         }

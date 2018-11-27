@@ -5,12 +5,13 @@ Fra 26-11-18:
 OK: Husk at ændre i DAO'er - se CarportDAO for detaljer, vedr. db forbindelse.
 OK: Skriv kommentarer for hvordan forbindelsen oprettes.
 OK: Dvs. ingen statiske metoder i DAO'erne heller.
-Og der er unit tests der skal laves lidt om.
+
 OK: Facader skal ikke være statiske.
 
 FRA PO 23-11-2018:
-Husk at tagpap kan findes for begge typer tag.
-LAv side så medarbejder kan indtaste carportdata og skyde til beregner.
+AFVENT: Husk at tagpap kan findes for begge typer tag.
+LAv side så medarbejder kan indtaste carportdata og skyde til beregner. #8
+
 FREDAG: Flere unit tests som tester for korrekt indhold. OG hardcoded tegning.
 Integration tests som tester commands...
 Brugergrænsefladetest...på papir - hvis jeg gør dit, så forventer ejg dat. Evt 
