@@ -24,15 +24,15 @@ public class MaterialDAO extends AbstractDAO
     /**
      * SQL som henter materialer og deres materialetyper.
      */
-    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialetypeId, m.navn, mt.type, laengde, enhed " +
-                                                                 "FROM Materiale m INNER JOIN Materialetype mt ON m.materialetypeId = mt.id";
+    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialtypeId, m.name, mt.type, length, unit " +
+                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id";
     
     //Det er til, at opret i databasen.
     
     /**
      * SQL som opretter materiale i databasen.
      */
-    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materiale(materialetypeId, navn, laengde, enhed) VALUES (?, ?, ?, ?)";
+    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (?, ?, ?, ?)";
     
     //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     
@@ -90,10 +90,10 @@ public class MaterialDAO extends AbstractDAO
         return new MaterialDTO
         (
             rs.getInt("id"), 
-            rs.getInt("materialetypeId"), 
-            rs.getString("navn"), 
-            rs.getInt("laengde"),
-            rs.getString("enhed"),
+            rs.getInt("materialtypeId"), 
+            rs.getString("name"), 
+            rs.getInt("length"),
+            rs.getString("unit"),
             rs.getString("type")
         );
     }

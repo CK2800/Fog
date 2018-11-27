@@ -1,3 +1,6 @@
+OK: 1. ForesporgselDAO.createForespoergsel SKAL IKKE oprette skuret selv. Lav en metode til det. SOLID princippet.
+OK: 2. Rename DK->Engelsk.
+=======
 Fra 26-11-18:
 OK: Husk at ændre i DAO'er - se CarportDAO for detaljer, vedr. db forbindelse.
 OK: Skriv kommentarer for hvordan forbindelsen oprettes.
@@ -28,6 +31,7 @@ Arkitektur
 Session
 MVC
 ----
+
 
 Få styr på flg.
 1. Spærkonstruktion - hvordan ser de ud, hvad er reglerne mht. adskillelse. 55 cm mellem hvert spær. stolpe for hver 4 mtr ca.
