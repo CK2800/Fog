@@ -3,14 +3,16 @@
     Created on : 26-11-2018, 16:20:33
     Author     : Jespe
 --%>
-
+<%
+    String title = "Carport";
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= title %></title>
-        <jsp:include page="./css/cdnfilesBootstrap.jsp"></jsp:include>
+        <jsp:include page="./css/bootstrap.jsp"></jsp:include>
     </head>
     <body>
             <jsp:include page="view/logo/logo.jsp"></jsp:include> <%-- Logo her ---%>
