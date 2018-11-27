@@ -27,7 +27,7 @@ public class ShowCarPortCommand  extends Command
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         
         String requestForm = null;
-        boolean viewUpdateQuest = false;//Den skal kun bliver vist hvis der fremkommer Tal ved "id'en".
+        boolean viewUpdateQuest = false;//skal lige overvej om det er noget vi overhovedet kommer til, at bruge..
         if(id > 0)
         {
             //Det her skal bliver vist hvis man skal updater indhold.
@@ -48,8 +48,8 @@ public class ShowCarPortCommand  extends Command
             requestForm = carportRequestToForm();
         }
         
-        request.setAttribute("requestForm", requestForm);
-        request.setAttribute("viewBill", viewUpdateQuest);
+        request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
+        request.setAttribute("viewBill", viewUpdateQuest);//Det er i forhold til om man skal opret eller ret mv.
         
         return Pages.SINGLE_CARPORTVIEW;
     }

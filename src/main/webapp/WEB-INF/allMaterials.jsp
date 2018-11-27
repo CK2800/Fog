@@ -11,9 +11,7 @@
         <jsp:include page="./css/bootstrap.jsp"></jsp:include>
     </head>
     <body>
-            <jsp:include page="view/logo/logo.jsp"></jsp:include> <%-- Logo her ---%>
-            <jsp:include page="view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
-            
+            <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
             <div class="container" style="min-height: 500px;">
                 <a href="#" class="btn btn-info" style="margin: 6px 0px;">Opret materiale</a>
                 <%= tableView %>
