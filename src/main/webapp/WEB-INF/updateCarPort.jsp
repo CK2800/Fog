@@ -1,7 +1,10 @@
+<%-- 
+    Document   : createCarPort
+    Created on : 26-11-2018, 16:20:33
+    Author     : Jespe
+--%>
 <%
-    String title = "Forespørgsel"; //Den kan fremkomme i title efter hvilken kunde der laver forespørgsel.
-    String requestForm = (String) request.getAttribute("requestForm");
-    String svg = (String) request.getAttribute("svg");
+    String title = "Carport";
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,14 +19,7 @@
             <jsp:include page="view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
             
             <div class="container" style="min-height: 500px;">
-                    <div class="col-md-12">
-                        <%= requestForm%>
-                    </div>
-                    <div class="col-md-12">
-                        <h2>Tegning</h2>
-                        <%= svg%>
-                    </div>
-                </div>
+                <p>Her skal updater muligheden være.</p>
             </div>
             
             <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
