@@ -25,4 +25,5 @@ public final class Commands
     public static final String SHOWMATERIALE = "showmateriale";
     public static final String STYKLISTE = "stykliste";
     public static final String SINGLEDRAW = "singledraw";
+    public static final String CARPORT = "carport";
 }

@@ -1,10 +1,7 @@
-<%-- 
-    Document   : createCarPort
-    Created on : 26-11-2018, 16:20:33
-    Author     : Jespe
---%>
 <%
     String title = "Carport";
+    boolean viewUpdateQuest = (Boolean)request.getAttribute("viewBill");
+    String requestForm = (String) request.getAttribute("requestForm");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +16,15 @@
             <jsp:include page="view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
             
             <div class="container" style="min-height: 500px;">
-                <p>Her skal updater muligheden være.</p>
+                
+                <div class="col-md-8">
+                    <%= requestForm %>
+                </div>
+                <div class="col-md-4">
+                    <% if(viewUpdateQuest == true) { %>
+                    <p>Styklist kommer her</p>
+                    <% } %>
+                </div>
             </div>
             
             <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
