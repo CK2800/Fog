@@ -7,9 +7,6 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.BillItem;
 
 /**
  * Udvidelse af RuleCalculator for udregning af spær.
@@ -17,26 +14,32 @@ import jc.fog.logic.BillItem;
  */
 public class RuleCalculatorRafters extends RuleCalculator
 {
+    public RuleCalculatorRafters(List<MaterialDTO> materials)
+    {
+        super(materials);
+    }
 
     @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
+        List<MaterialDTO> rafters;
         // er taget med rejsning?
         if (carportRequest.getSlope() > 0) 
         {
+            rafters = materials.get(MaterialtypeId.PRE_FAB_RAFTERS.name());
             // udhæng er 30 cm i hver ende.
             int roofLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
             // Spær placeres højst 0,89 m fra hinanden.
             int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
-            MaterialDTO material = null;
-            for(MaterialDTO m : materials)
-            {
-                if (m.getMaterialtypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_TYPE_ID) // byg selv spær
-                {
-                    material = m;
-                    break;
-                }
-            }
+            MaterialDTO material = rafters.get(0);
+//            for(MaterialDTO m : rafters)
+//            {
+//                if (m.getMaterialtypeDTO().getId() == BusinessRules.PRE_FAB_RAFTERS_TYPE_ID) // byg selv spær
+//                {
+//                    material = m;
+//                    break;
+//                }
+//            }
             if (material != null)
             {
                 bill.add(new BillItem(material, noRafters, "byg selv spær"));
@@ -49,7 +52,8 @@ public class RuleCalculatorRafters extends RuleCalculator
         else // fladt tag.
         {
             // spær laves af spærtræ som har varetypeid 4
-            List<MaterialDTO> rafters = filter(materials, 4);
+            //rafters = filter(materials, 4);
+            rafters = materials.get(MaterialtypeId.HEAD.name());
             sortLengthDesc(rafters);
             
             // Hent længste træ.

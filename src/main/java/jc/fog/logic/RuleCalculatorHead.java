@@ -7,23 +7,25 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.BillItem;
 
 /**
  * Udvidelse af RuleCalculator for udregning af rem.
  * @author Claus
  */
 public class RuleCalculatorHead extends RuleCalculator
-{    
+{   
+    public RuleCalculatorHead(List<MaterialDTO> materials)
+    {
+        super(materials);
+    }
+    
     @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
         try
         {
             // Remmen laves af spærtræ, varetypeid står i business rules.
-            List<MaterialDTO> heads = filter(materials, BusinessRules.HEAD_TYPE_ID);
+            List<MaterialDTO> heads = materials.get(MaterialtypeId.BATTENS.name());// filter(materials, BusinessRules.HEAD_TYPE_ID);
             // Sorter på laengde, faldende.
             sortLengthDesc(heads);
             // Hent længste træ.

@@ -35,5 +35,9 @@ public class BusinessRules
      * Materiale type id for lægter.
      */
     protected static int BATTENS_TYPE_ID = 6;
+    /**
+     * Materiale type id for beklædning til skur.
+     */
+    protected static int PLANKS_TYPE_ID = 1;
     
 }

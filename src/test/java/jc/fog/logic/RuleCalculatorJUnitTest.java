@@ -8,7 +8,6 @@ package jc.fog.logic;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
 
 import jc.fog.data.MaterialDAO;
@@ -17,6 +16,7 @@ import jc.fog.exceptions.FogException;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -74,6 +74,20 @@ public class RuleCalculatorJUnitTest
     }
     
     
+    @Test
+    public void testCalculatorInitialization() throws FogException
+    {
+        // Arrange
+//        MaterialDAO dao = new MaterialDAO(connection);
+//        List<MaterialDTO> materials = dao.getMaterials();        
+//        
+//        // Act
+//        Calculator.calculateBill(carportRequest, materials)
+//        
+//        // Assert
+//        assertTrue(Calculator.materials.size() > 0);
+    }
+    
     /**
      * Tester stolpe udregning hvor skuret er i samme bredde som carporten.
      */
@@ -88,10 +102,10 @@ public class RuleCalculatorJUnitTest
         int shedWidth = 500;
         CarportRequestDTO forespoergsel = new CarportRequestDTO(
                 2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);        
-        RuleCalculatorPost postCalculator = new RuleCalculatorPost();
+        RuleCalculatorPost postCalculator = new RuleCalculatorPost(materials);
         
         // Act
-        int items = postCalculator.calculate(forespoergsel, materials, stykliste);        
+        int items = postCalculator.calculate(forespoergsel, stykliste);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert

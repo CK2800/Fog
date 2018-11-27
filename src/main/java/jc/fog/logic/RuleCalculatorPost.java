@@ -7,10 +7,6 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.ShedDTO;
-import jc.fog.logic.BillItem;
 
 /**
  * Udvidelse af RuleCalculator for udregning af stolper.
@@ -18,12 +14,15 @@ import jc.fog.logic.BillItem;
  */
 public class RuleCalculatorPost extends RuleCalculator
 {
-
+    public RuleCalculatorPost(List<MaterialDTO> materials)
+    {
+        super(materials);
+    }
     @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
         // Find materialet.       
-        List<MaterialDTO> posts = filter(materials, BusinessRules.POST_TYPE_ID);        
+        List<MaterialDTO> posts = materials.get(MaterialtypeId.POST.name()); //filter(materials, BusinessRules.POST_TYPE_ID);        
         MaterialDTO post = posts.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;

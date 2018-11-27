@@ -14,23 +14,28 @@ import jc.fog.exceptions.FogException;
  */
 public class RuleCalculatorBattens extends RuleCalculator
 {
-
-    @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
+    public RuleCalculatorBattens(List<MaterialDTO> materials)
     {
+        super(materials);
+    }
+    
+    @Override
+    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
+    {
+        
         // Find materialer - typen har id 7
-        List<MaterialDTO> battens = filter(materials, BusinessRules.BATTENS_TYPE_ID);
+        List<MaterialDTO> battens = materials.get(MaterialtypeId.BATTENS.name()); // filter(materials, BusinessRules.BATTENS_TYPE_ID);
         // Sorter 
         sortLengthDesc(battens);
         int count = (int)Math.ceil((float)carportRequest.getLength() / battens.get(0).getLength());
         // Find korteste lægte
-        MaterialDTO materiale = findShortest(battens, count, carportRequest.getLength());
+        MaterialDTO material = findShortest(battens, count, carportRequest.getLength());
         // Find tagets længde:
         int halfCarportWidth = carportRequest.getWidth()/2;
         int hypothenuse = (int)Math.ceil(halfCarportWidth / Math.cos(Math.toRadians(carportRequest.getSlope())));
         // Business rule: ca. 30 cm ml. lægter.
         int noBattenRows = (int)Math.floor(hypothenuse / BusinessRules.BATTENS_SPACING);
-        bill.add(new BillItem(materiale, count * noBattenRows * 2, "lægte tekst"));
+        bill.add(new BillItem(material, count * noBattenRows * 2, "lægte tekst"));
         return 1;
     }    
 }

@@ -96,10 +96,21 @@ public class MaterialDTO implements Comparable<MaterialDTO>
 //        dimensioner.add(new DimensionerDTO(dimensionId, length));
 //    }
 
-    @Override
+    /**
+     * Sammenligning sker på materialetypens id.
+     * Hvis materialtypeDTO er null på et eller begge objekter der sammenlignes,
+     * sættes dets/deres materialetypeid til 0 og sammenligning udføres.
+     * @param o
+     * @return 
+     */
+    @Override    
     public int compareTo(MaterialDTO o)
     {
-        return Integer.compare(this.getLength(), o.getLength());
+        int materialetype1 = this.getMaterialtypeDTO() == null ? 0 : this.getMaterialtypeDTO().getId();
+        int materialetype2 = o.getMaterialtypeDTO() == null ? 0 : o.getMaterialtypeDTO().getId();
+                   
+        return Integer.compare(materialetype1, materialetype2);
+        
         
     }
     

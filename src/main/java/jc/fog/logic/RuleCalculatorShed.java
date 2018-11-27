@@ -7,10 +7,6 @@ package jc.fog.logic;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.ShedDTO;
-import jc.fog.logic.BillItem;
 
 /**
  * Udvidelse af RuleCalculator for udregning af skurets beklædning.
@@ -18,15 +14,24 @@ import jc.fog.logic.BillItem;
  */
 public class RuleCalculatorShed extends RuleCalculator
 {
-
+    public RuleCalculatorShed(List<MaterialDTO> materials)
+    {
+        super(materials);
+    }
     @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException
+    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {        
         ShedDTO shed = carportRequest.getShedDTO();
         if (shed != null)
         {
-            // Find materiale til skuret => trykimp. brædder, 19x100mm i 210 cm (id 9)                        
-            MaterialDTO material = materials.get(8);
+            // Find materiale til skuret => trykimp. brædder, 19x100mm i 210 cm                        
+            List<MaterialDTO> planks = materials.get(MaterialtypeId.PLANKS.name());
+            MaterialDTO plank = null;
+            for(MaterialDTO m : planks)
+            {
+                if ("19x100 mm.".equals(m.getName()) && m.getLength() == 210)
+                    plank = m;
+            }
                         
             // Find dimensioner for skur.
             int length = shed.getLength();
@@ -37,7 +42,7 @@ public class RuleCalculatorShed extends RuleCalculator
             // antal brædder i skurets bredde med overlap på 1 cm i hver side.
             int noWidth = (int)Math.ceil(width / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
             
-            bill.add(new BillItem(material, noLength + noWidth, "skur brædder 1 på 2"));
+            bill.add(new BillItem(plank, noLength + noWidth, "skur brædder 1 på 2"));
             return 1; // 1 nyt item på styklisten.
         }
         else 

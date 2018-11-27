@@ -7,13 +7,11 @@ package jc.fog.logic;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.BillItem;
 
 /**
  *
@@ -21,8 +19,57 @@ import jc.fog.logic.BillItem;
  */
 public abstract class RuleCalculator
 {
+    protected static enum MaterialtypeId
+    {
+        HEAD (BusinessRules.HEAD_TYPE_ID), // Materiale type id for spær træ.
+        POST (BusinessRules.POST_TYPE_ID), // Materiale type id for stolper.
+        BATTENS (BusinessRules.BATTENS_TYPE_ID), // Materiale type id for lægter.
+        PLANKS (BusinessRules.PLANKS_TYPE_ID), // Beklædningsplanker til skur.
+        PRE_FAB_RAFTERS (BusinessRules.PRE_FAB_RAFTERS_TYPE_ID); // Materiale type id byg selv spær.       
+        private final int materialtypeId;
+        
+        private MaterialtypeId(int materialtypeId)
+        {
+            this.materialtypeId = materialtypeId;
+        }
+        public int getMaterialtypeId(){return materialtypeId;}
+    }
+    
+    protected static HashMap<String, List<MaterialDTO>> materials;
+    protected abstract int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException;            
+    
+    /**
+     * Initialiserer krævede attributter inden brugen af nedarvninger af denne klasse.
+     * 
+     * Konstruktør i abstrakt klasse kan ikke kaldes.
+     * Nedarvninger må kalde denne konstruktør.
+     * @param materialList
+     * @param carportRequest
+     * @param materials 
+     */
+    public RuleCalculator(List<MaterialDTO> materialList)
+    {
+        if (materials == null)        
+            initializeMaterials(materialList);            
+        
+    }
+    /**
+     * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
+     * Hashmap tilgås af de forskellige beregnere, der til sammen udregner styklisten.
+     * @param materialList 
+     */
+    private static void initializeMaterials(List<MaterialDTO> materialList)
+    {        
+        // Sort the list ascending on materialtypeId.
+        //materialList.sort((a,b) -> a.compareTo(b));
+        // Opret ny hashmap.
+        materials = new HashMap<>();
 
-    protected abstract int calculate(CarportRequestDTO carportRequest, List<MaterialDTO> materials, List<BillItem> bill) throws FogException;            
+        for(MaterialtypeId mtId : MaterialtypeId.values())
+        {           
+            materials.put(mtId.name(), filter(materialList, mtId.getMaterialtypeId()));
+        }        
+    }
     
     /**
      * Filters a List of MaterialDTO on the type id.
@@ -30,7 +77,7 @@ public abstract class RuleCalculator
      * @param typeId
      * @return 
      */
-    protected List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
+    protected static List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
     {
         Stream<MaterialDTO> stream = list.stream().filter(m -> m.getMaterialtypeDTO().getId() == typeId);
         List<MaterialDTO> result = stream.collect(Collectors.toList());
