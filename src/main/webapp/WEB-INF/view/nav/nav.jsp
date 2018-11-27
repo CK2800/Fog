@@ -14,7 +14,7 @@
         <a class="nav-link" href="/Fog/FrontController?command=showrequests">Forspørgelse</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/Fog/FrontController?command=carport&id=0">Opret forespørgelse</a>
+        <a class="nav-link" href="/Fog/FrontController?command=carport">Opret forespørgelse</a>
       </li> 
       <li class="nav-item">
         <a class="nav-link" href="/Fog/FrontController?command=carport&id=1">Opret forespørgelse + ID</a>

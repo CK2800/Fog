@@ -20,32 +20,44 @@ public class ShowCarPortCommand  extends Command
 {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        // get request's id from request.
-        int id = Integer.parseInt(request.getParameter("id"));
-                
+        // get request's id from request hvis den findes.        
+        int id = 0;        
+                       
         // Get DataFacade.
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         
         String requestForm = null;
-        boolean viewUpdateQuest = false;//skal lige overvej om det er noget vi overhovedet kommer til, at bruge..
+        boolean viewUpdateQuest = true;//skal lige overvej om det er noget vi overhovedet kommer til, at bruge..
+        
+
+        // Har vi et gyldigt id ?
+        try
+        {
+            // Findes id ikke på requestet, catcher vi exception
+            id = Integer.parseInt(request.getParameter("id"));
+        }
+        catch(NumberFormatException n){
+            // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
+        }
+        // Fandt vi et gyldigt id på requestet (dvs. > 0)
         if(id > 0)
         {
             //Det her skal bliver vist hvis man skal updater indhold.
             CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
             // Create HTML form with request's data and set it on http request.
-            requestForm = carportRequestToBill(carportRequestDTO);
+            requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest);
             
             
             //Fortæller at den skal fremvise styklisten her.
-            viewUpdateQuest = true;
+            
             //Her skal styklisten så fremkomme.
         }
-        else
-        {
-            //Laver fejl fordi der ikke er angivet nogen id med noget tal.
+        else // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest
+        {            
             
+            viewUpdateQuest = false;
             //Det her skal blive vist hvis man skal opret en forespørgelse.
-            requestForm = carportRequestToForm();
+            requestForm = carportRequestToBill(null, viewUpdateQuest);
         }
         
         request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
@@ -60,49 +72,49 @@ public class ShowCarPortCommand  extends Command
      * @param item
      * @return 
      */
-    private String carportRequestToBill(CarportRequestDTO item)
+    private String carportRequestToBill(CarportRequestDTO item, boolean bill)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" />");
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHeight()).append("\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"").append(item.getSlope()).append("\" /><br />");
+        
+        //width, length osv.
+        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"$1\" />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"$2\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$3\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"$4\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"$5\" /><br />");
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\"").append(item.getShedDTO() != null ? " checked" : "").append(" /><br />");
         
-        if(item.getShedDTO() == null)
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"$6\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$7\" /><br />");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<input type=\"submit\" value=\"$8\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("</form><br/>");
+        
+        
+        if (item != null)
         {
-            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"0\" /><br />");
-            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" class=\"form-control\" name=\"bredde\" value=\"0\" /><br />");
+          // id   
+            text.replace("$1", item.getId());
+            text.replace("$2", item.getLength());
+            text.replace("$3", item.getWidth());
+            text.replace("$4", item.getHeight());
+            text.replace("$5", item.getSlope());
+            text.replace("$6", item.getLength());
+            text.replace("$7", item.getWidth());  
+            
+            text.replace("$8", "");  
         }
         else
         {
-            stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
-            stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
+            text.replace("$1", "");
+            text.replace("$2", "");
+            text.replace("$3", "");
+            text.replace("$4", "");
+            text.replace("$5", "");
+            text.replace("$6", "");
+            text.replace("$7", ""); 
+            text.replace("$8", "");
         }
-        stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Tjek styklisten\" class=\"btn btn-success btn-block\" />");
-        stringBuilder.append("</form><br/>");
-        
-        
-        
-        return stringBuilder.toString();
-    }
-    
-    private String carportRequestToForm()
-    {
-        StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" /><br />");
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\" /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"0\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" class=\"form-control\" name=\"bredde\" value=\"0\" /><br />");
-        stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
-        stringBuilder.append("</form><br/>");
-        
         
         
         return stringBuilder.toString();
