@@ -24,14 +24,15 @@ public class Calculator
     {
         rules = new ArrayList<RuleCalculator>();
         
-        rules.add(new RuleCalculatorHead());
-        rules.add(new RuleCalculatorPost());
-        rules.add(new RuleCalculatorRafters());
-        rules.add(new RuleCalculatorShed());
-        rules.add(new RuleCalculatorBattens());
+        rules.add(new RuleCalculatorHead()); // Udregner rem.
+        rules.add(new RuleCalculatorPost()); // Udregner stolper.
+        rules.add(new RuleCalculatorRafters()); // Udregner spær.
+        rules.add(new RuleCalculatorShed()); // Udregner skurets beklædning.
+        rules.add(new RuleCalculatorBattens()); // Udregner lægter.
+        rules.add(new RuleCalculatorRoof()); // Udregner tagbelægning.
     }
     
-    protected static List<BillItem> beregnStykliste(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
+    protected static List<BillItem> calculateBill(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
         if (rules == null)
             initializeRules();

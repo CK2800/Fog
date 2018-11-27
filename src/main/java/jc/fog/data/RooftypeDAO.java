@@ -89,7 +89,8 @@ public class RooftypeDAO extends AbstractDAO
                     rs.getString("name"),
                     rs.getInt("length"),
                     rs.getString("unit"),
-                    rs.getString("materialType")
+                    rs.getString("materialType"),
+                    rs.getInt("id") // rooftype id.
             ));                
         }
         return rooftypes;                    

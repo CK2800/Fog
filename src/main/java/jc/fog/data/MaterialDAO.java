@@ -22,10 +22,12 @@ import jc.fog.logic.MaterialDTO;
 public class MaterialDAO extends AbstractDAO
 {      
     /**
-     * SQL som henter materialer og deres materialetyper.
+     * SQL som henter materialer, deres materialetype og evt. tagtype.
      */
-    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialtypeId, m.name, mt.type, length, unit " +
-                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id";
+    public static final String GET_MATERIALS_SQL = "SELECT m.id, m.materialtypeId, m.name, mt.type, m.length, m.unit, rm.rooftypeId " +
+                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id LEFT JOIN RooftypeMaterials rm ON m.id = rm.materialId";
+//    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialtypeId, m.name, mt.type, length, unit " +
+//                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id";
     
     //Det er til, at opret i databasen.
     
@@ -94,7 +96,8 @@ public class MaterialDAO extends AbstractDAO
             rs.getString("name"), 
             rs.getInt("length"),
             rs.getString("unit"),
-            rs.getString("type")
+            rs.getString("type"),
+            rs.getInt("rooftypeId")
         );
     }
     

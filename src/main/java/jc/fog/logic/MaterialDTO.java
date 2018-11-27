@@ -20,6 +20,8 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     private int length;
     private String unit;
     private MaterialtypeDTO materialtypeDTO;
+    private int rooftypeId;
+    
     //private float pris; // decimal (6,2) i db.
     //private List<DimensionerDTO> dimensioner;
     
@@ -30,6 +32,8 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     public int getLength() { return length; }
     public String getUnit() { return unit; }
     public MaterialtypeDTO getMaterialtypeDTO(){return materialtypeDTO;}
+    public int getRooftypeId(){return rooftypeId;}
+    
     
     //public List<DimensionerDTO> getDimensioner() { return dimensioner; }
     
@@ -43,14 +47,15 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     
     /**
      * Konstruktør hvor alle argumenter kendes.
-     * @param id 
-     * @param materialtypeId 
-     * @param name 
+     * @param id
+     * @param materialtypeId
+     * @param name
      * @param length
      * @param unit
      * @param materialtype
+     * @param rooftypeId Angiver hvilken tagtype, dette materiale indgår i.
      */
-    public MaterialDTO(int id, int materialtypeId, String name, int length, String unit, String materialtype)
+    public MaterialDTO(int id, int materialtypeId, String name, int length, String unit, String materialtype, int rooftypeId)
     {
         this.id = id;
         this.materialtypeId = materialtypeId;
@@ -58,7 +63,23 @@ public class MaterialDTO implements Comparable<MaterialDTO>
         this.length = length;
         this.unit = unit;
         this.materialtypeDTO = new MaterialtypeDTO(materialtypeId, materialtype);
+        this.rooftypeId = rooftypeId;
     }
+            
+    
+    /**
+     * Konstruktør uden id for tagtype.
+     * @param id 
+     * @param materialtypeId 
+     * @param name 
+     * @param length
+     * @param unit
+     * @param materialtype
+     */
+//    public MaterialDTO(int id, int materialtypeId, String name, int length, String unit, String materialtype)
+//    {
+//        this(id, materialtypeId, name, length, unit, materialtype, 0);
+//    }
     
     
     
