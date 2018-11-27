@@ -14,8 +14,11 @@
         <a class="nav-link" href="/Fog/FrontController?command=showrequests">Forspørgelse</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>    
+        <a class="nav-link" href="#">Log ind</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="#">Log ind</a>
+      </li> 
     </ul>
   </div>  
 </nav>
