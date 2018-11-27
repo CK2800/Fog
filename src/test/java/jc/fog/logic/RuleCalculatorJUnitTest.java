@@ -16,7 +16,6 @@ import jc.fog.exceptions.FogException;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -113,10 +112,32 @@ public class RuleCalculatorJUnitTest
         Assert.assertEquals(expected, billItem.getCount());
     }
     
-    public void TestRuleCalculatorBattens() throws FogException
+    @Test
+    public void testRoofCalculator() throws FogException
     {
-        //CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
+        // Arrange
+        MaterialDAO dao = new MaterialDAO(connection);
+        List<MaterialDTO> materials = dao.getMaterials();        
+        ArrayList<BillItem> stykliste = new ArrayList<>();
+        
+        
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(
+                3, 0, 600, 210, 800, "blabla", 0,0);
+        RuleCalculatorRoof roofCalculator = new RuleCalculatorRoof(materials);
+        
+        // Act
+        int items = roofCalculator.calculate(forespoergsel, stykliste);        
+        BillItem billItem = stykliste.get(0);
+                
+        // Assert
+        int expected = 6;
+        Assert.assertEquals(expected, billItem.getCount());
     }
+    
+//    public void TestRuleCalculatorBattens() throws FogException
+//    {
+//        //CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
+//    }
     
 //    @Test
 //    public void CalculateStolper() throws FogException

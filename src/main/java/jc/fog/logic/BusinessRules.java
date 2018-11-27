@@ -20,24 +20,34 @@ public class BusinessRules
     protected static int PLANK_SPACING = 6;
     protected static int PLANK_WIDTH = 10; // bør hentes fra db.
     /**
-     * Materiale type id for stolper.
+     * Materiale type id for beklædning til skur.
      */
-    protected static int POST_TYPE_ID = 5;
+    protected static int PLANKS_TYPE_ID = 1;
     /**
      * Materiale type id for spær træ.
      */
     protected static int HEAD_TYPE_ID = 4;
     /**
-     * Materiale type id for byg selv spær.
+     * Materiale type id for stolper.
      */
-    protected static int PRE_FAB_RAFTERS_TYPE_ID = 23;
+    protected static int POST_TYPE_ID = 5;
     /**
      * Materiale type id for lægter.
      */
     protected static int BATTENS_TYPE_ID = 6;
     /**
-     * Materiale type id for beklædning til skur.
+     * Materialetype id for tagrygbelægning.
      */
-    protected static int PLANKS_TYPE_ID = 1;
+    protected static int ROOF_SHEETING_TYPE_ID = 7;   
+    /**
+     * Materialetype id for tagfladebelægning.
+     */
+    protected static int ROOF_RIDGE_TYPE_ID = 8;
+    /**
+     * Materiale type id for byg selv spær.
+     */
+    protected static int PRE_FAB_RAFTERS_TYPE_ID = 23;
+    
+    
     
 }

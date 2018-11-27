@@ -25,7 +25,9 @@ public abstract class RuleCalculator
         POST (BusinessRules.POST_TYPE_ID), // Materiale type id for stolper.
         BATTENS (BusinessRules.BATTENS_TYPE_ID), // Materiale type id for lægter.
         PLANKS (BusinessRules.PLANKS_TYPE_ID), // Beklædningsplanker til skur.
-        PRE_FAB_RAFTERS (BusinessRules.PRE_FAB_RAFTERS_TYPE_ID); // Materiale type id byg selv spær.       
+        PRE_FAB_RAFTERS (BusinessRules.PRE_FAB_RAFTERS_TYPE_ID), // Materiale type id byg selv spær.       
+        RIDGE (BusinessRules.ROOF_RIDGE_TYPE_ID), // Materialetype id for tagrygbelægning.
+        SHEETING (BusinessRules.ROOF_SHEETING_TYPE_ID); // Materialetype id for tagfladebelægning.
         private final int materialtypeId;
         
         private MaterialtypeId(int materialtypeId)
