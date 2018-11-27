@@ -44,7 +44,7 @@ public class ShowSingleRequestCommand extends Command
         rectangles.add(new Rectangle(0, 0, 170, 210, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
         
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500));
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500, 650, 1000));
         
         // return the page.
         return Pages.SINGLE_CARPORT;

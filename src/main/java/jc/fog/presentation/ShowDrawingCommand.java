@@ -23,7 +23,8 @@ public class ShowDrawingCommand extends Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         //henter id som skal bruges til, at frem vise hvordan tegning skal være.
-        int getId = Integer.parseInt(request.getParameter("id"));
+        //Den bliver ikke brugt lige pt.
+        int id = Integer.parseInt(request.getParameter("id"));
         
         
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
@@ -31,7 +32,7 @@ public class ShowDrawingCommand extends Command{
         rectangles.add(new Rectangle(15, 120, 825, 140, "D2691E"));
         
         //Her bliver højde og bredde til svg filen angivet.
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250));
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250, 600, 750));
         
         
         return Pages.SINGLE_DRAW;

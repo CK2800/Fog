@@ -13,8 +13,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><%= title %></title>
-        <jsp:include page="./css/cdnfilesBootstrap.jsp"></jsp:include>
+        <title>g</title>
+        <jsp:include page="./css/bootstrap.jsp"></jsp:include>
     </head>
     <body>
             <jsp:include page="view/logo/logo.jsp"></jsp:include> <%-- Logo her ---%>
