@@ -46,6 +46,7 @@ public abstract class Command
         commands.put(Commands.SHOWSINGLEMATERIALE, new ShowSingleMaterialeCommand());
         commands.put(Commands.STYKLISTE, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
+        commands.put(Commands.CARPORT, new ShowCarPortCommand());
     }
     
     /**

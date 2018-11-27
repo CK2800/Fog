@@ -22,6 +22,7 @@ public class ShowCarPortCommand  extends Command
     {
         // get request's id from request.
         int id = Integer.parseInt(request.getParameter("id"));
+                
         // Get DataFacade.
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         
@@ -37,9 +38,12 @@ public class ShowCarPortCommand  extends Command
             
             //Fortæller at den skal fremvise styklisten her.
             viewUpdateQuest = true;
+            //Her skal styklisten så fremkomme.
         }
         else
         {
+            //Laver fejl fordi der ikke er angivet nogen id med noget tal.
+            
             //Det her skal blive vist hvis man skal opret en forespørgelse.
             requestForm = carportRequestToForm();
         }
@@ -59,9 +63,7 @@ public class ShowCarPortCommand  extends Command
     private String carportRequestToBill(CarportRequestDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"
-                + "<a class=\"btn btn-info btn-xs \" style=\"margin-left: 20px;\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
-        stringBuilder.append("Id:<br /><input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
+        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
         stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHeight()).append("\" /><br />");
@@ -79,8 +81,8 @@ public class ShowCarPortCommand  extends Command
             stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
         }
         stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
-        stringBuilder.append("</form>");
+        stringBuilder.append("<input type=\"submit\" value=\"Tjek styklisten\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("</form><br/>");
         
         
         
@@ -99,7 +101,7 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("Skur Bredde:<br /><input type=\"text\" class=\"form-control\" name=\"bredde\" value=\"0\" /><br />");
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
-        stringBuilder.append("</form>");
+        stringBuilder.append("</form><br/>");
         
         
         

@@ -16,14 +16,17 @@
             <jsp:include page="view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
             
             <div class="container" style="min-height: 500px;">
-                
-                <div class="col-md-8">
-                    <%= requestForm %>
-                </div>
-                <div class="col-md-4">
-                    <% if(viewUpdateQuest == true) { %>
-                    <p>Styklist kommer her</p>
-                    <% } %>
+                <div class="row">
+                    <div class="col-md-8">
+                        <%= requestForm %>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(viewUpdateQuest == true) { %>
+                        <p>Styklist kommer her</p>
+                        <% } else { %>
+                        <p>Hej</p>
+                        <% } %>
+                    </div>
                 </div>
             </div>
             
