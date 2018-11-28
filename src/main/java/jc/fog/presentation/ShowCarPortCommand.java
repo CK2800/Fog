@@ -89,7 +89,7 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-success btn-block\" />");
         if(bill == true)//Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
         {
-            stringBuilder.append("<input type=\"submit\" value=\"$10\" class=\"btn btn-info btn-block\" /><br/>");
+            stringBuilder.append("<input type=\"submit\" value=\"$0\" class=\"btn btn-info btn-block\" /><br/>");
         }
         stringBuilder.append("</form><br/>");
         
@@ -106,7 +106,7 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$8", "checked");
             
             text = text.replace("$9", "Updater indhold");
-            text = text.replace("$10", "Beregn stykliste");
+            text = text.replace("$0", "Beregn stykliste");
         }
         else
         {
