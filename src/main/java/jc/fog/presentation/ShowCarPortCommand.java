@@ -90,33 +90,31 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("<input type=\"submit\" value=\"$8\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form><br/>");
         
-        
+        String text = stringBuilder.toString();
         if (item != null)
         {
           // id   
-            text.replace("$1", item.getId());
-            text.replace("$2", item.getLength());
-            text.replace("$3", item.getWidth());
-            text.replace("$4", item.getHeight());
-            text.replace("$5", item.getSlope());
-            text.replace("$6", item.getLength());
-            text.replace("$7", item.getWidth());  
+            text = text.replace("$1", String.valueOf(item.getId()));
+            text = text.replace("$2", String.valueOf(item.getLength()));
+            text = text.replace("$3", String.valueOf(item.getWidth()));
+            text = text.replace("$4", String.valueOf(item.getHeight()));
+            text = text.replace("$5", String.valueOf(item.getSlope()));
+            text = text.replace("$6", String.valueOf(item.getLength()));
+            text = text.replace("$7", String.valueOf(item.getWidth()));  
             
-            text.replace("$8", "");  
+            text = text.replace("$8", "");  
         }
         else
         {
-            text.replace("$1", "");
-            text.replace("$2", "");
-            text.replace("$3", "");
-            text.replace("$4", "");
-            text.replace("$5", "");
-            text.replace("$6", "");
-            text.replace("$7", ""); 
-            text.replace("$8", "");
+            text = text.replace("$1", "");
+            text = text.replace("$2", "");
+            text = text.replace("$3", "");
+            text = text.replace("$4", "");
+            text = text.replace("$5", "");
+            text = text.replace("$6", "");
+            text = text.replace("$7", ""); 
+            text = text.replace("$8", "");
         }
-        
-        
-        return stringBuilder.toString();
+        return text.toString();
     }
 }

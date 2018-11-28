@@ -27,10 +27,7 @@ public class Drawing {
     }
     
     public static String drawSvg(List<Rectangle> rectangles, int svgWidth, int svgHeight, int carportWidth, int carportHeight)
-    {
-        //rectangles must check if it has a value greater than svgWidth & svgHeight.
-        //HERE
-        
+    {        
         // Initialiser <svg> element.
         String svg = initializeSvg(svgWidth, svgHeight, carportWidth, carportHeight);
         // Saml <rect>'s for alle Rectangle objekter i samlingen.
