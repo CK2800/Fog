@@ -23,7 +23,7 @@ public class RuleCalculatorBattens extends RuleCalculator
     protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
         
-        // Find materialer - typen har id 7
+        // Find materialer
         List<MaterialDTO> battens = materials.get(MaterialtypeId.BATTENS.name()); // filter(materials, BusinessRules.BATTENS_TYPE_ID);
         // Sorter 
         sortLengthDesc(battens);

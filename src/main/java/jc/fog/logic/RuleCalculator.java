@@ -77,7 +77,7 @@ public abstract class RuleCalculator
      * @param typeId
      * @return 
      */
-    protected static List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
+    private static List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
     {
         Stream<MaterialDTO> stream = list.stream().filter(m -> m.getMaterialtypeDTO().getId() == typeId);
         List<MaterialDTO> result = stream.collect(Collectors.toList());
@@ -89,21 +89,19 @@ public abstract class RuleCalculator
      * Sorts the List of MaterialDTO on laengde in descending order.
      * @param list     
      */
-    protected void sortLengthDesc(List<MaterialDTO> list)
-    {
-        Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
-        Collections.reverse(list);
-    }
-    
+//    protected void sortLengthDesc(List<MaterialDTO> list)
+//    {
+//        Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
+//        Collections.reverse(list);
+//    }
+    HERTIL
     protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
     {
         MaterialDTO materialeDTO = null;
         for(MaterialDTO m : list)
         {
-            if (m.getLength() * count >= length)
-                materialeDTO = m;
-            else 
-                break;
+            if (m.getLength() * count >= length && materialeDTO != null && materialeDTO.getLength() > m.getLength())
+                materialeDTO = m;            
         }
         return materialeDTO;
     }
