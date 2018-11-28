@@ -19,21 +19,14 @@ public class RuleCalculatorHead extends RuleCalculator
     {
         try
         {
-            // Remmen laves af spærtræ, varetypeid står i business rules.
-            List<MaterialDTO> heads = materials.get(MaterialtypeId.BATTENS.name());// filter(materials, BusinessRules.HEAD_TYPE_ID);
-            // Sorter på laengde, faldende.
-            sortLengthDesc(heads);
-            // Hent længste træ.
-            MaterialDTO material = heads.get(0);
-            
+            // Remmen laves af spærtræ, find samlingen i hashmap.
+            List<MaterialDTO> heads = materials.get(MaterialtypeId.BATTENS.name());
             // Remmen bærer taget, udhæng 30 cm i hver ende.
             int headLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG;                        
-            // Hvor mange stk. træ skal der min. bruges?
-            int count = (int)Math.ceil((float)headLength/material.getLength());            
-            // Find korteste spærtræ med krævet længde.
-            material = findShortest(heads, count, headLength);
-                        
-            bill.add(new BillItem(material, count, "spær instruks"));
+            // Find korteste materiale og antal.
+            MaterialCount materialCount = findShortest(heads, headLength);                                    
+            // Tilføj til styklisten, husk at rem er i begge sider.
+            bill.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * 2, "rem instruks"));
             // 1 nyt item på styklisten.
             return 1;            
         }        

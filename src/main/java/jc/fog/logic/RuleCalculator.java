@@ -20,7 +20,9 @@ import jc.fog.exceptions.FogException;
 public abstract class RuleCalculator
 {
     /**
-     * Samling af konstanter 
+     * Samling af konstanter med materialetype id for lettere opdeling af List til HashMap.
+     * Eksempel: HEAD (4).
+     * @see initializeMaterials
      */
     protected static enum MaterialtypeId
     {
@@ -42,31 +44,18 @@ public abstract class RuleCalculator
     
     protected static HashMap<String, List<MaterialDTO>> materials;
     protected abstract int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException;            
-    
-//    /**
-//     * Initialiserer krævede attributter inden brugen af nedarvninger af denne klasse.
-//     * 
-//     * Konstruktør i abstrakt klasse kan ikke kaldes.
-//     * Nedarvninger må kalde denne konstruktør.
-//     * @param materialList 
-//     */
-//    public RuleCalculator(List<MaterialDTO> materialList)
-//    {
-//        if (materials == null)        
-//            initializeMaterials(materialList);
-//    }
+
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
      * Hashmap tilgås af de forskellige beregnere, der til sammen udregner styklisten.
      * @param materialList 
      */
     public static void initializeMaterials(List<MaterialDTO> materialList)
-    {        
-        // Sort the list ascending on materialtypeId.
-        //materialList.sort((a,b) -> a.compareTo(b));
+    {   
         // Opret ny hashmap.
         materials = new HashMap<>();
-
+        // Gennemløb enum og opret HashMap key-value pair med subset af listen, hvor 
+        // hvert MaterialDTO objekts materialtypeId svarer til værdien i enum.
         for(MaterialtypeId mtId : MaterialtypeId.values())
         {           
             materials.put(mtId.name(), filter(materialList, mtId.getMaterialtypeId()));
@@ -74,7 +63,8 @@ public abstract class RuleCalculator
     }
     
     /**
-     * Filters a List of MaterialDTO on the type id.
+     * Filtrerer en List af MaterialDTO på materialtype id.
+     * F.eks. en liste af MaterialDTO objekter hvor materialtypeId er 1, dvs. en liste af spærtræ.
      * @param list
      * @param typeId
      * @return 
@@ -96,14 +86,41 @@ public abstract class RuleCalculator
         Collections.reverse(list);
     }
     
-    protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
+    /**
+     * Finder korteste materiale i listen af MaterialDTO objekter som skal være sorteret på længden.
+     * @param list Listen af MaterialDTO objekter som skal gennemsøges.
+     * @param count Antal af det krævede materiale.
+     * @param length Længden som materialets længde * count skal dække.
+     * @return 
+     */
+    //protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
+    protected MaterialCount findShortest(List<MaterialDTO> list, int length)
     {
         MaterialDTO materialeDTO = null;
+        int actualCount = 0, count;        
         for(MaterialDTO m : list)
         {
-            if (m.getLength() * count >= length && materialeDTO != null && materialeDTO.getLength() > m.getLength())
-                materialeDTO = m;            
+            count = (int)Math.ceil((double)length / m.getLength());
+            
+            // Hvis aktuelt antal ikke er sat endnu, gøres det.
+            if (actualCount == 0)
+            {
+                actualCount = count;
+                materialeDTO = m;
+            }
+            // Hvis aktuelt antal er større, har vi fundet et længere materiale der duer.
+            else if (actualCount > count)
+            {
+                actualCount = count;
+                materialeDTO = m;                
+            }
+            // Hvis
+            else if (actualCount == count)
+            {
+                if (materialeDTO != null && materialeDTO.getLength() > m.getLength())
+                    materialeDTO = m;
+            }                
         }
-        return materialeDTO;
+        return new MaterialCount(actualCount, materialeDTO);        
     }
 }

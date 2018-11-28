@@ -23,7 +23,7 @@ public class RuleCalculatorRafters extends RuleCalculator
         {
             rafters = materials.get(MaterialtypeId.PRE_FAB_RAFTERS.name());
             // udhæng er 30 cm i hver ende.
-            int roofLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG; // skal udhæng medregnes her? 
+            int roofLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG;
             // Spær placeres højst 0,89 m fra hinanden.
             int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING_SLOPED_ROOF);
             MaterialDTO material = rafters.get(0);
@@ -46,24 +46,15 @@ public class RuleCalculatorRafters extends RuleCalculator
         }
         else // fladt tag.
         {
-            // spær laves af spærtræ som har varetypeid 4
-            //rafters = filter(materials, 4);
+            // Find materialer i hashmap.            
             rafters = materials.get(MaterialtypeId.HEAD.name());
-            sortLengthDesc(rafters);
-            
-            // Hent længste træ.
-            MaterialDTO material = rafters.get(0);
-            // Hvor mange stk. træ skal der min. bruges?
-            int raftersWidth = carportRequest.getWidth();
-            int noRequired = (int)Math.ceil((float)raftersWidth/material.getLength());            
-            // Find korteste spærtræ med krævet længde.            
-            material = findShortest(rafters, noRequired, raftersWidth);                        
-            
-            int roofLength = carportRequest.getLength();
-            // Spær placeres højst 0,55 cm fra hinanden.
-            int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING);                        
-            
-            bill.add(new BillItem(material, noRafters*noRequired, "spær fladt tag"));
+            // Hent antal korteste træ nødvendigt.
+            MaterialCount materialCount = findShortest(rafters, carportRequest.getWidth());            
+            // Find tagets længde og udregn antal spær, adskilt 55 cm fra hinanden.
+            int roofLength = carportRequest.getLength();            
+            int noRafters = (int)Math.ceil(roofLength / BusinessRules.RAFTER_SPACING);                                    
+            //bill.add(new BillItem(material, noRafters*noRequired, "spær fladt tag"));
+            bill.add(new BillItem(materialCount.getMaterialDTO(), noRafters*materialCount.getCount(), "spær fladt tag"));
             
             // Et item tilføjet stykliste.
             return 1;            
