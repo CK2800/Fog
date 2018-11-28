@@ -19,6 +19,9 @@ import jc.fog.exceptions.FogException;
  */
 public abstract class RuleCalculator
 {
+    /**
+     * Samling af konstanter 
+     */
     protected static enum MaterialtypeId
     {
         HEAD (BusinessRules.HEAD_TYPE_ID), // Materiale type id for spær træ.
@@ -40,27 +43,24 @@ public abstract class RuleCalculator
     protected static HashMap<String, List<MaterialDTO>> materials;
     protected abstract int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException;            
     
-    /**
-     * Initialiserer krævede attributter inden brugen af nedarvninger af denne klasse.
-     * 
-     * Konstruktør i abstrakt klasse kan ikke kaldes.
-     * Nedarvninger må kalde denne konstruktør.
-     * @param materialList
-     * @param carportRequest
-     * @param materials 
-     */
-    public RuleCalculator(List<MaterialDTO> materialList)
-    {
-        if (materials == null)        
-            initializeMaterials(materialList);            
-        
-    }
+//    /**
+//     * Initialiserer krævede attributter inden brugen af nedarvninger af denne klasse.
+//     * 
+//     * Konstruktør i abstrakt klasse kan ikke kaldes.
+//     * Nedarvninger må kalde denne konstruktør.
+//     * @param materialList 
+//     */
+//    public RuleCalculator(List<MaterialDTO> materialList)
+//    {
+//        if (materials == null)        
+//            initializeMaterials(materialList);
+//    }
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
      * Hashmap tilgås af de forskellige beregnere, der til sammen udregner styklisten.
      * @param materialList 
      */
-    private static void initializeMaterials(List<MaterialDTO> materialList)
+    public static void initializeMaterials(List<MaterialDTO> materialList)
     {        
         // Sort the list ascending on materialtypeId.
         //materialList.sort((a,b) -> a.compareTo(b));
@@ -86,17 +86,16 @@ public abstract class RuleCalculator
         return result;
     }
     
-    /**
-     * Sorts the List<MaterialeDTO> collection on laengde in descending order.
-     * Sorts the List of MaterialDTO on laengde in descending order.
+    /**     
+     * Sorts the List of MaterialDTO on length in descending order.
      * @param list     
      */
-//    protected void sortLengthDesc(List<MaterialDTO> list)
-//    {
-//        Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
-//        Collections.reverse(list);
-//    }
-    HERTIL
+    protected void sortLengthDesc(List<MaterialDTO> list)
+    {
+        Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
+        Collections.reverse(list);
+    }
+    
     protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
     {
         MaterialDTO materialeDTO = null;

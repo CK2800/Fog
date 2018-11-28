@@ -14,11 +14,6 @@ import jc.fog.exceptions.FogException;
  */
 public class RuleCalculatorRafters extends RuleCalculator
 {
-    public RuleCalculatorRafters(List<MaterialDTO> materials)
-    {
-        super(materials);
-    }
-
     @Override
     protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
