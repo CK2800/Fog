@@ -86,9 +86,14 @@ INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (6, '38x73 mm.'
 INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (6, '38x73 mm.', 420, 'stk');
 -- tagfladebelægning.
 INSERT INTO Materialtypes(type) VALUES('tagfladebelægning'); -- 7
+INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 240, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 300, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 420, 'stk'); -- 25
+INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 480, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 540, 'stk');
 INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 600, 'stk');
 INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, unit) VALUES (7, 'B & C Dobbelt-s sort', 'stk'); -- 25
+INSERT INTO Materials(materialtypeId, name, unit) VALUES (7, 'B & C Dobbelt-s sort', 'stk'); -- 30
 -- tagrygbelægning.
 INSERT INTO Materialtypes(type) VALUES('tagrygbelægning'); -- tidl. rygsten
 INSERT INTO Materials(materialtypeId, name, unit) VALUES (8, 'B & C sort', 'stk');
@@ -151,7 +156,12 @@ INSERT INTO Rooftypes(type) VALUES('Plast tag');
 INSERT INTO Rooftypes(type) VALUES('Pap tag');
 
 -- roof type materials
-INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 7, true, 25); -- tagsten sort
-INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 8, true, 26); -- rygsten sort
-INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 24); -- plast tag 360 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 7, true, 30); -- tagsten sort
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (2, 8, true, 31); -- rygsten sort
 INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 23); -- plast tag 600 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 24); -- plast tag 360 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 25); -- plast tag 240 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 26); -- plast tag 300 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 27); -- plast tag 420 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 28); -- plast tag 480 cm
+INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 29); -- plast tag 540 cm
