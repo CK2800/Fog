@@ -18,11 +18,7 @@
         <link href="WEB-INF/css/css.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        
-            
-            <jsp:include page="WEB-INF/view/logo/logo.jsp"></jsp:include> <%-- Logo her ---%>
-            <jsp:include page="WEB-INF/view/nav/nav.jsp"></jsp:include> <%-- menu her ---%>
-            
+            <jsp:include page="WEB-INF/view/Header.jsp"></jsp:include> <%-- Header her ---%>
             <div class="container" style="min-height: 500px;">
                 
             </div>

@@ -75,8 +75,10 @@ public class ShowCarPortCommand  extends Command
     private String carportRequestToBill(CarportRequestDTO item, boolean bill)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        
-        //width, length osv.
+        if(bill == true)//Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
+        {
+            stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-info btn-sm\" /><br/>");
+        }
         stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"$1\" />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"$2\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$3\" /><br />");
@@ -93,7 +95,6 @@ public class ShowCarPortCommand  extends Command
         String text = stringBuilder.toString();
         if (item != null)
         {
-          // id   
             text = text.replace("$1", String.valueOf(item.getId()));
             text = text.replace("$2", String.valueOf(item.getLength()));
             text = text.replace("$3", String.valueOf(item.getWidth()));
@@ -102,7 +103,8 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$6", String.valueOf(item.getLength()));
             text = text.replace("$7", String.valueOf(item.getWidth()));  
             
-            text = text.replace("$8", "");  
+            text = text.replace("$8", "Updater indhold");
+            text = text.replace("$9", "Beregn stykliste");
         }
         else
         {
@@ -113,7 +115,8 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$5", "");
             text = text.replace("$6", "");
             text = text.replace("$7", ""); 
-            text = text.replace("$8", "");
+            
+            text = text.replace("$8", "Opret forespørgelse");
         }
         return text.toString();
     }
