@@ -75,21 +75,22 @@ public class ShowCarPortCommand  extends Command
     private String carportRequestToBill(CarportRequestDTO item, boolean bill)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        if(bill == true)//Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
-        {
-            stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-info btn-sm\" /><br/>");
-        }
+        
         stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"$1\" />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"$2\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$3\" /><br />");
         stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"$4\" /><br />");
         stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"$5\" /><br />");
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\"").append(item.getShedDTO() != null ? " checked" : "").append(" /><br />");
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\" $8 /><br />");
         
         stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"$6\" /><br />");
         stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$7\" /><br />");
         stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"$8\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-success btn-block\" />");
+        if(bill == true)//Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
+        {
+            stringBuilder.append("<input type=\"submit\" value=\"$10\" class=\"btn btn-info btn-block\" /><br/>");
+        }
         stringBuilder.append("</form><br/>");
         
         String text = stringBuilder.toString();
@@ -101,10 +102,11 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$4", String.valueOf(item.getHeight()));
             text = text.replace("$5", String.valueOf(item.getSlope()));
             text = text.replace("$6", String.valueOf(item.getLength()));
-            text = text.replace("$7", String.valueOf(item.getWidth()));  
+            text = text.replace("$7", String.valueOf(item.getWidth()));
+            text = text.replace("$8", "checked");
             
-            text = text.replace("$8", "Updater indhold");
-            text = text.replace("$9", "Beregn stykliste");
+            text = text.replace("$9", "Updater indhold");
+            text = text.replace("$10", "Beregn stykliste");
         }
         else
         {
@@ -115,8 +117,9 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$5", "");
             text = text.replace("$6", "");
             text = text.replace("$7", ""); 
+            text = text.replace("$8", ""); 
             
-            text = text.replace("$8", "Opret forespørgelse");
+            text = text.replace("$9", "Opret forespørgelse");
         }
         return text.toString();
     }
