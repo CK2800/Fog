@@ -27,9 +27,10 @@ public class ShowCarPortCommand  extends Command
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         
         String requestForm = null;
-        boolean viewUpdateQuest = true;//skal lige overvej om det er noget vi overhovedet kommer til, at bruge..
         
-
+        //skal lige overvej om det er noget vi overhovedet kommer til, at bruge.. Fx om man er medarbejder eller ej?
+        boolean viewUpdateQuest = true;
+        
         // Har vi et gyldigt id ?
         try
         {
@@ -46,16 +47,9 @@ public class ShowCarPortCommand  extends Command
             CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
             // Create HTML form with request's data and set it on http request.
             requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest);
-            
-            
-            //Fortæller at den skal fremvise styklisten her.
-            
-            //Her skal styklisten så fremkomme.
         }
         else // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest
-        {            
-            
-            viewUpdateQuest = false;
+        {                        
             //Det her skal blive vist hvis man skal opret en forespørgelse.
             requestForm = carportRequestToBill(null, viewUpdateQuest);
         }
@@ -76,28 +70,40 @@ public class ShowCarPortCommand  extends Command
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         
-        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"$1\" />");
+        if(item != null)
+        {
+            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$1_1\" />");
+            if(item.getShedDTO().getId() > 0)
+            {
+                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$1_2\" />");
+            }
+        }
+        
+        
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"$2\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$3\" /><br />");
         stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"$4\" /><br />");
         stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"$5\" /><br />");
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\" $8 /><br />");
         
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"$6\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$7\" /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"skurLaengde\" value=\"$6\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"skurBredde\" class=\"form-control\" value=\"$7\" /><br />");
+        
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-success btn-block\" />");
         if(bill == true)
-        {
-            //Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
-            stringBuilder.append("<a href=\"/Fog/FrontController?command=" + Commands.STYKLISTE + "&id=$1\" class=\"btn btn-info btn-block\" \">$0</a><br/>");
+       
+            stringBuilder.append("<a href=\"/Fog/FrontController?command=" + Commands.STYKLISTE + "&id=$1_1\" class=\"btn btn-info btn-block\" \">$0</a><br/>");
         }
         stringBuilder.append("</form><br/>");
         
         String text = stringBuilder.toString();
         if (item != null)
         {
-            text = text.replace("$1", String.valueOf(item.getId()));
+            //Id'er til det angivet punkt/område i forhold til hvis det skal opdatere.
+            text = text.replace("$1_1", String.valueOf(item.getId()));
+            text = text.replace("$1_2", String.valueOf(item.getShedDTO().getId()));       
+            
             text = text.replace("$2", String.valueOf(item.getLength()));
             text = text.replace("$3", String.valueOf(item.getWidth()));
             text = text.replace("$4", String.valueOf(item.getHeight()));
@@ -111,7 +117,6 @@ public class ShowCarPortCommand  extends Command
         }
         else
         {
-            text = text.replace("$1", "");
             text = text.replace("$2", "");
             text = text.replace("$3", "");
             text = text.replace("$4", "");
@@ -121,6 +126,7 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$8", ""); 
             
             text = text.replace("$9", "Opret forespørgelse");
+            text = text.replace("$0", "Beregn stykliste");
         }
         return text.toString();
     }

@@ -27,12 +27,39 @@ public class ShowBillCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        // get request's id from request.
-        int id = Integer.parseInt(request.getParameter("id"));
+        // Se om der er en id i request, for så skal vi hente carportrequest fra db.
+        int id = 0;
+        CarportRequestDTO carportRequestDTO;
         // Create DataFacade
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        // get request.
-        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
+        // Har vi et gyldigt id ?
+        try
+        {
+            // Findes id ikke på requestet, catcher vi exception
+            id = Integer.parseInt(request.getParameter("id"));
+        }
+        catch(NumberFormatException n){
+            // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
+        }
+        if(id > 0)
+        {        
+            // get request.
+            carportRequestDTO = dataFacade.getCarport(id);
+        }
+        else
+        {
+            // nap parametre fra requests og dan CarportRequestDTO.
+            int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
+            int slope = Integer.parseInt(request.getParameter("slope"));
+            int width = Integer.parseInt(request.getParameter("width"));
+            int height = Integer.parseInt(request.getParameter("height"));
+            int length = Integer.parseInt(request.getParameter("length"));
+            String remark = request.getParameter("remark");
+            int shedLength = Integer.parseInt(request.getParameter("shedLength"));
+            int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+            
+            carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
+        }
         // get materials.
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Calculate the bill of materials.

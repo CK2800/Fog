@@ -16,15 +16,8 @@
             
             <div class="container" style="min-height: 500px;">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <%= requestForm %>
-                    </div>
-                    <div class="col-md-4">
-                        <% if(viewUpdateQuest == true) { %>
-                        <p>Styklist kommer her</p>
-                        <% } else { %>
-                        <p>Hej</p>
-                        <% } %>
                     </div>
                 </div>
             </div>

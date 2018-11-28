@@ -25,6 +25,10 @@ public class CarportRequestDAO extends AbstractDAO{
     final static String CREATE_CPREQUEST_SQL = "INSERT INTO Carportrequests(rooftypeId, slope, shedId, width, height, length, remark) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
     
     final static String CREATE_SHED_SQL = "INSERT INTO Sheds(length, width) VALUES(?,?)";
+    
+    final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, shedId = ?, width = ?, length = ? WHERE id = ?";
+    
+    final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
         
     /**
      * Konstruktør som fordrer en DbConnector instans.     
@@ -179,6 +183,84 @@ public class CarportRequestDAO extends AbstractDAO{
             throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
         }        
     }
+    
+    /**
+     * Den her skal updater i forhold til den forespørgelse der er i databasen
+     * @param id
+     * @param shedId
+     * @param shedCheck 
+     * @param slope
+     * @param width
+     * @param length
+     * @param shedWidth
+     * @param shedLength
+     * @return
+     * @throws FogException 
+     */
+    public boolean updateCarPortRequest(int id, int shedId, boolean shedCheck, int slope, int width, int length, int shedWidth, int shedLength) throws FogException
+    {
+        try
+        {
+            int setShedId;
+            //Updater shed
+            PreparedStatement pstm;
+            
+            int commits = 0;
+            if(shedId > 0)
+            {   
+                boolean autocommit = connection.getAutoCommit();
+                if (autocommit){
+                    connection.setAutoCommit(false);
+                }
+            
+                pstm = connection.prepareStatement(UPDATE_SHED_SQL);
+                pstm.setInt(1, shedWidth);
+                pstm.setInt(2, shedLength);
+                pstm.setInt(3, shedId);
+
+                //gem i databasen
+                commits += pstm.executeUpdate();
+                
+                
+                pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
+                pstm.setInt(1, slope);
+                pstm.setInt(2, width);
+                pstm.setInt(3, length);
+                pstm.setInt(4, id);
+                
+                
+                commits += pstm.executeUpdate();
+                
+                
+                connection.commit();
+                connection.setAutoCommit(autocommit);
+                
+                return commits == 2;                
+            }
+            else
+            {
+                if(shedCheck == true)
+                {
+                    setShedId = createShed(shedLength, shedWidth);
+                }
+                else
+                {
+                    setShedId = shedId;
+                }
+                
+                pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
+                pstm.setInt(1, slope);
+                pstm.setInt(2, setShedId);
+                pstm.setInt(3, width);
+                pstm.setInt(4, length);
+                pstm.setInt(5, id);
+            }            
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Kunne ikke opdater", e.getMessage());
+        }    
+    }
 
     /**
      * Hjælpemetode som opretter skuret. 
@@ -205,4 +287,6 @@ public class CarportRequestDAO extends AbstractDAO{
             throw new FogException("Skur blev ikke oprettet.", e.getMessage());
         }
     }
+    
+    
 }
