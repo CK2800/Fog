@@ -87,9 +87,10 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$7\" /><br />");
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-success btn-block\" />");
-        if(bill == true)//Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
+        if(bill == true)
         {
-            stringBuilder.append("<input type=\"submit\" value=\"$0\" class=\"btn btn-info btn-block\" /><br/>");
+            //Det her bliver kun vist hvis man er log ind som "Martin" / Medarbejder i FOG
+            stringBuilder.append("<a href=\"/Fog/FrontController?command=" + Commands.STYKLISTE + "&id=$1\" class=\"btn btn-info btn-block\" \">$0</a><br/>");
         }
         stringBuilder.append("</form><br/>");
         

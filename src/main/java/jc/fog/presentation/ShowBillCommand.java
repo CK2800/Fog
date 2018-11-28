@@ -50,7 +50,7 @@ public class ShowBillCommand extends Command
     private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
+        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" onclick=\"window.history.back();\"/>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");
