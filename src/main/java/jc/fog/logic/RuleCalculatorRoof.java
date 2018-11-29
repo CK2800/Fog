@@ -72,7 +72,7 @@ public class RuleCalculatorRoof extends RuleCalculator
         else // taget har hældning.
         {
             // Find tagfladens vidde:
-            int slopedWidth = (int)Math.ceil(calculateSlopedWidth(carportRequestDTO.getWidth()/2, carportRequestDTO.getSlope()));
+            double slopedWidth = calculateSlopedWidth(carportRequestDTO.getWidth()/2, carportRequestDTO.getSlope());
             // Find antal teglsten, husk at teglstens længde skal bruges i tagets bredde.
             int noRows = (int)Math.ceil(slopedWidth / BusinessRules.ROOFTILE_LENGTH);
             int noCols = (int)Math.ceil(carportRequestDTO.getLength() / BusinessRules.ROOFTILE_WIDTH);
