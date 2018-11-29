@@ -9,10 +9,10 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 
 /**
- * Udvidelse af RuleCalculator for udregning af rem.
+ * Udvidelse af RulesCalculator for udregning af rem.
  * @author Claus
  */
-public class RuleCalculatorHead extends RuleCalculator
+public class RulesCalculatorHead extends RulesCalculator
 {      
     @Override
     protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
@@ -20,13 +20,13 @@ public class RuleCalculatorHead extends RuleCalculator
         try
         {
             // Remmen laves af spærtræ, find samlingen i hashmap.
-            List<MaterialDTO> heads = materials.get(MaterialtypeId.BATTENS.name());
+            List<MaterialDTO> heads = materials.get(Materialtype.RAFTERS.name());
             // Remmen bærer taget, udhæng 30 cm i hver ende.
-            int headLength = carportRequest.getLength() - 2 * BusinessRules.OVERHANG;                        
+            int headLength = carportRequest.getLength() - 2 * Rules.OVERHANG;                        
             // Find korteste materiale og antal.
             MaterialCount materialCount = findShortest(heads, headLength);                                    
             // Tilføj til styklisten, husk at rem er i begge sider.
-            bill.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * 2, "rem instruks"));
+            bill.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * 2, CarportPart.HEAD, "rem instruks"));
             // 1 nyt item på styklisten.
             return 1;            
         }        

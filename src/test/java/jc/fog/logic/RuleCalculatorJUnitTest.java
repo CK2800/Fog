@@ -111,9 +111,9 @@ public class RuleCalculatorJUnitTest
         CarportRequestDTO forespoergsel = new CarportRequestDTO(2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth); // carport, 500 x 800 cm., med plastic tag, med skur i fuld bredde.
         
         //Initialiser materialer i rule calculator.
-        RuleCalculator.initializeMaterials(materials);        
+        RulesCalculator.initializeMaterials(materials);        
         // Opret stolpeudregner.
-        RuleCalculatorPost postCalculator = new RuleCalculatorPost();
+        RulesCalculatorPost postCalculator = new RulesCalculatorPost();
         
         // Act
         int items = postCalculator.calculate(forespoergsel, stykliste);        
@@ -133,8 +133,8 @@ public class RuleCalculatorJUnitTest
         List<MaterialDTO> materials = dao.getMaterials(); // materialer
         ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste 
         CarportRequestDTO forespoergsel = new CarportRequestDTO(1, 45, 600, 210, 800, "45 grader", 210, 600);
-        RuleCalculator.initializeMaterials(materials);
-        RuleCalculatorRoof roofCalculator = new RuleCalculatorRoof();
+        RulesCalculator.initializeMaterials(materials);
+        RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof();
         
         // Act
         int items = roofCalculator.calculate(forespoergsel, stykliste);
@@ -152,7 +152,7 @@ public class RuleCalculatorJUnitTest
         Assert.assertEquals(expectedTiles, billItem.getCount() );
     }
     /**
-     * Tester RuleCalculatorRoof med tagtype 3 (fladt plastic tag).
+     * Tester RulesCalculatorRoof med tagtype 3 (fladt plastic tag).
      * @throws FogException 
      */
     @Test
@@ -163,8 +163,8 @@ public class RuleCalculatorJUnitTest
         List<MaterialDTO> materials = dao.getMaterials(); // materialer
         ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste        
         CarportRequestDTO forespoergsel = new CarportRequestDTO(3, 0, 600, 210, 800, "blabla", 0,0); // carport, 600 x 800 cm., med plastic tag, uden skur.        
-        RuleCalculator.initializeMaterials(materials); // Initialiser RuleCalculator.
-        RuleCalculatorRoof roofCalculator = new RuleCalculatorRoof(); // Opret tag udregner.
+        RulesCalculator.initializeMaterials(materials); // Initialiser RulesCalculator.
+        RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof(); // Opret tag udregner.
         
         // Act
         int items = roofCalculator.calculate(forespoergsel, stykliste);        

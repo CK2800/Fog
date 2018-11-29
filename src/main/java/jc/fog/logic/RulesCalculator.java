@@ -17,36 +17,14 @@ import jc.fog.exceptions.FogException;
  *
  * @author Claus
  */
-public abstract class RuleCalculator
+public abstract class RulesCalculator extends Rules
 {
-    /**
-     * Samling af konstanter med materialetype id for lettere opdeling af List til HashMap.
-     * Eksempel: HEAD (4).
-     * @see initializeMaterials
-     */
-    protected static enum MaterialtypeId
-    {
-        HEAD (BusinessRules.HEAD_TYPE_ID), // Materiale type id for spær træ.
-        POST (BusinessRules.POST_TYPE_ID), // Materiale type id for stolper.
-        BATTENS (BusinessRules.BATTENS_TYPE_ID), // Materiale type id for lægter.
-        PLANKS (BusinessRules.PLANKS_TYPE_ID), // Beklædningsplanker til skur.
-        PRE_FAB_RAFTERS (BusinessRules.PRE_FAB_RAFTERS_TYPE_ID), // Materiale type id byg selv spær.       
-        RIDGE (BusinessRules.ROOF_RIDGE_TYPE_ID), // Materialetype id for tagrygbelægning.
-        SHEETING (BusinessRules.ROOF_SHEETING_TYPE_ID); // Materialetype id for tagfladebelægning.
-        private final int materialtypeId;
-        
-        private MaterialtypeId(int materialtypeId)
-        {
-            this.materialtypeId = materialtypeId;
-        }
-        public int getMaterialtypeId(){return materialtypeId;}
-    }
-    
     protected static HashMap<String, List<MaterialDTO>> materials;
     protected abstract int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException;            
 
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
+     * Hver List indeholder MaterialDTO objekter med samme materiale type id.
      * Hashmap tilgås af de forskellige beregnere, der til sammen udregner styklisten.
      * @param materialList 
      */
@@ -56,9 +34,9 @@ public abstract class RuleCalculator
         materials = new HashMap<>();
         // Gennemløb enum og opret HashMap key-value pair med subset af listen, hvor 
         // hvert MaterialDTO objekts materialtypeId svarer til værdien i enum.
-        for(MaterialtypeId mtId : MaterialtypeId.values())
+        for(Materialtype mt : Materialtype.values())
         {           
-            materials.put(mtId.name(), filter(materialList, mtId.getMaterialtypeId()));
+            materials.put(mt.name(), filter(materialList, mt.getMaterialtypeId()));
         }        
     }
     
