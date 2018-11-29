@@ -1,17 +1,13 @@
-OK: 1. ForesporgselDAO.createForespoergsel SKAL IKKE oprette skuret selv. Lav en metode til det. SOLID princippet.
-OK: 2. Rename DK->Engelsk.
-=======
 Fra 26-11-18:
 OK: Husk at ændre i DAO'er - se CarportDAO for detaljer, vedr. db forbindelse.
 OK: Skriv kommentarer for hvordan forbindelsen oprettes.
 OK: Dvs. ingen statiske metoder i DAO'erne heller.
-
+Og der er unit tests der skal laves lidt om.
 OK: Facader skal ikke være statiske.
 
 FRA PO 23-11-2018:
 AFVENT: Husk at tagpap kan findes for begge typer tag.
 LAv side så medarbejder kan indtaste carportdata og skyde til beregner. #8
-
 FREDAG: Flere unit tests som tester for korrekt indhold. OG hardcoded tegning.
 Integration tests som tester commands...
 Brugergrænsefladetest...på papir - hvis jeg gør dit, så forventer ejg dat. Evt 
@@ -23,7 +19,7 @@ Opdel liste af materialer i hashmap af lists på hver varetypeid.
 Ved udtræk af 1 materiale, hent øvrige med samme type og dan liste over dimensioner i entiteten, så kan det ene materiale give den rette størrelse.
 
 Rule vedr tagbelægning skal med. 
-Pris skal udregnes.
+Pris skal udregnes.>
 
 Indhold i projekt:
 formular til Forespørgselsdetaljer, tegning, pris, stykliste
@@ -32,7 +28,6 @@ Arkitektur
 Session
 MVC
 ----
-
 
 Få styr på flg.
 1. Spærkonstruktion - hvordan ser de ud, hvad er reglerne mht. adskillelse. 55 cm mellem hvert spær. stolpe for hver 4 mtr ca.

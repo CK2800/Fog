@@ -16,6 +16,7 @@ public class LogicFacade
 {
     public static List<BillItem> calculateBill(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
-        return Calculator.calculateBill(carportRequest, materials);
+        Calculator calculator = new Calculator(materials);
+        return calculator.calculateBill(carportRequest);        
     }
 }

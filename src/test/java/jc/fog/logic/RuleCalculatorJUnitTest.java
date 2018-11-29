@@ -16,6 +16,8 @@ import jc.fog.exceptions.FogException;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -74,6 +76,29 @@ public class RuleCalculatorJUnitTest
     }
     
     
+
+    
+    @Test
+    public void testCalculators() throws FogException
+    {
+        // Arrange
+        MaterialDAO dao = new MaterialDAO(connection);
+        List<MaterialDTO> materials = dao.getMaterials();        
+        List<BillItem> stykliste = new ArrayList<>();
+        // Skur i fuld vidde af carport, 500 cm.
+        int shedWidth = 500;
+        CarportRequestDTO carportRequest = new CarportRequestDTO(
+                2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);
+        // Opret calculator.
+        Calculator calculator = new Calculator(materials);
+        
+        // Act        
+        stykliste = calculator.calculateBill(carportRequest);
+        
+        // Assert
+        assertTrue(stykliste.size() > 0);
+    }
+
     
     /**
      * Tester stolpe udregning hvor skuret er i samme bredde som carporten.
@@ -82,14 +107,16 @@ public class RuleCalculatorJUnitTest
     public void testPostCalculator() throws FogException
     {
         // Arrange
-        MaterialDAO dao = new MaterialDAO(connection);
-        List<MaterialDTO> materials = dao.getMaterials();        
-        ArrayList<BillItem> stykliste = new ArrayList<>();
-        // Skur i fuld vidde af carport, 500 cm.
-        int shedWidth = 500;
-        CarportRequestDTO forespoergsel = new CarportRequestDTO(
-                2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);        
-        RuleCalculatorPost postCalculator = new RuleCalculatorPost(materials);
+        MaterialDAO dao = new MaterialDAO(connection); // forbindelse.
+        List<MaterialDTO> materials = dao.getMaterials(); // materialer.        
+        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste.        
+        int shedWidth = 500; // skur vidde.
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth); // carport, 500 x 800 cm., med plastic tag, med skur i fuld bredde.
+        
+        //Initialiser materialer i rule calculator.
+        RulesCalculator.initializeMaterials(materials);        
+        // Opret stolpeudregner.
+        RulesCalculatorPost postCalculator = new RulesCalculatorPost();
         
         // Act
         
@@ -101,58 +128,54 @@ public class RuleCalculatorJUnitTest
         assertEquals(expected, billItem.getCount());
     }
     
+    
     @Test
-    public void testRoofCalculator() throws FogException
+    public void testRoofCalculatorSloped() throws FogException
     {
         // Arrange
-        MaterialDAO dao = new MaterialDAO(connection);
-        List<MaterialDTO> materials = dao.getMaterials();        
-        ArrayList<BillItem> stykliste = new ArrayList<>();
+        MaterialDAO dao = new MaterialDAO(connection); // forbindelse
+        List<MaterialDTO> materials = dao.getMaterials(); // materialer
+        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste 
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(1, 45, 600, 210, 800, "45 grader", 210, 600);
+        RulesCalculator.initializeMaterials(materials);
+        RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof();
         
+        // Act
+        int items = roofCalculator.calculate(forespoergsel, stykliste);
+        BillItem billItem = null;
+        for(BillItem b : stykliste)
+            if (b.getMaterialDTO().getMaterialtypeDTO().getId() == 7) // tagfladebelægning
+                billItem = b;
         
-        CarportRequestDTO forespoergsel = new CarportRequestDTO(
-                3, 0, 600, 210, 800, "blabla", 0,0);
-        RuleCalculatorRoof roofCalculator = new RuleCalculatorRoof(materials);
+        // Assert
+        // Tagsten er 25 x 50 cm
+        // Taghældningens bredde er 300 / cos(45) ~ 424,264 cm => 424,264 / 50 = 9 hele rækker.
+        // Taglængden er 800 => 800 / 25 = 32 kolonner
+        // 9 rk a 32 kolonner = 288 teglsten.        
+        int expectedTiles = 288;
+        Assert.assertEquals(expectedTiles, billItem.getCount() );
+    }
+    /**
+     * Tester RulesCalculatorRoof med tagtype 3 (fladt plastic tag).
+     * @throws FogException 
+     */
+    @Test
+    public void testRoofCalculatorNoSlope() throws FogException
+    {
+        // Arrange
+        MaterialDAO dao = new MaterialDAO(connection); // forbindelse
+        List<MaterialDTO> materials = dao.getMaterials(); // materialer
+        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste        
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(3, 0, 600, 210, 800, "blabla", 0,0); // carport, 600 x 800 cm., med plastic tag, uden skur.        
+        RulesCalculator.initializeMaterials(materials); // Initialiser RulesCalculator.
+        RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof(); // Opret tag udregner.
         
         // Act
         int items = roofCalculator.calculate(forespoergsel, stykliste);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert
-        int expected = 6;
+        int expected = 6; // Vi forventer 6 tagplader, idet deres bredde er 109 cm.
         Assert.assertEquals(expected, billItem.getCount());
-    }
-    
-//    public void TestRuleCalculatorBattens() throws FogException
-//    {
-//        //CarportRequestDTO forespoergsel = new CarportRequestDTO(0, 2, 15, 
-//    }
-    
-//    @Test
-//    public void CalculateStolper() throws FogException
-//    {
-//        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
-//        forespoergsel.getSkurDTO().setBredde(forespoergsel.getBredde()); // skur og carport lige brede.
-//        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
-//        
-//        StolpeCalculatorRule calc = new StolpeCalculatorRule();
-//        calc.calculate(forespoergsel, materialer, stykliste);
-//        
-//        assertTrue(stykliste.size() == 1);
-//    }
-//    
-//    @Test
-//    public void CalculateRem() throws FogException
-//    {
-//        List<MaterialeDTO> materialer = MaterialeDAO.getMaterialer();
-//        CarportRequestDTO forespoergsel = ForesporgselDAO.getForesporgselSingle(1);
-//        forespoergsel.setLaengde(1501);
-//        List<StyklisteItem> stykliste = new ArrayList<StyklisteItem>();
-//        
-//        RemCalculatorRule calc = new RemCalculatorRule();
-//        calc.calculate(forespoergsel, materialer, stykliste);
-//        
-//        assertTrue(stykliste.size() == 1);
-//    }
+    }    
 }

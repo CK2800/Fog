@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jc.fog.logic;
+
+/**
+ * Statiske konstanter til brug ved udregninger af styklisten.
+ * @author Claus
+ */
+public class Rules
+{
+    
+    /** Udhæng i cm. */
+    protected static final int OVERHANG = 30;
+    /** Mellemrum ml. lægter i cm. */
+    protected static final float BATTENS_SPACING = 30F;
+    /** Antal stolper v. skur i samme bredde som carport */
+    protected static final int POSTS_SHED_FULL_WIDTH = 3;
+    /** Antal stolper v. skur med mindre bredde end carport. */
+    protected static final int POSTS_SHED = 4;
+    /** Afstand ml. byg-selv spær. */
+    protected static final float RAFTER_SPACING_SLOPED_ROOF = 89F;
+    /** Afstand ml. spær, fladt tag. */
+    protected static final float RAFTER_SPACING = 55F;
+    /** Afstand ml. beklædningsbrædder, skur. */
+    protected static final int PLANK_SPACING = 6;
+    /** Beklædningsbrædders bredde i cm. */
+    protected static final int PLANK_WIDTH = 10; // bør hentes fra db.
+    /** Teglstens bredde. */
+    protected static final int ROOFTILE_WIDTH = 25; 
+    /** Teglstens længde. */
+    protected static final int ROOFTILE_LENGTH = 50;
+    /** Rygstens længde. */
+    protected static final int RIDGETILE_LENGTH = 50;
+    /**
+     * Samling af konstanter med materialetype id.
+     * Bruges bl.a. til at opdele en List af MaterialDTO's i sub-lister med ens materialetype.
+     * Eksempel: RAFTERS (4).     
+     */
+    protected static enum Materialtype
+    {
+        PLANKS (1), // Beklædningsplanker til skur.
+        RAFTERS (4), // Materiale type id for spær træ.
+        POST (5), // Materiale type id for stolper.
+        BATTENS (6), // Materiale type id for lægter.
+        SHEETING (7), // Materialetype id for tagfladebelægning.
+        RIDGE (8), // Materialetype id for tagrygbelægning.
+        PRE_FAB_RAFTERS (23); // Materiale type id byg selv spær.       
+        
+        private final int materialtypeId;
+        
+        private Materialtype(int materialtypeId)
+        {
+            this.materialtypeId = materialtypeId;
+        }
+        public int getMaterialtypeId(){return materialtypeId;}
+    }
+    
+    /**
+     * Enum som indikerer en given del af carporten.
+     */
+    protected static enum CarportPart
+    {
+        HEAD,
+        RAFTERS,
+        POST,
+        BATTENS,
+        PLANKS,
+        PRE_FAB_RAFTERS,
+        RIDGE,
+        SHEETING
+    }
+}

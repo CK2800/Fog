@@ -12,13 +12,8 @@ import jc.fog.exceptions.FogException;
  *
  * @author Claus
  */
-public class RuleCalculatorRoof extends RuleCalculator        
-{
-    public RuleCalculatorRoof(List<MaterialDTO> materials)
-    {
-        super(materials);
-    }
-
+public class RulesCalculatorRoof extends RulesCalculator        
+{    
     @Override
     protected int calculate(CarportRequestDTO carportRequestDTO, List<BillItem> bill) throws FogException
     {        
@@ -29,8 +24,8 @@ public class RuleCalculatorRoof extends RuleCalculator
          * hvis forespørgslen IKKE har hældning...
          */
         // Hent tagryg- og tagfladematerialer.
-        List<MaterialDTO> ridges = materials.get(MaterialtypeId.RIDGE.name());
-        List<MaterialDTO> sheetings = materials.get(MaterialtypeId.SHEETING.name());
+        List<MaterialDTO> ridges = materials.get(Materialtype.RIDGE.name());
+        List<MaterialDTO> sheetings = materials.get(Materialtype.SHEETING.name());
         
         // Fladt tag, her skal vi blot bruge materialer fra sheetings.
         if (carportRequestDTO.getSlope() == 0)
@@ -64,8 +59,8 @@ public class RuleCalculatorRoof extends RuleCalculator
                 }
                 // Find antal.
                 int count = (int)Math.ceil(carportRequestDTO.getWidth() / 109F); // ecolite plader er 109 cm.
-                bill.add(new BillItem(longest, count, "lang tagflade"));
-                bill.add(new BillItem(shortest, count, "kort tagflade"));
+                bill.add(new BillItem(longest, count, CarportPart.SHEETING,  "lang tagflade"));
+                bill.add(new BillItem(shortest, count, CarportPart.SHEETING, "kort tagflade"));
                 return 2;
                 
             }
@@ -74,9 +69,22 @@ public class RuleCalculatorRoof extends RuleCalculator
                 throw new FogException("Tagbelægning, fladt tag, kan ikke beregnes.", e.getMessage());
             } 
         }
-        
-        
-        return 0;
+        else // taget har hældning.
+        {
+            // Find tagfladens vidde:
+            double slopedWidth = calculateSlopedWidth(carportRequestDTO.getWidth()/2, carportRequestDTO.getSlope());
+            // Find antal teglsten, husk at teglstens længde skal bruges i tagets bredde.
+            int noRows = (int)Math.ceil(slopedWidth / Rules.ROOFTILE_LENGTH);
+            int noCols = (int)Math.ceil(carportRequestDTO.getLength() / Rules.ROOFTILE_WIDTH);
+            // Find antal rygningsten:
+            int noRidge = (int)Math.ceil(carportRequestDTO.getLength() / Rules.RIDGETILE_LENGTH);
+            
+            // Opret bill items for hver sten.
+            bill.add(new BillItem(sheetings.get(0), noRows*noCols, CarportPart.SHEETING, "teglsten."));
+            bill.add(new BillItem(ridges.get(0), noRidge, CarportPart.RIDGE, "rygning sten."));
+            return 2;
+            
+        }        
     }
     
 }

@@ -6,12 +6,8 @@
 package jc.fog.logic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
-import static jc.fog.logic.RuleCalculator.materials;
 
 /**
  *
@@ -19,59 +15,37 @@ import static jc.fog.logic.RuleCalculator.materials;
  */
 public class Calculator
 {
-    private static ArrayList<RuleCalculator> rules;
+    private ArrayList<RulesCalculator> calculators;
     
-    
-    /**
-     * Samling af konstanter for div. materialetyper.
-     */
-    private static enum MaterialtypeId
+    public Calculator(List<MaterialDTO> materials)
     {
-        
-    }    
-    
-    
-    
-    /**
-     * Filtrerer en liste af MaterialDTO objekter på dets materialetypes id.
-     * @param list
-     * @param typeId
-     * @return 
-     */
-    private static List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
-    {
-        // Filtrer listen og husk at tage højde for evt. nullpointer fra getMaterialtypeDTO().
-        Stream<MaterialDTO> stream = list.stream().filter(m -> (m.getMaterialtypeDTO() == null ? 0 == typeId : m.getMaterialtypeDTO().getId() == typeId));
-        // Konverter tilbage til List og returner.
-        List<MaterialDTO> result = stream.collect(Collectors.toList());
-        return result;
+        // Initialiserer RulesCalculator's hashmap.
+        RulesCalculator.initializeMaterials(materials);
+        // Opret instanser af RulesCalculators.         
+        initializeRulesCalculators(materials);
     }
     
-    private static void initializeRules(List<MaterialDTO> materials)
-    {
-        rules = new ArrayList<RuleCalculator>();
+    private void initializeRulesCalculators(List<MaterialDTO> materials)
+    {        
+        calculators = new ArrayList<RulesCalculator>();
         
-        rules.add(new RuleCalculatorHead(materials)); // Udregner rem.
-        rules.add(new RuleCalculatorPost(materials)); // Udregner stolper.
-        rules.add(new RuleCalculatorRafters(materials)); // Udregner spær.
-        rules.add(new RuleCalculatorShed(materials)); // Udregner skurets beklædning.
-        rules.add(new RuleCalculatorBattens(materials)); // Udregner lægter.
-        rules.add(new RuleCalculatorRoof(materials)); // Udregner tagbelægning.
+        calculators.add(new RulesCalculatorHead()); // Udregner rem.
+        calculators.add(new RulesCalculatorPost()); // Udregner stolper.
+        calculators.add(new RulesCalculatorRafters()); // Udregner spær.
+        calculators.add(new RulesCalculatorShed()); // Udregner skurets beklædning.
+        calculators.add(new RulesCalculatorBattens()); // Udregner lægter.
+        calculators.add(new RulesCalculatorRoof()); // Udregner tagbelægning.
     }
-    
-        
-    protected static List<BillItem> calculateBill(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
-    {           
-        // Opret instanser af RuleCalculators.         
-        initializeRules(materials);
-        
+            
+    protected List<BillItem> calculateBill(CarportRequestDTO carportRequest) throws FogException
+    {                           
         // Opret tom stykliste.
         ArrayList<BillItem> bill = new ArrayList<>();
         
         // Gennemløb alle rule calculators.        
-        for(RuleCalculator rule : rules)
+        for(RulesCalculator calculator : calculators)
         {
-            rule.calculate(carportRequest, bill);
+            calculator.calculate(carportRequest, bill);
         }
 
         return bill;

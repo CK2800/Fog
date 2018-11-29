@@ -17,7 +17,7 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     private int id;    
     private int materialtypeId;
     private String name;
-    private int length;
+    private int length;    // todo, implementeres vha. dimensionDTO ?
     private String unit;
     private MaterialtypeDTO materialtypeDTO;
     private int rooftypeId;
@@ -29,7 +29,9 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     public int getId() { return id; }
     //public int getMaterialetypeId() { return materialetypeId; }
     public String getName() { return name; }
-    public int getLength() { return length; }
+    public int getLength() { return length; } // todo, implementeres vha. dimensionDTO ?
+    public int getWidth(){return 0;} // todo, implementeres vha. dimensionDTO ?
+    public int getHeight(){return 0;} // todo, implementeres vha. dimensionDTO ?
     public String getUnit() { return unit; }
     public MaterialtypeDTO getMaterialtypeDTO(){return materialtypeDTO;}
     public int getRooftypeId(){return rooftypeId;}

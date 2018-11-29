@@ -9,15 +9,11 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 
 /**
- * Udvidelse af RuleCalculator for udregning af skurets beklædning.
+ * Udvidelse af RulesCalculator for udregning af skurets beklædning.
  * @author Claus
  */
-public class RuleCalculatorShed extends RuleCalculator
-{
-    public RuleCalculatorShed(List<MaterialDTO> materials)
-    {
-        super(materials);
-    }
+public class RulesCalculatorShed extends RulesCalculator
+{    
     @Override
     protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {        
@@ -25,7 +21,7 @@ public class RuleCalculatorShed extends RuleCalculator
         if (shed != null)
         {
             // Find materiale til skuret => trykimp. brædder, 19x100mm i 210 cm                        
-            List<MaterialDTO> planks = materials.get(MaterialtypeId.PLANKS.name());
+            List<MaterialDTO> planks = materials.get(Materialtype.PLANKS.name());
             MaterialDTO plank = null;
             for(MaterialDTO m : planks)
             {
@@ -38,11 +34,11 @@ public class RuleCalculatorShed extends RuleCalculator
             int width = shed.getWidth();                        
             
             // antal brædder i skurets længderetning, inderste brædder placeres med 6 cm mellemrum.
-            int noLength = (int)Math.ceil(length / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
+            int noLength = (int)Math.ceil(length / (Rules.PLANK_SPACING + Rules.PLANK_WIDTH)) * 2;
             // antal brædder i skurets bredde med overlap på 1 cm i hver side.
-            int noWidth = (int)Math.ceil(width / (BusinessRules.PLANK_SPACING + BusinessRules.PLANK_WIDTH)) * 2;
+            int noWidth = (int)Math.ceil(width / (Rules.PLANK_SPACING + Rules.PLANK_WIDTH)) * 2;
             
-            bill.add(new BillItem(plank, noLength + noWidth, "skur brædder 1 på 2"));
+            bill.add(new BillItem(plank, noLength + noWidth, CarportPart.PLANKS, "skur brædder 1 på 2"));
             return 1; // 1 nyt item på styklisten.
         }
         else 

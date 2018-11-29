@@ -9,20 +9,16 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 
 /**
- * Udvidelse af RuleCalculator for udregning af stolper.
+ * Udvidelse af RulesCalculator for udregning af stolper.
  * @author Claus
  */
-public class RuleCalculatorPost extends RuleCalculator
-{
-    public RuleCalculatorPost(List<MaterialDTO> materials)
-    {
-        super(materials);
-    }
+public class RulesCalculatorPost extends RulesCalculator
+{    
     @Override
     protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
     {
         // Find materialet.       
-        List<MaterialDTO> posts = materials.get(MaterialtypeId.POST.name()); //filter(materials, BusinessRules.POST_TYPE_ID);        
+        List<MaterialDTO> posts = materials.get(Materialtype.POST.name()); //filter(materials, Rules.POST_TYPE_ID);        
         MaterialDTO post = posts.get(0);
         // en stolpe i hvert hjørne.
         int count = 4;
@@ -32,12 +28,12 @@ public class RuleCalculatorPost extends RuleCalculator
         {            
             // Er skuret i fuld bredde?
             if (shed.getWidth() == carportRequest.getWidth())
-                count += BusinessRules.POSTS_SHED_FULL_WIDTH;
+                count += Rules.POSTS_SHED_FULL_WIDTH;
             else
-                count += BusinessRules.POSTS_SHED;                
+                count += Rules.POSTS_SHED;                
         }
         
-        bill.add(new BillItem(post, count, "stolpetekst"));
+        bill.add(new BillItem(post, count, CarportPart.POST, "stolpetekst"));
         
         // 1 nyt item på styklisten.
         return 1;        
