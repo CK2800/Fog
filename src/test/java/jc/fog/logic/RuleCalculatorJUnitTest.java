@@ -19,6 +19,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -73,19 +74,6 @@ public class RuleCalculatorJUnitTest
     }
     
     
-    @Test
-    public void testCalculatorInitialization() throws FogException
-    {
-        // Arrange
-//        MaterialDAO dao = new MaterialDAO(connection);
-//        List<MaterialDTO> materials = dao.getMaterials();        
-//        
-//        // Act
-//        Calculator.calculateBill(carportRequest, materials)
-//        
-//        // Assert
-//        assertTrue(Calculator.materials.size() > 0);
-    }
     
     /**
      * Tester stolpe udregning hvor skuret er i samme bredde som carporten.
@@ -104,12 +92,13 @@ public class RuleCalculatorJUnitTest
         RuleCalculatorPost postCalculator = new RuleCalculatorPost(materials);
         
         // Act
+        
         int items = postCalculator.calculate(forespoergsel, stykliste);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert
         int expected = 7;
-        Assert.assertEquals(expected, billItem.getCount());
+        assertEquals(expected, billItem.getCount());
     }
     
     @Test
