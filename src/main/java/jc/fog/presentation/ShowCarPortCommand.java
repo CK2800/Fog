@@ -77,24 +77,24 @@ public class ShowCarPortCommand  extends Command
         {
             if(item.getShedDTO().getId() > 0)
             {
-                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$ShedId\" />");
+                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
             }
-            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$Id\" />");
+            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
         }
         
         //Carport information her
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$Carport1\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$Carport2\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$Carport3\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$Carport4\" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$carport2\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$carport3\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$carport4\" /><br />");
         
         //Shed information her
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $Shed1 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$Shed2\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$Shed3\" /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" /><br />");
         
         //Kommentar fra kunden.
-        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$Carport5\" /><br />");
+        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" /><br />");
         
         //Dropdown i forhold til type af tag.
         //KOmmer her med dropdown.
@@ -111,22 +111,22 @@ public class ShowCarPortCommand  extends Command
         if (item != null)
         {
             //Id'er til det angivet punkt/område i forhold til hvis det skal opdatere.
-            text = text.replace("$ShedId", String.valueOf(item.getShedDTO().getId()));       
-            text = text.replace("$Id", String.valueOf(item.getId()));
+            text = text.replace("$shedId", String.valueOf(item.getShedDTO().getId()));       
+            text = text.replace("$id", String.valueOf(item.getId()));
             
             //Carport område
-            text = text.replace("$Carport1", String.valueOf(item.getLength()));
-            text = text.replace("$Carport2", String.valueOf(item.getWidth()));
-            text = text.replace("$Carport3", String.valueOf(item.getHeight()));
-            text = text.replace("$Carport4", String.valueOf(item.getSlope()));
+            text = text.replace("$carport1", String.valueOf(item.getLength()));
+            text = text.replace("$carport2", String.valueOf(item.getWidth()));
+            text = text.replace("$carport3", String.valueOf(item.getHeight()));
+            text = text.replace("$carport4", String.valueOf(item.getSlope()));
             
             //Shed område
-            text = text.replace("$Shed2", String.valueOf(item.getLength()));
-            text = text.replace("$Shed3", String.valueOf(item.getWidth()));
-            text = text.replace("$Shed1", "checked");
+            text = text.replace("$shed2", String.valueOf(item.getLength()));
+            text = text.replace("$shed3", String.valueOf(item.getWidth()));
+            text = text.replace("$shed1", "checked");
             
             //Kunde kommentar
-            text = text.replace("$Carport5", String.valueOf(item.getRemark()));
+            text = text.replace("$carport5", String.valueOf(item.getRemark()));
             
             //Det som der skal blive vist af tekst ved "Submit" område.
             text = text.replace("$submit1", "Updater indhold");
@@ -136,30 +136,22 @@ public class ShowCarPortCommand  extends Command
         {
             
             //Carport område
-            text = text.replace("$Carport1", "");
-            text = text.replace("$Carport2", "");
-            text = text.replace("$Carport3", "");
-            text = text.replace("$Carport4", "");
+            text = text.replace("$carport1", "");
+            text = text.replace("$carport2", "");
+            text = text.replace("$carport3", "");
+            text = text.replace("$carport4", "");
             
             //Shed område
-            text = text.replace("$Shed12", "");
-            text = text.replace("$Shed3", "");
-            text = text.replace("$Shed1", "");
+            text = text.replace("$shed2", "");
+            text = text.replace("$shed3", "");
+            text = text.replace("$shed1", "");
             
             //Kunde kommentar
-            text = text.replace("$Carport5", "");
+            text = text.replace("$carport5", "");
             
             //Det som der skal blive vist af tekst ved "Submit" område.
             text = text.replace("$submit1", "Opret forespørgelse");
             text = text.replace("$submit2", "Beregn stykliste");
-            
-            text = text.replace("$2", "");
-            text = text.replace("$3", "");
-            text = text.replace("$4", "");
-            text = text.replace("$5", "");
-            text = text.replace("$6", "");
-            text = text.replace("$7", ""); 
-            text = text.replace("$8", ""); 
             
         }
         return text.toString();

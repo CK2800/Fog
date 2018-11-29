@@ -27,6 +27,7 @@ public class ShowBillCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
+        
         // Se om der er en id i request, for så skal vi hente carportrequest fra db.
         int id = 0;
         CarportRequestDTO carportRequestDTO;
@@ -47,7 +48,10 @@ public class ShowBillCommand extends Command
             carportRequestDTO = dataFacade.getCarport(id);
         }
         else
-        {
+        {            
+            //SKAL HAVE KIGGET PÅ OM HVIS SKUR ER STØRRE END CARPORT HVAD SÅ???
+            
+            
             int shedLength, shedWidth;
             
             //Ønsker man Skur til carport.
@@ -61,7 +65,8 @@ public class ShowBillCommand extends Command
             int length = Integer.parseInt(request.getParameter("length"));
             String remark = request.getParameter("remark");//Hvad skal vi har gjort med den her ? Da den ikke vil ha nogen betydning i forhold til at beregn som FOG?
             
-            if(addSked)//Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
+            //Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
+            if(addSked)
             {
                 shedLength = Integer.parseInt(request.getParameter("shedLength"));
                 shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
@@ -72,7 +77,11 @@ public class ShowBillCommand extends Command
                 shedWidth = 0;
             }
             
+            //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
+            
+            
             carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
+                
         }
         // get materials.
         List<MaterialDTO> materials = dataFacade.getMaterials();

@@ -4,7 +4,7 @@
     Author     : Claus
 --%>
 <%
-    String id = (String)request.getParameter("id");
+    String id = (String)request.getParameter("id");//Er den vigtig at få mere over??? i forhold til når den skal beregn?
     String carportDimensioner = (String)request.getAttribute("carportDimensioner");
     String tabel = (String)request.getAttribute("stykliste");
 %>
