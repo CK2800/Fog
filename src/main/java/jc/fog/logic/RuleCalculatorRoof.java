@@ -69,9 +69,22 @@ public class RuleCalculatorRoof extends RuleCalculator
                 throw new FogException("Tagbelægning, fladt tag, kan ikke beregnes.", e.getMessage());
             } 
         }
-        
-        
-        return 0;
+        else // taget har hældning.
+        {
+            // Find tagfladens vidde:
+            int slopedWidth = (int)Math.ceil(calculateSlopedWidth(carportRequestDTO.getWidth()/2, carportRequestDTO.getSlope()));
+            // Find antal teglsten, husk at teglstens længde skal bruges i tagets bredde.
+            int noRows = (int)Math.ceil(slopedWidth / BusinessRules.ROOFTILE_LENGTH);
+            int noCols = (int)Math.ceil(carportRequestDTO.getLength() / BusinessRules.ROOFTILE_WIDTH);
+            // Find antal rygningsten:
+            int noRidge = (int)Math.ceil(carportRequestDTO.getLength() / BusinessRules.RIDGETILE_LENGTH);
+            
+            // Opret bill items for hver sten.
+            bill.add(new BillItem(sheetings.get(0), noRows*noCols, "teglsten."));
+            bill.add(new BillItem(ridges.get(0), noRidge, "rygning sten."));
+            return 2;
+            
+        }        
     }
     
 }

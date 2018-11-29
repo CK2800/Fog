@@ -23,12 +23,10 @@ public class RuleCalculatorBattens extends RuleCalculator
             List<MaterialDTO> battens = materials.get(MaterialtypeId.BATTENS.name()); // filter(materials, BusinessRules.BATTENS_TYPE_ID);
             // Find korteste lægte og antal.
             MaterialCount materialCount = findShortest(battens, carportRequest.getLength());
-            // Find tagets længde:
-            int halfCarportWidth = carportRequest.getWidth()/2;
-            // Udregn skrå tagflades længde.
-            int hypothenuse = (int)Math.ceil(halfCarportWidth / Math.cos(Math.toRadians(carportRequest.getSlope())));
+            // Find skrånende tagflades bredde, afrund op:
+            int slopeWidth = (int)Math.ceil(calculateSlopedWidth(carportRequest.getWidth()/2, carportRequest.getSlope()));                        
             // Business rule: ca. 30 cm ml. lægter.
-            int noBattenRows = (int)Math.floor(hypothenuse / BusinessRules.BATTENS_SPACING);
+            int noBattenRows = (int)Math.floor(slopeWidth / BusinessRules.BATTENS_SPACING);
             // Tilføj til stykliste, husk at der er 2 halvdele af taget på hver side af rygningen.
             bill.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * noBattenRows * 2, "lægte tekst"));
             return 1;

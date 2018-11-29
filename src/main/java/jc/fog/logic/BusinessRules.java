@@ -20,6 +20,18 @@ public class BusinessRules
     protected static int PLANK_SPACING = 6;
     protected static int PLANK_WIDTH = 10; // bør hentes fra db.
     /**
+     * Teglstens vidde
+     */
+    protected static int ROOFTILE_WIDTH = 25; 
+    /**
+     * Teglstens længde
+     */
+    protected static int ROOFTILE_LENGTH = 50;
+    /**
+     * Rygstens længde
+     */
+    protected static int RIDGETILE_LENGTH = 50;
+    /**
      * Materiale type id for beklædning til skur.
      */
     protected static int PLANKS_TYPE_ID = 1;

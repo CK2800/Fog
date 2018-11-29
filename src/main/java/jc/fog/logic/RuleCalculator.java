@@ -89,7 +89,6 @@ public abstract class RuleCalculator
     /**
      * Finder korteste materiale i listen af MaterialDTO objekter som skal være sorteret på længden.
      * @param list Listen af MaterialDTO objekter som skal gennemsøges.
-     * @param count Antal af det krævede materiale.
      * @param length Længden som materialets længde * count skal dække.
      * @return 
      */
@@ -122,5 +121,17 @@ public abstract class RuleCalculator
             }                
         }
         return new MaterialCount(actualCount, materialeDTO);        
+    }
+    
+    /**
+     * Udregner hypotenusen for en retvinklet trekant, hvor hosliggende vinkel og katetens længde er kendt.
+     * Formel: Hypotenuse = katete / cos(vinkel)
+     * @param width Katetens længde
+     * @param degSlope Hosliggende vinkel i grader.
+     * @return 
+     */
+    protected double calculateSlopedWidth(double width, int degSlope)
+    {
+        return width / Math.cos(Math.toRadians(degSlope));
     }
 }
