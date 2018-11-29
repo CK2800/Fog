@@ -245,6 +245,8 @@ public class CarportRequestDAO extends AbstractDAO{
                 }
                 else
                 {
+                    //skal vi her hvis den er false??
+                    //skal den findes første?? Eller hvad?
                     setShedId = shedId;
                 }
                 
@@ -254,6 +256,8 @@ public class CarportRequestDAO extends AbstractDAO{
                 pstm.setInt(3, width);
                 pstm.setInt(4, length);
                 pstm.setInt(5, id);
+                
+                return true;//Skal måske væk igen...
             }            
         }
         catch(Exception e)

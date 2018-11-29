@@ -48,15 +48,29 @@ public class ShowBillCommand extends Command
         }
         else
         {
+            int shedLength, shedWidth;
+            
+            //Ønsker man Skur til carport.
+            boolean addSked = "1".equals(request.getParameter("addSked"));
+            
             // nap parametre fra requests og dan CarportRequestDTO.
-            int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
+            int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
             int slope = Integer.parseInt(request.getParameter("slope"));
             int width = Integer.parseInt(request.getParameter("width"));
             int height = Integer.parseInt(request.getParameter("height"));
             int length = Integer.parseInt(request.getParameter("length"));
-            String remark = request.getParameter("remark");
-            int shedLength = Integer.parseInt(request.getParameter("shedLength"));
-            int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+            String remark = request.getParameter("remark");//Hvad skal vi har gjort med den her ? Da den ikke vil ha nogen betydning i forhold til at beregn som FOG?
+            
+            if(addSked)//Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
+            {
+                shedLength = Integer.parseInt(request.getParameter("shedLength"));
+                shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+            }
+            else
+            {
+                shedLength = 0;
+                shedWidth = 0;
+            }
             
             carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
         }

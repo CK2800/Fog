@@ -40,13 +40,13 @@ public abstract class Command
         // put available commands onto hash map.
         //commands.put(Commands.LOGIN, new LoginCommand());
         //commands.put(Commands.LOGOUT, new LogoutCommand());
-        commands.put(Commands.SHOWREQUESTS, new ShowRequestsCommand());
-        commands.put(Commands.SHOWSINGLEREQUEST, new ShowSingleRequestCommand());
-        commands.put(Commands.SHOWMATERIALE, new ShowMaterialsCommand());
-        commands.put(Commands.SHOWSINGLEMATERIALE, new ShowSingleMaterialeCommand());
-        commands.put(Commands.STYKLISTE, new ShowBillCommand());
+        commands.put(Commands.SHOW_REQUESTS, new ShowRequestsCommand());
+        commands.put(Commands.SHOW_SINGLE_REQUEST, new ShowSingleRequestCommand());
+        commands.put(Commands.SHOW_MATERIALS, new ShowMaterialsCommand());
+        commands.put(Commands.SHOW_SINGLE_MATERIAL, new ShowSingleMaterialeCommand());
+        commands.put(Commands.SHOW_BILL, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
-        commands.put(Commands.CARPORT, new ShowCarPortCommand());
+        commands.put(Commands.SHOW_CARPORT_FORM, new ShowCarPortCommand());
     }
     
     /**

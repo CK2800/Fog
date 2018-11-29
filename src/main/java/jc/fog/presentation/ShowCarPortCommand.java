@@ -48,8 +48,10 @@ public class ShowCarPortCommand  extends Command
             // Create HTML form with request's data and set it on http request.
             requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest);
         }
-        else // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest
-        {                        
+        else 
+        {
+            // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest                        
+            viewUpdateQuest = false;
             //Det her skal blive vist hvis man skal opret en forespørgelse.
             requestForm = carportRequestToBill(null, viewUpdateQuest);
         }
@@ -68,41 +70,50 @@ public class ShowCarPortCommand  extends Command
      */
     private String carportRequestToBill(CarportRequestDTO item, boolean bill)
     {
-        StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
+        StringBuilder stringBuilder = new StringBuilder("<form action=\"FrontController\" method=\"POST\">"
+                + "<input type=\"hidden\" name=\"command\" value=\"" + Commands.SHOW_BILL + "\">");
         
         if(item != null)
         {
-            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$1_1\" />");
             if(item.getShedDTO().getId() > 0)
             {
-                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$1_2\" />");
+                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$ShedId\" />");
             }
+            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$Id\" />");
         }
         
+        //Carport information her
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$2\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$3\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$4\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$5\" /><br />");
         
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"$2\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"$3\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"$4\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"haeldning\" value=\"$5\" /><br />");
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"skur\" $8 /><br />");
+        //Shed information her
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $8 /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$6\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$7\" /><br />");
         
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"skurLaengde\" value=\"$6\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"skurBredde\" class=\"form-control\" value=\"$7\" /><br />");
+        //Kommentar fra kunden.
+        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$7\" /><br />");
         
+        //Dropdown i forhold til type af tag.
+        //KOmmer her med dropdown.
         stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"$9\" class=\"btn btn-success btn-block\" />");
-        if(bill == true)
-       
-            stringBuilder.append("<a href=\"/Fog/FrontController?command=" + Commands.STYKLISTE + "&id=$1_1\" class=\"btn btn-info btn-block\" \">$0</a><br/>");
-        }
+        
+        //Her kommer submit som skal updatere eller beregn styklisten
+        //Få lavet en command som laver en forespørgelse. Husk også at tílføje dens navn i Commands klassen, f.eks. Commands.CREATE_CARPORT_REQUEST
+        stringBuilder.append("<input type=\"submit\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
         stringBuilder.append("</form><br/>");
         
         String text = stringBuilder.toString();
+        
         if (item != null)
         {
             //Id'er til det angivet punkt/område i forhold til hvis det skal opdatere.
-            text = text.replace("$1_1", String.valueOf(item.getId()));
-            text = text.replace("$1_2", String.valueOf(item.getShedDTO().getId()));       
+            text = text.replace("$ShedId", String.valueOf(item.getShedDTO().getId()));       
+            text = text.replace("$Id", String.valueOf(item.getId()));
+            
             
             text = text.replace("$2", String.valueOf(item.getLength()));
             text = text.replace("$3", String.valueOf(item.getWidth()));
@@ -112,8 +123,8 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$7", String.valueOf(item.getWidth()));
             text = text.replace("$8", "checked");
             
-            text = text.replace("$9", "Updater indhold");
-            text = text.replace("$0", "Beregn stykliste");
+            text = text.replace("$submit1", "Updater indhold");
+            text = text.replace("$submit2", "Beregn stykliste");
         }
         else
         {
@@ -125,8 +136,8 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$7", ""); 
             text = text.replace("$8", ""); 
             
-            text = text.replace("$9", "Opret forespørgelse");
-            text = text.replace("$0", "Beregn stykliste");
+            text = text.replace("$submit1", "Opret forespørgelse");
+            text = text.replace("$submit2", "Beregn stykliste");
         }
         return text.toString();
     }
