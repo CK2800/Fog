@@ -83,18 +83,18 @@ public class ShowCarPortCommand  extends Command
         }
         
         //Carport information her
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$2\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$3\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$4\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$5\" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$Carport1\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$Carport2\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$Carport3\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$Carport4\" /><br />");
         
         //Shed information her
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $8 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$6\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$7\" /><br />");
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $Shed1 /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$Shed2\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$Shed3\" /><br />");
         
         //Kommentar fra kunden.
-        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$7\" /><br />");
+        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$Carport5\" /><br />");
         
         //Dropdown i forhold til type af tag.
         //KOmmer her med dropdown.
@@ -114,20 +114,45 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$ShedId", String.valueOf(item.getShedDTO().getId()));       
             text = text.replace("$Id", String.valueOf(item.getId()));
             
+            //Carport område
+            text = text.replace("$Carport1", String.valueOf(item.getLength()));
+            text = text.replace("$Carport2", String.valueOf(item.getWidth()));
+            text = text.replace("$Carport3", String.valueOf(item.getHeight()));
+            text = text.replace("$Carport4", String.valueOf(item.getSlope()));
             
-            text = text.replace("$2", String.valueOf(item.getLength()));
-            text = text.replace("$3", String.valueOf(item.getWidth()));
-            text = text.replace("$4", String.valueOf(item.getHeight()));
-            text = text.replace("$5", String.valueOf(item.getSlope()));
-            text = text.replace("$6", String.valueOf(item.getLength()));
-            text = text.replace("$7", String.valueOf(item.getWidth()));
-            text = text.replace("$8", "checked");
+            //Shed område
+            text = text.replace("$Shed2", String.valueOf(item.getLength()));
+            text = text.replace("$Shed3", String.valueOf(item.getWidth()));
+            text = text.replace("$Shed1", "checked");
             
+            //Kunde kommentar
+            text = text.replace("$Carport5", String.valueOf(item.getRemark()));
+            
+            //Det som der skal blive vist af tekst ved "Submit" område.
             text = text.replace("$submit1", "Updater indhold");
             text = text.replace("$submit2", "Beregn stykliste");
         }
         else
         {
+            
+            //Carport område
+            text = text.replace("$Carport1", "");
+            text = text.replace("$Carport2", "");
+            text = text.replace("$Carport3", "");
+            text = text.replace("$Carport4", "");
+            
+            //Shed område
+            text = text.replace("$Shed12", "");
+            text = text.replace("$Shed3", "");
+            text = text.replace("$Shed1", "");
+            
+            //Kunde kommentar
+            text = text.replace("$Carport5", "");
+            
+            //Det som der skal blive vist af tekst ved "Submit" område.
+            text = text.replace("$submit1", "Opret forespørgelse");
+            text = text.replace("$submit2", "Beregn stykliste");
+            
             text = text.replace("$2", "");
             text = text.replace("$3", "");
             text = text.replace("$4", "");
@@ -136,8 +161,6 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$7", ""); 
             text = text.replace("$8", ""); 
             
-            text = text.replace("$submit1", "Opret forespørgelse");
-            text = text.replace("$submit2", "Beregn stykliste");
         }
         return text.toString();
     }
