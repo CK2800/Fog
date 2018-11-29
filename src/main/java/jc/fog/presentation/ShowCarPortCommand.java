@@ -154,6 +154,6 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$submit2", "Beregn stykliste");
             
         }
-        return text.toString();
+        return text;
     }
 }
