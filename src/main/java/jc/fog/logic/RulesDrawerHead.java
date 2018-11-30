@@ -14,13 +14,22 @@ import java.util.List;
  */
 public class RulesDrawerHead extends RulesDrawer
 {
-    
-    public RulesDrawerHead(CarportRequestDTO carportRequestDTO, BillItem billItem)
+    /**
+     * Initierer instans af RulesDrawer implementation.
+     *      
+     * @param billItem Indeholder dimensioner for de materialer der skal tegnes.
+     */
+    public RulesDrawerHead(BillItem billItem)
     {
-        super(carportRequestDTO, billItem);
+        super(billItem);
     }
+    /**
+     * Opretter en List af Rectangle objekter på baggrund af carportens og materialernes dimensioner.
+     * @param carportRequestDTO Indeholder dimensioner for carport.     
+     * @return 
+     */
     @Override
-    protected List<Rectangle> draw()
+    protected List<Rectangle> draw(CarportRequestDTO carportRequestDTO)
     {
         List<Rectangle> result = new ArrayList();
        // Tegn hele carportens tag.

@@ -12,17 +12,15 @@ import java.util.List;
  * @author Claus
  */
 public abstract class RulesDrawer
-{
-    protected CarportRequestDTO carportRequestDTO;
+{        
     protected BillItem billItem;
-    public RulesDrawer(CarportRequestDTO carportRequestDTO, BillItem billItem)
-    {
-        this.carportRequestDTO = carportRequestDTO;        
+    public RulesDrawer(BillItem billItem)
+    {        
         this.billItem = billItem;
     }
     /**
      * Metode som danner en liste af Rectangle objekter baseret på materialets tykkelse, længde og antal.     
      * @return 
      */
-    protected abstract List<Rectangle> draw();
+    protected abstract List<Rectangle> draw(CarportRequestDTO carportRequest);
 }

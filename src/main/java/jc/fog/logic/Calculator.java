@@ -22,10 +22,10 @@ public class Calculator
         // Initialiserer RulesCalculator's hashmap.
         RulesCalculator.initializeMaterials(materials);
         // Opret instanser af RulesCalculators.         
-        initializeRulesCalculators(materials);
+        initializeRulesCalculators();
     }
     
-    private void initializeRulesCalculators(List<MaterialDTO> materials)
+    private void initializeRulesCalculators()
     {        
         calculators = new ArrayList<RulesCalculator>();
         

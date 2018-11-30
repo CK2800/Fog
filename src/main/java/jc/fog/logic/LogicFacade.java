@@ -19,4 +19,10 @@ public class LogicFacade
         Calculator calculator = new Calculator(materials);
         return calculator.calculateBill(carportRequest);        
     }
+    
+    public static List<Rectangle> drawCarport(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
+    {
+        Drawer drawer = new Drawer(materials, carportRequest);
+        return drawer.draw();
+    }
 }

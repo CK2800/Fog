@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.LogicFacade;
+import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.Rectangle;
 
 /**
@@ -29,6 +34,13 @@ public class ShowDrawingCommand extends Command{
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
         rectangles.add(new Rectangle(0, 0, 170, 180, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 825, 140, "D2691E"));
+        
+        // Hent carport request og materialer.
+        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        CarportRequestDTO carportRequest = dataFacade.getCarport(getId);
+        List<MaterialDTO> materials = dataFacade.getMaterials();
+        // Udregn rektangler.
+        rectangles = LogicFacade.drawCarport(carportRequest, materials);
         
         request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250));
         

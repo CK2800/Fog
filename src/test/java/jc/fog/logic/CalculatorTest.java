@@ -27,11 +27,11 @@ import static org.junit.Assert.*;
  *
  * @author Claus
  */
-public class RuleCalculatorJUnitTest
+public class CalculatorTest
 {
     static Connection connection = null;    
     
-    public RuleCalculatorJUnitTest()
+    public CalculatorTest()
     {
     }
     
