@@ -20,7 +20,7 @@ import jc.fog.exceptions.FogException;
 public abstract class RulesCalculator extends Rules
 {
     protected static HashMap<String, List<MaterialDTO>> materials;
-    protected abstract int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException;            
+    protected abstract List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException;            
 
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).

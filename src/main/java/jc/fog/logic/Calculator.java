@@ -45,7 +45,7 @@ public class Calculator
         // Gennemløb alle rule calculators.        
         for(RulesCalculator calculator : calculators)
         {
-            calculator.calculate(carportRequest, bill);
+            bill.addAll(calculator.calculate(carportRequest));
         }
 
         return bill;

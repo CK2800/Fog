@@ -109,7 +109,7 @@ public class RuleCalculatorJUnitTest
         // Arrange
         MaterialDAO dao = new MaterialDAO(connection); // forbindelse.
         List<MaterialDTO> materials = dao.getMaterials(); // materialer.        
-        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste.        
+        List<BillItem> stykliste; // tom stykliste.        
         int shedWidth = 500; // skur vidde.
         CarportRequestDTO forespoergsel = new CarportRequestDTO(2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth); // carport, 500 x 800 cm., med plastic tag, med skur i fuld bredde.
         
@@ -120,7 +120,7 @@ public class RuleCalculatorJUnitTest
         
         // Act
         
-        int items = postCalculator.calculate(forespoergsel, stykliste);        
+        stykliste = postCalculator.calculate(forespoergsel);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert
@@ -135,13 +135,13 @@ public class RuleCalculatorJUnitTest
         // Arrange
         MaterialDAO dao = new MaterialDAO(connection); // forbindelse
         List<MaterialDTO> materials = dao.getMaterials(); // materialer
-        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste 
+        List<BillItem> stykliste; // tom stykliste 
         CarportRequestDTO forespoergsel = new CarportRequestDTO(1, 45, 600, 210, 800, "45 grader", 210, 600);
         RulesCalculator.initializeMaterials(materials);
         RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof();
         
         // Act
-        int items = roofCalculator.calculate(forespoergsel, stykliste);
+        stykliste = roofCalculator.calculate(forespoergsel);
         BillItem billItem = null;
         for(BillItem b : stykliste)
             if (b.getMaterialDTO().getMaterialtypeDTO().getId() == 7) // tagfladebelægning
@@ -165,13 +165,13 @@ public class RuleCalculatorJUnitTest
         // Arrange
         MaterialDAO dao = new MaterialDAO(connection); // forbindelse
         List<MaterialDTO> materials = dao.getMaterials(); // materialer
-        ArrayList<BillItem> stykliste = new ArrayList<>(); // tom stykliste        
+        List<BillItem> stykliste; // tom stykliste        
         CarportRequestDTO forespoergsel = new CarportRequestDTO(3, 0, 600, 210, 800, "blabla", 0,0); // carport, 600 x 800 cm., med plastic tag, uden skur.        
         RulesCalculator.initializeMaterials(materials); // Initialiser RulesCalculator.
         RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof(); // Opret tag udregner.
         
         // Act
-        int items = roofCalculator.calculate(forespoergsel, stykliste);        
+        stykliste = roofCalculator.calculate(forespoergsel);        
         BillItem billItem = stykliste.get(0);
                 
         // Assert

@@ -6,7 +6,6 @@
 package jc.fog.logic;
 
 import java.util.List;
-import jc.fog.logic.Rules.CarportPart;
 
 /**
  * RulesDrawer til tegning af svg-elementer baseret på div. business rules.
@@ -14,16 +13,12 @@ import jc.fog.logic.Rules.CarportPart;
  */
 public abstract class RulesDrawer
 {
-    protected CarportPart carportPart;
-    protected MaterialDTO material;
-    protected int length;
-    protected int count;
-    public RulesDrawer(CarportPart carportPart, MaterialDTO material, int length, int count)
+    protected CarportRequestDTO carportRequestDTO;
+    protected BillItem billItem;
+    public RulesDrawer(CarportRequestDTO carportRequestDTO, BillItem billItem)
     {
-        this.carportPart = carportPart;
-        this.material = material;
-        this.length = length;
-        this.count = count;
+        this.carportRequestDTO = carportRequestDTO;        
+        this.billItem = billItem;
     }
     /**
      * Metode som danner en liste af Rectangle objekter baseret på materialets tykkelse, længde og antal.     

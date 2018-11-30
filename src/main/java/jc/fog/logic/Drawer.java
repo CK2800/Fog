@@ -25,8 +25,9 @@ public class Drawer
         // Fyld RulesDrawer's i listen.
         for(BillItem b : bill)
         {
-            switch(b.getMaterialDTO().)
-        drawers.add(new RulesDrawerHead()
+//            switch(b.getMaterialDTO().)
+//        drawers.add(new RulesDrawerHead()
+            }
         
     }
 }

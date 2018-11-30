@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 
@@ -15,17 +16,13 @@ import jc.fog.exceptions.FogException;
 public class RulesCalculatorRoof extends RulesCalculator        
 {    
     @Override
-    protected int calculate(CarportRequestDTO carportRequestDTO, List<BillItem> bill) throws FogException
+    protected List<BillItem> calculate(CarportRequestDTO carportRequestDTO) throws FogException
     {        
-        /**
-         * PSEUDO:
-         Hent forespørgslens tagtype.
-         * Hent materialer
-         * hvis forespørgslen IKKE har hældning...
-         */
+        
         // Hent tagryg- og tagfladematerialer.
         List<MaterialDTO> ridges = materials.get(Materialtype.RIDGE.name());
         List<MaterialDTO> sheetings = materials.get(Materialtype.SHEETING.name());
+        List<BillItem> result = new ArrayList();
         
         // Fladt tag, her skal vi blot bruge materialer fra sheetings.
         if (carportRequestDTO.getSlope() == 0)
@@ -59,9 +56,9 @@ public class RulesCalculatorRoof extends RulesCalculator
                 }
                 // Find antal.
                 int count = (int)Math.ceil(carportRequestDTO.getWidth() / 109F); // ecolite plader er 109 cm.
-                bill.add(new BillItem(longest, count, CarportPart.SHEETING,  "lang tagflade"));
-                bill.add(new BillItem(shortest, count, CarportPart.SHEETING, "kort tagflade"));
-                return 2;
+                result.add(new BillItem(longest, count, CarportPart.SHEETING,  "lang tagflade"));
+                result.add(new BillItem(shortest, count, CarportPart.SHEETING, "kort tagflade"));
+                return result;
                 
             }
             catch(Exception e)
@@ -80,10 +77,9 @@ public class RulesCalculatorRoof extends RulesCalculator
             int noRidge = (int)Math.ceil(carportRequestDTO.getLength() / Rules.RIDGETILE_LENGTH);
             
             // Opret bill items for hver sten.
-            bill.add(new BillItem(sheetings.get(0), noRows*noCols, CarportPart.SHEETING, "teglsten."));
-            bill.add(new BillItem(ridges.get(0), noRidge, CarportPart.RIDGE, "rygning sten."));
-            return 2;
-            
+            result.add(new BillItem(sheetings.get(0), noRows*noCols, CarportPart.SHEETING, "teglsten."));
+            result.add(new BillItem(ridges.get(0), noRidge, CarportPart.RIDGE, "rygning sten."));
+            return result;            
         }        
     }
     

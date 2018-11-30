@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,18 +14,21 @@ import java.util.List;
  */
 public class RulesDrawerHead extends RulesDrawer
 {
-    public RulesDrawerHead(MaterialDTO material, int length, int count)
+    
+    public RulesDrawerHead(CarportRequestDTO carportRequestDTO, BillItem billItem)
     {
-        super(material, length, count);
+        super(carportRequestDTO, billItem);
     }
     @Override
     protected List<Rectangle> draw()
     {
-        return null;
+        List<Rectangle> result = new ArrayList();
+       // Tegn hele carportens tag.
+       result.add(new Rectangle(0,0,carportRequestDTO.getLength(), carportRequestDTO.getWidth(), "eaea00"));
+       // Rem tegnes forskudt fra tagets kant med udhængets længde.
+       result.add(new Rectangle(Rules.OVERHANG, Rules.OVERHANG, carportRequestDTO.getLength()-(2*Rules.OVERHANG), 10, "ffeebb"));
+       result.add(new Rectangle(Rules.OVERHANG, carportRequestDTO.getWidth()-Rules.OVERHANG, carportRequestDTO.getLength()-(2*Rules.OVERHANG), 10, "ffeebb"));
+       
+       return result;
     }
-    
-
-    
-    
-    
 }

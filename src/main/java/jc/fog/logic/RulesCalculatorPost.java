@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 
@@ -15,28 +16,33 @@ import jc.fog.exceptions.FogException;
 public class RulesCalculatorPost extends RulesCalculator
 {    
     @Override
-    protected int calculate(CarportRequestDTO carportRequest, List<BillItem> bill) throws FogException
+    protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
     {
-        // Find materialet.       
-        List<MaterialDTO> posts = materials.get(Materialtype.POST.name()); //filter(materials, Rules.POST_TYPE_ID);        
-        MaterialDTO post = posts.get(0);
-        // en stolpe i hvert hjørne.
-        int count = 4;
-        // Skal der bygges skur, kræves flere stolper.
-        ShedDTO shed = carportRequest.getShedDTO();
-        if (shed != null)
-        {            
-            // Er skuret i fuld bredde?
-            if (shed.getWidth() == carportRequest.getWidth())
-                count += Rules.POSTS_SHED_FULL_WIDTH;
-            else
-                count += Rules.POSTS_SHED;                
+        try
+        {
+            ArrayList<BillItem> result = new ArrayList();
+            // Find materialet.       
+            List<MaterialDTO> posts = materials.get(Materialtype.POST.name()); //filter(materials, Rules.POST_TYPE_ID);        
+            MaterialDTO post = posts.get(0);
+            // en stolpe i hvert hjørne.
+            int count = 4;
+            // Skal der bygges skur, kræves flere stolper.
+            ShedDTO shed = carportRequest.getShedDTO();
+            if (shed != null)
+            {            
+                // Er skuret i fuld bredde?
+                if (shed.getWidth() == carportRequest.getWidth())
+                    count += Rules.POSTS_SHED_FULL_WIDTH;
+                else
+                    count += Rules.POSTS_SHED;                
+            }
+            // Returner liste med bill items.
+            result.add(new BillItem(post, count, CarportPart.POST, "stolpetekst"));
+            return result;                         
         }
-        
-        bill.add(new BillItem(post, count, CarportPart.POST, "stolpetekst"));
-        
-        // 1 nyt item på styklisten.
-        return 1;        
-    }
-    
+        catch(Exception e)
+        {
+            throw new FogException("Stolper kunne ikke beregnes.", e.getMessage());
+        }
+    }    
 }
