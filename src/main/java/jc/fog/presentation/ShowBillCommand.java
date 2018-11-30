@@ -63,7 +63,7 @@ public class ShowBillCommand extends Command
             int width = Integer.parseInt(request.getParameter("width"));
             int height = Integer.parseInt(request.getParameter("height"));
             int length = Integer.parseInt(request.getParameter("length"));
-            String remark = request.getParameter("remark");//Hvad skal vi har gjort med den her ? Da den ikke vil ha nogen betydning i forhold til at beregn som FOG?
+            String remark = request.getParameter("remark");
             
             //Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
             if(addSked)

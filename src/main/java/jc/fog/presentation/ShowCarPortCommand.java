@@ -102,7 +102,7 @@ public class ShowCarPortCommand  extends Command
         
         //Her kommer submit som skal updatere eller beregn styklisten
         //Få lavet en command som laver en forespørgelse. Husk også at tílføje dens navn i Commands klassen, f.eks. Commands.CREATE_CARPORT_REQUEST
-        stringBuilder.append("<input type=\"submit\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("<input type=\"submit\" formaction=\"/action_page2.php\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
         stringBuilder.append("</form><br/>");
         

@@ -26,7 +26,7 @@ public class CarportRequestDAO extends AbstractDAO{
     
     final static String CREATE_SHED_SQL = "INSERT INTO Sheds(length, width) VALUES(?,?)";
     
-    final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, shedId = ?, width = ?, length = ? WHERE id = ?";
+    final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, shedId = ?, width = ?, length = ?, rooftypeId = ?, remark = ? WHERE id = ?";
     
     final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
         
@@ -197,7 +197,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws FogException 
      */
-    public boolean updateCarPortRequest(int id, int shedId, boolean shedCheck, int slope, int width, int length, int shedWidth, int shedLength) throws FogException
+    public boolean updateCarPortRequest(int id, int shedId, boolean shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
         try
         {
@@ -226,7 +226,9 @@ public class CarportRequestDAO extends AbstractDAO{
                 pstm.setInt(1, slope);
                 pstm.setInt(2, width);
                 pstm.setInt(3, length);
-                pstm.setInt(4, id);
+                pstm.setInt(4, rooftypeId);
+                pstm.setString(5, remark);
+                pstm.setInt(6, id);
                 
                 
                 commits += pstm.executeUpdate();
