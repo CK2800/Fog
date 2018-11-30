@@ -37,14 +37,6 @@ public class ShowSingleRequestCommand extends Command
         CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
         // Create HTML form with request's data and set it on http request.
         request.setAttribute("requestForm", carportRequestToForm(carportRequestDTO));
-        //request.setAttribute("ForesporgselDTO", carportRequestDTO);
-        
-        //Laver en list over hvordan svg skal blive fremvist på siden.
-        List<Rectangle> rectangles = new ArrayList<Rectangle>();
-        rectangles.add(new Rectangle(0, 0, 170, 210, "7FFF00"));
-        rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
-        
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500, 650, 1000));
         
         // return the page.
         return Pages.SINGLE_CARPORT;

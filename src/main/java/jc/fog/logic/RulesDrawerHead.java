@@ -36,7 +36,7 @@ public class RulesDrawerHead extends RulesDrawer
        result.add(new Rectangle(0,0,carportRequestDTO.getLength(), carportRequestDTO.getWidth(), "eaea00"));
        // Rem tegnes forskudt fra tagets kant med udhængets længde.
        result.add(new Rectangle(Rules.OVERHANG, Rules.OVERHANG, carportRequestDTO.getLength()-(2*Rules.OVERHANG), 10, "ffeebb"));
-       result.add(new Rectangle(Rules.OVERHANG, carportRequestDTO.getWidth()-Rules.OVERHANG, carportRequestDTO.getLength()-(2*Rules.OVERHANG), 10, "ffeebb"));
+       result.add(new Rectangle(carportRequestDTO.getWidth()-Rules.OVERHANG-10,Rules.OVERHANG, carportRequestDTO.getLength()-(2*Rules.OVERHANG), 10, "ffeebb"));
        
        return result;
     }

@@ -46,7 +46,7 @@ public class ShowDrawingCommand extends Command{
        
 
         //Her bliver højde og bredde til svg filen angivet.
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250, 600, 750));
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, "100%", "100%", carportRequest.getWidth(), carportRequest.getLength()));
 
         
         
