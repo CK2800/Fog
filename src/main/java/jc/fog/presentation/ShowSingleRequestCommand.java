@@ -44,7 +44,7 @@ public class ShowSingleRequestCommand extends Command
         rectangles.add(new Rectangle(0, 0, 170, 210, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 125, 140, "D2691E"));
         
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500));
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 500, 650, 1000));
         
         // return the page.
         return Pages.SINGLE_CARPORT;
@@ -58,8 +58,8 @@ public class ShowSingleRequestCommand extends Command
     private String carportRequestToForm(CarportRequestDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOWREQUESTS +"\">Tilbage..</a>"
-                + "<a class=\"btn btn-info btn-xs pull-right\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
+        stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOW_REQUESTS +"\">Tilbage..</a>"
+                + "<a class=\"btn btn-info btn-xs \" style=\"margin-left: 20px;\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
         stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");

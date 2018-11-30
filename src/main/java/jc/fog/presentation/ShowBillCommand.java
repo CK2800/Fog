@@ -27,12 +27,62 @@ public class ShowBillCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        // get request's id from request.
-        int id = Integer.parseInt(request.getParameter("id"));
+        
+        // Se om der er en id i request, for så skal vi hente carportrequest fra db.
+        int id = 0;
+        CarportRequestDTO carportRequestDTO;
         // Create DataFacade
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        // get request.
-        CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
+        // Har vi et gyldigt id ?
+        try
+        {
+            // Findes id ikke på requestet, catcher vi exception
+            id = Integer.parseInt(request.getParameter("id"));
+        }
+        catch(NumberFormatException n){
+            // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
+        }
+        if(id > 0)
+        {        
+            // get request.
+            carportRequestDTO = dataFacade.getCarport(id);
+        }
+        else
+        {            
+            //SKAL HAVE KIGGET PÅ OM HVIS SKUR ER STØRRE END CARPORT HVAD SÅ???
+            
+            
+            int shedLength, shedWidth;
+            
+            //Ønsker man Skur til carport.
+            boolean addSked = "1".equals(request.getParameter("addSked"));
+            
+            // nap parametre fra requests og dan CarportRequestDTO.
+            int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
+            int slope = Integer.parseInt(request.getParameter("slope"));
+            int width = Integer.parseInt(request.getParameter("width"));
+            int height = Integer.parseInt(request.getParameter("height"));
+            int length = Integer.parseInt(request.getParameter("length"));
+            String remark = request.getParameter("remark");//Hvad skal vi har gjort med den her ? Da den ikke vil ha nogen betydning i forhold til at beregn som FOG?
+            
+            //Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
+            if(addSked)
+            {
+                shedLength = Integer.parseInt(request.getParameter("shedLength"));
+                shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+            }
+            else
+            {
+                shedLength = 0;
+                shedWidth = 0;
+            }
+            
+            //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
+            
+            
+            carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
+                
+        }
         // get materials.
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Calculate the bill of materials.
@@ -50,7 +100,7 @@ public class ShowBillCommand extends Command
     private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<a href=\"FrontController?command=" + Commands.SHOWREQUESTS + "\">Tilbage..</a>");
+        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" onclick=\"window.history.back();\"/>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");

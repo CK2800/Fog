@@ -8,22 +8,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><%= title%></title>
-        <jsp:include page="./bootstrap/cdnfilesBootstrap.jsp"></jsp:include>
-        </head>
-        <body>
-            <div class="container">
-                <jsp:include page="./nav/nav.jsp"></jsp:include>
-                <h1><%= title%></h1>
-                <div class="row">
-                    <div class="col-md-8">
-                    <%= requestForm%>
+        <title><%= title %></title>
+        <jsp:include page="./css/bootstrap.jsp"></jsp:include>
+    </head>
+    <body>
+            <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
+            <div class="container" style="min-height: 500px;">
+                    <div class="col-md-12">
+                        <%= requestForm%>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <h2>Tegning</h2>
-                    <%= svg%>
+                        <%= svg%>
                     </div>
                 </div>
             </div>
+            
+            <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
     </body>
 </html>

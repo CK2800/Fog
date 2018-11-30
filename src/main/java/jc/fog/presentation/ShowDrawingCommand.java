@@ -28,21 +28,26 @@ public class ShowDrawingCommand extends Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         //henter id som skal bruges til, at frem vise hvordan tegning skal være.
-        int getId = Integer.parseInt(request.getParameter("id"));
+        //Den bliver ikke brugt lige pt.
+        int id = Integer.parseInt(request.getParameter("id"));
         
         
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
         rectangles.add(new Rectangle(0, 0, 170, 180, "7FFF00"));
         rectangles.add(new Rectangle(15, 120, 825, 140, "D2691E"));
         
+
         // Hent carport request og materialer.
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        CarportRequestDTO carportRequest = dataFacade.getCarport(getId);
+        CarportRequestDTO carportRequest = dataFacade.getCarport(id);
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Udregn rektangler.
         rectangles = LogicFacade.drawCarport(carportRequest, materials);
-        
-        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250));
+       
+
+        //Her bliver højde og bredde til svg filen angivet.
+        request.setAttribute("svg", Drawing.drawSvg(rectangles, 200, 250, 600, 750));
+
         
         
         return Pages.SINGLE_DRAW;
