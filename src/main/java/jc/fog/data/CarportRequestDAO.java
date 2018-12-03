@@ -201,7 +201,6 @@ public class CarportRequestDAO extends AbstractDAO{
     {
         try
         {
-            int setShedId;
             //Updater shed
             PreparedStatement pstm;
             
@@ -224,15 +223,15 @@ public class CarportRequestDAO extends AbstractDAO{
                 
                 pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
                 pstm.setInt(1, slope);
-                pstm.setInt(2, width);
-                pstm.setInt(3, length);
-                pstm.setInt(4, rooftypeId);
-                pstm.setString(5, remark);
-                pstm.setInt(6, id);
+                pstm.setInt(2, shedId);
+                pstm.setInt(3, width);
+                pstm.setInt(4, length);
+                pstm.setInt(5, rooftypeId);
+                pstm.setString(6, remark);
+                pstm.setInt(7, id);
                 
                 
                 commits += pstm.executeUpdate();
-                
                 
                 connection.commit();
                 connection.setAutoCommit(autocommit);
@@ -243,18 +242,18 @@ public class CarportRequestDAO extends AbstractDAO{
             {
                 if(shedCheck == true)
                 {
-                    setShedId = createShed(shedLength, shedWidth);
+                    shedId = createShed(shedLength, shedWidth);
                 }
                 else
                 {
                     //skal vi her hvis den er false??
                     //skal den findes første?? Eller hvad?
-                    setShedId = shedId;
+                    shedId = shedId;
                 }
                 
                 pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
                 pstm.setInt(1, slope);
-                pstm.setInt(2, setShedId);
+                pstm.setInt(2, shedId);
                 pstm.setInt(3, width);
                 pstm.setInt(4, length);
                 pstm.setInt(5, id);

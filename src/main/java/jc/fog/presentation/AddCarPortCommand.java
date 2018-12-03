@@ -5,8 +5,6 @@
  */
 package jc.fog.presentation;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
@@ -31,7 +29,7 @@ public class AddCarPortCommand extends Command
         int width = Integer.parseInt(request.getParameter("width"));
         int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
         int length = Integer.parseInt(request.getParameter("length"));
-        ByteBuffer remark =  StandardCharsets.UTF_8.encode(request.getParameter("remark"));
+        String remark = request.getParameter("remark");
 
         int shedLength = Integer.parseInt(request.getParameter("shedLength"));
         int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
