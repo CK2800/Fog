@@ -22,4 +22,5 @@ public final class Pages
     public static final String BILL = "/WEB-INF/bill.jsp";
     public static final String SINGLE_DRAW = "/WEB-INF/singleDraw.jsp";
     public static final String SINGLE_CARPORTVIEW = "/WEB-INF/carPort.jsp";
+    public static final String UPDATE_CARPORT = "/WEB-INF/updateCarport.jsp";
 }
