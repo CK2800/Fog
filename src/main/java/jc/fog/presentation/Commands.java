@@ -35,4 +35,6 @@ public final class Commands
     public static final String SINGLEDRAW = "singledraw";
     /** Command til oprettelse af carport request. */
     public static final String SHOW_CARPORT_FORM = "showCarportForm";
+    /** Command til oprettelse af carport request så den updater i databasen. */
+    public static final String CREATE_CARPORT_REQUEST = "createCarportRequest";
 }

@@ -29,7 +29,7 @@ public class AddCarPortCommand extends Command
         int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
         int slope = Integer.parseInt(request.getParameter("slope"));
         int width = Integer.parseInt(request.getParameter("width"));
-        int height = Integer.parseInt(request.getParameter("height"));
+        int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
         int length = Integer.parseInt(request.getParameter("length"));
         String remark = request.getParameter("remark");
         
@@ -40,14 +40,7 @@ public class AddCarPortCommand extends Command
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         boolean createCarport = dataFacade.createCarPort(id, shedWidth, addSked, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         
-        if(createCarport)
-        {
-            return Pages.ALL_MATERIALS;
-        }
-        else
-        {
-            
-        }
+        return Pages.ALL_MATERIALS;
     }
     
     
