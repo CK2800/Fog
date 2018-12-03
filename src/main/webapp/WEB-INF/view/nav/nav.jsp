@@ -17,9 +17,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_CARPORT_FORM %>">Opret forespørgelse</a>
       </li> 
-      <li class="nav-item">
-        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_CARPORT_FORM %>&id=9">Opret forespørgelse + ID</a>
-      </li> 
     </ul>
   </div>  
 </nav>

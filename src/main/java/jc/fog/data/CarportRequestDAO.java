@@ -212,7 +212,7 @@ public class CarportRequestDAO extends AbstractDAO{
             if(shedId > 0 && shedCheck != null)
             {   
                 //Opdater skur
-                boolean autocommit = false;
+                boolean autocommit = true;
                 if (autocommit){
                     connection.setAutoCommit(false);
                 }

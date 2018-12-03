@@ -39,13 +39,6 @@ public class AddCarPortCommand extends Command
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         boolean createCarport = dataFacade.createCarPort(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         
-        if(createCarport)
-        {
-            return Pages.UPDATE_CARPORT;
-        }
-        else
-        {
-            return Pages.ALL_MATERIALS;
-        }
+        return Pages.UPDATE_CARPORT;
     }
 }
