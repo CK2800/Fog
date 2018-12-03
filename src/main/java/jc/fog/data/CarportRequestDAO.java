@@ -205,78 +205,81 @@ public class CarportRequestDAO extends AbstractDAO{
     {
         try
         {
+            
+                
             //Updater shed
             PreparedStatement pstm;
-            
-            int commits = 0;
-            if(shedId > 0 && shedCheck != null)
+             
+            // Har vi skurets id og er skuret tilvalgt, opdater evt. skurets attributter.
+            if(shedId > 0 && "on".equals(shedCheck))//Den skal køre hvis Shedid er over 0 og Checkbox er tilføjet
             {   
+                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
+                connection.setAutoCommit(false);
                 //Opdater skur
-                boolean autocommit = true;
-                if (autocommit){
-                    connection.setAutoCommit(false);
-                }
                 
                 //Skal opdater værdi hos skur. til de nye værdier.
-                commits = updateShed(shedWidth, shedLength, shedId, commits);
+                updateShed(shedWidth, shedLength, shedId);
                 
                 //Skal opdater til de nye oplysning.
-                commits = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id, commits);
+                updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
                 
                 connection.commit();
-                connection.setAutoCommit(autocommit);
-                
-                return commits == 2;                
+                connection.setAutoCommit(true);
+                return true;
+                                
             }
-            else if(shedId > 0&& shedCheck == null)
+            else if(shedId > 0 && !"on".equals(shedCheck))
             {
+                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
+                connection.setAutoCommit(false);
                 //Slet Skur
-                boolean autocommit = false;
-                if (autocommit){
-                    connection.setAutoCommit(false);
-                }
-                
+                               
                 //Skal slet det enkelt skur.
-                commits = deleteShed(shedId, commits);
+                deleteShed(shedId);
                 
-                //Updater carport delen
-                commits = updaterShedId(0, id, commits);
+                //Updater carport delen                
+                updateCarPort(slope, 0, width, length, rooftypeId, remark, id);
+                //updaterShedId(0, id);
                 
                 connection.commit();
-                connection.setAutoCommit(autocommit);
+                connection.setAutoCommit(true);
+                return true;
                 
-                return commits == 1;
                 
             }
-            else if(shedId < 0 && shedCheck != null)
+            else if(shedId == 0 && "on".equals(shedCheck))
             {
+                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
+                connection.setAutoCommit(false);
                 //Skal tilføj Skurid til carport.
-                boolean autocommit = false;
-                if (autocommit){
-                    connection.setAutoCommit(false);
-                }
                 
                 //Her skal den opret skur til databasen. Hvis der ikke er tilføjet skurid i formen.
                 //Men man har klikket af på, at shedcheck.
                 //int addShedId = createShed(shedLength, shedWidth);
                 //eller skal vi bare bruge "createShed" og så få angivet den værdi som vi kan bruge til, at updater til forespørgelse.
-                pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS);
-                pstm.setInt(1, length);
-                pstm.setInt(2, width);
                 
-                commits += pstm.executeUpdate();
+                pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS);
+                pstm.setInt(1, shedLength);
+                pstm.setInt(2, shedWidth);
+                //pstm.addBatch();
+                
+                pstm.executeUpdate();
                 ResultSet rs = pstm.getGeneratedKeys();
                 rs.next();
                 
                 int addShedId = rs.getInt(1);
+                rs.close();
                 
-                commits = updaterShedId(addShedId, id, commits);
+                
+                pstm = connection.prepareStatement(UPDATE_SHEDID_SQL);
+                pstm.setInt(1, addShedId);
+                pstm.setInt(2, id);
+                pstm.executeUpdate();
                 
                 connection.commit();
-                connection.setAutoCommit(autocommit);
-                
-                return commits == 2;
-                
+                // Reset autocommit på forbindelsen.
+                connection.setAutoCommit(true);
+                return true;
             }
             else
             {
@@ -298,7 +301,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws SQLException 
      */
-    private int updateShed(int shedWidth, int shedLength, int shedId, int commits) throws SQLException {
+    private boolean updateShed(int shedWidth, int shedLength, int shedId) throws SQLException {
         PreparedStatement pstm;
         //Updater skur værdi.
         pstm = connection.prepareStatement(UPDATE_SHED_SQL);
@@ -306,14 +309,15 @@ public class CarportRequestDAO extends AbstractDAO{
         pstm.setInt(2, shedLength);
         pstm.setInt(3, shedId);
         //gem i databasen
-        commits += pstm.executeUpdate();
-        return commits;
+        return pstm.executeUpdate() == 1;
+        
     }
 
     /**
      * Skal updater carport værdi til de nye værdier.
+     * Er carportforespørgslens skur blevet slettet, angives 0 som shedId.
      * @param slope
-     * @param shedId
+     * @param shedId Skurets id eller 0 ved intet skur.
      * @param width
      * @param length
      * @param rooftypeId
@@ -323,38 +327,22 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws SQLException 
      */
-    private int updateCarPort(int slope, int shedId, int width, int length, int rooftypeId, String remark, int id, int commits) throws SQLException {
+    private boolean updateCarPort(int slope, int shedId, int width, int length, int rooftypeId, String remark, int id) throws SQLException {
         PreparedStatement pstm;
         //Updater carport værdi.
         pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
         pstm.setInt(1, slope);
-        pstm.setInt(2, shedId);
+        if (shedId != 0)
+                pstm.setInt(2, shedId);                
+            else // ... intet skur medfører null i sql.
+                pstm.setNull(2, Types.INTEGER);        
         pstm.setInt(3, width);
         pstm.setInt(4, length);
         pstm.setInt(5, rooftypeId);
         pstm.setString(6, remark);
         pstm.setInt(7, id);
-        commits += pstm.executeUpdate();
-        return commits;
-    }
-
-    /**
-     * Skal updater de angivet værdi til nogen nye.
-     * @param addShedId
-     * @param id
-     * @param commits
-     * @return
-     * @throws SQLException 
-     */
-    private int updaterShedId(int addShedId, int id, int commits) throws SQLException {
-        PreparedStatement pstm;
-        //skal smide det angivet "generated_keys"
-        //skal også lige updater skurid i carport delen.
-        pstm = connection.prepareStatement(UPDATE_SHEDID_SQL);
-        pstm.setInt(1, addShedId);
-        pstm.setInt(2, id);
-        commits += pstm.executeUpdate();
-        return commits;
+        return pstm.executeUpdate() == 1;
+        
     }
 
     /**
@@ -364,13 +352,13 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws SQLException 
      */
-    private int deleteShed(int shedId, int commits) throws SQLException {
+    private boolean deleteShed(int shedId) throws SQLException {
         PreparedStatement pstm;
         //Her skal vi slette Skur.
         pstm = connection.prepareStatement(DELETE_SHED_SQL);
         pstm.setInt(1, shedId);
-        commits += pstm.executeUpdate();
-        return commits;
+        return pstm.executeUpdate() == 1;
+        
     }
 
     /**

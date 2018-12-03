@@ -128,7 +128,7 @@ public class ShowCarPortCommand  extends Command
             String textShedId = "";
             if(item.getShedId() > 0)
             {
-                textShedId = "check";
+                textShedId = "checked";
             }
             
             if(item.getShedId() != 0)
