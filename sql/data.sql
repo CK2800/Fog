@@ -52,51 +52,51 @@ INSERT INTO Remarks(text) VALUES('vandbrædt på stern i forende');
 
 -- trykimprægnerede brædder.
 INSERT INTO Materialtypes(type) VALUES('Trykimp. brædt');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x200 mm.', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x200 mm.', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x150 mm.', 480, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x150 mm.', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x150 mm.', 600, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x125 mm.', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x125 mm.', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '25x50 mm.', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '19x100 mm.', 210, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '19x100 mm.', 240, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '19x100 mm.', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '19x100 mm.', 480, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (1, '19x100 mm.', 540, 'stk'); -- 13
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x200 mm.', 360, 'stk', 75.42);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x200 mm.', 540, 'stk', 113.13);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x150 mm.', 480, 'stk', 100.56);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x150 mm.', 540, 'stk', 113.13);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x150 mm.', 600, 'stk', 125.7);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x125 mm.', 360, 'stk', 75.42);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x125 mm.', 540, 'stk', 113.13);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '25x50 mm.', 540, 'stk', 113.13);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '19x100 mm.', 210, 'stk', 43.99);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '19x100 mm.', 240, 'stk', 50.28 );
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '19x100 mm.', 360, 'stk', 75.42);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '19x100 mm.', 480, 'stk', 100.56);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (1, '19x100 mm.', 540, 'stk', 113.13); -- 13
 -- ubehandlede lægter
 INSERT INTO Materialtypes(type) VALUES('lægte ubh.');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (2, '38x73 mm.', 420, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (2, '38x73 mm.', 420, 'stk', 41.79);
 -- ubehandlede reglar
 INSERT INTO Materialtypes(type) VALUES('reglar ub.');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (3, '45x95 mm.', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (3, '45x95 mm.', 270, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (3, '45x95 mm.', 240, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (3, '45x95 mm.', 360, 'stk', 169.02);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (3, '45x95 mm.', 270, 'stk', 126.77);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (3, '45x95 mm.', 240, 'stk', 112.68);
 -- spærtræ, ubehandlet.
 INSERT INTO Materialtypes(type) VALUES('spærtræ ubh.');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (4, '45x195 mm.', 600, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (4, '45x195 mm.', 480, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (4, '45x195 mm.', 600, 'stk', 233.7);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (4, '45x195 mm.', 480, 'stk', 186.96);
 -- trykimprægnerede stolper.
 INSERT INTO Materialtypes(type) VALUES('trykimp. stolpe');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (5, '97x97 mm.', 300, 'stk'); -- 20
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (5, '97x97 mm.', 300, 'stk', 68.31 ); -- 20
 -- taglægte T1
 INSERT INTO Materialtypes(type) VALUES('taglægte T1');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (6, '38x73 mm.', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (6, '38x73 mm.', 420, 'stk');
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (6, '38x73 mm.', 540, 'stk', 134.73 );
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (6, '38x73 mm.', 420, 'stk', 104.79 );
 -- tagfladebelægning.
 INSERT INTO Materialtypes(type) VALUES('tagfladebelægning'); -- 7
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 240, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 300, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 420, 'stk'); -- 25
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 480, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 540, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 600, 'stk');
-INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (7, 'Plastmo ecolite blåtonet', 360, 'stk');
-INSERT INTO Materials(materialtypeId, name, unit) VALUES (7, 'B & C Dobbelt-s sort', 'stk'); -- 30
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 240, 'stk', 79.95);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 300, 'stk', 99.95);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 420, 'stk', 149 ); -- 25
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 480, 'stk', 179);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 540, 'stk', 229);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 600, 'stk', 289);
+INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (7, 'Plastmo ecolite blåtonet', 360, 'stk', 119);
+INSERT INTO Materials(materialtypeId, name, unit, price) VALUES (7, 'B & C Dobbelt-s sort', 'stk', 15.95); -- 30
 -- tagrygbelægning.
 INSERT INTO Materialtypes(type) VALUES('tagrygbelægning'); -- tidl. rygsten
-INSERT INTO Materials(materialtypeId, name, unit) VALUES (8, 'B & C sort', 'stk');
+INSERT INTO Materials(materialtypeId, name, unit, price) VALUES (8, 'B & C sort', 'stk', 94.95);
 -- toplægteholder
 INSERT INTO Materialtypes(type) VALUES('toplægteholder');
 INSERT INTO Materials(materialtypeId, name, unit) VALUES (9, 'B & C', 'stk');

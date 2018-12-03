@@ -28,7 +28,8 @@ CREATE TABLE Materials(
 	materialtypeId int NOT NULL,
     `name` VARCHAR(100) NOT NULL,    
     length int,    
-    unit VARCHAR(10) NOT NULL,	   
+    unit VARCHAR(10) NOT NULL,	
+    price DECIMAL(6,2) NOT NULL DEFAULT 0, -- 6 tal, 4 foran komma, 2 efter.
 	CONSTRAINT fk_Materials_Materialtypes
 	FOREIGN KEY (materialtypeId)
 	REFERENCES Materials(id)
