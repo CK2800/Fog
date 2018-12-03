@@ -230,7 +230,11 @@ public class CarportRequestDAO extends AbstractDAO{
                 //Slet Skur
                 boolean autocommit = autocommit();
                 
+                //Skal slet det enkelt skur.
                 commits = deleteShed(shedId, commits);
+                
+                //Updater carport delen
+                commits = updaterShedId(0, id, commits);
                 
                 connection.commit();
                 connection.setAutoCommit(autocommit);
@@ -246,6 +250,7 @@ public class CarportRequestDAO extends AbstractDAO{
                 //Her skal den opret skur til databasen. Hvis der ikke er tilføjet skurid i formen.
                 //Men man har klikket af på, at shedcheck.
                 //int addShedId = createShed(shedLength, shedWidth);
+                //eller skal vi bare bruge "createShed" og så få angivet den værdi som vi kan bruge til, at updater til forespørgelse.
                 pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS);
                 pstm.setInt(1, length);
                 pstm.setInt(2, width);
