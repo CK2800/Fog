@@ -13,33 +13,39 @@ import jc.fog.exceptions.FogException;
 
 /**
  *
- * @author Jesper
+ * @author Jespe
  */
-public class AddCarPortCommand extends Command
+public class UpdateCarPortCommand extends Command
 {
-    
-    
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        // Later we will validate a logged in user
+        int id = Integer.parseInt(request.getParameter("carportId"));
+        int shedId = Integer.parseInt(request.getParameter("shedId"));
+        String shedCheck = request.getParameter("addSked");
 
         // nap parametre fra requests og dan CarportRequestDTO.
         int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
         int slope = Integer.parseInt(request.getParameter("slope"));
         int width = Integer.parseInt(request.getParameter("width"));
+        int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
         int length = Integer.parseInt(request.getParameter("length"));
         String remark = request.getParameter("remark");
 
         int shedLength = Integer.parseInt(request.getParameter("shedLength"));
         int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
-        
+
+
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        //husk at fjern højde som er 200
-        boolean updateCarport = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
+        boolean updateCarport = dataFacade.updateCarPort(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         
-        
-        // Return the page showing all requests.
-        return Pages.ALL_CARPORTS;
+        if(updateCarport)
+        {
+            return Pages.ALL_CARPORTS;
+        }
+        else
+        {
+            return Pages.INDEX;
+        }
     }
 }

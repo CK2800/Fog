@@ -75,10 +75,7 @@ public class ShowCarPortCommand  extends Command
         
         if(item != null)
         {
-            if(item.getShedDTO().getId() > 0)
-            {
-                stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
-            }
+            stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
             stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
         }
         
@@ -101,7 +98,15 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("<br/>");
         
         //Her kommer submit som skal updatere eller beregn styklisten
-        stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.CREATE_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+        if(bill)
+        {
+            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.UPDATE_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+        }
+        else
+        {
+            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.ADD_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+        }
+        
         stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
         stringBuilder.append("</form><br/>");
         
@@ -110,7 +115,7 @@ public class ShowCarPortCommand  extends Command
         if (item != null)
         {
             //Id'er til det angivet punkt/område i forhold til hvis det skal opdatere.
-            text = text.replace("$shedId", String.valueOf(item.getShedDTO().getId()));       
+            text = text.replace("$shedId", String.valueOf(item.getShedId()));       
             text = text.replace("$id", String.valueOf(item.getId()));
             
             //Carport område
@@ -120,9 +125,23 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$carport4", String.valueOf(item.getSlope()));
             
             //Shed område
-            text = text.replace("$shed2", String.valueOf(item.getLength()));
-            text = text.replace("$shed3", String.valueOf(item.getWidth()));
-            text = text.replace("$shed1", "checked");
+            String textShedId = "";
+            if(item.getShedId() > 0)
+            {
+                textShedId = "check";
+            }
+            
+            if(item.getShedId() != 0)
+            {
+                text = text.replace("$shed2", String.valueOf(item.getShedDTO().getLength()));
+                text = text.replace("$shed3", String.valueOf(item.getShedDTO().getWidth()));
+            }
+            else
+            {
+                text = text.replace("$shed2", "0");
+                text = text.replace("$shed3", "0");
+            }
+            text = text.replace("$shed1", textShedId);
             
             //Kunde kommentar
             text = text.replace("$carport5", String.valueOf(item.getRemark()));

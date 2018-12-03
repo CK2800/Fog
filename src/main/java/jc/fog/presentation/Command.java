@@ -47,7 +47,8 @@ public abstract class Command
         commands.put(Commands.SHOW_BILL, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
         commands.put(Commands.SHOW_CARPORT_FORM, new ShowCarPortCommand());
-        commands.put(Commands.CREATE_CARPORT_REQUEST, new AddCarPortCommand());
+        commands.put(Commands.UPDATE_CARPORT_REQUEST, new UpdateCarPortCommand());
+        commands.put(Commands.ADD_CARPORT_REQUEST, new AddCarPortCommand());
     }
     
     /**

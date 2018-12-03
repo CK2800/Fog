@@ -136,7 +136,7 @@ public class CarportRequestDAO extends AbstractDAO{
 
     /**
      * Skal kun opret forespørgsel.
-     * @param productId
+     * @param rooftypeId
      * @param slope
      * @param width
      * @param height
@@ -148,7 +148,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws SQLException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
-    public boolean createCarportRequest(int productId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
+    public boolean createCarportRequest(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {
         //Den "space removed" i siderne
         remark = remark.trim();
@@ -164,7 +164,7 @@ public class CarportRequestDAO extends AbstractDAO{
             
             // Opret forespørgsel, evt. med skur.
             pstm = connection.prepareStatement(CREATE_CPREQUEST_SQL);
-            pstm.setInt(1, productId);
+            pstm.setInt(1, rooftypeId);
             pstm.setInt(2, slope);           
             // Hvis skur ønskes, sættes dets id i sql...
             if (shedId != 0)
