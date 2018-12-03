@@ -201,7 +201,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws FogException 
      */
-    public boolean updateCarPortRequest(int id, int shedId, boolean shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
+    public boolean updateCarPortRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
         try
         {
@@ -209,10 +209,13 @@ public class CarportRequestDAO extends AbstractDAO{
             PreparedStatement pstm;
             
             int commits = 0;
-            if(shedId > 0 && shedCheck)
+            if(shedId > 0 && shedCheck != null)
             {   
                 //Opdater skur
-                boolean autocommit = autocommit();
+                boolean autocommit = false;
+                if (autocommit){
+                    connection.setAutoCommit(false);
+                }
                 
                 //Skal opdater værdi hos skur. til de nye værdier.
                 commits = updateShed(shedWidth, shedLength, shedId, commits);
@@ -225,10 +228,13 @@ public class CarportRequestDAO extends AbstractDAO{
                 
                 return commits == 2;                
             }
-            else if(shedId > 0&& !shedCheck)
+            else if(shedId > 0&& shedCheck == null)
             {
                 //Slet Skur
-                boolean autocommit = autocommit();
+                boolean autocommit = false;
+                if (autocommit){
+                    connection.setAutoCommit(false);
+                }
                 
                 //Skal slet det enkelt skur.
                 commits = deleteShed(shedId, commits);
@@ -242,10 +248,13 @@ public class CarportRequestDAO extends AbstractDAO{
                 return commits == 1;
                 
             }
-            else if(shedId < 0 && shedCheck)
+            else if(shedId < 0 && shedCheck != null)
             {
                 //Skal tilføj Skurid til carport.
-                boolean autocommit = autocommit();
+                boolean autocommit = false;
+                if (autocommit){
+                    connection.setAutoCommit(false);
+                }
                 
                 //Her skal den opret skur til databasen. Hvis der ikke er tilføjet skurid i formen.
                 //Men man har klikket af på, at shedcheck.
@@ -278,19 +287,6 @@ public class CarportRequestDAO extends AbstractDAO{
         {
             throw new FogException("Kunne ikke opdater", e.getMessage());
         }    
-    }
-
-    /**
-     * (Skal lige skrive noget her)...
-     * @return
-     * @throws SQLException 
-     */
-    private boolean autocommit() throws SQLException {
-        boolean autocommit = false;
-        if (autocommit){
-            connection.setAutoCommit(false);
-        }
-        return autocommit;
     }
 
     /**

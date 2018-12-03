@@ -21,7 +21,8 @@ public class AddCarPortCommand extends Command
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         int id = Integer.parseInt(request.getParameter("carportId"));
-        boolean addSked = "1".equals(request.getParameter("addSked"));
+        int shedId = Integer.parseInt(request.getParameter("shedId"));
+        String shedCheck = request.getParameter("addSked");
 
         // nap parametre fra requests og dan CarportRequestDTO.
         int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
@@ -36,7 +37,7 @@ public class AddCarPortCommand extends Command
 
 
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        boolean createCarport = dataFacade.createCarPort(id, shedWidth, addSked, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
+        boolean createCarport = dataFacade.createCarPort(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         
         if(createCarport)
         {

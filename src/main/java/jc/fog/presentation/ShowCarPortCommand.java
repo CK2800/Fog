@@ -89,7 +89,7 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$carport4\" /><br />");
         
         //Shed information her
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $Shed1 /><br />");
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $shed1 /><br />");
         stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" /><br />");
         stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" /><br />");
         
@@ -101,7 +101,6 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("<br/>");
         
         //Her kommer submit som skal updatere eller beregn styklisten
-        //Få lavet en command som laver en forespørgelse. Husk også at tílføje dens navn i Commands klassen, f.eks. Commands.CREATE_CARPORT_REQUEST
         stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.CREATE_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
         stringBuilder.append("</form><br/>");
