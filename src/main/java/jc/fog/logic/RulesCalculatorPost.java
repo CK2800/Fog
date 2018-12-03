@@ -21,11 +21,29 @@ public class RulesCalculatorPost extends RulesCalculator
         try
         {
             ArrayList<BillItem> result = new ArrayList();
-            // Find materialet.       
-            List<MaterialDTO> posts = materials.get(Materialtype.POST.name()); //filter(materials, Rules.POST_TYPE_ID);        
+            // Find materialer.       
+            List<MaterialDTO> posts = materials.get(Materialtype.POST.name());             
+            List<MaterialDTO> rafters = materials.get(Materialtype.RAFTERS.name()); // spær
+            MaterialCount mcRafters = findShortest(rafters, carportRequest.getWidth()); // Antal træ til 1 spær.
+            MaterialCount mcHeads = findShortest(rafters, carportRequest.getLength()); // Antal træ til 1 rem.
             MaterialDTO post = posts.get(0);
-            // en stolpe i hvert hjørne.
-            int count = 4;
+            int noHeads = 2; // 2 remme som minimum.
+            int noPostsPerHead = 2; // 2 stolper pr. rem som minimum.
+            int count = 0; // antal stolper.
+            
+            // Tjek antal brud på rem (count > 1) og læg til stolpeantal pr. rem.
+            noPostsPerHead += (mcHeads.getCount()-1);
+            
+            // Kun v. fladt tag skal vi tjekke for brud på spær.
+            if (carportRequest.getSlope()==0)
+            {
+                // Læg ekstra rem til for hvert brud på spær (count > 1).
+                noHeads += (mcRafters.getCount()-1);
+            }
+            
+            // antal stolper er antal remme * stolper/rem.
+            count = noHeads * noPostsPerHead;            
+            
             // Skal der bygges skur, kræves flere stolper.
             ShedDTO shed = carportRequest.getShedDTO();
             if (shed != null)
