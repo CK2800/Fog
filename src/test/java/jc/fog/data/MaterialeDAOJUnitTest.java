@@ -70,7 +70,7 @@ public class MaterialeDAOJUnitTest
     public void testCreateMateriale() throws FogException
     {
         MaterialDAO dao = new MaterialDAO(connection);
-        boolean succes = dao.createMaterial(2, "5x5 mm", 6, "stk");
+        boolean succes = dao.createMaterial(2, "5x5 mm", 6, "stk", 78.95F);
         assertTrue(succes);
     }
     

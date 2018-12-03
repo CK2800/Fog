@@ -46,7 +46,7 @@ public class AddCarPortCommand extends Command
         }
         else
         {
-            
+            return Pages.INDEX;
         }
     }
     

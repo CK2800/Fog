@@ -24,7 +24,7 @@ public class MaterialDAO extends AbstractDAO
     /**
      * SQL som henter materialer, deres materialetype og evt. tagtype.
      */
-    public static final String GET_MATERIALS_SQL = "SELECT m.id, m.materialtypeId, m.name, mt.type, m.length, m.unit, rm.rooftypeId " +
+    public static final String GET_MATERIALS_SQL = "SELECT m.id, m.materialtypeId, m.name, mt.type, m.length, m.unit, m.price, rm.rooftypeId " +
                                                                  "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id LEFT JOIN RooftypeMaterials rm ON m.id = rm.materialId";
 //    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialtypeId, m.name, mt.type, length, unit " +
 //                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id";
@@ -34,7 +34,7 @@ public class MaterialDAO extends AbstractDAO
     /**
      * SQL som opretter materiale i databasen.
      */
-    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materials(materialtypeId, name, length, unit) VALUES (?, ?, ?, ?)";
+    public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (?, ?, ?, ?, ?)";
     
     //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     
@@ -97,7 +97,8 @@ public class MaterialDAO extends AbstractDAO
             rs.getInt("length"),
             rs.getString("unit"),
             rs.getString("type"),
-            rs.getInt("rooftypeId")
+            rs.getInt("rooftypeId"),
+            rs.getFloat("price")
         );
     }
     
@@ -127,10 +128,11 @@ public class MaterialDAO extends AbstractDAO
      * @param name
      * @param length
      * @param unit
+     * @param price
      * @return - Skal bare fortælle om man har opret eller ej?
      * @throws FogException 
      */
-    public boolean createMaterial(int materialtypeId, String name, int length, String unit) throws FogException
+    public boolean createMaterial(int materialtypeId, String name, int length, String unit, float price) throws FogException
     {
         //Den "space removed" i siderne
         name = name.trim();
@@ -144,6 +146,7 @@ public class MaterialDAO extends AbstractDAO
             pstm.setString(2, name);
             pstm.setInt(3, length);
             pstm.setString(4, unit);
+            pstm.setFloat(5, price);
             
             return pstm.executeUpdate() == 1;
         }
