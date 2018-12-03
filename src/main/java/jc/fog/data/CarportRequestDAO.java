@@ -28,7 +28,11 @@ public class CarportRequestDAO extends AbstractDAO{
     
     final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, shedId = ?, width = ?, length = ?, rooftypeId = ?, remark = ? WHERE id = ?";
     
+    final static String UPDATE_SHEDID_SQL = "UPDATE Carportrequests SET shedId = ? WHERE id = ?";
+    
     final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
+      
+    final static String DELETE_SHED_SQL = "DELETE FROM Sheds WHERE id = ?";
         
     /**
      * Konstruktør som fordrer en DbConnector instans.     
@@ -205,66 +209,167 @@ public class CarportRequestDAO extends AbstractDAO{
             PreparedStatement pstm;
             
             int commits = 0;
-            if(shedId > 0)
+            if(shedId > 0 && shedCheck)
             {   
-                boolean autocommit = connection.getAutoCommit();
-                if (autocommit){
-                    connection.setAutoCommit(false);
-                }
-            
-                pstm = connection.prepareStatement(UPDATE_SHED_SQL);
-                pstm.setInt(1, shedWidth);
-                pstm.setInt(2, shedLength);
-                pstm.setInt(3, shedId);
-
-                //gem i databasen
-                commits += pstm.executeUpdate();
+                //Opdater skur
+                boolean autocommit = autocommit();
                 
+                //Skal opdater værdi hos skur. til de nye værdier.
+                commits = updateShed(shedWidth, shedLength, shedId, commits);
                 
-                pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
-                pstm.setInt(1, slope);
-                pstm.setInt(2, shedId);
-                pstm.setInt(3, width);
-                pstm.setInt(4, length);
-                pstm.setInt(5, rooftypeId);
-                pstm.setString(6, remark);
-                pstm.setInt(7, id);
-                
-                
-                commits += pstm.executeUpdate();
+                //Skal opdater til de nye oplysning.
+                commits = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id, commits);
                 
                 connection.commit();
                 connection.setAutoCommit(autocommit);
                 
                 return commits == 2;                
             }
+            else if(shedId > 0&& !shedCheck)
+            {
+                //Slet Skur
+                boolean autocommit = autocommit();
+                
+                commits = deleteShed(shedId, commits);
+                
+                connection.commit();
+                connection.setAutoCommit(autocommit);
+                
+                return commits == 1;
+                
+            }
+            else if(shedId < 0 && shedCheck)
+            {
+                //Skal tilføj Skurid til carport.
+                boolean autocommit = autocommit();
+                
+                //Her skal den opret skur til databasen. Hvis der ikke er tilføjet skurid i formen.
+                //Men man har klikket af på, at shedcheck.
+                //int addShedId = createShed(shedLength, shedWidth);
+                pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS);
+                pstm.setInt(1, length);
+                pstm.setInt(2, width);
+                
+                commits += pstm.executeUpdate();
+                ResultSet rs = pstm.getGeneratedKeys();
+                rs.next();
+                
+                int addShedId = rs.getInt(1);
+                
+                commits = updaterShedId(addShedId, id, commits);
+                
+                connection.commit();
+                connection.setAutoCommit(autocommit);
+                
+                return commits == 2;
+                
+            }
             else
             {
-                if(shedCheck == true)
-                {
-                    shedId = createShed(shedLength, shedWidth);
-                }
-                else
-                {
-                    //skal vi her hvis den er false??
-                    //skal den findes første?? Eller hvad?
-                    shedId = shedId;
-                }
-                
-                pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
-                pstm.setInt(1, slope);
-                pstm.setInt(2, shedId);
-                pstm.setInt(3, width);
-                pstm.setInt(4, length);
-                pstm.setInt(5, id);
-                
-                return true;//Skal måske væk igen...
-            }            
+                return false;
+            }
         }
         catch(Exception e)
         {
             throw new FogException("Kunne ikke opdater", e.getMessage());
         }    
+    }
+
+    /**
+     * (Skal lige skrive noget her)...
+     * @return
+     * @throws SQLException 
+     */
+    private boolean autocommit() throws SQLException {
+        boolean autocommit = false;
+        if (autocommit){
+            connection.setAutoCommit(false);
+        }
+        return autocommit;
+    }
+
+    /**
+     * Skal updater skur område med nye værdier.
+     * @param shedWidth
+     * @param shedLength
+     * @param shedId
+     * @param commits
+     * @return
+     * @throws SQLException 
+     */
+    private int updateShed(int shedWidth, int shedLength, int shedId, int commits) throws SQLException {
+        PreparedStatement pstm;
+        //Updater skur værdi.
+        pstm = connection.prepareStatement(UPDATE_SHED_SQL);
+        pstm.setInt(1, shedWidth);
+        pstm.setInt(2, shedLength);
+        pstm.setInt(3, shedId);
+        //gem i databasen
+        commits += pstm.executeUpdate();
+        return commits;
+    }
+
+    /**
+     * Skal updater carport værdi til de nye værdier.
+     * @param slope
+     * @param shedId
+     * @param width
+     * @param length
+     * @param rooftypeId
+     * @param remark
+     * @param id
+     * @param commits
+     * @return
+     * @throws SQLException 
+     */
+    private int updateCarPort(int slope, int shedId, int width, int length, int rooftypeId, String remark, int id, int commits) throws SQLException {
+        PreparedStatement pstm;
+        //Updater carport værdi.
+        pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
+        pstm.setInt(1, slope);
+        pstm.setInt(2, shedId);
+        pstm.setInt(3, width);
+        pstm.setInt(4, length);
+        pstm.setInt(5, rooftypeId);
+        pstm.setString(6, remark);
+        pstm.setInt(7, id);
+        commits += pstm.executeUpdate();
+        return commits;
+    }
+
+    /**
+     * Skal updater de angivet værdi til nogen nye.
+     * @param addShedId
+     * @param id
+     * @param commits
+     * @return
+     * @throws SQLException 
+     */
+    private int updaterShedId(int addShedId, int id, int commits) throws SQLException {
+        PreparedStatement pstm;
+        //skal smide det angivet "generated_keys"
+        //skal også lige updater skurid i carport delen.
+        pstm = connection.prepareStatement(UPDATE_SHEDID_SQL);
+        pstm.setInt(1, addShedId);
+        pstm.setInt(2, id);
+        commits += pstm.executeUpdate();
+        return commits;
+    }
+
+    /**
+     * Den skal slette det enkelt skur.
+     * @param shedId
+     * @param commits
+     * @return
+     * @throws SQLException 
+     */
+    private int deleteShed(int shedId, int commits) throws SQLException {
+        PreparedStatement pstm;
+        //Her skal vi slette Skur.
+        pstm = connection.prepareStatement(DELETE_SHED_SQL);
+        pstm.setInt(1, shedId);
+        commits += pstm.executeUpdate();
+        return commits;
     }
 
     /**
