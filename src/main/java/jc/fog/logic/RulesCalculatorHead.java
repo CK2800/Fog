@@ -20,16 +20,23 @@ public class RulesCalculatorHead extends RulesCalculator
     {        
         try
         {
+            // mindst 2 remme.
+            int noHeads = 2; 
             ArrayList<BillItem> result = new ArrayList();
             // Remmen laves af spærtræ, find samlingen i hashmap.
             List<MaterialDTO> heads = materials.get(Materialtype.RAFTERS.name());
-            // Remmen bærer taget, udhæng 30 cm i hver ende.
+            // Remmen bærer taget, som har udhæng 30 cm i hver ende.
             int headLength = carportRequest.getLength() - 2 * Rules.OVERHANG;                        
             // Find korteste materiale og antal.
             MaterialCount materialCount = findShortest(heads, headLength);                                    
+            // Find antallet af remme krævet, ved at se hvor mange gange, spær skæres over.
+            MaterialCount mcRafters = findShortest(heads, carportRequest.getWidth());
+            // Skal der bruges mere end 1 stk træ til et spær, skal overskæringen understøttes med 1 rem.
+            noHeads += (mcRafters.getCount()-1);
+            
             // Returner liste med bill items.
             
-            result.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * 2, CarportPart.HEAD, "rem instruks"));
+            result.add(new BillItem(materialCount.getMaterialDTO(), materialCount.getCount() * noHeads, CarportPart.HEAD, "rem instruks"));
             return result;                
         }        
         catch(Exception e)

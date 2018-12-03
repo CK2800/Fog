@@ -124,7 +124,7 @@ public class CalculatorTest
         BillItem billItem = stykliste.get(0);
                 
         // Assert
-        int expected = 9;
+        int expected = 9; // 3 på hver rem, 3 til skur.
         assertEquals(expected, billItem.getCount());
     }
     
