@@ -74,8 +74,12 @@ public class ShowRequestsCommand extends Command
             row = row.replace("$5", textSkur);
             row = row.replace("$6", "<a href=\"FrontController?command=" + Commands.SHOW_SINGLE_REQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a> - "
                     + "<a href=\"FrontController?command=" + Commands.SHOW_BILL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a>");
+<<<<<<< HEAD
             row = row.replace("$7", "<a href=\"FrontController?command=" + Commands.SHOW_CARPORT_FORM + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater</a>");
             
+=======
+
+>>>>>>> FeatureClaus
             stringBuilder.append(row);
             
         }

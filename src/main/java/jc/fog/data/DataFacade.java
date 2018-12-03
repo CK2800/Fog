@@ -60,9 +60,9 @@ public class DataFacade
         return materialDAO.getMaterials();
     }
     
-    public boolean createMaterial(int materialeTypeId, String name, int length, String unit) throws FogException
+    public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException
     {
-        return materialDAO.createMaterial(materialeTypeId, name, length, unit);
+        return materialDAO.createMaterial(materialeTypeId, name, length, unit, price);
     }
     
     public List<RooftypeDTO> getRooftypes() throws FogException

@@ -5,7 +5,7 @@
  */
 package jc.fog.logic;
 
-import java.util.List;
+import jc.fog.logic.Rules.CarportPart;
 
 /**
  * A pure fabrication of a collection of data comprising a line in the bill of goods.
@@ -16,15 +16,32 @@ public class BillItem
     private MaterialDTO material;
     private int count;
     private String remarks;
+    /** Indikerer hvilken del af carporten, dette bill item bruges til. */
+    private CarportPart carportPart;
+        
     
-    public MaterialDTO getMaterialDTO(){return material;}
-    public int getCount(){return count;}
-    public String getRemarks(){return remarks;}
+    // Getters
+    /** Materialet der skal bruges. */
+    public MaterialDTO getMaterialDTO() { return material; }
+    /** Antal af materialet, der skal bruges. */
+    public int getCount() { return count; }
+    /** Indikerer hvilken del af carporten, dette bill item bruges til. */
+    public CarportPart getCarportPart() { return carportPart; }
+    /** Instruks for bygning af denne del af carporten. */
+    public String getRemarks() { return remarks; }
     
-    public BillItem(MaterialDTO material, int count, String remarks)
+    /**
+     * Angiver hvilket materiale og hvor meget samt til hvilken del på carporten.
+     * @param material
+     * @param count
+     * @param carportPart
+     * @param remarks 
+     */
+    public BillItem(MaterialDTO material, int count, CarportPart carportPart, String remarks)
     {
         this.material = material;
         this.count = count;
+        this.carportPart = carportPart;
         this.remarks = remarks;
     }
     

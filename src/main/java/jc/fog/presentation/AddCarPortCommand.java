@@ -39,7 +39,18 @@ public class AddCarPortCommand extends Command
         boolean updateCarport = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         
         
+<<<<<<< HEAD
         // Return the page showing all requests.
         return Pages.ALL_CARPORTS;
+=======
+        if(createCarport)
+        {
+            return Pages.ALL_MATERIALS;
+        }
+        else
+        {
+            return Pages.INDEX;
+        }
+>>>>>>> FeatureClaus
     }
 }

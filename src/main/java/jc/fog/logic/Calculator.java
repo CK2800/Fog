@@ -8,9 +8,6 @@ package jc.fog.logic;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.BillItem;
 
 /**
  *
@@ -18,30 +15,37 @@ import jc.fog.logic.BillItem;
  */
 public class Calculator
 {
-    private static ArrayList<RuleCalculator> rules;
+    private ArrayList<RulesCalculator> calculators;
     
-    private static void initializeRules()
+    public Calculator(List<MaterialDTO> materials)
     {
-        rules = new ArrayList<RuleCalculator>();
-        
-        rules.add(new RuleCalculatorHead());
-        rules.add(new RuleCalculatorPost());
-        rules.add(new RuleCalculatorRafters());
-        rules.add(new RuleCalculatorShed());
-        rules.add(new RuleCalculatorBattens());
+        // Initialiserer RulesCalculator's hashmap.
+        RulesCalculator.initializeMaterials(materials);
+        // Opret instanser af RulesCalculators.         
+        initializeRulesCalculators();
     }
     
-    protected static List<BillItem> beregnStykliste(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
-    {
-        if (rules == null)
-            initializeRules();
+    private void initializeRulesCalculators()
+    {        
+        calculators = new ArrayList<RulesCalculator>();
         
+        calculators.add(new RulesCalculatorHead()); // Udregner rem.
+        calculators.add(new RulesCalculatorPost()); // Udregner stolper.
+        calculators.add(new RulesCalculatorRafters()); // Udregner spær.
+        calculators.add(new RulesCalculatorShed()); // Udregner skurets beklædning.
+        calculators.add(new RulesCalculatorBattens()); // Udregner lægter.
+        calculators.add(new RulesCalculatorRoof()); // Udregner tagbelægning.
+    }
+            
+    protected List<BillItem> calculateBill(CarportRequestDTO carportRequest) throws FogException
+    {                           
+        // Opret tom stykliste.
         ArrayList<BillItem> bill = new ArrayList<>();
         
-        
-        for(RuleCalculator rule : rules)
+        // Gennemløb alle rule calculators.        
+        for(RulesCalculator calculator : calculators)
         {
-            rule.calculate(carportRequest, materials, bill);
+            bill.addAll(calculator.calculate(carportRequest));
         }
 
         return bill;

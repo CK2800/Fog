@@ -5,6 +5,7 @@
  */
 package jc.fog.presentation;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,9 +93,22 @@ public class ShowBillCommand extends Command
         
         // Format the bill of materials nicely for view.
         request.setAttribute("stykliste", billToHtml(bill));
+        request.setAttribute("totalpris", calculateTotal(bill));
         request.setAttribute("carportDimensioner", carportDimensions);
         
         return Pages.BILL;
+    }
+    
+    private String calculateTotal(List<BillItem> bill)
+    {
+        float total = 0F;
+        for(BillItem item:bill)
+        {
+            total += (item.getCount() * item.getMaterialDTO().getPrice());
+        }
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMaximumFractionDigits(2);
+        return decimalFormat.format(total);        
     }
     
     private String billToHtml(List<BillItem> bill)

@@ -26,7 +26,7 @@ public class RooftypeDAO extends AbstractDAO
      * Tupler sorteres på Rooftype.id så ResultSet kan gennemløbes og liste af
      * MaterialDTO objekter dannes til hvert RooftypeDTO objekt.
      */
-    private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialId, m.materialtypeId, m.name, m.length, m.unit, mt.type as materialType " +
+    private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialId, m.materialtypeId, m.name, m.length, m.unit, m.price, mt.type as materialType " +
                                                     "FROM Rooftypes rt INNER JOIN RooftypeMaterials rm ON rt.id = rm.rooftypeId " + 
                                                     "INNER JOIN Materials m ON rm.materialId = m.id " + 
                                                     "INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id " +
@@ -89,7 +89,9 @@ public class RooftypeDAO extends AbstractDAO
                     rs.getString("name"),
                     rs.getInt("length"),
                     rs.getString("unit"),
-                    rs.getString("materialType")
+                    rs.getString("materialType"),
+                    rs.getInt("id"), // rooftype id.
+                    rs.getFloat("price")
             ));                
         }
         return rooftypes;                    

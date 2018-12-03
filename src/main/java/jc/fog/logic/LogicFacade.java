@@ -16,6 +16,13 @@ public class LogicFacade
 {
     public static List<BillItem> calculateBill(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
-        return Calculator.beregnStykliste(carportRequest, materials);
+        Calculator calculator = new Calculator(materials);
+        return calculator.calculateBill(carportRequest);        
+    }
+    
+    public static List<Rectangle> drawCarport(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
+    {
+        Drawer drawer = new Drawer(materials, carportRequest);
+        return drawer.draw();
     }
 }
