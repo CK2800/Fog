@@ -79,8 +79,6 @@ public class ShowBillCommand extends Command
             }
             
             //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
-            
-            
             carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
                 
         }
@@ -91,13 +89,21 @@ public class ShowBillCommand extends Command
         // Calculate string with carport dimensions.
         String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
         
+        String shed = shedCheck(carportRequestDTO);
+        
+        
         // Format the bill of materials nicely for view.
         request.setAttribute("stykliste", billToHtml(bill));
         request.setAttribute("totalpris", calculateTotal(bill));
         request.setAttribute("carportDimensioner", carportDimensions);
-        request.setAttribute("shed", "hej");//skal fortælle om der er skur eller ej?
+        request.setAttribute("shed", shed);//skal fortælle om der er skur eller ej?
         
         return Pages.BILL;
+    }
+
+    private String shedCheck(CarportRequestDTO carportRequestDTO) {
+        String shed = (carportRequestDTO.getShedId() > 0 ? "Tilføj skur" : "Intet skur");
+        return shed;
     }
     
     private String calculateTotal(List<BillItem> bill)

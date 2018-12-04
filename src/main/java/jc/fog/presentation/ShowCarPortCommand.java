@@ -103,8 +103,8 @@ public class ShowCarPortCommand  extends Command
         //Dropdown i forhold til type af tag.
         String dropdown = "Type:<br /><select class=\"form-control\" name=\"rooftypeId\"><option>V&aelig;lg tagtype:</option>$body</select>";
         String rows = "";
-        String selectedCheck = " selected";//Bruges til, at fortælle option hvilken værdi man har valgt.
-        rows = rooftypeOption(Rooftypes, item, selectedCheck, rows);//Method til, at tilføj dvs værdier i option.
+        String selectedCheck = "";//Bruges til, at fortælle option hvilken værdi man har valgt.
+        rows = rooftypeDropdown(Rooftypes, item, selectedCheck, rows);
         dropdown = dropdown.replace("$body", rows);
         stringBuilder.append(dropdown);
         stringBuilder.append("<br/><br/>");
@@ -138,11 +138,7 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$carport4", String.valueOf(item.getSlope()));
             
             //Shed område
-            String textShedId = "";
-            if(item.getShedId() > 0)
-            {
-                textShedId = "checked";
-            }
+            
             
             if(item.getShedId() != 0)
             {
@@ -154,6 +150,8 @@ public class ShowCarPortCommand  extends Command
                 text = text.replace("$shed2", "0");
                 text = text.replace("$shed3", "0");
             }
+            
+            String textShedId = shedCheck(item);
             text = text.replace("$shed1", textShedId);
             
             //Kunde kommentar
@@ -188,6 +186,40 @@ public class ShowCarPortCommand  extends Command
         return text;
     }
 
+    /**
+     * Bruges til, at fortælle om den angivet "checkbox" er tilføjet eller ej?
+     * @param item
+     * @return 
+     */
+    private String shedCheck(CarportRequestDTO item) {
+        return item.getShedId() > 0 ? "checked" : "";
+    }
+
+    /**
+     * Den gennemløber "for" og tilføj de forskellig værdier fra db i "option"
+     * @param Rooftypes
+     * @param item
+     * @param selectedCheck
+     * @param rows
+     * @return 
+     */
+    private String rooftypeDropdown(List<RooftypeDTO> Rooftypes, CarportRequestDTO item, String selectedCheck, String rows) {
+        for(RooftypeDTO value : Rooftypes)
+        {
+            String row = "<option value=\"$1\" $3>$2</option>";
+            row = row.replace("$1", String.valueOf(value.getId()));
+            row = row.replace("$2", value.getType());
+            row = row.replace("$3", item != null && item.getRooftypeId() == value.getId() ? "selected" : "");//Tilføj selected ved den angivet id som man har tilføjet ved forespørgelse.
+            rows += row;
+        }
+        return rows;
+    }
+
+    /**
+     * Tilføj to værdi til hvilken forespørgelse og samtidig skurid i shedId
+     * @param item
+     * @param stringBuilder 
+     */
     private void anyIDs(CarportRequestDTO item, StringBuilder stringBuilder) {
         if(item != null)
         {
@@ -196,17 +228,4 @@ public class ShowCarPortCommand  extends Command
         }
     }
 
-    private String rooftypeOption(List<RooftypeDTO> Rooftypes, CarportRequestDTO item, String selectedCheck, String rows) {
-        for(RooftypeDTO value : Rooftypes)
-        {
-            String row = "<option value=\"$1\"$3>$2</option>";
-            
-            row = row.replace("$1", String.valueOf(value.getId()));
-            row = row.replace("$2", value.getType());
-            row = row.replace("$3", item.getRooftypeId() == value.getId() ? selectedCheck:"");//Tilføj selected ved den angivet id som man har tilføjet ved forespørgelse.
-            
-            rows += row;
-        }
-        return rows;
-    }
 }

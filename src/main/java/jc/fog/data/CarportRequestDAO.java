@@ -31,9 +31,7 @@ public class CarportRequestDAO extends AbstractDAO{
     final static String UPDATE_SHEDID_SQL = "UPDATE Carportrequests SET shedId = ? WHERE id = ?";
     
     final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
-    
-    final static String UPDATE_ROOFTYPE_SQL = "UPDATE Carportrequests SET rooftypeId = ? WHERE id = ?";
-      
+              
     final static String DELETE_SHED_SQL = "DELETE FROM Sheds WHERE id = ?";
         
     /**
@@ -281,19 +279,17 @@ public class CarportRequestDAO extends AbstractDAO{
                 connection.setAutoCommit(true);
                 return true;
             }
-            else if(rooftypeId > 0)
-            {
-                //Updater Rooftype
-                pstm = connection.prepareStatement(UPDATE_ROOFTYPE_SQL);
-                pstm.setInt(1, rooftypeId);
-                pstm.setInt(2, id);
-                
-                pstm.executeUpdate();
-                return true;
-            }
             else
             {
-                return false;
+                //skal kun updater de enkelte værdi på forespørgelsen
+                connection.setAutoCommit(false);
+                
+                updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
+                
+                connection.commit();
+                connection.setAutoCommit(true);
+                
+                return true;
             }
         }
         catch(Exception e)
