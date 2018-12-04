@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -176,6 +175,32 @@ public class CalculatorTest
                 
         // Assert
         int expected = 6; // Vi forventer 6 tagplader, idet deres bredde er 109 cm.
+        Assert.assertEquals(expected, billItem.getCount());
+    }
+
+/**
+     * Tester RulesCalculatorRoof med tagtype 3 (fladt plastic tag).
+     * @throws FogException 
+     */
+    @Test
+    public void testHeadCalculatorNoSlope() throws FogException
+    {
+        // Arrange
+        MaterialDAO dao = new MaterialDAO(connection); // forbindelse
+        List<MaterialDTO> materials = dao.getMaterials(); // materialer
+        List<BillItem> stykliste; // tom stykliste        
+        
+        // carport, 610 x 800 cm., med plastic tag, uden skur. 
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(3, 0, 610, 210, 800, "blabla", 0,0); // bredde 610 giver 1 brud på spær, dvs. 3 remme med 2 stk. træ i hver = 6.
+        RulesCalculator.initializeMaterials(materials); // Initialiser RulesCalculator.
+        RulesCalculatorHead headCalculator = new RulesCalculatorHead(); // Opret rem udregner.
+        
+        // Act
+        stykliste = headCalculator.calculate(forespoergsel);        
+        BillItem billItem = stykliste.get(0);
+                
+        // Assert
+        int expected = 6; // Vi forventer 6 stk. træ, idet 2 remme i hver side + 1 hvor spær brydes = 3, og hver rem skal bruge 2 stk. træ.
         Assert.assertEquals(expected, billItem.getCount());
     }    
 }
