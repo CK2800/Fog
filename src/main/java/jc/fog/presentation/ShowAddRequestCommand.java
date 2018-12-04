@@ -15,7 +15,7 @@ import jc.fog.exceptions.FogException;
  *
  * @author Jesper
  */
-public class AddRequestCommand extends Command
+public class ShowAddRequestCommand extends Command
 {
     
     

@@ -46,8 +46,9 @@ public abstract class Command
         commands.put(Commands.SHOW_BILL, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
         commands.put(Commands.SHOW_FORM_REQUEST, new ShowCarPortCommand());
-        commands.put(Commands.UPDATE_REQUEST, new UpdateRequestCommand());
-        commands.put(Commands.ADD_REQUEST, new AddRequestCommand());
+        commands.put(Commands.UPDATE_REQUEST, new ShowUpdateRequestCommand());
+        commands.put(Commands.ADD_REQUEST, new ShowAddRequestCommand());
+        commands.put(Commands.LOGIN, new ShowLoginCommand());
     }
     
     /**

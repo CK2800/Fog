@@ -18,7 +18,7 @@ import jc.fog.logic.CarportRequestDTO;
  *
  * @author Jespe
  */
-public class UpdateRequestCommand extends Command
+public class ShowUpdateRequestCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
