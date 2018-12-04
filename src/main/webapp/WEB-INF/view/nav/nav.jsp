@@ -15,7 +15,16 @@
         <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_REQUESTS %>">Forspørgelse</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_CARPORT_FORM %>">Opret forespørgelse</a>
+        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_FORM_REQUEST %>">Opret forespørgelse</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.REGISTER %>">Opret bruger</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.LOGIN %>">Log ind</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.LOGOUT %>">Log ud</a>
       </li> 
     </ul>
   </div>  

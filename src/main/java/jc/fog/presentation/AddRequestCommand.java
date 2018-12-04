@@ -15,7 +15,7 @@ import jc.fog.exceptions.FogException;
  *
  * @author Jesper
  */
-public class AddCarPortCommand extends Command
+public class AddRequestCommand extends Command
 {
     
     
@@ -36,11 +36,24 @@ public class AddCarPortCommand extends Command
         
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         //husk at fjern højde som er 200
-        boolean updateCarport = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
+        boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         
-        
-        
-        // Return the page showing all requests.
-        return Pages.ALL_CARPORTS;
+        if (createRequest)
+        {
+            try
+            {
+                // Kald ShowRequestCommand.execute.
+                return new ShowRequestsCommand().execute(request, response);
+            }
+            catch(Exception e)
+            {
+                throw new FogException("Listen med forespørgsler kan ikke vises, ring til Jesper", e.getMessage());
+            }
+        }
+        else
+        {
+            // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
+            return Pages.SINGLE_CARPORTVIEW;
+        }
     }
 }

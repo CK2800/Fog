@@ -87,18 +87,18 @@ public class ShowCarPortCommand  extends Command
         anyIDs(item, stringBuilder);
         
         //Carport information her
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$carport2\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$carport3\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$carport4\" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" placeholder=\"Længde på carport\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$carport2\" placeholder=\"Bredde på carport\" /><br />");
+        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$carport3\" placeholder=\"Højde\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$carport4\" placeholder=\"Hældning på taget\" /><br />");
         
         //Shed information her
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $shed1 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
         
         //Kommentar fra kunden.
-        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" /><br />");
+        stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" placeholder=\"Kommentar til forespørgelse\" /><br />");
         
         //Dropdown i forhold til type af tag.
         String dropdown = "Type:<br /><select class=\"form-control\" name=\"rooftypeId\"><option>V&aelig;lg tagtype:</option>$body</select>";
@@ -113,11 +113,11 @@ public class ShowCarPortCommand  extends Command
         //Her kommer submit som skal updatere eller beregn styklisten
         if(bill)
         {
-            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.UPDATE_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.UPDATE_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         }
         else
         {
-            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.ADD_CARPORT_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
+            stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.ADD_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         }
         
         stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
@@ -168,11 +168,11 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$carport1", "");
             text = text.replace("$carport2", "");
             text = text.replace("$carport3", "");
-            text = text.replace("$carport4", "");
+            text = text.replace("$carport4", "0");
             
             //Shed område
-            text = text.replace("$shed2", "");
-            text = text.replace("$shed3", "");
+            text = text.replace("$shed2", "0");
+            text = text.replace("$shed3", "0");
             text = text.replace("$shed1", "");
             
             //Kunde kommentar

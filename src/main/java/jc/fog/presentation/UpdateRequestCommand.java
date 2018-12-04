@@ -5,17 +5,20 @@
  */
 package jc.fog.presentation;
 
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.CarportRequestDTO;
 
 /**
  *
  * @author Jespe
  */
-public class UpdateCarPortCommand extends Command
+public class UpdateRequestCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
@@ -37,8 +40,25 @@ public class UpdateCarPortCommand extends Command
 
 
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        boolean updateCarport = dataFacade.updateCarPort(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
+        boolean updateRequest = dataFacade.updateRequest(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
+        // Hvis opdatering er ok, gå til side med alle carporte.
+        if (updateRequest)
+        {
+            try
+            {
+                // Kald ShowRequestCommand.execute.
+                return new ShowRequestsCommand().execute(request, response);
+            }
+            catch(Exception e)
+            {
+                throw new FogException("Listen med forespørgsler kan ikke vises, ring til Jesper", e.getMessage());
+            }
+        }
+        else
+        {
+            // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
+            return Pages.SINGLE_CARPORTVIEW;
+        }
         
-        return Pages.ALL_CARPORTS;
     }
 }

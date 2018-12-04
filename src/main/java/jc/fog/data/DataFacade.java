@@ -70,7 +70,7 @@ public class DataFacade
         return rooftypeDAO.getRooftypes();
     }
     
-    public boolean updateCarPort(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
+    public boolean updateRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
         return carportRequestDAO.updateCarPortRequest(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
     }

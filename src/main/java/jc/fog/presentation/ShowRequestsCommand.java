@@ -68,7 +68,7 @@ public class ShowRequestsCommand extends Command
             row = row.replace("$5", shedIsIndicated(item));
             row = row.replace("$6", "<a href=\"FrontController?command=" + Commands.SINGLEDRAW + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se tegning</a> "
                     + "<a href=\"FrontController?command=" + Commands.SHOW_BILL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a> "
-                    + "<a href=\"FrontController?command=" + Commands.SHOW_CARPORT_FORM + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater</a>");
+                    + "<a href=\"FrontController?command=" + Commands.SHOW_FORM_REQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater</a>");
 
             stringBuilder.append(row);
             

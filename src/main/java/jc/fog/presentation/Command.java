@@ -41,14 +41,13 @@ public abstract class Command
         //commands.put(Commands.LOGIN, new LoginCommand());
         //commands.put(Commands.LOGOUT, new LogoutCommand());
         commands.put(Commands.SHOW_REQUESTS, new ShowRequestsCommand());
-        commands.put(Commands.SHOW_SINGLE_REQUEST, new ShowSingleRequestCommand());
         commands.put(Commands.SHOW_MATERIALS, new ShowMaterialsCommand());
         commands.put(Commands.SHOW_SINGLE_MATERIAL, new ShowSingleMaterialeCommand());
         commands.put(Commands.SHOW_BILL, new ShowBillCommand());
         commands.put(Commands.SINGLEDRAW, new ShowDrawingCommand());
-        commands.put(Commands.SHOW_CARPORT_FORM, new ShowCarPortCommand());
-        commands.put(Commands.UPDATE_CARPORT_REQUEST, new UpdateCarPortCommand());
-        commands.put(Commands.ADD_CARPORT_REQUEST, new AddCarPortCommand());
+        commands.put(Commands.SHOW_FORM_REQUEST, new ShowCarPortCommand());
+        commands.put(Commands.UPDATE_REQUEST, new UpdateRequestCommand());
+        commands.put(Commands.ADD_REQUEST, new AddRequestCommand());
     }
     
     /**
