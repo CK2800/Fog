@@ -19,8 +19,21 @@ import jc.fog.exceptions.FogException;
  */
 public abstract class RulesCalculator extends Rules
 {
+    /**
+     * Opdeling af List af MaterialDTO objekter i subsets baseret på materialets type.
+     */
     protected static HashMap<String, List<MaterialDTO>> materials;
+    /**
+     * Udregner materialeforbrug til stykliste.
+     * @param carportRequest
+     * @return
+     * @throws FogException 
+     */
     protected abstract List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException;            
+    /**
+     * Samling af Rectangle objekter til tegning af carport.
+     */
+    protected List<Rectangle> rectangles;
 
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
@@ -65,13 +78,12 @@ public abstract class RulesCalculator extends Rules
     }
     
     /**
-     * Finder korteste materiale i listen af MaterialDTO objekter som skal være sorteret på længden.
+     * Finder korteste materiale i listen af MaterialDTO objekter.
      * @param list Listen af MaterialDTO objekter som skal gennemsøges.
      * @param length Længden som materialets længde * count skal dække.
      * @return 
-     */
-    //protected MaterialDTO findShortest(List<MaterialDTO> list, int count, int length)
-    protected MaterialCount findShortest(List<MaterialDTO> list, int length)
+     */    
+    protected MaterialCount findShortest(List<MaterialDTO> list, int length) throws FogException
     {
         MaterialDTO materialeDTO = null;
         int actualCount = 0, count;        
@@ -98,7 +110,10 @@ public abstract class RulesCalculator extends Rules
                     materialeDTO = m;
             }                
         }
-        return new MaterialCount(actualCount, materialeDTO);        
+        if (actualCount > 0)
+            return new MaterialCount(actualCount, materialeDTO);        
+        else
+            throw new FogException("Intet materiale passer til længden.", "Intet materiale fundet som passer til den krævede længde.");
     }
     
     /**

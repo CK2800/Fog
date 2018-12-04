@@ -22,7 +22,7 @@ public class LogicFacade
     
     public static List<Rectangle> drawCarport(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
-        Drawer drawer = new Drawer(materials, carportRequest);
-        return drawer.draw();
+        Drawer drawer = new Drawer(materials);
+        return drawer.drawCarport(carportRequest);
     }
 }

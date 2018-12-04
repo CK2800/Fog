@@ -18,6 +18,7 @@ public class BillItem
     private String remarks;
     /** Indikerer hvilken del af carporten, dette bill item bruges til. */
     private CarportPart carportPart;
+        
     
     // Getters
     /** Materialet der skal bruges. */

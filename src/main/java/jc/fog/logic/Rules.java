@@ -14,6 +14,8 @@ public class Rules
     
     /** Udhæng i cm. */
     protected static final int OVERHANG = 30;
+    /** Skurdørens vidde i cm. */
+    protected static final int DOOR_WIDTH = 100;
     /** Mellemrum ml. lægter i cm. */
     protected static final float BATTENS_SPACING = 30F;
     /** Antal stolper v. skur i samme bredde som carport */
@@ -28,6 +30,10 @@ public class Rules
     protected static final int PLANK_SPACING = 6;
     /** Beklædningsbrædders bredde i cm. */
     protected static final int PLANK_WIDTH = 10; // bør hentes fra db.
+    /** Rem tykkelse i cm. */
+    protected static final int HEAD_HEIGHT = 8;
+    /** Stolpe tykkelse i cm. */
+    protected static final int POST_HEIGHT = 20;    
     /** Teglstens bredde. */
     protected static final int ROOFTILE_WIDTH = 25; 
     /** Teglstens længde. */
