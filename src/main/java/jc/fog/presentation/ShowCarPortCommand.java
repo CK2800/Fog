@@ -5,12 +5,15 @@
  */
 package jc.fog.presentation;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
+import jc.fog.data.RooftypeDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.RooftypeDTO;
 
 /**
  *
@@ -28,7 +31,7 @@ public class ShowCarPortCommand  extends Command
         
         String requestForm = null;
         
-        //skal lige overvej om det er noget vi overhovedet kommer til, at bruge.. Fx om man er medarbejder eller ej?
+        //Den bruges til, at find ud af om man har et id eller ej?. For om man skal updater eller opret?
         boolean viewUpdateQuest = true;
         
         // Har vi et gyldigt id ?
@@ -40,20 +43,26 @@ public class ShowCarPortCommand  extends Command
         catch(NumberFormatException n){
             // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
         }
+        
+        List<RooftypeDTO> Rooftypes = dataFacade.getRooftypes();
+        
         // Fandt vi et gyldigt id på requestet (dvs. > 0)
         if(id > 0)
         {
             //Det her skal bliver vist hvis man skal updater indhold.
             CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
             // Create HTML form with request's data and set it on http request.
-            requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest);
+            requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest, Rooftypes);
         }
         else 
         {
-            // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest                        
-            viewUpdateQuest = false;
+            // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest      
+            
+            viewUpdateQuest = false;//Den er med til, at fortælle at vi skal "opret" forespørgelse i db.
+            
+            
             //Det her skal blive vist hvis man skal opret en forespørgelse.
-            requestForm = carportRequestToBill(null, viewUpdateQuest);
+            requestForm = carportRequestToBill(null, viewUpdateQuest, Rooftypes);
         }
         
         request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
@@ -68,16 +77,14 @@ public class ShowCarPortCommand  extends Command
      * @param item
      * @return 
      */
-    private String carportRequestToBill(CarportRequestDTO item, boolean bill)
+    private String carportRequestToBill(CarportRequestDTO item, boolean bill, List<RooftypeDTO> Rooftypes)
     {
-        StringBuilder stringBuilder = new StringBuilder("<form action=\"FrontController\" method=\"POST\">"
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<form action=\"FrontController\" method=\"POST\">"
                 + "<input type=\"hidden\" name=\"command\" value=\"" + Commands.SHOW_BILL + "\">");
         
-        if(item != null)
-        {
-            stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
-            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
-        }
+        //Det er shedid og forespørgelse id som fremkommer her.
+        anyIDs(item, stringBuilder);
         
         //Carport information her
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" /><br />");
@@ -94,8 +101,14 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" /><br />");
         
         //Dropdown i forhold til type af tag.
-        //KOmmer her med dropdown.
-        stringBuilder.append("<br/>");
+        String dropdown = "Type:<br /><select class=\"form-control\" name=\"rooftypeId\"><option>V&aelig;lg tagtype:</option>$body</select>";
+        String rows = "";
+        String selectedCheck = " selected";//Bruges til, at fortælle option hvilken værdi man har valgt.
+        rows = rooftypeOption(Rooftypes, item, selectedCheck, rows);//Method til, at tilføj dvs værdier i option.
+        dropdown = dropdown.replace("$body", rows);
+        stringBuilder.append(dropdown);
+        stringBuilder.append("<br/><br/>");
+        
         
         //Her kommer submit som skal updatere eller beregn styklisten
         if(bill)
@@ -173,5 +186,27 @@ public class ShowCarPortCommand  extends Command
             
         }
         return text;
+    }
+
+    private void anyIDs(CarportRequestDTO item, StringBuilder stringBuilder) {
+        if(item != null)
+        {
+            stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
+            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
+        }
+    }
+
+    private String rooftypeOption(List<RooftypeDTO> Rooftypes, CarportRequestDTO item, String selectedCheck, String rows) {
+        for(RooftypeDTO value : Rooftypes)
+        {
+            String row = "<option value=\"$1\"$3>$2</option>";
+            
+            row = row.replace("$1", String.valueOf(value.getId()));
+            row = row.replace("$2", value.getType());
+            row = row.replace("$3", item.getRooftypeId() == value.getId() ? selectedCheck:"");//Tilføj selected ved den angivet id som man har tilføjet ved forespørgelse.
+            
+            rows += row;
+        }
+        return rows;
     }
 }

@@ -95,6 +95,7 @@ public class ShowBillCommand extends Command
         request.setAttribute("stykliste", billToHtml(bill));
         request.setAttribute("totalpris", calculateTotal(bill));
         request.setAttribute("carportDimensioner", carportDimensions);
+        request.setAttribute("shed", "hej");//skal fortælle om der er skur eller ej?
         
         return Pages.BILL;
     }
@@ -114,7 +115,7 @@ public class ShowBillCommand extends Command
     private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" onclick=\"window.history.back();\"/>");
+        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" class=\"btn btn-info\" onclick=\"window.history.back();\"/><br/><br/>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");

@@ -25,7 +25,7 @@ public class UpdateCarPortCommand extends Command
         String shedCheck = request.getParameter("addSked");
 
         // nap parametre fra requests og dan CarportRequestDTO.
-        int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
+        int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
         int slope = Integer.parseInt(request.getParameter("slope"));
         int width = Integer.parseInt(request.getParameter("width"));
         int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
@@ -39,13 +39,6 @@ public class UpdateCarPortCommand extends Command
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         boolean updateCarport = dataFacade.updateCarPort(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         
-        if(updateCarport)
-        {
-            return Pages.ALL_CARPORTS;
-        }
-        else
-        {
-            return Pages.INDEX;
-        }
+        return Pages.ALL_CARPORTS;
     }
 }

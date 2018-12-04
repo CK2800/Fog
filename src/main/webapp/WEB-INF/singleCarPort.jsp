@@ -1,7 +1,6 @@
 <%
     String title = "Forespørgsel"; //Den kan fremkomme i title efter hvilken kunde der laver forespørgsel.
     String requestForm = (String) request.getAttribute("requestForm");
-    String svg = (String) request.getAttribute("svg");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,10 +15,6 @@
             <div class="container" style="min-height: 500px;">
                     <div class="col-md-12">
                         <%= requestForm%>
-                    </div>
-                    <div class="col-md-12">
-                        <h2>Tegning</h2>
-                        <%= svg%>
                     </div>
                 </div>
             </div>

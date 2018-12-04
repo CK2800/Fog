@@ -31,7 +31,7 @@ public final class Commands
     /** Command som viser alle forespørgsler. */
     public static final String SHOW_REQUESTS = "showrequests";
     /** Command som viser en enkelt forespørgsel. */
-    public static final String SHOW_SINGLE_REQUEST = "showsinglerequest";
+    public static final String SHOW_SINGLE_REQUEST = "showsinglerequest";//Skal måske slet den her.
     /** Command som viser et enkelt materiale */
     public static final String SHOW_SINGLE_MATERIAL = "showsinglematerial";
     /** Command som viser en liste af materialer */

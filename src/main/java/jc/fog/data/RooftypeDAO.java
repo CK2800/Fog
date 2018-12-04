@@ -26,11 +26,14 @@ public class RooftypeDAO extends AbstractDAO
      * Tupler sorteres på Rooftype.id så ResultSet kan gennemløbes og liste af
      * MaterialDTO objekter dannes til hvert RooftypeDTO objekt.
      */
+        
     private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialId, m.materialtypeId, m.name, m.length, m.unit, m.price, mt.type as materialType " +
                                                     "FROM Rooftypes rt INNER JOIN RooftypeMaterials rm ON rt.id = rm.rooftypeId " + 
                                                     "INNER JOIN Materials m ON rm.materialId = m.id " + 
                                                     "INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id " +
                                                     "ORDER BY rt.id ASC"; 
+        
+    //static final String GET_LIST_ROOFTYPES_WHERE_SQL = "SELECT id, type FROM Rooftypes order by id = ? desc";
     
     public RooftypeDAO(Connection connection) throws FogException
     {

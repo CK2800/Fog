@@ -52,7 +52,7 @@ public class ShowSingleRequestCommand extends Command
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
         stringBuilder.append("<a class=\"btn btn-info btn-xs\" href=\"FrontController?command=" + Commands.SHOW_REQUESTS +"\">Tilbage..</a>"
                 + "<a class=\"btn btn-info btn-xs \" style=\"margin-left: 20px;\" href=\"FrontController?command=" + Commands.SINGLEDRAW +"&id=" + item.getId() + "\">Vis tegning</a> <br/>");
-        stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
+        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" />");
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"laengde\" class=\"form-control\" value=\"").append(item.getLength()).append("\" /><br />");
         stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
         stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"hoejde\" value=\"").append(item.getHeight()).append("\" /><br />");
@@ -69,8 +69,7 @@ public class ShowSingleRequestCommand extends Command
             stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
             stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"bredde\" class=\"form-control\" value=\"").append(item.getWidth()).append("\" /><br />");
         }
-        stringBuilder.append("<br/>");
-        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
+        stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" /><br/>");
         stringBuilder.append("</form>");
         
         

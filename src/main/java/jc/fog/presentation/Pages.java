@@ -16,7 +16,7 @@ public final class Pages
     private Pages(){}
     public static final String INDEX = "index.jsp";
     public static final String ALL_CARPORTS = "/WEB-INF/allCarports.jsp";
-    public static final String SINGLE_CARPORT = "/WEB-INF/singleCarPort.jsp";
+    public static final String SINGLE_CARPORT = "/WEB-INF/singleCarPort.jsp";//skal måske slet den her
     public static final String ALL_MATERIALS = "/WEB-INF/allMaterials.jsp";
     public static final String SINGLE_MATERIAL = "/WEB-INF/singleMaterial.jsp";
     public static final String BILL = "/WEB-INF/bill.jsp";

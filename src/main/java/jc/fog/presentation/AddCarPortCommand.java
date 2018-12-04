@@ -25,7 +25,7 @@ public class AddCarPortCommand extends Command
         // Later we will validate a logged in user
 
         // nap parametre fra requests og dan CarportRequestDTO.
-        int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
+        int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
         int slope = Integer.parseInt(request.getParameter("slope"));
         int width = Integer.parseInt(request.getParameter("width"));
         int length = Integer.parseInt(request.getParameter("length"));
@@ -39,18 +39,7 @@ public class AddCarPortCommand extends Command
         boolean updateCarport = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         
         
-<<<<<<< HEAD
         // Return the page showing all requests.
         return Pages.ALL_CARPORTS;
-=======
-        if(createCarport)
-        {
-            return Pages.ALL_MATERIALS;
-        }
-        else
-        {
-            return Pages.INDEX;
-        }
->>>>>>> FeatureClaus
     }
 }
