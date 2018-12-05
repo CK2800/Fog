@@ -4,23 +4,19 @@
  * and open the template in the editor.
  */
 package jc.fog.logic;
-
 import java.util.List;
+import jc.fog.exceptions.FogException;
 
 /**
  * RulesDrawer til tegning af svg-elementer baseret på div. business rules.
  * @author Claus
  */
-public abstract class RulesDrawer
+public interface RulesDrawer
 {        
-    protected BillItem billItem;
-    public RulesDrawer(BillItem billItem)
-    {        
-        this.billItem = billItem;
-    }
     /**
      * Metode som danner en liste af Rectangle objekter baseret på materialets tykkelse, længde og antal.     
+     * @param carportRequest
      * @return 
      */
-    protected abstract List<Rectangle> draw(CarportRequestDTO carportRequest);
+    public List<Rectangle> draw(CarportRequestDTO carportRequest) throws FogException;
 }

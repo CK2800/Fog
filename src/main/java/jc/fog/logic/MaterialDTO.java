@@ -5,9 +5,6 @@
  */
 package jc.fog.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Claus

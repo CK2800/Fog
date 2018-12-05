@@ -16,12 +16,10 @@ import jc.fog.exceptions.FogException;
 public class Drawer
 {
     private List<RulesDrawer> drawers = new ArrayList();
-    private List<Rectangle> rectangles;
-    private CarportRequestDTO carportRequest;
+    private List<Rectangle> rectangles;    
     
-    public Drawer(List<MaterialDTO> materials, CarportRequestDTO carportRequest) throws FogException
-    {
-        this.carportRequest = carportRequest;
+    public Drawer(List<MaterialDTO> materials) throws FogException
+    {        
         // // Initialiserer RulesCalculator's hashmap.
         RulesCalculator.initializeMaterials(materials);
         
@@ -30,12 +28,15 @@ public class Drawer
     }
     private void initializeRuleDrawers() throws FogException
     {
-        // Hent udregning fra RulesCalculatorHead og giv til RulesDrawerHead.
-        List<BillItem> bill = new RulesCalculatorHead().calculate(carportRequest);
-        drawers.add(new RulesDrawerHead(bill.get(0)));
+        
+        // Hent udregning fra RulesCalculatorHead og giv til RulesDrawerHead.        
+        drawers.add(new RulesCalculatorHead()); 
+        drawers.add(new RulesCalculatorRafters());
+        drawers.add(new RulesCalculatorPost());
+        drawers.add(new RulesCalculatorShed());
     }
     
-    public List<Rectangle> draw()
+    public List<Rectangle> drawCarport(CarportRequestDTO carportRequest) throws FogException
     {
         rectangles = new ArrayList();
         

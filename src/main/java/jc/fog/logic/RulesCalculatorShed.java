@@ -13,7 +13,7 @@ import jc.fog.exceptions.FogException;
  * Udvidelse af RulesCalculator for udregning af skurets beklædning.
  * @author Claus
  */
-public class RulesCalculatorShed extends RulesCalculator
+public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
 {    
     @Override
     protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
@@ -31,7 +31,7 @@ public class RulesCalculatorShed extends RulesCalculator
                 {
                     if ("19x100 mm.".equals(m.getName()) && m.getLength() == 210)
                         plank = m;
-                }
+                }                
 
                 // Find dimensioner for skur.
                 int length = shed.getLength();
@@ -41,8 +41,12 @@ public class RulesCalculatorShed extends RulesCalculator
                 int noLength = (int)Math.ceil(length / (Rules.PLANK_SPACING + Rules.PLANK_WIDTH)) * 2;
                 // antal brædder i skurets bredde med overlap på 1 cm i hver side.
                 int noWidth = (int)Math.ceil(width / (Rules.PLANK_SPACING + Rules.PLANK_WIDTH)) * 2;
-
-                result.add(new BillItem(plank, noLength + noWidth, CarportPart.PLANKS, "skur brædder 1 på 2"));
+                
+                // Fandt vi materiale, returner nyt billitem.
+                if (plank != null)
+                    result.add(new BillItem(plank, noLength + noWidth, CarportPart.PLANKS, "skur brædder 1 på 2"));
+                else // Intet materiale medfører exception.
+                    throw new FogException("Skurbeklædning kunne ikke beregnes.", "Ingen planker fundet.");
                 
             }
             return result;
@@ -50,6 +54,26 @@ public class RulesCalculatorShed extends RulesCalculator
         catch(Exception e)
         {
             throw new FogException("Skurbeklædning kunne ikke beregnes.", e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Rectangle> draw(CarportRequestDTO carportRequest) throws FogException
+    {
+        try
+        {
+            List<Rectangle> rectangles = new ArrayList();
+            // Læg blot rektangel i samlingen, som har dimensioner som skuret i forespørgslen.
+            if (carportRequest.getShedDTO() != null)
+            {
+                int halfPostHeight = (int)Math.ceil(Rules.POST_HEIGHT/2);
+                rectangles.add(new Rectangle(Rules.OVERHANG - halfPostHeight, Rules.OVERHANG, carportRequest.getShedDTO().getLength(), carportRequest.getShedDTO().getWidth(), "000000"));
+            }
+            return rectangles;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Skur kan ikke tegnes.", e.getMessage());
         }
     }
     

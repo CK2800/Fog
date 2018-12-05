@@ -19,8 +19,21 @@ import jc.fog.exceptions.FogException;
  */
 public abstract class RulesCalculator extends Rules
 {
+    /**
+     * Opdeling af List af MaterialDTO objekter i subsets baseret på materialets type.
+     */
     protected static HashMap<String, List<MaterialDTO>> materials;
+    /**
+     * Udregner materialeforbrug til stykliste.
+     * @param carportRequest
+     * @return
+     * @throws FogException 
+     */
     protected abstract List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException;            
+    /**
+     * Samling af Rectangle objekter til tegning af carport.
+     */
+    protected List<Rectangle> rectangles;
 
     /**
      * Initialiserer et statisk HashMap med kombinationer af String og List (af MaterialDTO objekter).
