@@ -7,10 +7,13 @@ package jc.fog.data;
 
 import java.sql.Connection;
 import static jc.fog.data.RooftypeDAOJUnitTest.connection;
+import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -57,6 +60,15 @@ public class UserDAOUnitTest {
     
     @After
     public void tearDown() {
+    }
+    
+    
+    @Test
+    public void testCreateUser() throws FogException
+    {
+        UserDAO userdao = new UserDAO(connection);
+        boolean success = userdao.createUser("Jesper", 3450, 11, "test@test.dk", "12345", 5);
+        assertTrue(success);
     }
     
 }
