@@ -165,3 +165,11 @@ INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VAL
 INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 27); -- plast tag 420 cm
 INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 28); -- plast tag 480 cm
 INSERT INTO RooftypeMaterials(rooftypeId, materialtypeId, slope, materialId) VALUES (3, 7, false, 29); -- plast tag 540 cm
+
+
+INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('3450', 'Allerød');
+INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('3460', 'Birkerød');
+INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2605', 'Brøndby');
+INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2100', 'København');
+INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2630', 'Taastrup');
+
