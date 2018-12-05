@@ -6,6 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import jc.fog.exceptions.FogException;
 
 /**
@@ -22,4 +23,38 @@ public class UserDAO extends AbstractDAO
     } 
     
     
+    /**
+     * createUser skal være med til, at opret 'user' i db.
+     * @param name
+     * @param zip
+     * @param phone
+     * @param email
+     * @param password
+     * @param rank
+     * @return
+     * @throws FogException 
+     */
+    public boolean createUser(String name, int zip, int phone, String email, String password, int rank) throws FogException
+    {
+        name = name.trim();
+        try {
+            
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(CREATE_USER);
+            pstm.setString(1, name);
+            pstm.setInt(2, zip);
+            pstm.setInt(3, phone);
+            pstm.setString(4, email);
+            pstm.setString(5, password);
+            pstm.setInt(6, rank);
+            
+            return pstm.executeUpdate() == 1;
+            
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Bruger kunne ikke blive oprettet." + e.getMessage());
+        }
+    }
 }
