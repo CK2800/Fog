@@ -14,7 +14,7 @@ public class ShowLoginCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-                
+        
         return Pages.SINGLE_DRAW;
     }
 }

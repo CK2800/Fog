@@ -18,7 +18,31 @@ public class ShowRegisterCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-                
+        
+        
+        
+        request.setAttribute("loginForm", loginForm());
+        
+        
         return Pages.SINGLE_DRAW;
+    }
+    
+    private String loginForm()
+    {
+        //Navn-c postnr telefon-c emai-c adgangskode-c
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<form action=\"FrontController\" method=\"POST\">");
+        stringBuilder.append("E-mail (Brugernavn):<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
+        stringBuilder.append("Adgangskode<br /><input type=\"text\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
+        stringBuilder.append("Navn:<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
+        stringBuilder.append("Telefon nr:<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
+        
+        //Dropdown
+        
+        stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"Log ind\" \">");
+        stringBuilder.append("</form><br/>");
+        
+        return stringBuilder.toString();
     }
 }

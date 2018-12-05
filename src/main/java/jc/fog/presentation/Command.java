@@ -49,6 +49,7 @@ public abstract class Command
         commands.put(Commands.UPDATE_REQUEST, new ShowUpdateRequestCommand());
         commands.put(Commands.ADD_REQUEST, new ShowAddRequestCommand());
         commands.put(Commands.LOGIN, new ShowLoginCommand());
+        commands.put(Commands.REGISTER, new ShowRegisterCommand());
     }
     
     /**
