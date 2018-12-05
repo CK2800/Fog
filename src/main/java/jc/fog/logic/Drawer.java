@@ -33,6 +33,7 @@ public class Drawer
         drawers.add(new RulesCalculatorHead()); 
         drawers.add(new RulesCalculatorRafters());
         drawers.add(new RulesCalculatorPost());
+        drawers.add(new RulesCalculatorShed());
     }
     
     public List<Rectangle> drawCarport(CarportRequestDTO carportRequest) throws FogException

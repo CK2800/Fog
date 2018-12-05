@@ -79,13 +79,13 @@ public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
             if (shed.getWidth() != carportRequest.getWidth())
             {
                 // Stolpe i skurets bagerste hjørne, udhæng gælder også for skuret.
-                rectangles.add(new Rectangle(shed.getWidth() - Rules.OVERHANG - halfPostHeight, Rules.OVERHANG - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
+                rectangles.add(new Rectangle(shed.getWidth(), Rules.OVERHANG - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
             }
             // Stolper i skurets forside.
             rectangles.add(new Rectangle(Rules.OVERHANG - halfPostHeight, Rules.OVERHANG + shed.getLength() - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));            
-            rectangles.add(new Rectangle(shed.getWidth() - Rules.OVERHANG - halfPostHeight, Rules.OVERHANG + shed.getLength() - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
+            rectangles.add(new Rectangle(shed.getWidth(), Rules.OVERHANG + shed.getLength() - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
             // Stolpe til dørhængsel.
-            rectangles.add(new Rectangle(shed.getWidth() - Rules.OVERHANG - halfPostHeight - Rules.DOOR_WIDTH, Rules.OVERHANG + shed.getLength() - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
+            rectangles.add(new Rectangle(shed.getWidth() - Rules.DOOR_WIDTH, Rules.OVERHANG + shed.getLength() - halfPostHeight, POST_HEIGHT, POST_HEIGHT, "55ddcc"));
         }
         
         

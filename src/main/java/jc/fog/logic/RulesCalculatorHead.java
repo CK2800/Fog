@@ -99,7 +99,7 @@ public class RulesCalculatorHead extends RulesCalculator implements RulesDrawer
                 rectangles.add(new Rectangle(Rules.OVERHANG - HEAD_HEIGHT/2, Rules.OVERHANG + i * materialLength, materialLength, HEAD_HEIGHT, "ffeebb"));
                 
                 // Sidste rem.
-                rectangles.add(new Rectangle(carportRequest.getWidth() - Rules.OVERHANG - HEAD_HEIGHT/2, Rules.OVERHANG + i * materialLength, materialLength, HEAD_HEIGHT, "ababab"));
+                rectangles.add(new Rectangle(carportRequest.getWidth() - Rules.OVERHANG - HEAD_HEIGHT/2, Rules.OVERHANG + i * materialLength, materialLength, HEAD_HEIGHT, "ffeebb"));
                 
                 // Evt. remme hvor spær er brudt.
                 for(int a = 2; a < noHeads; a++)
