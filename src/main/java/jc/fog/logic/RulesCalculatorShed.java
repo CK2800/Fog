@@ -60,14 +60,21 @@ public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
     @Override
     public List<Rectangle> draw(CarportRequestDTO carportRequest) throws FogException
     {
-        List<Rectangle> rectangles = new ArrayList();
-        // Læg blot rektangel i samlingen, som har dimensioner som skuret i forespørgslen.
-        if (carportRequest.getShedDTO() != null)
+        try
         {
-            int halfPostHeight = (int)Math.ceil(Rules.POST_HEIGHT/2);
-            rectangles.add(new Rectangle(Rules.OVERHANG - halfPostHeight, Rules.OVERHANG, carportRequest.getShedDTO().getLength(), carportRequest.getShedDTO().getWidth(), "000000"));
+            List<Rectangle> rectangles = new ArrayList();
+            // Læg blot rektangel i samlingen, som har dimensioner som skuret i forespørgslen.
+            if (carportRequest.getShedDTO() != null)
+            {
+                int halfPostHeight = (int)Math.ceil(Rules.POST_HEIGHT/2);
+                rectangles.add(new Rectangle(Rules.OVERHANG - halfPostHeight, Rules.OVERHANG, carportRequest.getShedDTO().getLength(), carportRequest.getShedDTO().getWidth(), "000000"));
+            }
+            return rectangles;
         }
-        return rectangles;
+        catch(Exception e)
+        {
+            throw new FogException("Skur kan ikke tegnes.", e.getMessage());
+        }
     }
     
 }

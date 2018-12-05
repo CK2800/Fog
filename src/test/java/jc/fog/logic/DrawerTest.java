@@ -69,7 +69,25 @@ public class DrawerTest
     }
 
     @Test
-    public void testDrawer() throws FogException
+    public void unitTestDrawerShed() throws FogException
+    {
+        // Arrange
+        // Carport med skur
+        CarportRequestDTO carportRequest = new CarportRequestDTO(
+                2, 0, 500, 210, 800, "blabla", 120, 500);
+        RulesCalculatorShed rcs = new RulesCalculatorShed();
+        
+        // Act.
+        List<Rectangle> rectangles = rcs.draw(carportRequest);
+        
+        // Assert.
+        assertTrue(rectangles.size() == 1); // 1 rektangel for skur.
+    }
+    
+    
+    
+    @Test
+    public void integrationTestDrawers() throws FogException
     {
         // Arrange
         MaterialDAO dao = new MaterialDAO(connection);
