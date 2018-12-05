@@ -32,7 +32,7 @@ CREATE TABLE Materials(
     price DECIMAL(6,2) NOT NULL DEFAULT 0, -- 6 tal, 4 foran komma, 2 efter.
 	CONSTRAINT fk_Materials_Materialtypes
 	FOREIGN KEY (materialtypeId)
-	REFERENCES Materials(id)
+	REFERENCES Materialtypes(id)
 	ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
 );
 
