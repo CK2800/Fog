@@ -79,8 +79,6 @@ public class ShowBillCommand extends Command
             }
             
             //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
-            
-            
             carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
                 
         }
@@ -91,12 +89,21 @@ public class ShowBillCommand extends Command
         // Calculate string with carport dimensions.
         String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
         
+        String shed = shedCheck(carportRequestDTO);
+        
+        
         // Format the bill of materials nicely for view.
         request.setAttribute("stykliste", billToHtml(bill));
         request.setAttribute("totalpris", calculateTotal(bill));
         request.setAttribute("carportDimensioner", carportDimensions);
+        request.setAttribute("shed", shed);//skal fortælle om der er skur eller ej?
         
         return Pages.BILL;
+    }
+
+    private String shedCheck(CarportRequestDTO carportRequestDTO) {
+        String shed = (carportRequestDTO.getShedId() > 0 ? "Tilføj skur" : "Intet skur");
+        return shed;
     }
     
     private String calculateTotal(List<BillItem> bill)
@@ -114,7 +121,7 @@ public class ShowBillCommand extends Command
     private String billToHtml(List<BillItem> bill)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" onclick=\"window.history.back();\"/>");
+        stringBuilder.append("<input name=\"action\" type=\"submit\" value=\"Tilbage\" class=\"btn btn-info\" onclick=\"window.history.back();\"/><br/><br/>");
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Antal");

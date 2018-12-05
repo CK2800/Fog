@@ -13,7 +13,7 @@
     <body>
             <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
             <div class="container" style="min-height: 500px;">
-            <input type="button" value="Print" onclick="window.print()" /> <br/><br/>
+            <input type="button" value="Print" onclick="window.print()" class="btn btn-primary" /> <br/><br/>
             <%= svg %>
             </div>
             

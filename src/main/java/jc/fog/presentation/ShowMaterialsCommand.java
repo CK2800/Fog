@@ -49,7 +49,7 @@ public class ShowMaterialsCommand extends Command {
             row = row.replace("$3", String.valueOf(item.getName()));
             row = row.replace("$4", String.valueOf(item.getLength()));
             row = row.replace("$5", String.valueOf(item.getUnit()));
-            row = row.replace("$6", "<a href=\"FrontController?command=showsinglemateriale&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
+            row = row.replace("$6", "<a href=\"FrontController?command=" + Commands.SHOW_SINGLE_MATERIAL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a>");
             stringBuilder.append(row);
         }
         

@@ -15,11 +15,19 @@ public final class Pages
     // private constructor to avoid instantiation.
     private Pages(){}
     public static final String INDEX = "index.jsp";
-    public static final String ALL_CARPORTS = "/WEB-INF/allCarports.jsp";
-    public static final String SINGLE_CARPORT = "/WEB-INF/singleCarPort.jsp";
+    
+    
+    public static final String ALL_CARPORTS = "/WEB-INF/allRequest.jsp";
+    public static final String SINGLE_CARPORTVIEW = "/WEB-INF/request.jsp";
+    
     public static final String ALL_MATERIALS = "/WEB-INF/allMaterials.jsp";
     public static final String SINGLE_MATERIAL = "/WEB-INF/singleMaterial.jsp";
+    
     public static final String BILL = "/WEB-INF/bill.jsp";
+    
     public static final String SINGLE_DRAW = "/WEB-INF/singleDraw.jsp";
-    public static final String SINGLE_CARPORTVIEW = "/WEB-INF/carPort.jsp";
+    
+    public static final String LOGIN = "/WEB-INF/login.jsp";
+    public static final String REGISTER = "/WEB-INF/register.jsp";
+    
 }

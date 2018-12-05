@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Carportrequests;
 DROP TABLE IF EXISTS RooftypeMaterials;
 DROP TABLE IF EXISTS Rooftypes;
 DROP TABLE IF EXISTS Sheds;
-DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Zipcodes;
 DROP TABLE IF EXISTS Materials;
 DROP TABLE IF EXISTS Materialtypes;
@@ -32,7 +32,7 @@ CREATE TABLE Materials(
     price DECIMAL(6,2) NOT NULL DEFAULT 0, -- 6 tal, 4 foran komma, 2 efter.
 	CONSTRAINT fk_Materials_Materialtypes
 	FOREIGN KEY (materialtypeId)
-	REFERENCES Materials(id)
+	REFERENCES Materialtypes(id)
 	ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
 );
 
@@ -41,16 +41,18 @@ create table Zipcodes(
     city varchar(150) not null
 );
 
-CREATE TABLE Customers(
+CREATE TABLE Users(
 	id int primary key auto_increment,
     `name` varchar(200) not null,
     zip smallint not null,
     phone int not null,
-    email varchar(200) not null,
-    CONSTRAINT fk_Customers_Zipcodes
+    email varchar(200) not null unique,
+    `password` varchar(200) not null ,
+    rank int not null,
+    CONSTRAINT fk_Users_Zipcodes
     FOREIGN KEY (zip)
 	REFERENCES Zipcodes(zip)
-	ON DELETE NO ACTION -- varetype refereret i vare må ikke slettes.
+	ON DELETE NO ACTION -- postnumre i brug i denne tabel må ikke slettes.
 );
 
 CREATE TABLE Sheds(

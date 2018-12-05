@@ -49,28 +49,40 @@ public class ShowRequestsCommand extends Command
     private String requestsToHtml(List<CarportRequestDTO> requests)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th></tr></thead><tbody>$body</tbody></table>";        
+        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th><th>$5</th><th>$6</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "ID");
         table = table.replace("$2", "BREDDE");
         table = table.replace("$3", "H&Oslash;JDE");
         table = table.replace("$4", "L&AElig;NGDE");
-        table = table.replace("$5", "Se forespørgsel");
+        table = table.replace("$5", "Skur");
+        table = table.replace("$6", "Se forespørgsel");
         
         for(CarportRequestDTO item : requests)
-        {
-            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td></tr>";
+        {            
+            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td><td>$5</td><td>$6</td></tr>";
             row = row.replace("$1", String.valueOf(item.getId()));
             row = row.replace("$2", String.valueOf(item.getWidth()));
             row = row.replace("$3", String.valueOf(item.getHeight()));
             row = row.replace("$4", String.valueOf(item.getLength()));
-            row = row.replace("$5", "<a href=\"FrontController?command=" + Commands.SHOW_SINGLE_REQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se her</a> - "
-                    + "<a href=\"FrontController?command=" + Commands.SHOW_BILL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a>");
+            row = row.replace("$5", shedIsIndicated(item));
+            row = row.replace("$6", "<a href=\"FrontController?command=" + Commands.SINGLEDRAW + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se tegning</a> "
+                    + "<a href=\"FrontController?command=" + Commands.SHOW_BILL + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Se Stykliste</a> "
+                    + "<a href=\"FrontController?command=" + Commands.SHOW_FORM_REQUEST + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater</a>");
 
             stringBuilder.append(row);
             
         }
         
         return table.replace("$body", stringBuilder.toString());
+    }
+
+    private String shedIsIndicated(CarportRequestDTO item) {
+        String textSkur = "Nej";
+        if(item.getShedId() > 0)
+        {
+            textSkur = "Ja";
+        }
+        return textSkur;
     }
 }

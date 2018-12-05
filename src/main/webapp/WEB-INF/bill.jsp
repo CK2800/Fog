@@ -8,6 +8,7 @@
     String carportDimensioner = (String)request.getAttribute("carportDimensioner");
     String tabel = (String)request.getAttribute("stykliste");
     String totalpris = (String)request.getAttribute("totalpris");
+    String shedCheck = (String)request.getAttribute("shed");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,9 +21,9 @@
     <body>
             <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
             <div class="container" style="min-height: 500px;">
-            <h1>Stykliste for forespørgsel <%= id %>, <%= carportDimensioner %></h1>
+            <h1>Stykliste for forespørgsel <%= id %>, <%= carportDimensioner %> <%= shedCheck %></h1>
                 <%= tabel %>     
-                <text>Totalpris DKK: <%= totalpris %></text>
+                <text class="btn btn-secondary btn-lg btn-block">Totalpris DKK: <%= totalpris %></text><br/><br/>
             </div>
             
             <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
