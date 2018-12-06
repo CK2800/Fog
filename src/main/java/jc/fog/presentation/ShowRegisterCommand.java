@@ -24,25 +24,29 @@ public class ShowRegisterCommand extends Command {
     {
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         
+        //får fast i zipcodes.
         List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();
         
-        
+        //Fremviser form for opret bruger delen.
         request.setAttribute("register", register(zipcodes));
         
-        
+        //Siden som skal bliver vist.
         return Pages.REGISTER;
     }
     
+    /**
+     * Form som bliver vist til bruger når man skal oprette sig.
+     * @param zipcodes - Få zipcodes som skal bruge til dropdown.
+     * @return 
+     */
     private String register(List<ZipcodeDTO> zipcodes)
     {
-        //Navn-c postnr telefon-c emai-c adgangskode-c
-        
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<form action=\"FrontController\" method=\"POST\">");
         stringBuilder.append("E-mail (Brugernavn):<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
         stringBuilder.append("Adgangskode<br /><input type=\"text\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
-        stringBuilder.append("Navn:<br /><input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
-        stringBuilder.append("Telefon nr:<br /><input type=\"text\" name=\"phone\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
+        stringBuilder.append("Navn:<br /><input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Dit navn\" /><br />");
+        stringBuilder.append("Telefon nr:<br /><input type=\"text\" name=\"phone\" class=\"form-control\" placeholder=\"Dit telefon nr\" /><br />");
         
         //Dropdown
         String Dropdown = "Post nr:<br /><select class=\"form-control\" name=\"zipcode\">$body</select>";
@@ -52,12 +56,18 @@ public class ShowRegisterCommand extends Command {
         stringBuilder.append(Dropdown);
         stringBuilder.append("<br/>");
         
-        stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"Opret bruger\" \">");
+        stringBuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.ADD_REGISTER + "\" class=\"btn btn-info btn-block\" value=\"Opret bruger\" \">");
         stringBuilder.append("</form><br/>");
         
         return stringBuilder.toString();
     }
 
+    /**
+     * For langt dvs værdier ind i option.
+     * @param zipcodes
+     * @param rows
+     * @return 
+     */
     private String zipcodesDropdown(List<ZipcodeDTO> zipcodes, String rows) {
         for(ZipcodeDTO value : zipcodes)
         {

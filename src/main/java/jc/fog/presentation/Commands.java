@@ -21,8 +21,10 @@ public final class Commands
     public static final String LOGIN = "login";
     /** Logger brugeren ud. */
     public static final String LOGOUT = "logout";
-    /** Command til opret bruger delen */
+    /** Command til at opret bruger */
     public static final String REGISTER = "register";
+    /** Command til send/smide bruger oplysning op */
+    public static final String ADD_REGISTER = "addRegister";
     
     
     /** Command som viser alle forespørgsler. */
