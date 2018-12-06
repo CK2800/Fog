@@ -52,4 +52,7 @@ public final class Commands
     /** Command som viser tegning af carport. */
     public static final String SINGLEDRAW = "singledraw";
     
+    
+    public static final String ADMIN_USERS ="adminUsers";
+    
 }

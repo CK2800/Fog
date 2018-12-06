@@ -60,6 +60,13 @@ public class UserDAO extends AbstractDAO
         }
     }
     
+    /**
+     * 
+     * @param email
+     * @param password
+     * @return
+     * @throws FogException 
+     */
     public UsersDTO login(String email, String password) throws FogException
     {
         password = password.trim();

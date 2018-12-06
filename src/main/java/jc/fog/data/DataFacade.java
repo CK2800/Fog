@@ -101,4 +101,9 @@ public class DataFacade
     {
         return zipcodeDAO.getZipcodes();
     }
+    
+    public List<UsersDTO> getAllUsers() throws FogException
+    {
+        return userDAO.
+    }
 }
