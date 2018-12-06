@@ -51,6 +51,7 @@ public abstract class Command
         commands.put(Commands.LOGIN_CHECK, new ShowLoginCheckCommand());
         commands.put(Commands.REGISTER, new ShowRegisterCommand());
         commands.put(Commands.ADD_REGISTER, new ShowAddRegisterCommand());
+        commands.put(Commands.LOGOUT, new Logout());
     }
     
     /**

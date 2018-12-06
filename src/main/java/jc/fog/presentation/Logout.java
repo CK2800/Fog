@@ -20,8 +20,7 @@ public class Logout extends Command
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         HttpSession session = request.getSession();
-        session.setAttribute("id", null);
-        session.setAttribute("rank", null);
+        session.setAttribute("user", null);
 
         return Pages.INDEX;
     }

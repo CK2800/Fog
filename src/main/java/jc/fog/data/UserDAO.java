@@ -76,8 +76,9 @@ public class UserDAO extends AbstractDAO
             
             if(rs.next())
             {
-                int rank = rs.getInt("rank");
+                //Får fat i både Id og rank
                 int userId = rs.getInt("id");
+                int rank = rs.getInt("rank");                
                 
                 UsersDTO user = new UsersDTO(userId, rank);
                 user.setId(userId);
