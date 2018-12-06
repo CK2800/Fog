@@ -15,26 +15,24 @@ import jc.fog.exceptions.FogException;
  */
 public class UserDAO extends AbstractDAO
 {
-    final static String CREATE_USER = "INSERT INTO Users (name, zip, phone, email, password, rank) VALUES (?,?,?,?,?,?)";
+    final static String CREATE_USER = "INSERT INTO Users (name, zip, phone, email, password) VALUES (?,?,?,?,?)";
        
     
     public UserDAO(Connection connection) throws FogException {
         super(connection);
     } 
     
-    
     /**
-     * createUser skal være med til, at opret 'user' i db.
+     * Opret bruger i user table.
      * @param name
-     * @param zip
-     * @param phone
      * @param email
      * @param password
-     * @param rank
+     * @param zip
+     * @param phone
      * @return
      * @throws FogException 
      */
-    public boolean createUser(String name, int zip, int phone, String email, String password, int rank) throws FogException
+    public boolean createUser(String email, String name, String password, int phone, int zipcode) throws FogException
     {
         name = name.trim();
         try {
@@ -43,14 +41,12 @@ public class UserDAO extends AbstractDAO
             
             pstm = connection.prepareStatement(CREATE_USER);
             pstm.setString(1, name);
-            pstm.setInt(2, zip);
+            pstm.setInt(2, zipcode);
             pstm.setInt(3, phone);
             pstm.setString(4, email);
             pstm.setString(5, password);
-            pstm.setInt(6, rank);
             
             return pstm.executeUpdate() == 1;
-            
         }
         catch(Exception e)
         {

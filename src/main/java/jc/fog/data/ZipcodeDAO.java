@@ -26,9 +26,10 @@ public class ZipcodeDAO extends AbstractDAO {
         super(connection);
     }
     
+    
+    
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
-        
         try
         {
             List<ZipcodeDTO> getZipcodes = new ArrayList<ZipcodeDTO>();

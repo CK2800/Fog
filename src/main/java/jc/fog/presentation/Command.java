@@ -38,8 +38,7 @@ public abstract class Command
         commands = new HashMap<>();
         
         // put available commands onto hash map.
-        //commands.put(Commands.LOGIN, new LoginCommand());
-        //commands.put(Commands.LOGOUT, new LogoutCommand());
+        
         commands.put(Commands.SHOW_REQUESTS, new ShowRequestsCommand());
         commands.put(Commands.SHOW_MATERIALS, new ShowMaterialsCommand());
         commands.put(Commands.SHOW_SINGLE_MATERIAL, new ShowSingleMaterialeCommand());
