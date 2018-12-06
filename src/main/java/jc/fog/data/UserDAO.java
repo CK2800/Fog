@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.UsersDTO;
 
 /**
  *
@@ -16,10 +17,10 @@ import jc.fog.exceptions.FogException;
  */
 public class UserDAO extends AbstractDAO
 {
-    final static String CREATE_USER = "INSERT INTO Users (name, zip, phone, email, password) VALUES (?,?,?,?,?)";
+    final static String CREATE_USER_SQL = "INSERT INTO Users (name, zip, phone, email, password) VALUES (?,?,?,?,?)";
     
     //skal måske ha lavet navnet om på den her.
-    final static String GET_USER = "SELECT * FROM email = ? AND password = ?";
+    final static String GET_USER_SQL = "SELECT id, rank FROM Users WHERE email=? AND password=?";
        
     
     public UserDAO(Connection connection) throws FogException {
@@ -44,7 +45,7 @@ public class UserDAO extends AbstractDAO
             
             PreparedStatement pstm;
             
-            pstm = connection.prepareStatement(CREATE_USER);
+            pstm = connection.prepareStatement(CREATE_USER_SQL);
             pstm.setString(1, name);
             pstm.setInt(2, zipcode);
             pstm.setInt(3, phone);
@@ -59,7 +60,7 @@ public class UserDAO extends AbstractDAO
         }
     }
     
-    public boolean login(String email, String password) throws FogException
+    public UsersDTO login(String email, String password) throws FogException
     {
         password = password.trim();
         
@@ -67,14 +68,26 @@ public class UserDAO extends AbstractDAO
         {
             PreparedStatement pstm;
             
-            pstm = connection.prepareStatement(GET_USER);
+            pstm = connection.prepareStatement(GET_USER_SQL);
             pstm.setString(1, email);
             pstm.setString(2, password);
             
             ResultSet rs = pstm.executeQuery();
             
-            //skal fortælle om man har skrevet rigtigt brugernavn og password.
-            return rs.next();
+            if(rs.next())
+            {
+                int rank = rs.getInt("rank");
+                int userId = rs.getInt("id");
+                
+                UsersDTO user = new UsersDTO(userId, rank);
+                user.setId(userId);
+                return user;
+            }
+            else
+            {
+                //Hvad skal der ske hvis den ikke findes?
+                throw new FogException("Den findes desværre ikke");
+            }
             
         }
         catch(Exception e)

@@ -11,6 +11,7 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.RooftypeDTO;
+import jc.fog.logic.UsersDTO;
 import jc.fog.logic.ZipcodeDTO;
 
 /**
@@ -25,6 +26,7 @@ public class DataFacade
     private RooftypeDAO rooftypeDAO;
     private ZipcodeDAO zipcodeDAO;
     private UserDAO userDAO;
+    
     
     public DataFacade(Connection connection) throws FogException
     {        
@@ -88,6 +90,11 @@ public class DataFacade
     public boolean createUser(String email, String password, String name, int phone, int zipcode) throws FogException
     {
         return userDAO.createUser(email, password, name, phone, zipcode);
+    }
+    
+    public UsersDTO login(String email, String password) throws FogException
+    {
+        return userDAO.login(email, password);
     }
     
     public List<ZipcodeDTO> getZipcodes() throws FogException

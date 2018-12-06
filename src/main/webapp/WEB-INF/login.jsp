@@ -1,7 +1,6 @@
 <%
     String title = "Log ind på Fog";
-    boolean viewUpdateQuest = (Boolean)request.getAttribute("viewBill");
-    String requestForm = (String) request.getAttribute("requestForm");
+    String login = (String) request.getAttribute("login");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +16,7 @@
             <div class="container" style="min-height: 500px;">
                 <div class="row">
                     <div class="col-md-12">
-                        
+                        <%= login %>
                     </div>
                 </div>
             </div>
