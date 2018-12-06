@@ -22,10 +22,10 @@ import org.junit.Test;
  *
  * @author Claus
  */
-public class ForespoergselDAOUnitTest
+public class CarportRequestDAOIntegrationTest
 {
     static Connection connection = null;
-    public ForespoergselDAOUnitTest()
+    public CarportRequestDAOIntegrationTest()
     {
     }
     

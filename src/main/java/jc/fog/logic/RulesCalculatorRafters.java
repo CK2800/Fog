@@ -16,23 +16,38 @@ import jc.fog.exceptions.FogException;
 public class RulesCalculatorRafters extends RulesCalculator implements RulesDrawer
 {
     /**
-     * Angiver hvor mange spær, carporten skal have.
-     * Værdien udregnes i calculateMaterials().
+     * Angiver hvor mange spær, carporten skal have.     
      */
-    private int noRafters;
+    private int raftersCount;
+    /**
+     * Angiver hvor mange spær, carporten skal have.
+     * @return 
+     */
+    public int getRaftersCount(){return raftersCount;}
+    
     /**
      * Længde på hvert stk. træ i et spær.
      * Værdien udregnes i calculateMaterials().
      */
-    private int raftersLength;
+    // private int raftersLength;
     /** 
      * Angiver udregnet mellemrum ml. spær.
      */
     private int raftersSpacing;
     /**
+     * Angiver udregnet mellemrum ml. spær i cm.
+     * @return 
+     */
+    public int getRaftersSpacing(){return raftersSpacing;}
+    /**
      * Tagets længde.
      */
     private int roofLength;
+    /**
+     * Tagets længde i cm.
+     * @return 
+     */
+    public int getRoofLength(){return roofLength;}
     
     @Override
     protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
@@ -41,58 +56,14 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
         MaterialCount materialCount = calculateMaterials(carportRequest);
         if (carportRequest.getSlope() == 0) // fladt tag.
         {
-            result.add(new BillItem(materialCount.getMaterialDTO(), noRafters*materialCount.getCount(), CarportPart.RAFTERS, "spær fladt tag"));                        
+            result.add(new BillItem(materialCount.getMaterialDTO(), raftersCount*materialCount.getCount(), CarportPart.RAFTERS, "spær fladt tag"));                        
         }
         else
         {
-            result.add(new BillItem(materialCount.getMaterialDTO(), noRafters, CarportPart.PRE_FAB_RAFTERS, "byg selv spær"));  
+            result.add(new BillItem(materialCount.getMaterialDTO(), raftersCount, CarportPart.PRE_FAB_RAFTERS, "byg selv spær"));  
         }
         return result;
-    }
-    
-//    @Override
-//    protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
-//    {
-//        try
-//        {
-//            List<MaterialDTO> rafters;
-//            List<BillItem> result = new ArrayList();
-//            // er taget med rejsning?
-//            if (carportRequest.getSlope() > 0) 
-//            {
-//                rafters = materials.get(Materialtype.PRE_FAB_RAFTERS.name());
-//                // udhæng er 30 cm i hver ende.
-//                int roofLength = carportRequest.getLength() - 2 * Rules.OVERHANG;
-//                // Spær placeres højst 0,89 m fra hinanden.
-//                int noRafters = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING_SLOPED_ROOF);
-//                MaterialDTO material = rafters.get(0);
-//
-//                if (material != null)
-//                {                
-//                    result.add(new BillItem(material, noRafters, CarportPart.PRE_FAB_RAFTERS, "byg selv spær"));                
-//                }
-//                else
-//                    throw new FogException("Byg selv spær kunne ikke findes for denne carport.", "Ingen materialer med materialetype 24 (byg selv spær)");
-//            }
-//            else // fladt tag.
-//            {
-//                // Find materialer i hashmap.            
-//                rafters = materials.get(Materialtype.RAFTERS.name());
-//                // Hent antal korteste træ nødvendigt.
-//                MaterialCount materialCount = findShortest(rafters, carportRequest.getWidth());            
-//                // Find tagets længde og udregn antal spær, adskilt 55 cm fra hinanden.
-//                int roofLength = carportRequest.getLength();            
-//                int noRafters = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING);                                    
-//                //bill.add(new BillItem(material, noRafters*noRequired, "spær fladt tag"));
-//                result.add(new BillItem(materialCount.getMaterialDTO(), noRafters*materialCount.getCount(), CarportPart.RAFTERS, "spær fladt tag"));                        
-//            }
-//            return result;
-//        }
-//        catch(Exception e)
-//        {
-//            throw new FogException("Spær kunne ikke beregnes.", e.getMessage());
-//        }
-//    }    
+    }    
 
     @Override
     public List<Rectangle> draw(CarportRequestDTO carportRequest) throws FogException
@@ -107,13 +78,13 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
             // længde 
             int materialLength = carportRequest.getWidth() / count;                        
             
-            for(int i = 0; i < noRafters; i++)
+            for(int i = 0; i < raftersCount; i++)
             {
                 for(int a = 0; a < count; a++)
                 {
                     // y position er i 0 + udhæng + mellemrum ml. spær - halv spær tykkelse.
                     int yPos = Rules.OVERHANG + (i * raftersSpacing) + (int)HEAD_HEIGHT/2; 
-                    if (i == noRafters-1) // sidste spær lægges så bagkant flugter rem.
+                    if (i == raftersCount-1) // sidste spær lægges så bagkant flugter rem.
                         yPos = carportRequest.getLength() - Rules.OVERHANG - HEAD_HEIGHT;
                     
                     rectangles.add(new Rectangle(a * materialLength, yPos, HEAD_HEIGHT, materialLength, "995522"));
@@ -128,7 +99,17 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
         }
     }
     
-    private MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
+    /**
+     * Udregner antal af et MaterialDTO som skal bruges for at lave 1 spær.
+     * POST:
+     * this.roofLength, som angiver tagets længde uden udhæng, er sat.
+     * this.noRafters, som angiver antallet af spær i taget, er sat.
+     * this.raftersSpacing, som angiver mellemrum i cm ml. spær, er sat.
+     * @param carportRequest
+     * @return
+     * @throws FogException 
+     */
+    public MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
     {
         try
         {
@@ -141,9 +122,9 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
                 // Find materialer i hashmap.           
                 rafters = materials.get(Materialtype.PRE_FAB_RAFTERS.name());                
                 // Spær placeres ca 0,89 m fra hinanden.
-                noRafters = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING_SLOPED_ROOF) + 1; // Et spær ekstra, da vi har udregnet antal mellemrum.
+                raftersCount = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING_SLOPED_ROOF) + 1; // Et spær ekstra, da vi har udregnet antal mellemrum.
                 // Gem aktuel afstand ml. spær.
-                raftersSpacing = (int)Math.ceil(roofLength / (float)(noRafters-1)); // Husk at fratrække slut spær for at få nok mellemrum.
+                raftersSpacing = (int)Math.ceil(roofLength / (float)(raftersCount-1)); // Husk at fratrække slut spær for at få nok mellemrum.
                 MaterialDTO material = rafters.get(0);
 
                 return new MaterialCount(1, material);
@@ -153,9 +134,9 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
                 // Find materialer i hashmap.            
                 rafters = materials.get(Materialtype.RAFTERS.name());
                 // Find tagets længde og udregn antal spær, adskilt 55 cm fra hinanden.                
-                noRafters = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING) + 1;// Et spær ekstra, da vi har udregnet antal mellemrum.     
+                raftersCount = (int)Math.ceil(roofLength / Rules.RAFTER_SPACING) + 1;// Et spær ekstra, da vi har udregnet antal mellemrum.     
                 // Gem aktuel afstand ml. spær.
-                raftersSpacing = (int)Math.ceil(roofLength / (float)(noRafters-1));// Husk at fratrække slut spær for at få nok mellemrum.
+                raftersSpacing = (int)Math.ceil(roofLength / (float)(raftersCount-1));// Husk at fratrække slut spær for at få nok mellemrum.
                 // Hent antal korteste træ nødvendigt pr. spær.
                 MaterialCount materialCount = findShortest(rafters, carportRequest.getWidth());            
                 

@@ -6,7 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import static jc.fog.data.RooftypeDAOJUnitTest.connection;
+import static jc.fog.data.RooftypeDAOIntegrationTest.connection;
 import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,10 +19,10 @@ import org.junit.Test;
  *
  * @author Jespe
  */
-public class UserDAOUnitTest {
+public class UserDAOIntegrationTest {
     
     static Connection connection = null;    
-    public UserDAOUnitTest()
+    public UserDAOIntegrationTest()
     {
     }
     

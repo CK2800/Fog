@@ -43,12 +43,5 @@ public class BillItem
         this.count = count;
         this.carportPart = carportPart;
         this.remarks = remarks;
-    }
-    
-    /**
-     * Adds value to count.
-     * @param value 
-     */
-    public void add(int value){this.count += value;}
-    
+    }    
 }

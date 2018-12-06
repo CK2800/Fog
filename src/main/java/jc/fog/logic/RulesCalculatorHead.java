@@ -16,18 +16,16 @@ import jc.fog.exceptions.FogException;
 public class RulesCalculatorHead extends RulesCalculator implements RulesDrawer
 {    
     /**
-     * Carport har mindst 2 remme. 
-     * Yderligere remme, hvor spær brydes, udregnes i calculateMaterials.
+     * Antal remme for carporten.      
      */
-    private int noHeads = 2;
+    private int noHeads;
     /**
-     * Remmens længde, dvs carportens længde minus evt. udhæng.
-     * Værdien udregnes i calculateMaterials().
+     * Remmens længde.
+     * Remmens længde er carportens længde minus evt. udhæng.     
      */
     private int headLength;
     /**
-     * Afstand mellem remme, hvis spær er brudt.
-     * Værdien udregnes i calculateMaterials().
+     * Afstand mellem remme, hvis spær er brudt.     
      */
     private int headSpacing;
     
@@ -57,8 +55,9 @@ public class RulesCalculatorHead extends RulesCalculator implements RulesDrawer
      * @return MaterialCount objekt med data om materiale og antal pr. rem.
      * @throws FogException 
      */
-    private MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
+    public MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
     {
+        noHeads = 2; // 2 remme som minimum.
         // Remmen laves af spærtræ, find samlingen i hashmap.
         List<MaterialDTO> heads = materials.get(Materialtype.RAFTERS.name());
         // Remmen bærer taget, som har udhæng 30 cm i hver ende.

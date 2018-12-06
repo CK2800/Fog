@@ -17,7 +17,7 @@ public class Calculator
 {
     private ArrayList<RulesCalculator> calculators;
     
-    public Calculator(List<MaterialDTO> materials)
+    public Calculator(List<MaterialDTO> materials) throws FogException
     {
         // Initialiserer RulesCalculator's hashmap.
         RulesCalculator.initializeMaterials(materials);

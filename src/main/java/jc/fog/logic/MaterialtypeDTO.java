@@ -34,17 +34,5 @@ public class MaterialtypeDTO
     {
         this.id = id;
         this.type = type;
-    }
-    
-    /**
-     * Mapper værdier fra ResultSet tuple til MaterialtypeDTO.
-     * @param rs ResultSet med tuple.
-     * @return MaterialtypeDTO
-     * @throws SQLException 
-     */
-    public static MaterialtypeDTO mapMaterialtype(ResultSet rs) throws SQLException
-    {
-        return new MaterialtypeDTO(rs.getInt("id"), rs.getString("type"));
-    }
-    
+    }    
 }

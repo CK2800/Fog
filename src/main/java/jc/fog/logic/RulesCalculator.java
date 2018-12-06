@@ -41,16 +41,24 @@ public abstract class RulesCalculator extends Rules
      * Hashmap tilgås af de forskellige beregnere, der til sammen udregner styklisten.
      * @param materialList 
      */
-    public static void initializeMaterials(List<MaterialDTO> materialList)
+    public static void initializeMaterials(List<MaterialDTO> materialList) throws FogException
     {   
-        // Opret ny hashmap.
-        materials = new HashMap<>();
-        // Gennemløb enum og opret HashMap key-value pair med subset af listen, hvor 
-        // hvert MaterialDTO objekts materialtypeId svarer til værdien i enum.
-        for(Materialtype mt : Materialtype.values())
-        {           
-            materials.put(mt.name(), filter(materialList, mt.getMaterialtypeId()));
-        }        
+        try
+        {
+            // Opret ny hashmap.
+            materials = new HashMap<>();
+            // Gennemløb enum og opret HashMap key-value pair med subset af listen, hvor 
+            // hvert MaterialDTO objekts materialtypeId svarer til værdien i enum.
+            for(Materialtype mt : Materialtype.values())
+            {           
+                materials.put(mt.name(), filter(materialList, mt.getMaterialtypeId()));
+            }
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Materialer blev ikke initialiseret", e.getMessage());
+        }
+        
     }
     
     /**
@@ -61,10 +69,10 @@ public abstract class RulesCalculator extends Rules
      * @return 
      */
     private static List<MaterialDTO> filter(List<MaterialDTO> list, int typeId)
-    {
+    {        
         Stream<MaterialDTO> stream = list.stream().filter(m -> m.getMaterialtypeDTO().getId() == typeId);
         List<MaterialDTO> result = stream.collect(Collectors.toList());
-        return result;
+        return result;        
     }
     
     /**     
@@ -73,6 +81,7 @@ public abstract class RulesCalculator extends Rules
      */
     protected void sortLengthDesc(List<MaterialDTO> list)
     {
+        
         Collections.sort(list, Comparator.comparing(MaterialDTO::getLength));
         Collections.reverse(list);
     }
@@ -85,46 +94,64 @@ public abstract class RulesCalculator extends Rules
      */    
     protected MaterialCount findShortest(List<MaterialDTO> list, int length) throws FogException
     {
-        MaterialDTO materialeDTO = null;
-        int actualCount = 0, count;        
-        for(MaterialDTO m : list)
+        try
         {
-            count = (int)Math.ceil((double)length / m.getLength());
-            
-            // Hvis aktuelt antal ikke er sat endnu, gøres det.
-            if (actualCount == 0)
+            MaterialDTO materialeDTO = null;
+            int actualCount = 0, count;        
+            for(MaterialDTO m : list)
             {
-                actualCount = count;
-                materialeDTO = m;
+                // Da vi har promoted dividend og divisor til double v. division for at 
+                // kunne runde antal materialer op til nærmeste hele antal, får vi ingen
+                // divide by zero - exception, fordi den kun kastes ved heltalsdivision.
+                // Derfor tjekker vi "manuelt" om materialet har en brugbar længde.
+                if (m.getLength() > 0)
+                {
+                    count = (int)Math.ceil((double)length / m.getLength());
+
+                    // Hvis aktuelt antal ikke er sat endnu, gøres det.
+                    if (actualCount == 0)
+                    {
+                        actualCount = count;
+                        materialeDTO = m;
+                    }
+                    // Hvis aktuelt antal er større, har vi fundet et længere materiale der duer.
+                    else if (actualCount > count)
+                    {
+                        actualCount = count;
+                        materialeDTO = m;                
+                    }
+                    // Hvis
+                    else if (actualCount == count)
+                    {
+                        if (materialeDTO != null && materialeDTO.getLength() > m.getLength())
+                            materialeDTO = m;
+                    }                
+                }                
             }
-            // Hvis aktuelt antal er større, har vi fundet et længere materiale der duer.
-            else if (actualCount > count)
-            {
-                actualCount = count;
-                materialeDTO = m;                
-            }
-            // Hvis
-            else if (actualCount == count)
-            {
-                if (materialeDTO != null && materialeDTO.getLength() > m.getLength())
-                    materialeDTO = m;
-            }                
+            if (actualCount > 0)
+                return new MaterialCount(actualCount, materialeDTO);        
+            else
+                throw new FogException("Intet materiale passer til længden.", "Intet materiale fundet som passer til den krævede længde.");
         }
-        if (actualCount > 0)
-            return new MaterialCount(actualCount, materialeDTO);        
-        else
-            throw new FogException("Intet materiale passer til længden.", "Intet materiale fundet som passer til den krævede længde.");
+        catch(Exception e)
+        {
+            throw new FogException("Intet materiale fundet", e.getMessage());
+        }
     }
     
     /**
-     * Udregner hypotenusen for en retvinklet trekant, hvor hosliggende vinkel og katetens længde er kendt.
+     * Udregner hypotenusen for en retvinklet trekant, hvor vinkel og hosliggende katetes længde er kendt.
+     * F.eks.: carport bredde = 540 cm., taghældning = 15 grader. Hosliggende katete er 270 cm (halv tagbredde).
      * Formel: Hypotenuse = katete / cos(vinkel)
-     * @param width Katetens længde
-     * @param degSlope Hosliggende vinkel i grader.
+     * @param width Hosliggende katetes længde
+     * @param degSlope Vinkel i grader, for hvilken gælder at 0 < degSlope < 90.
      * @return 
      */
-    protected double calculateSlopedWidth(double width, int degSlope)
+    protected double calculateSlopedWidth(double width, int degSlope) throws FogException
     {
+        // stopping conditions er <= 0 og >= 90.
+        if (degSlope <= 0 || degSlope >= 90)
+            throw new FogException("Ugyldig vinkel", "Vidde kan ikke beregnes for vinkler på 0 eller derunder ELLER på 90 eller derover.");
         return width / Math.cos(Math.toRadians(degSlope));
     }
 }

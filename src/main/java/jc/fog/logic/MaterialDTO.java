@@ -73,7 +73,7 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     }
 
     /**
-     * Sammenligning sker på materialetypens id.
+     * Sammenligning af materialetypens id.
      * Hvis materialtypeDTO er null på et eller begge objekter der sammenlignes,
      * sættes dets/deres materialetypeid til 0 og sammenligning udføres.
      * @param o

@@ -24,7 +24,8 @@ public class DbConnector
     public final static String DRIVER_CLASS = "com.mysql.jdbc.Driver";        
 
     /**
-     * Statisk, deles på tværs af alle instanser af DbConnector.
+     * Statisk, deles på tværs af alle instanser af DbConnector. 
+     * Singleton.
      */
     private static Connection connection;
     
@@ -63,5 +64,15 @@ public class DbConnector
         if (connection != null)
             connection.close();
         connection = null;
+    }
+    
+    /**
+     * Klassemetode til at sætte en ny forbindelse.
+     * Brug denne hvis systemet skal testes mod en anden database.
+     * @param connection 
+     */
+    public static void setConnection(Connection connection)
+    {
+        DbConnector.connection = connection;
     }
 }

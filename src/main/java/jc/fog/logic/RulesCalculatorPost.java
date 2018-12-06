@@ -16,11 +16,11 @@ import jc.fog.exceptions.FogException;
 public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
 {    
     /**
-     * Data vedr. spær materiale til tag.
+     * Data vedr. spær materiale til tag, herunder hvor mange stk. træ pr. spær.
      */
     private MaterialCount mcRafters;
     /**
-     * Data vedr. rem materiale til tag.
+     * Data vedr. rem materiale til tag, herunder hvor mange stk. træ pr. rem.
      */
     private MaterialCount mcHeads;
     /**
@@ -92,7 +92,17 @@ public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
         return rectangles;
     }
     
-    private MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
+    /**
+     * Udregner antallet af stolper for carporten.
+     * POST:
+     * this.mcRafters, som angiver materiale samt antal pr. spær, er sat.
+     * this.mcHeads, som angiver materiale samt antal pr. rem, er sat.
+     * this.noHeads, som angiver antal remme, er sat.
+     * @param carportRequest
+     * @return
+     * @throws FogException 
+     */
+    public MaterialCount calculateMaterials(CarportRequestDTO carportRequest) throws FogException
     {        
         // Find materialer.       
         List<MaterialDTO> posts = materials.get(Materialtype.POST.name());         
