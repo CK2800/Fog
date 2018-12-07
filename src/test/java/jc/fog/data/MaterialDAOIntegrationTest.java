@@ -68,15 +68,16 @@ public class MaterialDAOIntegrationTest
 
     
     @Test
-    public void testCreateMateriale() throws FogException
+    public void testCreateMaterial() throws FogException
     {
         MaterialDAO dao = new MaterialDAO(connection);
         boolean succes = dao.createMaterial(2, "5x5 mm", 6, "stk", 78.95F);
         assertTrue(succes);
     }
     
+    
     @Test
-    public void testGetSingleMateriale() throws FogException
+    public void testGetSingleMaterial() throws FogException
     {
         MaterialDAO dao = new MaterialDAO(connection);
         MaterialDTO request = dao.getMaterial(1);
@@ -84,19 +85,21 @@ public class MaterialDAOIntegrationTest
     }
     
     @Test
-    public void testGetAllMateriale() throws FogException
+    public void testGetMaterials() throws FogException
     {   
         MaterialDAO dao = new MaterialDAO(connection);
-        List<MaterialDTO> varer = dao.getMaterials();        
-        assertTrue(varer.size() > 0);
+        List<MaterialDTO> materials = dao.getMaterials();        
+        assertTrue(materials.size() > 0);
     }
     
     @Test(expected = FogException.class)
     public void testGetMaterialsFails() throws Exception
     {
         MaterialDAO dao = new MaterialDAO(connection);
-        connection.close();
-        List<MaterialDTO> varer = dao.getMaterials();
-        assertTrue(varer.size() > 0);
+        DbConnector.closeConnection();
+        List<MaterialDTO> materials = dao.getMaterials();
+        // genåbn forbindelse.
+        connection = DbConnector.getConnection();
+        assertTrue(materials.size() > 0);
     }
 }

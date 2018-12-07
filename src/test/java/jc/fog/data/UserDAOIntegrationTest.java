@@ -75,4 +75,16 @@ public class UserDAOIntegrationTest {
         boolean success = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
         assertTrue(success);
     }    
+    
+//    @Test
+//    public void testLoginUser() throws FogException
+//    {
+//        // Arrange
+//        UserDAO userDAO = new UserDAO(connection);
+//        
+//        
+//        // Act
+//        
+//        // Assert
+//    }
 }

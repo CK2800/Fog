@@ -32,19 +32,14 @@ public class ShowDrawingCommand extends Command{
         //henter id som skal bruges til, at frem vise hvordan tegning skal være.
         //Den bliver ikke brugt lige pt.
         int id = Integer.parseInt(request.getParameter("id"));
-        
-        
-        List<Rectangle> rectangles = new ArrayList<Rectangle>();
-        rectangles.add(new Rectangle(0, 0, 170, 180, "7FFF00"));
-        rectangles.add(new Rectangle(15, 120, 825, 140, "D2691E"));
-        
+       
 
         // Hent carport request og materialer.
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         CarportRequestDTO carportRequest = dataFacade.getCarport(id);
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Udregn rektangler.
-        rectangles = LogicFacade.drawCarport(carportRequest, materials);
+        List<Rectangle> rectangles = LogicFacade.drawCarport(carportRequest, materials);
        
 
         //Her bliver højde og bredde til svg filen angivet.
