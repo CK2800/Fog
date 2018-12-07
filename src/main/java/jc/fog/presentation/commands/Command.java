@@ -3,8 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation;
+package jc.fog.presentation.commands;
 
+import jc.fog.presentation.commands.ShowAddRegisterCommand;
+import jc.fog.presentation.commands.ShowAddRequestCommand;
+import jc.fog.presentation.commands.ShowBillCommand;
+import jc.fog.presentation.commands.ShowCarPortCommand;
+import jc.fog.presentation.commands.ShowDrawingCommand;
+import jc.fog.presentation.commands.ShowLoginCheckCommand;
+import jc.fog.presentation.commands.ShowLoginCommand;
+import jc.fog.presentation.commands.ShowMaterialsCommand;
+import jc.fog.presentation.commands.ShowRegisterCommand;
+import jc.fog.presentation.commands.ShowRequestsCommand;
+import jc.fog.presentation.commands.ShowSingleMaterialeCommand;
+import jc.fog.presentation.commands.ShowUpdateRequestCommand;
+import jc.fog.presentation.commands.UnknownCommand;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +64,7 @@ public abstract class Command
         commands.put(Commands.LOGIN_CHECK, new ShowLoginCheckCommand());
         commands.put(Commands.REGISTER, new ShowRegisterCommand());
         commands.put(Commands.ADD_REGISTER, new ShowAddRegisterCommand());
-        commands.put(Commands.LOGOUT, new Logout());
+        commands.put(Commands.LOGOUT, new LogoutCommand());
     }
     
     /**

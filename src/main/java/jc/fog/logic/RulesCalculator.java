@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.Rules;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,6 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.BillItem;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.MaterialCount;
+import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.Rectangle;
 
 /**
  *

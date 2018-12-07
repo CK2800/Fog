@@ -5,6 +5,12 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.calculators.RulesCalculatorPost;
+import jc.fog.logic.calculators.RulesCalculatorShed;
+import jc.fog.logic.calculators.RulesCalculatorHead;
+import jc.fog.logic.calculators.RulesCalculatorRafters;
+import jc.fog.logic.calculators.RulesCalculatorBattens;
+import jc.fog.logic.calculators.RulesCalculatorRoof;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;

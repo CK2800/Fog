@@ -5,6 +5,7 @@
  */
 package jc.fog.presentation;
 
+import jc.fog.presentation.commands.Command;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

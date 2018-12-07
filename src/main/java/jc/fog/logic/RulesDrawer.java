@@ -6,6 +6,8 @@
 package jc.fog.logic;
 import java.util.List;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.Rectangle;
 
 /**
  * RulesDrawer til tegning af svg-elementer baseret på div. business rules.

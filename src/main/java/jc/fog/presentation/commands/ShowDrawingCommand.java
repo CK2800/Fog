@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation;
+package jc.fog.presentation.commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.LogicFacade;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.Rectangle;
+import jc.fog.presentation.Drawing;
+import jc.fog.presentation.Pages;
 
 /**
  *

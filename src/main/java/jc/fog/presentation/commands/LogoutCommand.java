@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation;
+package jc.fog.presentation.commands;
 
+import jc.fog.presentation.commands.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnector;
+import javax.servlet.http.HttpSession;
 import jc.fog.exceptions.FogException;
+import jc.fog.presentation.Pages;
 
 /**
  *
  * @author Jespe
  */
-public class ShowAdminUsersCommand extends Command
+public class LogoutCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        
-        
-        
-        return Pages.ADMIN_USER;
+        HttpSession session = request.getSession();
+        session.setAttribute("user", null);
+
+        return Pages.INDEX;
     }
 }

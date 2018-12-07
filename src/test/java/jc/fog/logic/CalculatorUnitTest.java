@@ -5,15 +5,13 @@
  */
 package jc.fog.logic;
 
-import java.sql.Connection;
+import jc.fog.logic.calculators.RulesCalculatorRafters;
+import jc.fog.logic.calculators.RulesCalculatorPost;
+import jc.fog.logic.calculators.RulesCalculatorHead;
 import java.util.ArrayList;
 import java.util.List;
-import jc.fog.data.DbConnector;
-
-import jc.fog.data.MaterialDAO;
 
 import jc.fog.exceptions.FogException;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;

@@ -3,11 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic;
+package jc.fog.logic.calculators;
 
+import jc.fog.logic.RulesDrawer;
+import jc.fog.logic.RulesCalculator;
+import jc.fog.logic.Rules;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.BillItem;
+import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.MaterialCount;
+import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.Rectangle;
+import jc.fog.logic.ShedDTO;
 
 /**
  * Udvidelse af RulesCalculator for udregning af stolper.

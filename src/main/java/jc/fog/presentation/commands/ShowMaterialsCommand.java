@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.presentation;
+package jc.fog.presentation.commands;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +12,7 @@ import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
+import jc.fog.presentation.Pages;
 
 /**
  *
