@@ -13,14 +13,29 @@ public class UsersDTO {
     private int id, phone, rank, zip;
     private String name, email, password;
 
-    public UsersDTO(int id, int phone, int rank, int zip, String name, String email, String password) {
+    
+    /**
+     * Konstruktør bruges til, at fremvis en list over dvs bruger oplysninger.
+     * @param id
+     * @param rank
+     * @param name
+     * @param email 
+     */
+    public UsersDTO(int id, int rank, String name, String email) {
         this.id = id;
-        this.phone = phone;
         this.rank = rank;
-        this.zip = zip;
         this.name = name;
         this.email = email;
-        this.password = password;
+    }
+    
+    /**
+     * Konstruktør bruges til login området. 
+     * @param id
+     * @param rank 
+     */
+    public UsersDTO(int id, int rank) {
+        this.id = id;
+        this.rank = rank;
     }
 
     public int getId() {

@@ -6,7 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import static jc.fog.data.RooftypeDAOIntegrationTest.connection;
+import java.util.Random;
 import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -63,14 +63,16 @@ public class UserDAOIntegrationTest {
     @After
     public void tearDown() {
     }
-    
-    
-    //@Test
-//    public void testCreateUser() throws FogException
-//    {
-//        UserDAO userdao = new UserDAO(connection);
-//        boolean success = userdao.createUser("Jesper", 3450, 11, "test@test.dk", "12345", 5);
-//        assertTrue(success);
-//    }
-    
+
+    @Test
+    public void testCreateUser() throws FogException
+    {
+        //Laver sådan at de bruger som bliver oprettet er unikke.
+        Random rand = new Random();
+        int random = rand.nextInt(100) + 1;
+        
+        UserDAO userdao = new UserDAO(connection);
+        boolean success = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
+        assertTrue(success);
+    }    
 }
