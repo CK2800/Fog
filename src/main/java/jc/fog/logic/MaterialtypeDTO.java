@@ -5,9 +5,6 @@
  */
 package jc.fog.logic;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  *
  * @author Claus
@@ -20,10 +17,6 @@ public class MaterialtypeDTO
     // getters
     public int getId() { return id; }
     public String getType() { return type; }
-    
-    // setters.
-    public void setId(int value) { id = value; }
-    public void setType(String value) { type = value; }
     
     /**
      * Konstruktør som kræver argumenter for alle attributter.

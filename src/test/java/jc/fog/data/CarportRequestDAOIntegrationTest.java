@@ -73,7 +73,7 @@ public class CarportRequestDAOIntegrationTest
     @Test
     public void testConnection() throws Exception
     {
-        Connection connection = DbConnector.getConnection();
+        connection = DbConnector.getConnection();
         if (connection != null)
         {
             String tilstand = connection.isClosed() ? "lukket" : "åben";
@@ -82,34 +82,84 @@ public class CarportRequestDAOIntegrationTest
         assertNotNull(connection);
     }
     
+    
+    /******************* Data facade tests *************************/    
+    
+    
+    /** Tester DataFacade ved at hente alle carport forespørgsler. */
     @Test
-    public void testGetCarportsIntegration() throws FogException
+    public void GetCarports() throws FogException
     {
-        DataFacade df = new DataFacade(DbConnector.getConnection());
-        List<CarportRequestDTO> carports = df.getCarports();
-        assertTrue(carports.size() > 0);
+        // Arrange
+        DataFacade df = new DataFacade(connection);
+        List<CarportRequestDTO> carports = null;
         
+        // Act
+        carports = df.getCarports();
+        
+        // Assert
+        assertTrue(carports != null);        
     }
     
-    @Test(expected = FogException.class)
-    public void testGetCarportsIntegrationFails() throws Exception
-    {
-        
-        DataFacade df = new DataFacade(DbConnector.getConnection());
-        DbConnector.closeConnection();
-        List<CarportRequestDTO> carports = df.getCarports();
-        assertTrue(carports.size() > 0);
-        
-    }
-    
+    /** Tester at DataFacade fejler korrekt i forsøget på at hente carport forespørgsler */
     @Test(expected = FogException.class)    
-    public void testCreateCarportRequestFailure() throws Exception
+    public void getCarportsFails() throws Exception
+    {        
+        // Arrange
+        DataFacade df = new DataFacade(connection);        
+        List<CarportRequestDTO> carports = null;        
+        DbConnector.closeConnection();
+        
+        // Act        
+        carports = df.getCarports();
+        
+        // Assert
+        assertTrue(carports == null);        
+    }
+    
+    @Test
+    public void getCarport() throws FogException
     {
-       // Opret carportdao.
-        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
+        // Arrange
+        DataFacade df = new DataFacade(connection);
+        
+        // Act
+        CarportRequestDTO carport = df.getCarport(1);
+        
+        // Assert
+        assertTrue(carport != null);        
+    }
+        
+    
+    public void updateRequest() throws FogException
+    {        
+        // Arrange
+        DataFacade df = new DataFacade(connection);
+        CarportRequestDTO carport = df.getCarport(1);
+        carport.setRemark(carport.getRemark() + " ændret i integration test");
+        
+        // Act
+        //df.updateRequest(carport.getId(), carport.getShedId(), shedCheck, 0, 0, 0, 0, 0, 0, remark);
+        
+        
+        
+    }
+    
+    /************************* CarportRequestDAO tests *************************/
+    
+    
+    /** Tester at oprettelse af carport request fejler. */
+    @Test(expected = FogException.class)    
+    public void createCarportRequestFails() throws Exception
+    {
+       // Opret carport dao.
+        CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
          // luk forbindelsen så vi får fejl.
         DbConnector.closeConnection();
-        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");        
+        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Denne carport request skal fejle.");        
+        // Genåbn forbindelsen.
+        connection = DbConnector.getConnection();
+        
         assertFalse(success);        
     }
     
@@ -117,23 +167,23 @@ public class CarportRequestDAOIntegrationTest
     public void testOpretForespoergselMedSkur() throws Exception
     {   
         // Opret carportdao som opretter forbindelse, hvis den mangler.
-        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());         
-        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        CarportRequestDAO carportDAO = new CarportRequestDAO(connection);         
+        boolean success = carportDAO.createCarportRequest(3, 0, 600, 210, 1000, 275, 125, "600 x 1000 m skur 275 x 125, fladt tag.");
         assertTrue(success);        
     }
     
     @Test
     public void testOpretForespoergselUdenSkur() throws FogException
     {
-        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
-        boolean success = carportDAO.createCarportRequest(2, 30, 500, 125, 300,0,0,"Uden skur");
+        CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
+        boolean success = carportDAO.createCarportRequest(2, 30, 500, 125, 750,0,0,"500 x 750, 30 graders taghældning, uden skur");
         assertTrue(success);
     }
     
     @Test
     public void testHentAlleForespoergsler() throws FogException
     {        
-        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
+        CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
         carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         List<CarportRequestDTO> requests = carportDAO.getCarportRequests();
         assertTrue(requests.size() > 0);        
@@ -142,7 +192,7 @@ public class CarportRequestDAOIntegrationTest
     @Test
     public void testHentEnkeltForespørgsel() throws FogException
     {
-        CarportRequestDAO carportDAO = new CarportRequestDAO(DbConnector.getConnection());
+        CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
         carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         CarportRequestDTO request = carportDAO.getCarportRequest(1);
         assertTrue(request != null);

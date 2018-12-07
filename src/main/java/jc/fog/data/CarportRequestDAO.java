@@ -90,8 +90,8 @@ public class CarportRequestDAO extends AbstractDAO{
     }
     
     /**
-     * Den henter alt i databasen hvor alt sammen bliver brugt senere.
-     * @return - Alle de forespørgsel der findes i databasen.
+     * Henter alle carport forespørgsler.
+     * @return - List af CarportRequestDTO objekter. Fandtes ingen forespørgsler, returneres tom liste.
      */
     public ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
         
@@ -145,7 +145,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @param shedWidth
      * @param remark - den kan evt være kommentar til Fog.
      * @return
-     * @throws SQLException 
+     * @throws FogException 
      * Bemærk: skurlaengde + bredde skal videre giv Skurs id over til forespørgsel.
      */
     public boolean createCarportRequest(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException

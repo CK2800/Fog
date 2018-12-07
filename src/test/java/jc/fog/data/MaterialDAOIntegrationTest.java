@@ -30,6 +30,15 @@ public class MaterialDAOIntegrationTest
     @BeforeClass
     public static void setUpClass()
     {
+        try
+        {
+            connection = DbConnector.getConnection();
+            System.out.println("Db forbindelse åbnet");
+        }
+        catch(Exception e)
+        {
+            System.out.println("No database connection established: " + e.getMessage());
+        }
     }
     
     @AfterClass
@@ -49,15 +58,7 @@ public class MaterialDAOIntegrationTest
     @Before
     public void setUp()
     {
-        try
-        {
-            connection = DbConnector.getConnection();
-            System.out.println("Db forbindelse åbnet");
-        }
-        catch(Exception e)
-        {
-            System.out.println("No database connection established: " + e.getMessage());
-        }
+        
     }
     
     @After

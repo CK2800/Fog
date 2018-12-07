@@ -5,11 +5,12 @@
  */
 package jc.fog.logic;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import jc.fog.data.DbConnector;
 import jc.fog.data.MaterialDAO;
 import jc.fog.exceptions.FogException;
-import static jc.fog.logic.CalculatorUnitTest.connection;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +25,7 @@ import static org.junit.Assert.*;
  */
 public class CalculatorIntegrationTest
 {
+    static Connection connection;
     
     public CalculatorIntegrationTest()
     {
@@ -32,16 +34,35 @@ public class CalculatorIntegrationTest
     @BeforeClass
     public static void setUpClass()
     {
+        try
+        {
+            connection = DbConnector.getConnection(); 
+            System.out.println("Db forbindelse åbnet");
+        }
+        catch(Exception e)
+        {
+            System.out.println("No database connection established: " + e.getMessage());
+        }
     }
     
     @AfterClass
     public static void tearDownClass()
     {
+        try
+        {
+            DbConnector.closeConnection();
+            System.out.println("Db forbindelse lukket.");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Database connection was not closed: " + e.getMessage());
+        }
     }
     
     @Before
     public void setUp()
     {
+         
     }
     
     @After

@@ -27,46 +27,25 @@ import org.junit.Test;
  * @author Claus
  */
 public class CalculatorUnitTest
-{
-    static Connection connection = null;    
-    
+{   
     public CalculatorUnitTest()
     {
     }
     
     @BeforeClass
     public static void setUpClass()
-    {
+    { 
     }
     
     @AfterClass
     public static void tearDownClass()
-    {
-        try
-        {
-            DbConnector.closeConnection();            
-            System.out.println("Db forbindelse lukket.");
-        }
-        catch(Exception e)
-        {
-            System.out.println("Database connection was not closed: " + e.getMessage());
-        }
+    {     
     }
     
     @Before
     public void setUp()
     {
-        try
-        {
-            connection = DbConnector.getConnection(); 
-            System.out.println("Db forbindelse åbnet");
-                                    
-            
-        }
-        catch(Exception e)
-        {
-            System.out.println("setUp not completed: " + e.getMessage());
-        }
+        
     }
     
     @After

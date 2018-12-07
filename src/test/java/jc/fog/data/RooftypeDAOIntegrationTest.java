@@ -27,7 +27,17 @@ public class RooftypeDAOIntegrationTest
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
+        try
+        {
+            connection = DbConnector.getConnection(); 
+            System.out.println("Db forbindelse åbnet");
+        }
+        catch(Exception e)
+        {
+            System.out.println("No database connection established: " + e.getMessage());
+        }
     }
     
     @AfterClass
@@ -47,15 +57,7 @@ public class RooftypeDAOIntegrationTest
     @Before
     public void setUp()
     {
-        try
-        {
-            connection = DbConnector.getConnection(); 
-            System.out.println("Db forbindelse åbnet");
-        }
-        catch(Exception e)
-        {
-            System.out.println("No database connection established: " + e.getMessage());
-        }
+        
     }
     
     @After

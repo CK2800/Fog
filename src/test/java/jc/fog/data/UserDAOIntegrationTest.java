@@ -27,7 +27,17 @@ public class UserDAOIntegrationTest {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() 
+    {
+        try
+        {
+            connection = DbConnector.getConnection(); 
+            System.out.println("Db forbindelse åbnet");
+        }
+        catch(Exception e)
+        {
+            System.out.println("No database connection established: " + e.getMessage());
+        }
     }
     
     @AfterClass
@@ -47,15 +57,7 @@ public class UserDAOIntegrationTest {
     @Before
     public void setUp()
     {
-        try
-        {
-            connection = DbConnector.getConnection(); 
-            System.out.println("Db forbindelse åbnet");
-        }
-        catch(Exception e)
-        {
-            System.out.println("No database connection established: " + e.getMessage());
-        }
+        
     }
     
     @After
@@ -63,12 +65,12 @@ public class UserDAOIntegrationTest {
     }
     
     
-    @Test
-    public void testCreateUser() throws FogException
-    {
-        UserDAO userdao = new UserDAO(connection);
-        boolean success = userdao.createUser("Jesper", 3450, 11, "test@test.dk", "12345", 5);
-        assertTrue(success);
-    }
+    //@Test
+//    public void testCreateUser() throws FogException
+//    {
+//        UserDAO userdao = new UserDAO(connection);
+//        boolean success = userdao.createUser("Jesper", 3450, 11, "test@test.dk", "12345", 5);
+//        assertTrue(success);
+//    }
     
 }
