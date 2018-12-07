@@ -27,6 +27,8 @@ public final class Commands
     public static final String REGISTER = "register";
     /** Command til send/smide bruger oplysning op */
     public static final String ADD_REGISTER = "addRegister";
+    /** Command til at fortælle man har glemt adgangskode! */
+    public static final String FORGET = "forget";
     
     
     /** Command som viser alle forespørgsler. */

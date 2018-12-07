@@ -35,7 +35,7 @@ public class ShowRequestsCommand extends Command
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getRank() == 1)
+            if(user != null && user.getRank() > 1)
             {
                 return Pages.INDEX;
             } 

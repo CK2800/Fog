@@ -21,6 +21,8 @@ public class UserDAO extends AbstractDAO
     
     //skal måske ha lavet navnet om på den her.
     final static String GET_USER_SQL = "SELECT id, rank FROM Users WHERE email=? AND password=?";
+    
+    final static String UPDATE_PASSWORD = "UPDATE Users SET password = ? WHERE email = ?";
        
     
     public UserDAO(Connection connection) throws FogException {
@@ -101,6 +103,23 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Kun ikke log ind.. " + e.getMessage());
+        }
+    }
+    
+    public boolean forgetUser(String email) throws FogException
+    {
+        try {
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(UPDATE_PASSWORD);
+            pstm.setString(1, "123456");
+            pstm.setString(2, email);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Den kun ikke finde denne email." + e.getMessage());
         }
     }
 }

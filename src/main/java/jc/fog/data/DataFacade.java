@@ -92,6 +92,11 @@ public class DataFacade
         return userDAO.createUser(email, password, name, phone, zipcode);
     }
     
+    public boolean forgetUser(String email) throws FogException
+    {
+        return userDAO.forgetUser(email);
+    }
+    
     public UsersDTO login(String email, String password) throws FogException
     {
         return userDAO.login(email, password);
