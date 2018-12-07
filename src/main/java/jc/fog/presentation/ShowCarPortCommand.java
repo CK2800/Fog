@@ -8,12 +8,14 @@ package jc.fog.presentation;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
 import jc.fog.data.RooftypeDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.RooftypeDTO;
+import jc.fog.logic.UsersDTO;
 
 /**
  *
@@ -23,52 +25,70 @@ public class ShowCarPortCommand  extends Command
 {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        // get request's id from request hvis den findes.        
-        int id = 0;        
-                       
-        // Get DataFacade.
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        
-        String requestForm = null;
-        
-        //Den bruges til, at find ud af om man har et id eller ej?. For om man skal updater eller opret?
-        boolean viewUpdateQuest = true;
-        
-        // Har vi et gyldigt id ?
-        try
+        try 
         {
-            // Findes id ikke på requestet, catcher vi exception
-            id = Integer.parseInt(request.getParameter("id"));
-        }
-        catch(NumberFormatException n){
-            // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
-        }
-        
-        List<RooftypeDTO> Rooftypes = dataFacade.getRooftypes();
-        
-        // Fandt vi et gyldigt id på requestet (dvs. > 0)
-        if(id > 0)
-        {
-            //Det her skal bliver vist hvis man skal updater indhold.
-            CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
-            // Create HTML form with request's data and set it on http request.
-            requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest, Rooftypes);
-        }
-        else 
-        {
-            // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest      
-            
-            viewUpdateQuest = false;//Den er med til, at fortælle at vi skal "opret" forespørgelse i db.
+            //sikker sig at man har den rigtigt rank for at kun se det her område.
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user != null && user.getRank() == 1)
+            {
+                return Pages.INDEX;
+            } 
             
             
-            //Det her skal blive vist hvis man skal opret en forespørgelse.
-            requestForm = carportRequestToBill(null, viewUpdateQuest, Rooftypes);
+            // get request's id from request hvis den findes.        
+            int id = 0;        
+
+            // Get DataFacade.
+            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+
+            String requestForm = null;
+
+
+            //Den bruges til, at find ud af om man har et id eller ej?. For om man skal updater eller opret?
+            boolean viewUpdateQuest = true;
+
+            // Har vi et gyldigt id ?
+            try
+            {
+                // Findes id ikke på requestet, catcher vi exception
+                id = Integer.parseInt(request.getParameter("id"));
+            }
+            catch(NumberFormatException n){
+                // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
+            }
+
+            List<RooftypeDTO> Rooftypes = dataFacade.getRooftypes();
+
+            // Fandt vi et gyldigt id på requestet (dvs. > 0)
+            if(id > 0)
+            {
+                //Det her skal bliver vist hvis man skal updater indhold.
+                CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
+                // Create HTML form with request's data and set it on http request.
+                requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest, Rooftypes);
+            }
+            else 
+            {
+                // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest      
+
+                viewUpdateQuest = false;//Den er med til, at fortælle at vi skal "opret" forespørgelse i db.
+
+
+                //Det her skal blive vist hvis man skal opret en forespørgelse.
+                requestForm = carportRequestToBill(null, viewUpdateQuest, Rooftypes);
+            }
+
+            request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
+            request.setAttribute("viewBill", viewUpdateQuest);//Det er i forhold til om man skal opret eller ret mv.
+
+            return Pages.SINGLE_CARPORTVIEW;
         }
-        
-        request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
-        request.setAttribute("viewBill", viewUpdateQuest);//Det er i forhold til om man skal opret eller ret mv.
-        
-        return Pages.SINGLE_CARPORTVIEW;
+        catch(Exception e)
+        {
+            throw new FogException("" + e.getMessage());
+        }
     }
     
     

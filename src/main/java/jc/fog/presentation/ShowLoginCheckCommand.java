@@ -27,7 +27,7 @@ public class ShowLoginCheckCommand extends Command {
         
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
         UsersDTO user = dataFacade.login(email, password);
-
+        
         //tilføjer session på Rank og Id.
         HttpSession session = request.getSession();
         session.setAttribute("user", user);

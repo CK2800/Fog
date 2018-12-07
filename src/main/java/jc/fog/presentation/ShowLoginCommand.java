@@ -7,16 +7,34 @@ package jc.fog.presentation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.UsersDTO;
 
 public class ShowLoginCommand extends Command {
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        request.setAttribute("login", login());
-        return Pages.LOGIN;
+        try
+        {
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user != null && user.getId() > 0)
+            {
+                return Pages.INDEX;
+            }        
+
+            // Ingen user i session => dan login formular og vis login side.
+            request.setAttribute("login", login());
+            return Pages.LOGIN;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Login side kan ikke vises, prøv igen.", e.getMessage());
+        }
     }
     
     /**
