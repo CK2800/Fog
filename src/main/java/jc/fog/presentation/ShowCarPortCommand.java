@@ -8,12 +8,14 @@ package jc.fog.presentation;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DbConnector;
 import jc.fog.data.RooftypeDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.RooftypeDTO;
+import jc.fog.logic.UsersDTO;
 
 /**
  *
@@ -22,17 +24,17 @@ import jc.fog.logic.RooftypeDTO;
 public class ShowCarPortCommand  extends Command
 {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
+    {  
         // get request's id from request hvis den findes.        
         int id = 0;        
-                       
+
         // Get DataFacade.
         DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-        
+
         String requestForm = null;
-        
-        //Den bruges til, at find ud af om man har et id eller ej?. For om man skal updater eller opret?
-        boolean viewUpdateQuest = true;
+
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
         
         // Har vi et gyldigt id ?
         try
@@ -43,31 +45,27 @@ public class ShowCarPortCommand  extends Command
         catch(NumberFormatException n){
             // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
         }
-        
+
         List<RooftypeDTO> Rooftypes = dataFacade.getRooftypes();
-        
+
         // Fandt vi et gyldigt id på requestet (dvs. > 0)
         if(id > 0)
         {
             //Det her skal bliver vist hvis man skal updater indhold.
             CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
             // Create HTML form with request's data and set it on http request.
-            requestForm = carportRequestToBill(carportRequestDTO,viewUpdateQuest, Rooftypes);
+            requestForm = carportRequestToBill(carportRequestDTO, user, Rooftypes);
         }
         else 
         {
             // Ingen id i requestet, lav en tom formular til ny oprettelse af carportrequest      
-            
-            viewUpdateQuest = false;//Den er med til, at fortælle at vi skal "opret" forespørgelse i db.
-            
-            
+
             //Det her skal blive vist hvis man skal opret en forespørgelse.
-            requestForm = carportRequestToBill(null, viewUpdateQuest, Rooftypes);
+            requestForm = carportRequestToBill(null, user, Rooftypes);
         }
-        
+
         request.setAttribute("requestForm", requestForm);//Det er form til den enkelt som skal bruges
-        request.setAttribute("viewBill", viewUpdateQuest);//Det er i forhold til om man skal opret eller ret mv.
-        
+
         return Pages.SINGLE_CARPORTVIEW;
     }
     
@@ -77,7 +75,7 @@ public class ShowCarPortCommand  extends Command
      * @param item
      * @return 
      */
-    private String carportRequestToBill(CarportRequestDTO item, boolean bill, List<RooftypeDTO> Rooftypes)
+    private String carportRequestToBill(CarportRequestDTO item, UsersDTO user, List<RooftypeDTO> Rooftypes)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<form action=\"FrontController\" method=\"POST\">"
@@ -85,6 +83,8 @@ public class ShowCarPortCommand  extends Command
         
         //Det er shedid og forespørgelse id som fremkommer her.
         anyIDs(item, stringBuilder);
+        
+        //Bruger oplysning skal opret sig her hvis man er oprettet.
         
         //Carport information her
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" placeholder=\"Længde på carport\" /><br />");
@@ -111,7 +111,7 @@ public class ShowCarPortCommand  extends Command
         
         
         //Her kommer submit som skal updatere eller beregn styklisten
-        if(bill)
+        if(user != null && user.getRank() == 1)
         {
             stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.UPDATE_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         }

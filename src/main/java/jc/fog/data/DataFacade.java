@@ -11,6 +11,8 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.RooftypeDTO;
+import jc.fog.logic.UsersDTO;
+import jc.fog.logic.ZipcodeDTO;
 
 /**
  * Facade to expose subsystem methods to clients.
@@ -22,12 +24,17 @@ public class DataFacade
     private CarportRequestDAO carportRequestDAO;
     private MaterialDAO materialDAO;
     private RooftypeDAO rooftypeDAO;
+    private ZipcodeDAO zipcodeDAO;
+    private UserDAO userDAO;
+    
     
     public DataFacade(Connection connection) throws FogException
     {        
         carportRequestDAO = new CarportRequestDAO(connection);
         materialDAO = new MaterialDAO(connection);
         rooftypeDAO = new RooftypeDAO(connection);
+        zipcodeDAO = new ZipcodeDAO(connection);
+        userDAO = new UserDAO(connection);
     }
     /**
      * Get all requests (forespørgsler).
@@ -79,4 +86,29 @@ public class DataFacade
     {
         return carportRequestDAO.createCarportRequest(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }
+    
+    public boolean createUser(String email, String password, String name, int phone, int zipcode) throws FogException
+    {
+        return userDAO.createUser(email, password, name, phone, zipcode);
+    }
+    
+    public boolean forgetUser(String email) throws FogException
+    {
+        return userDAO.forgetUser(email);
+    }
+    
+    public UsersDTO login(String email, String password) throws FogException
+    {
+        return userDAO.login(email, password);
+    }
+    
+    public List<ZipcodeDTO> getZipcodes() throws FogException
+    {
+        return zipcodeDAO.getZipcodes();
+    }
+    
+//    public List<UsersDTO> getAllUsers() throws FogException
+//    {
+//        return userDAO.
+//    }
 }

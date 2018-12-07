@@ -21,8 +21,14 @@ public final class Commands
     public static final String LOGIN = "login";
     /** Logger brugeren ud. */
     public static final String LOGOUT = "logout";
-    /** Command til opret bruger delen */
+    /** Command til at tjek om man er bruger eller ej?*/
+    public static final String LOGIN_CHECK = "loginCheck";
+    /** Command til at opret bruger */
     public static final String REGISTER = "register";
+    /** Command til send/smide bruger oplysning op */
+    public static final String ADD_REGISTER = "addRegister";
+    /** Command til at fortælle man har glemt adgangskode! */
+    public static final String FORGET = "forget";
     
     
     /** Command som viser alle forespørgsler. */
@@ -47,5 +53,8 @@ public final class Commands
     
     /** Command som viser tegning af carport. */
     public static final String SINGLEDRAW = "singledraw";
+    
+    
+    public static final String ADMIN_USERS ="adminUsers";
     
 }

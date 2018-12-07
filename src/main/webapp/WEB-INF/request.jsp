@@ -1,6 +1,5 @@
 <%
     String title = "Carport";
-    boolean viewUpdateQuest = (Boolean)request.getAttribute("viewBill");
     String requestForm = (String) request.getAttribute("requestForm");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

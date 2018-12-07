@@ -48,7 +48,7 @@ CREATE TABLE Users(
     phone int not null,
     email varchar(200) not null unique,
     `password` varchar(200) not null ,
-    rank int not null,
+    rank int not null DEFAULT 5,
     CONSTRAINT fk_Users_Zipcodes
     FOREIGN KEY (zip)
 	REFERENCES Zipcodes(zip)

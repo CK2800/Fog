@@ -6,6 +6,7 @@
 package jc.fog.data;
 
 import java.sql.Connection;
+import java.util.Random;
 import static jc.fog.data.RooftypeDAOJUnitTest.connection;
 import jc.fog.exceptions.FogException;
 import org.junit.After;
@@ -66,8 +67,12 @@ public class UserDAOUnitTest {
     @Test
     public void testCreateUser() throws FogException
     {
+        //Laver sådan at de bruger som bliver oprettet er unikke.
+        Random rand = new Random();
+        int random = rand.nextInt(100) + 1;
+        
         UserDAO userdao = new UserDAO(connection);
-        boolean success = userdao.createUser("Jesper", 3450, 11, "test@test.dk", "12345", 5);
+        boolean success = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
         assertTrue(success);
     }
     

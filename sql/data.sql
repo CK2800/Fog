@@ -173,3 +173,5 @@ INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2605', 'Brøndby');
 INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2100', 'København');
 INSERT INTO `Fog`.`Zipcodes` (`zip`, `city`) VALUES ('2630', 'Taastrup');
 
+INSERT INTO `Fog`.`Users` (`name`, `zip`, `phone`, `email`, `password`, `rank`) VALUES ('Kasper', 3450, 111, 'testadmin@admin.dk', '123', 1);
+INSERT INTO `Fog`.`Users` (`name`, `zip`, `phone`, `email`, `password`, `rank`) VALUES ('Kasper', 3450, 111, '00hej@hej.dk', '123', 5);
