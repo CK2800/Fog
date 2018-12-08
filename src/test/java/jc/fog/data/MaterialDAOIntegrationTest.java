@@ -30,15 +30,7 @@ public class MaterialDAOIntegrationTest
     @BeforeClass
     public static void setUpClass()
     {
-        try
-        {
-            connection = DbConnector.getConnection();
-            System.out.println("Db forbindelse åbnet");
-        }
-        catch(Exception e)
-        {
-            System.out.println("No database connection established: " + e.getMessage());
-        }
+        
     }
     
     @AfterClass
@@ -58,7 +50,15 @@ public class MaterialDAOIntegrationTest
     @Before
     public void setUp()
     {
-        
+       try
+        {
+            connection = DbConnector.getConnection();
+            System.out.println("Db forbindelse åbnet");
+        }
+        catch(Exception e)
+        {
+            System.out.println("No database connection established: " + e.getMessage());
+        } 
     }
     
     @After
@@ -86,7 +86,7 @@ public class MaterialDAOIntegrationTest
     
     @Test
     public void testGetMaterials() throws FogException
-    {   
+    {           
         MaterialDAO dao = new MaterialDAO(connection);
         List<MaterialDTO> materials = dao.getMaterials();        
         assertTrue(materials.size() > 0);
@@ -98,8 +98,7 @@ public class MaterialDAOIntegrationTest
         MaterialDAO dao = new MaterialDAO(connection);
         DbConnector.closeConnection();
         List<MaterialDTO> materials = dao.getMaterials();
-        // genåbn forbindelse.
-        connection = DbConnector.getConnection();
+        
         assertTrue(materials.size() > 0);
     }
 }

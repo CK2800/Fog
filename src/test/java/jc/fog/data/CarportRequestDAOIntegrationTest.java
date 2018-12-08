@@ -112,6 +112,8 @@ public class CarportRequestDAOIntegrationTest
         
         // Act        
         carports = df.getCarports();
+        // genåbn forbindelse.
+        connection = DbConnector.getConnection();
         
         // Assert
         assertTrue(carports == null);        
