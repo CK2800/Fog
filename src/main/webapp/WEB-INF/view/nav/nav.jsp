@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_REQUESTS %>">Forspørgelse</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.ADMIN_USERS %>">Admin bruger</a>
+                </li>
             <% } %>
             <li class="nav-item">
                 <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.LOGOUT %>">Log ud</a>

@@ -54,7 +54,11 @@ public final class Commands
     /** Command som viser tegning af carport. */
     public static final String SINGLEDRAW = "singledraw";
     
-    
+    /** Command som viser alle bruger. */
     public static final String ADMIN_USERS ="adminUsers";
+    /** Command til at tildel ny rank. */
+    public static final String ADMIN_RANK ="adminRank";
+    /** Command til at giv ny adgangskode. */
+    public static final String ADMIN_PASSWORD ="adminPassword";
     
 }

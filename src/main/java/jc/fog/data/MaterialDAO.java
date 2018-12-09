@@ -26,17 +26,11 @@ public class MaterialDAO extends AbstractDAO
      */
     public static final String GET_MATERIALS_SQL = "SELECT m.id, m.materialtypeId, m.name, mt.type, m.length, m.unit, m.price, rm.rooftypeId " +
                                                                  "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id LEFT JOIN RooftypeMaterials rm ON m.id = rm.materialId";
-//    public static final String GET_MATERIALS_SQL = "SELECT m.id, materialtypeId, m.name, mt.type, length, unit " +
-//                                                                 "FROM Materials m INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id";
-    
-    //Det er til, at opret i databasen.
-    
+        
     /**
      * SQL som opretter materiale i databasen.
      */
     public static final String CREATE_MATERIAL_SQL = "INSERT INTO Materials(materialtypeId, name, length, unit, price) VALUES (?, ?, ?, ?, ?)";
-    
-    //Bruger GET_VARER_TIL_BEREGNING_SQL så der fremkommer de rigtig værdier.
     
     
     /**
