@@ -52,19 +52,17 @@ public class CarportRequestDAO extends AbstractDAO{
     public CarportRequestDTO getCarportRequest(int id) throws FogException
     {
         CarportRequestDTO carportRequest = null;
-        try
-        {          
-            
-             PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL);
-             pstm.setInt(1, id);
-
-             //try with ressources.
-             try(ResultSet rs = pstm.executeQuery())
-             {
-                 if(rs.next())
-                 {
-                     //System.out.println("rs:" + rs.toString());
-                     carportRequest = new CarportRequestDTO(
+        try(PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL))
+        {
+            pstm.setInt(1, id);
+        
+            //try with ressources.
+            try(ResultSet rs = pstm.executeQuery())
+            {
+                if(rs.next())
+                {
+                    //System.out.println("rs:" + rs.toString());
+                    carportRequest = new CarportRequestDTO(
                                 rs.getInt("id"),
                                 rs.getInt("rooftypeId"),
                                 rs.getInt("slope"),
@@ -75,10 +73,9 @@ public class CarportRequestDAO extends AbstractDAO{
                                 rs.getString("remark"),
                                 rs.getInt("shedLength"),
                                 rs.getInt("shedWidth")
-                     );
-                     
-                 }
-             }
+                    );                     
+                }
+            }
         } 
         catch(Exception e)
         {
@@ -93,45 +90,41 @@ public class CarportRequestDAO extends AbstractDAO{
      * Henter alle carport forespørgsler.
      * @return - List af CarportRequestDTO objekter. Fandtes ingen forespørgsler, returneres tom liste.
      */
-    public ArrayList<CarportRequestDTO> getCarportRequests() throws FogException{
+    public ArrayList<CarportRequestDTO> getCarportRequests() throws FogException
+    {
         
         //kan være den skal laves om.
         ArrayList<CarportRequestDTO> carportRequests = new ArrayList<CarportRequestDTO>();
         
-        try{
-            
-            //Forsøg at hente forespørgsel ud fra Sql'en
-            PreparedStatement pstm = connection.prepareStatement(GET_CPREQUESTS_SQL);
-            
-            //try with ressources.
-            try(ResultSet rs = pstm.executeQuery())
+        //Forsøg at hente forespørgsel ud fra Sql'en
+        try(
+            PreparedStatement pstm = connection.prepareStatement(GET_CPREQUESTS_SQL); 
+            ResultSet rs = pstm.executeQuery();
+            )
+        {
+            while(rs.next())//Løber alle igennem
             {
-                while(rs.next())//Løber alle igennem
-                {
-                    System.out.println("rs:" + rs.toString());
-                     carportRequests.add(new CarportRequestDTO(
-                                rs.getInt("id"),
-                                rs.getInt("rooftypeId"),
-                                rs.getInt("slope"),
-                                rs.getInt("shedId"),
-                                rs.getInt("width"),
-                                rs.getInt("height"),
-                                rs.getInt("length"),
-                                rs.getString("remark"),
-                                rs.getInt("shedLength"),
-                                rs.getInt("shedWidth")
-                     ));
-                }
-            }            
-            
-            return carportRequests;
-       } 
-       catch(Exception e)
-       {
-           //Der er sket en fejl her
-           throw new FogException("Error:" + e.getMessage(), e.getMessage());
-       }  
-       
+                System.out.println("rs:" + rs.toString());
+                 carportRequests.add(new CarportRequestDTO(
+                            rs.getInt("id"),
+                            rs.getInt("rooftypeId"),
+                            rs.getInt("slope"),
+                            rs.getInt("shedId"),
+                            rs.getInt("width"),
+                            rs.getInt("height"),
+                            rs.getInt("length"),
+                            rs.getString("remark"),
+                            rs.getInt("shedLength"),
+                            rs.getInt("shedWidth")
+                ));
+            }
+        }
+        catch(Exception e)
+        {
+            //Der er sket en fejl her
+            throw new FogException("Error:" + e.getMessage(), e.getMessage());
+        }  
+        return carportRequests;
     }
 
     /**
@@ -150,20 +143,20 @@ public class CarportRequestDAO extends AbstractDAO{
      */
     public boolean createCarportRequest(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {
-        //Den "space removed" i siderne
+        // Fjern whitespace foran og bagved.
         remark = remark.trim();
-        
-        try
+        boolean success = false;
+        try(PreparedStatement pstm = connection.prepareStatement(CREATE_CPREQUEST_SQL);)
         {
-
-            PreparedStatement pstm;
+            // Start transaktion, da BÅDE skur (hvis valgt) OG carport skal oprettes.
+            connection.setAutoCommit(false);
+            
             int shedId = 0;
             // Først oprettes skur, hvis det ønskes.
             if (shedLength > 0 && shedWidth > 0) // skur ønskes.
                 shedId = createShed(shedLength, shedWidth);                
             
             // Opret forespørgsel, evt. med skur.
-            pstm = connection.prepareStatement(CREATE_CPREQUEST_SQL);
             pstm.setInt(1, rooftypeId);
             pstm.setInt(2, slope);           
             // Hvis skur ønskes, sættes dets id i sql...
@@ -171,21 +164,31 @@ public class CarportRequestDAO extends AbstractDAO{
                 pstm.setInt(3, shedId);                
             else // ... intet skur medfører null i sql.
                 pstm.setNull(3, Types.INTEGER);
-            
+
             pstm.setInt(4, width);
             pstm.setInt(5, height);
             pstm.setInt(6, length);
             pstm.setString(7, remark);
-                            
+
+            connection.commit();
+            // Reset autocommit på forbindelsen.
+            connection.setAutoCommit(true);
+
             // If exactly one row was affected, return true.
-            return pstm.executeUpdate() == 1;                
-            
+            success = pstm.executeUpdate() == 1;                                
         }
         // Her skal vi have egen exception handling
         catch(Exception e)
         {
-            throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+            // Blev forespørgsel ikke oprettet, kast exception.
+            if (!success)
+                throw new FogException("Forespørgsel blev ikke gemt.", e.getMessage());
+            else // forespørgsel oprettet, men exception er sket.
+            {
+                // todo: log exception.
+            }
         }        
+        return success;
     }
     
     /**
@@ -203,94 +206,53 @@ public class CarportRequestDAO extends AbstractDAO{
      */
     public boolean updateCarPortRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
+        boolean success = false, ok = false;
+        
         try
-        {
-            //Updater shed
-            PreparedStatement pstm;
-             
+        {                         
+            // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
+            connection.setAutoCommit(false);
+            
             // Har vi skurets id og er skuret tilvalgt, opdater evt. skurets attributter.
             if(shedId > 0 && "on".equals(shedCheck))//Den skal køre hvis Shedid er over 0 og Checkbox er tilføjet
-            {   
-                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
-                connection.setAutoCommit(false);
-                //Opdater skur
-                
+            {                   
                 //Skal opdater værdi hos skur. til de nye værdier.
-                updateShed(shedWidth, shedLength, shedId);
-                
-                //Skal opdater til de nye oplysning.
-                updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
-                
-                connection.commit();
-                connection.setAutoCommit(true);
-                return true;
-                                
+                ok = updateShed(shedWidth, shedLength, shedId);
+                if (ok) // skur opdateret ok, nu opdateres carport.
+                    ok = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
+                    
+                success = ok;
             }
+            // Checkbox for skur fravalgt, men skurId findes => slet skur.
             else if(shedId > 0 && !"on".equals(shedCheck))
-            {
-                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
-                connection.setAutoCommit(false);
-                //Slet Skur
-                               
+            {                               
                 //Skal slet det enkelt skur.
-                deleteShed(shedId);
+                ok = deleteShed(shedId);
+                if (ok) //Updater carport delen                
+                    updateCarPort(slope, 0, width, length, rooftypeId, remark, id);
                 
-                //Updater carport delen                
-                updateCarPort(slope, 0, width, length, rooftypeId, remark, id);
-                //updaterShedId(0, id);
-                
-                connection.commit();
-                connection.setAutoCommit(true);
-                return true;
-                
-                
+                success = ok;
             }
+            // Intet skurId, men checkbox tilvalgt => opret skur.
             else if(shedId == 0 && "on".equals(shedCheck))
-            {
-                // Start transaktion idet vi vil have ALLE opdateringer eller INGEN gennemført.
-                connection.setAutoCommit(false);
-                //Skal tilføj Skurid til carport.
+            {                
+                int addShedId = createShed(shedLength, shedWidth);
+                if (addShedId > 0)
+                    ok = updateCarPort(slope, addShedId, width, length, rooftypeId, remark, id);
+                else
+                    ok = false;
                 
-                //Her skal den opret skur til databasen. Hvis der ikke er tilføjet skurid i formen.
-                //Men man har klikket af på, at shedcheck.
-                //int addShedId = createShed(shedLength, shedWidth);
-                //eller skal vi bare bruge "createShed" og så få angivet den værdi som vi kan bruge til, at updater til forespørgelse.
-                
-                pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS);
-                pstm.setInt(1, shedLength);
-                pstm.setInt(2, shedWidth);
-                //pstm.addBatch();
-                
-                pstm.executeUpdate();
-                ResultSet rs = pstm.getGeneratedKeys();
-                rs.next();
-                
-                int addShedId = rs.getInt(1);
-                rs.close();
-                
-                
-                pstm = connection.prepareStatement(UPDATE_SHEDID_SQL);
-                pstm.setInt(1, addShedId);
-                pstm.setInt(2, id);
-                pstm.executeUpdate();
-                
-                connection.commit();
-                // Reset autocommit på forbindelsen.
-                connection.setAutoCommit(true);
-                return true;
+                success = ok;
             }
-            else
-            {
-                //skal kun updater de enkelte værdi på forespørgelsen
-                connection.setAutoCommit(false);
-                
-                updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
-                
-                connection.commit();
-                connection.setAutoCommit(true);
-                
-                return true;
+            else // Opdater carportens værdier.
+            {   
+                ok = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);                
+                success = ok;
             }
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+            return success;
         }
         catch(Exception e)
         {
@@ -308,14 +270,15 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws SQLException 
      */
     private boolean updateShed(int shedWidth, int shedLength, int shedId) throws SQLException {
-        PreparedStatement pstm;
-        //Updater skur værdi.
-        pstm = connection.prepareStatement(UPDATE_SHED_SQL);
-        pstm.setInt(1, shedWidth);
-        pstm.setInt(2, shedLength);
-        pstm.setInt(3, shedId);
-        //gem i databasen
-        return pstm.executeUpdate() == 1;
+        
+        try(PreparedStatement pstm = connection.prepareStatement(UPDATE_SHED_SQL);)
+        {
+            pstm.setInt(1, shedWidth);
+            pstm.setInt(2, shedLength);
+            pstm.setInt(3, shedId);
+            //gem i databasen
+            return pstm.executeUpdate() == 1;
+        }
         
     }
 
@@ -334,21 +297,20 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws SQLException 
      */
     private boolean updateCarPort(int slope, int shedId, int width, int length, int rooftypeId, String remark, int id) throws SQLException {
-        PreparedStatement pstm;
-        //Updater carport værdi.
-        pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);
-        pstm.setInt(1, slope);
-        if (shedId != 0)
+        try(PreparedStatement pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);)
+        {
+            pstm.setInt(1, slope);
+            if (shedId != 0)
                 pstm.setInt(2, shedId);                
             else // ... intet skur medfører null i sql.
                 pstm.setNull(2, Types.INTEGER);        
-        pstm.setInt(3, width);
-        pstm.setInt(4, length);
-        pstm.setInt(5, rooftypeId);
-        pstm.setString(6, remark);
-        pstm.setInt(7, id);
-        return pstm.executeUpdate() == 1;
-        
+            pstm.setInt(3, width);
+            pstm.setInt(4, length);
+            pstm.setInt(5, rooftypeId);
+            pstm.setString(6, remark);
+            pstm.setInt(7, id);
+            return pstm.executeUpdate() == 1;
+        }        
     }
 
     /**
@@ -359,11 +321,11 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws SQLException 
      */
     private boolean deleteShed(int shedId) throws SQLException {
-        PreparedStatement pstm;
-        //Her skal vi slette Skur.
-        pstm = connection.prepareStatement(DELETE_SHED_SQL);
-        pstm.setInt(1, shedId);
-        return pstm.executeUpdate() == 1;
+        try(PreparedStatement pstm = connection.prepareStatement(DELETE_SHED_SQL);)
+        {
+            pstm.setInt(1, shedId);
+            return pstm.executeUpdate() == 1;
+        }
         
     }
 
@@ -376,21 +338,24 @@ public class CarportRequestDAO extends AbstractDAO{
      */
     private int createShed(int length, int width) throws FogException
     {
-        try
+        int id = 0;
+        try(PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );)
         {
-            PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );
             pstm.setInt(1, length);
             pstm.setInt(2, width);
             pstm.executeUpdate();
-            ResultSet rs = pstm.getGeneratedKeys();
-            // Move the cursor to first record.
-            rs.next();            
-            return rs.getInt(1); 
+            try(ResultSet rs = pstm.getGeneratedKeys();)
+            {
+                // Move the cursor to first record.
+                rs.next();            
+                id = rs.getInt(1); 
+            }
         }
         catch(Exception e)
         {
             throw new FogException("Skur blev ikke oprettet.", e.getMessage());
         }
+        return id;
     }
     
     
