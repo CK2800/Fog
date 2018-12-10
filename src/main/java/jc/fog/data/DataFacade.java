@@ -32,4 +32,6 @@ public interface DataFacade
     public List<ZipcodeDTO> getZipcodes() throws FogException;
     public UsersDTO login(String email, String password) throws FogException;
     public boolean forgotPassword(String email) throws FogException;
+    public boolean setNewRankUser(int id, int rank) throws FogException;
+    public List<UsersDTO> getAllUsers() throws FogException;
 }

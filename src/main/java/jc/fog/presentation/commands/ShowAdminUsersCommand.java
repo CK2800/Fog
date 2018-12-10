@@ -38,8 +38,8 @@ public class ShowAdminUsersCommand extends Command
             } 
             
             DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-//            List<UsersDTO> users = dataFacade.getAllUsers();
-//            request.setAttribute("usersTable", userTable(users));
+            List<UsersDTO> getAllUsers = dataFacade.getAllUsers();
+            request.setAttribute("usersTable", userTable(getAllUsers, user));
         
             return Pages.ADMIN_USER;
         }
@@ -49,24 +49,31 @@ public class ShowAdminUsersCommand extends Command
         }
     }
     
-    private String userTable(List<UsersDTO> users)
+    
+    /**
+     * 
+     * @param getAllUsers
+     * @param userInfo Sikker sig at man ikke vil kun giv sig selv en mindre rank eller ny adgangskode.
+     * @return 
+     */
+    private String userTable(List<UsersDTO> getAllUsers, UsersDTO userInfo)
     {
         StringBuilder stringBuilder = new StringBuilder();
         String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th></tr></thead><tbody>$body</tbody></table>";        
         
         table = table.replace("$1", "Navn");
-        table = table.replace("$2", "Længde");
+        table = table.replace("$2", "Email");
         table = table.replace("$3", "Bruger status");
         table = table.replace("$4", "");
         
-        for(UsersDTO item : users)
+        for(UsersDTO item : getAllUsers)
         {
             String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td></tr>";
             row = row.replace("$1", String.valueOf(item.getName()));
             row = row.replace("$2", String.valueOf(item.getEmail()));
             row = row.replace("$3", String.valueOf(item.getRank() == 1 ? "Admin" : "Alm bruger"));
-            row = row.replace("$4", "<a href=\"FrontController?command=" + Commands.ADMIN_RANK + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater bruger status</a> " + 
-                                    "<a href=\"FrontController?command=" + Commands.ADMIN_PASSWORD + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Ny kode</a>");
+            row = row.replace("$4", (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_RANK + "&id=" + item.getId() + "&rank=" + item.getRank() + "\" class=\"btn btn-info btn-sm\">" + (item.getRank() == 5 ? "Gør til Admin" : "Gør til alm bruger") + "</a> " : "") + 
+                                    (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_PASSWORD + "&email=" + item.getEmail()+ "\" class=\"btn btn-info btn-sm\">Ny kode</a>" : ""));
             stringBuilder.append(row);
         }
         

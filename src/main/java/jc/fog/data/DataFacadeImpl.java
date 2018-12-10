@@ -107,13 +107,20 @@ public class DataFacadeImpl implements DataFacade
         return userDAO.forgotPassword(email);
     }
     
+    public boolean setNewRankUser(int id, int rank) throws FogException
+    {
+        return userDAO.setNewRankUser(id, rank);
+    }
+    
+    public List<UsersDTO> getAllUsers() throws FogException
+    {
+        return userDAO.getAllUsers();
+    }
+    
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
         return zipcodeDAO.getZipcodes();
     }
     
-//    public List<UsersDTO> getAllUsers() throws FogException
-//    {
-//        return userDAO.
-//    }
+    
 }

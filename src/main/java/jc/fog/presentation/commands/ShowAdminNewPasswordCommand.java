@@ -7,7 +7,11 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.presentation.Pages;
 
 /**
  *
@@ -16,6 +20,13 @@ import jc.fog.exceptions.FogException;
 public class ShowAdminNewPasswordCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        return null;
+        String email = request.getParameter("email");
+        
+        DataFacade dataFacede = new DataFacadeImpl(DbConnector.getConnection());
+        boolean newPassword = dataFacede.forgotPassword(email);
+        if(newPassword)
+            return Pages.ADMIN_USER;
+        else
+            return Pages.INDEX;
     }
 }

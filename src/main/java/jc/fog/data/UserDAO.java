@@ -31,6 +31,8 @@ public class UserDAO extends AbstractDAO
     final static String GET_ALL_USERS_SQL = "SELECT * FROM Users";
 
     final static String FORGOT_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
+    
+    final static String ADD_NEW_RANK_SQL ="UPDATE Users SET rank = ? WHERE id = ?";
 
        
     
@@ -147,6 +149,23 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Den kun ikke finde denne email." + e.getMessage());
+        }
+    }
+    
+    public boolean setNewRankUser(int id, int rank) throws FogException
+    {
+        try {
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(ADD_NEW_RANK_SQL);
+            pstm.setInt(1, rank);
+            pstm.setInt(2, id);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("..." + e.getMessage());
         }
     }
     
