@@ -37,7 +37,7 @@ public class UserDAO extends AbstractDAO
      * @return
      * @throws FogException 
      */
-    public boolean createUser(String email, String name, String password, int phone, int zipcode) throws FogException
+    public int createUser(String email, String name, String password, int phone, int zipcode) throws FogException
     {
         name = name.trim();
         password = password.trim();

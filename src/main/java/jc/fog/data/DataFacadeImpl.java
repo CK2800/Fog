@@ -36,6 +36,11 @@ public class DataFacadeImpl implements DataFacade
         zipcodeDAO = new ZipcodeDAO(connection);
         userDAO = new UserDAO(connection);
     }
+    public boolean deleteUser(int id)
+    {
+        // todo by jespe.
+        throw new UnsupportedOperationException("kommer snart");
+    }
     /**
      * Get all requests (forespørgsler).
      * @return List of CarportRequestDTO objects.

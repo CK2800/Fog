@@ -9,11 +9,13 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 
 /**
- *
+ * Facade som tilbyder offentlige metoder mod Logic laget.
+ * Facaden er tilstandsløs (indtil videre), og kunne tilbyde 
+ * metoderne som klassemetoder.
  * @author Claus
  */
 public class LogicFacade
-{
+{    
     public static List<BillItem> calculateBill(CarportRequestDTO carportRequest, List<MaterialDTO> materials) throws FogException
     {
         Calculator calculator = new Calculator(materials);

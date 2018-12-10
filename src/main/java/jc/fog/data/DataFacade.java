@@ -21,7 +21,8 @@ public interface DataFacade
 {
     public List<CarportRequestDTO> getCarports() throws FogException;
     public CarportRequestDTO getCarport(int id) throws FogException;
-    public boolean createUser(String email, String password, String name, int phone, int zipcode) throws FogException;
+    public int createUser(String email, String password, String name, int phone, int zipcode) throws FogException;
+    public boolean deleteUser(int id);
     public MaterialDTO getMaterial(int id) throws FogException;
     public List<MaterialDTO> getMaterials() throws FogException;
     public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException;
