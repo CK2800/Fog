@@ -8,6 +8,7 @@ package jc.fog.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
 
@@ -45,14 +46,23 @@ public class UserDAO extends AbstractDAO
             
             PreparedStatement pstm;
             
-            pstm = connection.prepareStatement(CREATE_USER_SQL);
+            pstm = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, name);
             pstm.setInt(2, zipcode);
             pstm.setInt(3, phone);
             pstm.setString(4, email);
             pstm.setString(5, password);
             
-            return pstm.executeUpdate() == 1;
+            // udfør opdatering.
+            pstm.executeUpdate();
+            
+            // Hent id.
+            ResultSet rs = pstm.getGeneratedKeys();
+            if (rs.next())
+                return rs.getInt(1);
+            else
+                return 0;
+            
         }
         catch(Exception e)
         {

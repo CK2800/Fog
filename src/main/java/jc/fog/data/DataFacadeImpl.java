@@ -92,7 +92,7 @@ public class DataFacadeImpl implements DataFacade
         return carportRequestDAO.createCarportRequest(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }
     
-    public boolean createUser(String email, String password, String name, int phone, int zipcode) throws FogException
+    public int createUser(String email, String password, String name, int phone, int zipcode) throws FogException
     {
         return userDAO.createUser(email, password, name, phone, zipcode);
     }

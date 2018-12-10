@@ -72,8 +72,9 @@ public class UserDAOIntegrationTest {
         int random = rand.nextInt(100) + 1;
         
         UserDAO userdao = new UserDAO(connection);
-        boolean success = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
-        assertTrue(success);
+        int userId = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
+        
+        assertTrue(userId != 0);
     }    
     
 //    @Test
