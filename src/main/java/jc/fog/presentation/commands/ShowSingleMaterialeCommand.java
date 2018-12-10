@@ -7,7 +7,7 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
@@ -27,7 +27,7 @@ public class ShowSingleMaterialeCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         int getId = Integer.parseInt(request.getParameter("id"));
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         MaterialDTO materialDTO = dataFacade.getMaterial(getId);
         request.setAttribute("materialeForm", materialToForm(materialDTO));
         

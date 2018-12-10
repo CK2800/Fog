@@ -8,7 +8,7 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
@@ -31,7 +31,7 @@ public class ShowRequestsCommand extends Command
         // Later we will validate a logged in user
                 
         // Get the list of requests.
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         List<CarportRequestDTO> requests = dataFacade.getCarports();
         
         // Convert the requests to a nicely formattet HTML table and save on request.

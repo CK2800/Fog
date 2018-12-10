@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
@@ -35,7 +35,7 @@ public class ShowDrawingCommand extends Command{
        
 
         // Hent carport request og materialer.
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         CarportRequestDTO carportRequest = dataFacade.getCarport(id);
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Udregn rektangler.

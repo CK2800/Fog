@@ -8,7 +8,7 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.data.RooftypeDAO;
 import jc.fog.exceptions.FogException;
@@ -27,8 +27,8 @@ public class ShowCarPortCommand  extends Command
         // get request's id from request hvis den findes.        
         int id = 0;        
                        
-        // Get DataFacade.
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        // Get DataFacadeImpl.
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         
         String requestForm = null;
         

@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
@@ -33,8 +33,8 @@ public class ShowBillCommand extends Command
         // Se om der er en id i request, for så skal vi hente carportrequest fra db.
         int id = 0;
         CarportRequestDTO carportRequestDTO;
-        // Create DataFacade
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        // Create DataFacadeImpl
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         // Har vi et gyldigt id ?
         try
         {

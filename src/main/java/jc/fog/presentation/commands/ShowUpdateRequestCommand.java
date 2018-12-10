@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
@@ -40,7 +40,7 @@ public class ShowUpdateRequestCommand extends Command
         int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
 
 
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         boolean updateRequest = dataFacade.updateRequest(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         // Hvis opdatering er ok, gå til side med alle carporte.
         if (updateRequest)

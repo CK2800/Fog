@@ -8,7 +8,7 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.ZipcodeDTO;
@@ -23,7 +23,7 @@ public class ShowRegisterCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         
         //får fast i zipcodes.
         List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();

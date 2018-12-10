@@ -86,12 +86,12 @@ public class CarportRequestDAOIntegrationTest
     /******************* Data facade tests *************************/    
     
     
-    /** Tester DataFacade ved at hente alle carport forespørgsler. */
+    /** Tester DataFacadeImpl ved at hente alle carport forespørgsler. */
     @Test
     public void GetCarports() throws FogException
     {
         // Arrange
-        DataFacade df = new DataFacade(connection);
+        DataFacadeImpl df = new DataFacadeImpl(connection);
         List<CarportRequestDTO> carports = null;
         
         // Act
@@ -101,12 +101,12 @@ public class CarportRequestDAOIntegrationTest
         assertTrue(carports != null);        
     }
     
-    /** Tester at DataFacade fejler korrekt i forsøget på at hente carport forespørgsler */
+    /** Tester at DataFacadeImpl fejler korrekt i forsøget på at hente carport forespørgsler */
     @Test(expected = FogException.class)    
     public void getCarportsFails() throws Exception
     {        
         // Arrange
-        DataFacade df = new DataFacade(connection);        
+        DataFacadeImpl df = new DataFacadeImpl(connection);        
         List<CarportRequestDTO> carports = null;        
         DbConnector.closeConnection();
         
@@ -123,7 +123,7 @@ public class CarportRequestDAOIntegrationTest
     public void getCarport() throws FogException
     {
         // Arrange
-        DataFacade df = new DataFacade(connection);
+        DataFacadeImpl df = new DataFacadeImpl(connection);
         
         // Act
         CarportRequestDTO carport = df.getCarport(1);
@@ -136,7 +136,7 @@ public class CarportRequestDAOIntegrationTest
     public void updateRequest() throws FogException
     {        
         // Arrange
-        DataFacade df = new DataFacade(connection);
+        DataFacadeImpl df = new DataFacadeImpl(connection);
         CarportRequestDTO carport = df.getCarport(1);
         carport.setRemark(carport.getRemark() + " ændret i integration test");
         

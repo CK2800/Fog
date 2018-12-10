@@ -8,7 +8,7 @@ package jc.fog.presentation.commands;
 import jc.fog.presentation.commands.ShowRequestsCommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.presentation.Pages;
@@ -36,7 +36,7 @@ public class ShowAddRequestCommand extends Command
         int shedLength = Integer.parseInt(request.getParameter("shedLength"));
         int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
         
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         //husk at fjern højde som er 200
         boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         

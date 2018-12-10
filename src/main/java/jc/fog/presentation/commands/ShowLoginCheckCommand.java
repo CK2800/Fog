@@ -8,7 +8,7 @@ package jc.fog.presentation.commands;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
+import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
@@ -26,7 +26,7 @@ public class ShowLoginCheckCommand extends Command {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         UsersDTO user = dataFacade.login(email, password);
 
         //tilføjer session på Rank og Id.
