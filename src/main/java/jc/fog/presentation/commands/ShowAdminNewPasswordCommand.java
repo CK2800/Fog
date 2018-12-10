@@ -25,8 +25,8 @@ public class ShowAdminNewPasswordCommand extends Command {
         DataFacade dataFacede = new DataFacadeImpl(DbConnector.getConnection());
         boolean newPassword = dataFacede.forgotPassword(email);
         if(newPassword)
-            return Pages.ADMIN_USER;
+            return new ShowAdminUsersCommand().execute(request, response);
         else
-            return Pages.INDEX;
+            return new ShowLoginCommand().execute(request, response);
     }
 }

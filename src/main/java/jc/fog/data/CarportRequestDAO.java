@@ -33,7 +33,7 @@ public class CarportRequestDAO extends AbstractDAO{
     final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
               
     final static String DELETE_SHED_SQL = "DELETE FROM Sheds WHERE id = ?";
-        
+            
     /**
      * Konstruktør som fordrer en DbConnector instans.     
      * @param connection

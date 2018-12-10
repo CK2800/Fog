@@ -29,8 +29,8 @@ public class ShowAdminUpdateRankCommand extends Command {
         boolean succesRank = dataFacede.setNewRankUser(id, newRank);
         
         if(succesRank)
-            return Pages.ADMIN_USER;
+            return new ShowAdminUsersCommand().execute(request, response);
         else
-            return Pages.INDEX;
+            return new ShowLoginCommand().execute(request, response);
     }
 }

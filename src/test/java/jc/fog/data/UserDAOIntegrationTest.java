@@ -66,16 +66,12 @@ public class UserDAOIntegrationTest {
 
     @Test
     public void testCreateUser() throws FogException
-    {
-        //Laver sådan at de bruger som bliver oprettet er unikke.
-        //Jesper lave det om...
-        Random rand = new Random();
-        int random = rand.nextInt(100) + 1;
-        
+    {      
         UserDAO userdao = new UserDAO(connection);
-        int userId = userdao.createUser(random + "test@test.dk", "hej", "12345", 11, 3450);
+        int userId = userdao.createUser("123456@123456.dk", "Test user", "12345", 11, 3450);
+        boolean deleteUser = userdao.deleteUser(userId);
         
-        assertTrue(userId != 0);
+        assertTrue(deleteUser);
     }    
     
 //    @Test

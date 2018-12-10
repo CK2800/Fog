@@ -42,19 +42,13 @@ public class ShowAddRequestCommand extends Command
         
         if (createRequest)
         {
-            try
-            {
-                // Kald ShowRequestCommand.execute.
-                return new ShowRequestsCommand().execute(request, response);
-            }
-            catch(Exception e)
-            {
-                throw new FogException("Listen med forespørgsler kan ikke vises, ring til Jesper", e.getMessage());
-            }
+            return new ShowRequestsCommand().execute(request, response);
         }
         else
         {
             // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
+            
+            //skal find ud af om vi skal lave den her om.
             return Pages.SINGLE_CARPORTVIEW;
         }
     }

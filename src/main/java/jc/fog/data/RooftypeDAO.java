@@ -32,7 +32,6 @@ public class RooftypeDAO extends AbstractDAO
                                                     "INNER JOIN Materialtypes mt ON m.materialtypeId = mt.id " +
                                                     "ORDER BY rt.id ASC"; 
         
-    //static final String GET_LIST_ROOFTYPES_WHERE_SQL = "SELECT id, type FROM Rooftypes order by id = ? desc";
     
     public RooftypeDAO(Connection connection) throws FogException
     {

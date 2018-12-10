@@ -33,11 +33,11 @@ public class ShowAddRegisterCommand extends Command
         
         if(createUser > 0)
         {        
-            return Pages.LOGIN;
+            return new ShowLoginCommand().execute(request, response);
         }
         else
         {
-            return Pages.REGISTER;
+            return new ShowRegisterCommand().execute(request, response);
         }
     }
 

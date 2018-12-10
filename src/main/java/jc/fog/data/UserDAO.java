@@ -33,9 +33,10 @@ public class UserDAO extends AbstractDAO
     final static String FORGOT_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
     
     final static String ADD_NEW_RANK_SQL ="UPDATE Users SET rank = ? WHERE id = ?";
+    
+    final static String DELETE_USER_SQL ="DELETE FROM Users WHERE id = ?";
 
        
-    
     public UserDAO(Connection connection) throws FogException {
         super(connection);
     } 
@@ -83,7 +84,8 @@ public class UserDAO extends AbstractDAO
     }
     
     /**
-     * 
+     * Bruges til, at find ud af om man har opretter sig på siden
+     * Hvis man findes i db så vil man få adgang til siden.
      * @param email
      * @param password
      * @return
@@ -125,9 +127,25 @@ public class UserDAO extends AbstractDAO
             throw new FogException("Kun ikke log ind.. " + e.getMessage());
         }
     }
+    
+    public boolean deleteUser(int userid) throws FogException
+    {
+        try {
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(DELETE_USER_SQL);
+            pstm.setInt(1, userid);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Kunne ikke slette bruger.. " + e.getMessage());
+        }
+    }
 
     /**
-     * 
+     * Skal tildele bruger med denne email ny adgangskode.
      * @param email
      * @return
      * @throws FogException 
@@ -136,6 +154,7 @@ public class UserDAO extends AbstractDAO
     {
         try
         {
+            //Henter vores random som sender tal + bogstaver tilbage som bruges til password.
             String password = Rules.randomPassword();
             
             PreparedStatement pstm;
@@ -148,10 +167,17 @@ public class UserDAO extends AbstractDAO
         }
         catch(Exception e)
         {
-            throw new FogException("Den kun ikke finde denne email." + e.getMessage());
+            throw new FogException("Den kun ikke finde denne email. " + e.getMessage());
         }
     }
     
+    /**
+     * Tildeler den ny rank til brugeren.
+     * @param id
+     * @param rank
+     * @return
+     * @throws FogException 
+     */
     public boolean setNewRankUser(int id, int rank) throws FogException
     {
         try {
@@ -165,7 +191,7 @@ public class UserDAO extends AbstractDAO
         }
         catch(Exception e)
         {
-            throw new FogException("..." + e.getMessage());
+            throw new FogException("Der sket en fejl ved opdater ranken. " + e.getMessage());
         }
     }
     

@@ -45,15 +45,8 @@ public class ShowUpdateRequestCommand extends Command
         // Hvis opdatering er ok, gå til side med alle carporte.
         if (updateRequest)
         {
-            try
-            {
-                // Kald ShowRequestCommand.execute.
-                return new ShowRequestsCommand().execute(request, response);
-            }
-            catch(Exception e)
-            {
-                throw new FogException("Listen med forespørgsler kan ikke vises, ring til Jesper", e.getMessage());
-            }
+            // Kald ShowRequestCommand.execute.
+            return new ShowRequestsCommand().execute(request, response);
         }
         else
         {
