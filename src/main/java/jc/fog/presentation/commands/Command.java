@@ -64,18 +64,12 @@ public abstract class Command
         commands.put(Commands.LOGIN_CHECK, new ShowLoginCheckCommand());
         commands.put(Commands.REGISTER, new ShowRegisterCommand());
         commands.put(Commands.ADD_REGISTER, new ShowAddRegisterCommand());
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/Command.java
         commands.put(Commands.ADMIN_USERS, new ShowAdminUsersCommand());
         commands.put(Commands.ADMIN_PASSWORD, new ShowAdminNewPasswordCommand());
         commands.put(Commands.ADMIN_RANK, new ShowAdminUpdateRankCommand());
-        commands.put(Commands.LOGOUT, new Logout());
-=======
+        //commands.put(Commands.LOGOUT, new Logout());
         commands.put(Commands.LOGOUT, new LogoutCommand());
-<<<<<<< HEAD
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/Command.java
-=======
-        commands.put(Commands.FORGOT, new ForgotPassword());
->>>>>>> FeatureClaus
+        commands.put(Commands.FORGET_PASSWORD, new ForgetPassword());
     }
     
     /**

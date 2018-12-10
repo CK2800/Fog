@@ -7,20 +7,13 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowSingleMaterialeCommand.java
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnector;
-import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.UsersDTO;
-=======
 import jc.fog.data.DataFacadeImpl;
+import jc.fog.logic.UsersDTO;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.presentation.Pages;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowSingleMaterialeCommand.java
 
 
 
@@ -35,7 +28,6 @@ public class ShowSingleMaterialeCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowSingleMaterialeCommand.java
         try {
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();
@@ -47,7 +39,7 @@ public class ShowSingleMaterialeCommand extends Command {
             } 
             
             int getId = Integer.parseInt(request.getParameter("id"));
-            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
             MaterialDTO materialDTO = dataFacade.getMaterial(getId);
             request.setAttribute("materialeForm", materialToForm(materialDTO));
 
@@ -57,15 +49,7 @@ public class ShowSingleMaterialeCommand extends Command {
         catch(Exception e)
         {
             throw new FogException("" + e.getMessage());
-        }
-=======
-        int getId = Integer.parseInt(request.getParameter("id"));
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        MaterialDTO materialDTO = dataFacade.getMaterial(getId);
-        request.setAttribute("materialeForm", materialToForm(materialDTO));
-        
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowSingleMaterialeCommand.java
-        
+        }     
     }
     
     private String materialToForm(MaterialDTO item)

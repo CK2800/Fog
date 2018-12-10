@@ -8,12 +8,9 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowRegisterCommand.java
 import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
-=======
 import jc.fog.data.DataFacadeImpl;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowRegisterCommand.java
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
@@ -29,7 +26,6 @@ public class ShowRegisterCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowRegisterCommand.java
         try
         {
             HttpSession session = request.getSession();
@@ -39,15 +35,8 @@ public class ShowRegisterCommand extends Command {
             {
                 return Pages.INDEX;
             } 
-=======
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        
-        //får fast i zipcodes.
-        List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowRegisterCommand.java
-        
-        
-            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+            
+            DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
 
             //får fast i zipcodes.
             List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();

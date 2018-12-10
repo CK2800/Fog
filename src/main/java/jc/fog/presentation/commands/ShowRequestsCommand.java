@@ -8,18 +8,12 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowRequestsCommand.java
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
-=======
 import jc.fog.data.DataFacadeImpl;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowRequestsCommand.java
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.UsersDTO;
-
-import jc.fog.presentation.Pages;
 import jc.fog.presentation.Pages;
 
 
@@ -34,7 +28,6 @@ public class ShowRequestsCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowRequestsCommand.java
         try {
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();
@@ -46,7 +39,7 @@ public class ShowRequestsCommand extends Command
             } 
 
             // Get the list of requests.
-            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
             List<CarportRequestDTO> requests = dataFacade.getCarports();
 
             // Convert the requests to a nicely formattet HTML table and save on request.
@@ -59,19 +52,6 @@ public class ShowRequestsCommand extends Command
         {
             throw new FogException("" + e.getMessage());
         }
-=======
-        // Later we will validate a logged in user
-                
-        // Get the list of requests.
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        List<CarportRequestDTO> requests = dataFacade.getCarports();
-        
-        // Convert the requests to a nicely formattet HTML table and save on request.
-        request.setAttribute("requestsTable", requestsToHtml(requests));
-        
-        // Return the page showing all requests.
-        return Pages.ALL_CARPORTS;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowRequestsCommand.java
     }
     
     /**

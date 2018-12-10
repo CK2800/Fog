@@ -24,13 +24,12 @@ public final class Commands
     /** Command til at tjek om man er bruger eller ej?*/
     public static final String LOGIN_CHECK = "loginCheck";
     
-    public static final String FORGOT = "forgot";
     /** Command til at opret bruger */
     public static final String REGISTER = "register";
     /** Command til send/smide bruger oplysning op */
     public static final String ADD_REGISTER = "addRegister";
     /** Command til at fortælle man har glemt adgangskode! */
-    public static final String FORGET = "forget";
+    public static final String FORGET_PASSWORD = "forget";
     
     
     /** Command som viser alle forespørgsler. */

@@ -8,20 +8,15 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowMaterialsCommand.java
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnector;
-import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialDTO;
+
 import jc.fog.logic.UsersDTO;
-=======
+
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.presentation.Pages;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowMaterialsCommand.java
 
 /**
  *
@@ -32,7 +27,6 @@ public class ShowMaterialsCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowMaterialsCommand.java
         try
         {
             //sikker sig at man har den rigtigt rank for at kun se det her område.
@@ -44,14 +38,9 @@ public class ShowMaterialsCommand extends Command {
                 return Pages.INDEX;
             } 
             
-            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
             List<MaterialDTO> materials = dataFacade.getMaterials();
             request.setAttribute("materialTable", materialsToHtml(materials));
-=======
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        List<MaterialDTO> materials = dataFacade.getMaterials();
-        request.setAttribute("materialTable", materialsToHtml(materials));
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowMaterialsCommand.java
         
             return Pages.ALL_MATERIALS;
         }

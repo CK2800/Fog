@@ -7,16 +7,10 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowLoginCommand.java
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
-import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
-=======
-import jc.fog.data.DataFacadeImpl;
 import jc.fog.exceptions.FogException;
 import jc.fog.presentation.Pages;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowLoginCommand.java
 
 public class ShowLoginCommand extends Command {
     
@@ -54,11 +48,7 @@ public class ShowLoginCommand extends Command {
         stringbuilder.append("E-mail (Brugernavn):<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
         stringbuilder.append("Adgangskode<br /><input type=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
         stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.LOGIN_CHECK + "\" class=\"btn btn-info btn-block\" value=\"Login\" \">");
-<<<<<<< HEAD
-        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.FORGET + "\" class=\"btn btn-info btn-block\" value=\"Send adgangskode\" \">");
-=======
-        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.FORGOT + "\" class=\"btn btn-info btn-block\" value=\"Ny adgangskode\" \">");
->>>>>>> FeatureClaus
+        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.FORGET_PASSWORD + "\" class=\"btn btn-info btn-block\" value=\"Ny adgangskode\" \">");
         stringbuilder.append("</form><br/>");
         
         return stringbuilder.toString();

@@ -8,22 +8,14 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowCarPortCommand.java
 import javax.servlet.http.HttpSession;
-import jc.fog.data.DataFacade;
-=======
 import jc.fog.data.DataFacadeImpl;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowCarPortCommand.java
 import jc.fog.data.DbConnector;
-import jc.fog.data.RooftypeDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.RooftypeDTO;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowCarPortCommand.java
 import jc.fog.logic.UsersDTO;
-=======
 import jc.fog.presentation.Pages;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowCarPortCommand.java
 
 /**
  *
@@ -35,17 +27,9 @@ public class ShowCarPortCommand  extends Command
     {  
         // get request's id from request hvis den findes.        
         int id = 0;        
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowCarPortCommand.java
-
-        // Get DataFacade.
-        DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-
-=======
                        
         // Get DataFacadeImpl.
         DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowCarPortCommand.java
         String requestForm = null;
 
         HttpSession session = request.getSession();

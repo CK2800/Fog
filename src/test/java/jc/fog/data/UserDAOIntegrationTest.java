@@ -63,22 +63,12 @@ public class UserDAOIntegrationTest {
     @After
     public void tearDown() {
     }
-<<<<<<< HEAD:src/test/java/jc/fog/data/UserDAOUnitTest.java
-    
-    
-//    @Test
-//    public void testCreateUser() throws FogException
-//    {
-//        UserDAO userdao = new UserDAO(connection);
-//        boolean success = userdao.createUser("test@test.dk", "hej", "12345", 11, 3450);
-//        assertTrue(success);
-//    }
-=======
 
     @Test
     public void testCreateUser() throws FogException
     {
         //Laver sådan at de bruger som bliver oprettet er unikke.
+        //Jesper lave det om...
         Random rand = new Random();
         int random = rand.nextInt(100) + 1;
         
@@ -87,7 +77,6 @@ public class UserDAOIntegrationTest {
         
         assertTrue(userId != 0);
     }    
->>>>>>> FeatureClaus:src/test/java/jc/fog/data/UserDAOIntegrationTest.java
     
 //    @Test
 //    public void testLoginUser() throws FogException

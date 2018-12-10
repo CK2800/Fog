@@ -8,19 +8,15 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowAdminUsersCommand.java
 import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
-import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.MaterialDTO;
 import jc.fog.logic.UsersDTO;
-=======
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.presentation.Pages;
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowAdminUsersCommand.java
 
 /**
  *
@@ -31,7 +27,6 @@ public class ShowAdminUsersCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowAdminUsersCommand.java
         try{
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();
@@ -42,12 +37,9 @@ public class ShowAdminUsersCommand extends Command
                 return Pages.INDEX;
             } 
             
-            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
-            List<UsersDTO> users = dataFacade.getAllUsers();
-            request.setAttribute("usersTable", userTable(users));
-=======
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
->>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowAdminUsersCommand.java
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+//            List<UsersDTO> users = dataFacade.getAllUsers();
+//            request.setAttribute("usersTable", userTable(users));
         
             return Pages.ADMIN_USER;
         }
