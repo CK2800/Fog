@@ -31,6 +31,7 @@ public class ShowLoginCommand extends Command {
         stringbuilder.append("E-mail (Brugernavn):<br /><input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
         stringbuilder.append("Adgangskode<br /><input type=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
         stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.LOGIN_CHECK + "\" class=\"btn btn-info btn-block\" value=\"Login\" \">");
+        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.FORGOT + "\" class=\"btn btn-info btn-block\" value=\"Ny adgangskode\" \">");
         stringbuilder.append("</form><br/>");
         
         return stringbuilder.toString();

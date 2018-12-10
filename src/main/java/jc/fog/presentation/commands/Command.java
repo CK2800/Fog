@@ -65,6 +65,7 @@ public abstract class Command
         commands.put(Commands.REGISTER, new ShowRegisterCommand());
         commands.put(Commands.ADD_REGISTER, new ShowAddRegisterCommand());
         commands.put(Commands.LOGOUT, new LogoutCommand());
+        commands.put(Commands.FORGOT, new ForgotPassword());
     }
     
     /**
