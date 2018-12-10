@@ -36,7 +36,7 @@ public class RooftypeDTO
      * Liste af MaterialDTO objekter som indgår i tagtypen, f.eks. røde rygsten, røde tagsten.
      * @return 
      */
-    public List<MaterialDTO> getMaterials(){return materials;}
+    public List<MaterialDTO> getMaterials(){return materials;} // Bør være deep copy af listen.
         
     /**
      * Initialiserer et RooftypeDTO objekt.

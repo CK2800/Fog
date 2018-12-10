@@ -6,7 +6,7 @@
 package jc.fog.logic;
 
 /**
- * Pure fabrication som kan fortælle hvor mange MaterialDTO objekter der skal brugs
+ * Pure fabrication som kan fortælle hvor mange MaterialDTO objekter der skal bruges
  * for at dække en given længde ifm. udregninger af styklister.
  * @author Claus
  */

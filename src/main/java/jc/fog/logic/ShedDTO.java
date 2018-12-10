@@ -19,12 +19,7 @@ public class ShedDTO
     public int getId(){ return id; }
     public int getLength() { return length; }
     public int getWidth() { return width; }
-    
-    // setters
-    public void setId(int value) { id = value; }
-    public void setLength(int value) { length = value; }
-    public void setWidth(int value) { width = value; }
-    
+            
     public ShedDTO(int id, int length, int width)
     {
         this.id = id;

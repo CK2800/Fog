@@ -30,24 +30,16 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     public int getWidth(){return 0;} // todo, implementeres vha. dimensionDTO ?
     public int getHeight(){return 0;} // todo, implementeres vha. dimensionDTO ?
     public String getUnit() { return unit; }
-    public MaterialtypeDTO getMaterialtypeDTO(){return materialtypeDTO;}
+    public MaterialtypeDTO getMaterialtypeDTO(){return materialtypeDTO;} // Ref type bør klones...
     public int getRooftypeId(){return rooftypeId;}
     /** Henter enhedspris for materialet */
     public float getPrice(){return price;}
     
     
-    //public List<DimensionerDTO> getDimensioner() { return dimensioner; }
-    
     // setters
-    public void setId(int value) { id = value; }
-    //public void setMaterialetypeId(int value) { materialetypeId = value; }
-    public void setName(String value) { name = value; }
-    public void setLength(int value) { length = value;}
-    public void setUnit(String value) { unit = value;}
-    public void setMaterialtypeDTO(MaterialtypeDTO value){materialtypeDTO = value;}
-    public void setRooftypeId(int value){rooftypeId = value;}
-    /** Sæt enhedspris */
-    public void setPrice(float value){price = value;}
+    // Bruges blot i tests.
+    protected void setMaterialtypeDTO(MaterialtypeDTO value){materialtypeDTO = value;}    
+    
     /**
      * Konstruktør hvor alle argumenter kendes.
      * @param id
@@ -73,7 +65,7 @@ public class MaterialDTO implements Comparable<MaterialDTO>
     }
 
     /**
-     * Sammenligning sker på materialetypens id.
+     * Sammenligning af materialetypens id.
      * Hvis materialtypeDTO er null på et eller begge objekter der sammenlignes,
      * sættes dets/deres materialetypeid til 0 og sammenligning udføres.
      * @param o

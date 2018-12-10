@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jc.fog.presentation.commands;
+
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowAdminUsersCommand.java
+import javax.servlet.http.HttpSession;
+import jc.fog.data.DataFacade;
+import jc.fog.data.DbConnector;
+import jc.fog.exceptions.FogException;
+import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.UsersDTO;
+=======
+import jc.fog.data.DataFacadeImpl;
+import jc.fog.data.DbConnector;
+import jc.fog.exceptions.FogException;
+import jc.fog.presentation.Pages;
+>>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowAdminUsersCommand.java
+
+/**
+ *
+ * @author Jespe
+ */
+public class ShowAdminUsersCommand extends Command
+{
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
+    {
+<<<<<<< HEAD:src/main/java/jc/fog/presentation/ShowAdminUsersCommand.java
+        try{
+            //sikker sig at man har den rigtigt rank for at kun se det her område.
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user != null && user.getRank() > 1)
+            {
+                return Pages.INDEX;
+            } 
+            
+            DataFacade dataFacade = new DataFacade(DbConnector.getConnection());
+            List<UsersDTO> users = dataFacade.getAllUsers();
+            request.setAttribute("usersTable", userTable(users));
+=======
+        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+>>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/ShowAdminUsersCommand.java
+        
+            return Pages.ADMIN_USER;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("" + e.getMessage());
+        }
+    }
+    
+    private String userTable(List<UsersDTO> users)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        String table = "<table class=\"table table-striped\"><thead><tr><th>$1</th><th>$2</th><th>$3</th><th>$4</th></tr></thead><tbody>$body</tbody></table>";        
+        
+        table = table.replace("$1", "Navn");
+        table = table.replace("$2", "Længde");
+        table = table.replace("$3", "Bruger status");
+        table = table.replace("$4", "");
+        
+        for(UsersDTO item : users)
+        {
+            String row = "<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td></tr>";
+            row = row.replace("$1", String.valueOf(item.getName()));
+            row = row.replace("$2", String.valueOf(item.getEmail()));
+            row = row.replace("$3", String.valueOf(item.getRank() == 1 ? "Admin" : "Alm bruger"));
+            row = row.replace("$4", "<a href=\"FrontController?command=" + Commands.ADMIN_RANK + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Opdater bruger status</a> " + 
+                                    "<a href=\"FrontController?command=" + Commands.ADMIN_PASSWORD + "&id=" + item.getId() + "\" class=\"btn btn-info btn-sm\">Ny kode</a>");
+            stringBuilder.append(row);
+        }
+        
+        return table.replace("$body", stringBuilder.toString());
+    }
+}

@@ -25,8 +25,7 @@ public class RooftypeDAO extends AbstractDAO
      * Henter tupler i Rooftype og relateret data fra Materiale og Materialetype.
      * Tupler sorteres på Rooftype.id så ResultSet kan gennemløbes og liste af
      * MaterialDTO objekter dannes til hvert RooftypeDTO objekt.
-     */
-        
+     */        
     private static final String GET_ROOFTYPES_SQL = "SELECT rt.id, rt.type, m.id as materialId, m.materialtypeId, m.name, m.length, m.unit, m.price, mt.type as materialType " +
                                                     "FROM Rooftypes rt INNER JOIN RooftypeMaterials rm ON rt.id = rm.rooftypeId " + 
                                                     "INNER JOIN Materials m ON rm.materialId = m.id " + 
@@ -46,21 +45,38 @@ public class RooftypeDAO extends AbstractDAO
      */
     protected List<RooftypeDTO> getRooftypes() throws FogException
     {
+        PreparedStatement pstm = null;
+        List<RooftypeDTO> rooftypes = new ArrayList();
         try
-        {            
-            List<RooftypeDTO> rooftypes = new ArrayList<RooftypeDTO>();
+        {   
             // Opret sql og kør.
-            PreparedStatement pstm = connection.prepareStatement(GET_ROOFTYPES_SQL);
-            try(ResultSet rs = pstm.executeQuery())
+            pstm = connection.prepareStatement(GET_ROOFTYPES_SQL);
+            try(ResultSet rs = pstm.executeQuery()) // ResultSet implementerer AutoCloseable og lukkes automatisk.
             {
                 rooftypes = mapRooftypes(rs);                
-            }
-            return rooftypes;
+            }            
         }
         catch(Exception e)
         {
             throw new FogException("Systemet kan ikke finde tagtyper.", e.getMessage());
         }
+        finally
+        {            
+            try
+            {
+                pstm.close();
+            }
+            catch(Exception s)
+            {
+                if (rooftypes.isEmpty()) // Ingen tagtyper fundet, kast fejl.
+                    throw new FogException("Systemet kan ikke finde tagtyper.", s.getMessage());
+                else
+                {
+                    // log at pstm ej blev lukket.
+                }
+            }            
+        }
+        return rooftypes;
     }
     
     /**

@@ -50,29 +50,43 @@ public class MaterialDAO extends AbstractDAO
     }
     
     /**
-     * Skal træk alt fra databasen ud i listen så det giver bruger/FOG mulighed for, at se materialer.
-     * @return
+     * Henter alle materialer.
+     * @return List af MaterialDTO objekter. Hvis ingen materialer findes, returneres tom liste.
      * @throws FogException 
      */
     public List<MaterialDTO> getMaterials() throws FogException
-    {
-        /*
-        Pseudo:
-        Hent materialer og deres dimensioner
-        Hent første vare fra recordset
-        Sålænge vareid er ens, tilføj til dimensioner
-        */ 
+    {        
+        List<MaterialDTO> materials = new ArrayList();
+        PreparedStatement pstm = null;
         try
-        {
-            PreparedStatement pstm = connection.prepareStatement(GET_MATERIALS_SQL);
-            ResultSet rs = pstm.executeQuery();
-            
-            return mapMaterials(rs);
+        {            
+            pstm = connection.prepareStatement(GET_MATERIALS_SQL);
+            try(ResultSet rs = pstm.executeQuery()) // ResultSet er AutoCloseable.
+            {
+                materials = mapMaterials(rs);            
+            }
         }
         catch(Exception e)
         {
             throw new FogException("Systemet kan ikke finde materialer.", e.getMessage());
         }
+        finally
+        {   
+            try
+            {
+                pstm.close();
+            }
+            catch(Exception s)
+            {
+                if (materials.isEmpty()) // ingen materialer fundet, giv besked.
+                    throw new FogException("Systemet kan ikke finde materialer.", s.getMessage());
+                else
+                {
+                    // log at pstm ej blev lukket.
+                }
+            }                                    
+        }        
+        return materials;
     }
     
     /**
@@ -98,6 +112,7 @@ public class MaterialDAO extends AbstractDAO
     
     /**
      * Henter værdier fra ResultSet tuples til liste af MaterialDTO.
+     * PRE: ResultSet rs er åbent.     
      * @param rs
      * @return
      * @throws SQLException 
@@ -117,56 +132,78 @@ public class MaterialDAO extends AbstractDAO
     }
     
     /**
-     * Skal opret Materiale med navn, længde, enhed og hvilke materialType man har valgt.
-     * @param materialtypeId
-     * @param name
+     * Opretter et materiale i databasen.
+     * @param materialtypeId id for materialets type.
+     * @param name materialets navn.
      * @param length
-     * @param unit
-     * @param price
-     * @return - Skal bare fortælle om man har opret eller ej?
+     * @param unit stk, mtr, kg osv.
+     * @param price enhedspris.
+     * @return true hvis oprettelse lykkedes, ellers false.
      * @throws FogException 
      */
     public boolean createMaterial(int materialtypeId, String name, int length, String unit, float price) throws FogException
     {
-        //Den "space removed" i siderne
+        // Fjern leading og trailing white space.
         name = name.trim();
         unit = unit.trim();
         
+        PreparedStatement pstm = null;
+        boolean success = false;
         try
         {            
             //Forsøg at hente forespørgsel ud fra Sql'en
-            PreparedStatement pstm = connection.prepareStatement(CREATE_MATERIAL_SQL, Statement.RETURN_GENERATED_KEYS);
+            pstm = connection.prepareStatement(CREATE_MATERIAL_SQL, Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, materialtypeId);
             pstm.setString(2, name);
             pstm.setInt(3, length);
             pstm.setString(4, unit);
             pstm.setFloat(5, price);
             
-            return pstm.executeUpdate() == 1;
+            success = pstm.executeUpdate() == 1;
+            
         }
         catch(Exception e)
         {
+            success = false;
             throw new FogException("Materiale blev ikke oprettet.", e.getMessage());
         }
+        finally
+        {
+            try
+            {
+                pstm.close();
+            }
+            catch(Exception s)
+            {
+                if (!success) // Oprettelsen fandt ikke sted, giv brugeren besked.
+                    throw new FogException("Materiale blev ikke oprettet.", s.getMessage());
+                else
+                {
+                    // todo - log fejl - alternativt rollback.
+                }
+            }            
+        }
+        return success;
     }
     
     
     /**
-     * Skal hente dens angivet indhold ud fra det som passer med getMaterialId.
-     * @param materialId
-     * @return - Skal sende dens indhold tilbage. Så det er muligt at arbejde med det.
+     * Henter materiale med det ønskede id.
+     * @param id
+     * @return - Returnerer MaterialDTO objekt hvis det findes, ellers null.
      * @throws FogException 
      */
-    public MaterialDTO getMaterial(int materialId) throws FogException
+    public MaterialDTO getMaterial(int id) throws FogException
     {
         MaterialDTO material = null;
+        PreparedStatement pstm = null;
         try
         {
-            PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);
-            pstm.setInt(1, materialId);
+            pstm = connection.prepareStatement(GET_MATERIAL_SQL);
+            pstm.setInt(1, id);
 
             //try with ressources.
-            try(ResultSet rs = pstm.executeQuery())
+            try(ResultSet rs = pstm.executeQuery()) // rs lukkes automatisk, da ResultSet implementerer AutoCloseable.
             {
                 if(rs.next())
                 {
@@ -177,6 +214,22 @@ public class MaterialDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Systemet kan ikke finde det ønskede materiale.", e.getMessage());
+        }
+        finally
+        {            
+            try
+            {
+                pstm.close();
+            }
+            catch(Exception s)
+            {
+                if (material == null) // Intet materiale fundet, giv besked.
+                    throw new FogException("Systemet kan ikke finde det ønskede materiale.", s.getMessage());
+                else
+                {
+                    // log at pstm ej blev lukket.
+                }
+            }            
         }
         return material;
     }

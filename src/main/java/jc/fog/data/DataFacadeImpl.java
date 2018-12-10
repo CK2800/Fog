@@ -5,6 +5,7 @@
  */
 package jc.fog.data;
 
+import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.CarportRequestDTO;
@@ -14,12 +15,12 @@ import jc.fog.logic.UsersDTO;
 import jc.fog.logic.ZipcodeDTO;
 
 /**
- *
+ * Facade to expose subsystem methods to clients.
+ * 
  * @author Claus
  */
-public interface DataFacade
+public class DataFacadeImpl implements DataFacade
 {
-<<<<<<< HEAD
     private CarportRequestDAO carportRequestDAO;
     private MaterialDAO materialDAO;
     private RooftypeDAO rooftypeDAO;
@@ -27,13 +28,18 @@ public interface DataFacade
     private UserDAO userDAO;
     
     
-    public DataFacade(Connection connection) throws FogException
+    public DataFacadeImpl(Connection connection) throws FogException
     {        
         carportRequestDAO = new CarportRequestDAO(connection);
         materialDAO = new MaterialDAO(connection);
         rooftypeDAO = new RooftypeDAO(connection);
         zipcodeDAO = new ZipcodeDAO(connection);
         userDAO = new UserDAO(connection);
+    }
+    public boolean deleteUser(int id)
+    {
+        // todo by jespe.
+        throw new UnsupportedOperationException("kommer snart");
     }
     /**
      * Get all requests (forespørgsler).
@@ -86,14 +92,9 @@ public interface DataFacade
         return carportRequestDAO.createCarportRequest(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }
     
-    public boolean createUser(String email, String password, String name, int phone, int zipcode) throws FogException
+    public int createUser(String email, String password, String name, int phone, int zipcode) throws FogException
     {
         return userDAO.createUser(email, password, name, phone, zipcode);
-    }
-    
-    public boolean forgetUser(String email) throws FogException
-    {
-        return userDAO.forgetUser(email);
     }
     
     public UsersDTO login(String email, String password) throws FogException
@@ -106,24 +107,8 @@ public interface DataFacade
         return zipcodeDAO.getZipcodes();
     }
     
-    public List<UsersDTO> getAllUsers() throws FogException
-    {
-        return userDAO.getAllUsers();
-    }
+//    public List<UsersDTO> getAllUsers() throws FogException
+//    {
+//        return userDAO.
+//    }
 }
-=======
-    public List<CarportRequestDTO> getCarports() throws FogException;
-    public CarportRequestDTO getCarport(int id) throws FogException;
-    public int createUser(String email, String password, String name, int phone, int zipcode) throws FogException;
-    public boolean deleteUser(int id);
-    public MaterialDTO getMaterial(int id) throws FogException;
-    public List<MaterialDTO> getMaterials() throws FogException;
-    public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException;
-    public List<RooftypeDTO> getRooftypes() throws FogException;
-    public boolean updateRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException;
-    public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException;
-    public List<ZipcodeDTO> getZipcodes() throws FogException;
-    public UsersDTO login(String email, String password) throws FogException;
-    
-}
->>>>>>> FeatureClaus
