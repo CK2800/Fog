@@ -102,6 +102,11 @@ public class DataFacadeImpl implements DataFacade
         return userDAO.login(email, password);
     }
     
+    public boolean forgotPassword(String email) throws FogException
+    {
+        return userDAO.forgotPassword(email);
+    }
+    
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
         return zipcodeDAO.getZipcodes();

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.Rules;
 import jc.fog.logic.UsersDTO;
 
 /**
@@ -22,6 +23,8 @@ public class UserDAO extends AbstractDAO
     
     //skal måske ha lavet navnet om på den her.
     final static String GET_USER_SQL = "SELECT id, rank FROM Users WHERE email=? AND password=?";
+    
+    final static String FORGOT_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
        
     
     public UserDAO(Connection connection) throws FogException {
@@ -111,6 +114,26 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Kun ikke log ind.. " + e.getMessage());
+        }
+    }
+    
+    public boolean forgotPassword(String email) throws FogException
+    {
+        try
+        {
+            String password = Rules.randomPassword();
+            
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(FORGOT_PASSWORD_SQL);
+            pstm.setString(1, password);
+            pstm.setString(2, email);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("..." + e.getMessage());
         }
     }
 }
