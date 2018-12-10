@@ -8,12 +8,9 @@ package jc.fog.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.sql.Statement;
->>>>>>> FeatureClaus
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
 
