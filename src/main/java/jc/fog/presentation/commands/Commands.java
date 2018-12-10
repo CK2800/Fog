@@ -23,6 +23,8 @@ public final class Commands
     public static final String LOGOUT = "logout";
     /** Command til at tjek om man er bruger eller ej?*/
     public static final String LOGIN_CHECK = "loginCheck";
+    
+    public static final String FORGOT = "forgot";
     /** Command til at opret bruger */
     public static final String REGISTER = "register";
     /** Command til send/smide bruger oplysning op */

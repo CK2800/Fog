@@ -71,7 +71,11 @@ public abstract class Command
         commands.put(Commands.LOGOUT, new Logout());
 =======
         commands.put(Commands.LOGOUT, new LogoutCommand());
+<<<<<<< HEAD
 >>>>>>> FeatureClaus:src/main/java/jc/fog/presentation/commands/Command.java
+=======
+        commands.put(Commands.FORGOT, new ForgotPassword());
+>>>>>>> FeatureClaus
     }
     
     /**

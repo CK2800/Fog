@@ -1,5 +1,5 @@
+<%@page import="jc.fog.presentation.commands.Commands"%>
 <%@page import="jc.fog.logic.UsersDTO"%>
-<%@page import="jc.fog.presentation.Commands"%>
 <%
     UsersDTO user = (UsersDTO)session.getAttribute("user");
 %>

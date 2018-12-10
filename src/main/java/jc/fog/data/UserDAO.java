@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.Rules;
 import jc.fog.logic.UsersDTO;
 
 /**
@@ -25,9 +26,13 @@ public class UserDAO extends AbstractDAO
     //skal måske ha lavet navnet om på den her.
     final static String GET_USER_SQL = "SELECT id, rank FROM Users WHERE email=? AND password=?";
     
+<<<<<<< HEAD
     final static String UPDATE_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
     
     final static String GET_ALL_USERS_SQL = "SELECT * FROM Users";
+=======
+    final static String FORGOT_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
+>>>>>>> FeatureClaus
        
     
     public UserDAO(Connection connection) throws FogException {
@@ -120,6 +125,7 @@ public class UserDAO extends AbstractDAO
         }
     }
     
+<<<<<<< HEAD
     /**
      * Gør det muligt at kun opdater ens konto med ny password.
      * @param email
@@ -133,12 +139,25 @@ public class UserDAO extends AbstractDAO
             
             pstm = connection.prepareStatement(UPDATE_PASSWORD_SQL);
             pstm.setString(1, "123456");
+=======
+    public boolean forgotPassword(String email) throws FogException
+    {
+        try
+        {
+            String password = Rules.randomPassword();
+            
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(FORGOT_PASSWORD_SQL);
+            pstm.setString(1, password);
+>>>>>>> FeatureClaus
             pstm.setString(2, email);
             
             return pstm.executeUpdate() == 1;
         }
         catch(Exception e)
         {
+<<<<<<< HEAD
             throw new FogException("Den kun ikke finde denne email." + e.getMessage());
         }
     }
@@ -165,6 +184,9 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Systemet havde problemet med at find users - " + e.getMessage());
+=======
+            throw new FogException("..." + e.getMessage());
+>>>>>>> FeatureClaus
         }
     }
 }

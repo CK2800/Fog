@@ -16,29 +16,17 @@ import jc.fog.presentation.Pages;
  *
  * @author Jespe
  */
-public class ShowAddRegisterCommand extends Command
+public class ForgotPassword extends Command
 {
-    
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        int phone = Integer.parseInt(request.getParameter("phone"));
-        int zipcode = Integer.parseInt(request.getParameter("zipcode"));
         
         DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        
-        int createUser = dataFacade.createUser(email, password, name, phone, zipcode);
-        
-        if(createUser > 0)
-        {        
+        boolean password = dataFacade.forgotPassword(email);
+        if(password)
             return Pages.LOGIN;
-        }
         else
-        {
             return Pages.REGISTER;
-        }
     }
-
 }

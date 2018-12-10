@@ -5,6 +5,9 @@
  */
 package jc.fog.logic;
 
+import java.util.Random;
+import java.util.UUID;
+
 /**
  * Statiske konstanter til brug ved udregninger af styklisten.
  * @author Claus
@@ -79,4 +82,22 @@ public class Rules
         SHEETING
     }
     
+<<<<<<< HEAD
+=======
+    
+    /**
+     * Bruges til, at kun giv bruger et "user" ny adgangskode.
+     * Hvis nextInt bliver "0" så vil den altid tilføj 5.
+     * @return 
+     */
+    public static String randomPassword()
+    {
+        Random rand = new Random();
+        int max = rand.nextInt(10) + 5;
+        
+        String uniqueText = UUID.randomUUID().toString();
+        return uniqueText.replace("-", "").substring(0, max);
+    }
+   
+>>>>>>> FeatureClaus
 }
