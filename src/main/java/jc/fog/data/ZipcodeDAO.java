@@ -19,8 +19,7 @@ import jc.fog.logic.ZipcodeDTO;
  */
 public class ZipcodeDAO extends AbstractDAO {
     
-    static final String GET_ZIPCODES_SQL = "SELECT zip, city FROM Zipcodes";
-    
+    static final String GET_ZIPCODES_SQL = "SELECT zip, city FROM Zipcodes";    
     
     public ZipcodeDAO(Connection connection) throws FogException {
         super(connection);

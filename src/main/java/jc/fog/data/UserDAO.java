@@ -125,21 +125,19 @@ public class UserDAO extends AbstractDAO
     
     public boolean forgotPassword(String email) throws FogException
     {
-        try
+        boolean success = false;
+        try (PreparedStatement pstm = connection.prepareStatement(FORGOT_PASSWORD_SQL);)
         {
-            String password = Rules.randomPassword();
-            
-            PreparedStatement pstm;
-            
-            pstm = connection.prepareStatement(FORGOT_PASSWORD_SQL);
+            String password = Rules.randomPassword();            
             pstm.setString(1, password);
             pstm.setString(2, email);
             
-            return pstm.executeUpdate() == 1;
+            success = pstm.executeUpdate() == 1;
         }
         catch(Exception e)
         {
             throw new FogException("..." + e.getMessage());
         }
+        return success;
     }
 }
