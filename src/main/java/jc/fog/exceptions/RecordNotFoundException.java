@@ -5,12 +5,21 @@
  */
 package jc.fog.exceptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Exception som bruges, når en record ikke findes i databasen.
  * @author Claus
  */
 public class RecordNotFoundException extends Exception
 {
+    /**
+     * Logger for RecordNotFoundException klassen. 
+     * Erklæret statisk, så alle instanser deler samme logger.
+     */
+    //private static final Logger LOGGER = FogLogger.getLogger(jc.fog.exceptions.RecordNotFoundException.class.getName(), false); ej nødv., da vi logger i FogException og disse konverteres dertil.
+    
     /** Databasens tabeller */
     public static enum Table { CARPORTREQUESTS, MATERIALS, REMARKS, ROOFTYPEMATERIALS, ROOFTYPES, SHEDS, USERS, ZIPCODES }
     
@@ -46,5 +55,8 @@ public class RecordNotFoundException extends Exception
         this.table = table;    
         this.criteria = criteria;
         this.column = column;
+        
+        // Log undtagelsen.
+        //LOGGER.log(Level.SEVERE, this.getMessage());
     }
 }
