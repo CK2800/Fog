@@ -44,9 +44,9 @@ public class ShowUpdateRequestCommand extends Command
         boolean updateRequest = dataFacade.updateRequest(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
         // Hvis opdatering er ok, gå til side med alle carporte.
         if (updateRequest)
-        {
+        {            
             // Kald ShowRequestCommand.execute.
-            return new ShowRequestsCommand().execute(request, response);
+            return new ShowRequestsCommand().execute(request, response);            
         }
         else
         {

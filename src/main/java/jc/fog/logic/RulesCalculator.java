@@ -62,7 +62,7 @@ public abstract class RulesCalculator extends Rules
         }
         catch(Exception e)
         {
-            throw new FogException("Materialer blev ikke initialiseret", e.getMessage());
+            throw new FogException("Materialer blev ikke initialiseret", e.getMessage(), e);
         }
         
     }
@@ -103,9 +103,11 @@ public abstract class RulesCalculator extends Rules
         try
         {
             MaterialDTO materialeDTO = null;
+            String materialType = "";
             int actualCount = 0, count;        
             for(MaterialDTO m : list)
-            {
+            {                
+                materialType = m.getMaterialtypeDTO().getType();
                 // Da vi har promoted dividend og divisor til double v. division for at 
                 // kunne runde antal materialer op til nærmeste hele antal, får vi ingen
                 // divide by zero - exception, fordi den kun kastes ved heltalsdivision.
@@ -136,12 +138,12 @@ public abstract class RulesCalculator extends Rules
             }
             if (actualCount > 0)
                 return new MaterialCount(actualCount, materialeDTO);        
-            else
-                throw new FogException("Intet materiale passer til længden.", "Intet materiale fundet som passer til den krævede længde.");
-        }
+            else // Kast en generisk exception om at ønsket materialetype i ønsket længde ej blev fundet.
+                throw new Exception("Intet materiale af typen: " + materialType + " fundet, som passer til den krævede længde: " + length);                
+        }        
         catch(Exception e)
         {
-            throw new FogException("Intet materiale fundet", e.getMessage());
+            throw new FogException("Intet materiale fundet.", e.getMessage(), e);
         }
     }
     
@@ -151,13 +153,21 @@ public abstract class RulesCalculator extends Rules
      * Formel: Hypotenuse = katete / cos(vinkel)
      * @param width Hosliggende katetes længde
      * @param degSlope Vinkel i grader, for hvilken gælder at 0 < degSlope < 90.
-     * @return 
+     * @return Hypotenusens længde.
+     * @throws jc.fog.exceptions.FogException 
      */
     protected double calculateSlopedWidth(double width, int degSlope) throws FogException
     {
-        // stopping conditions er <= 0 og >= 90.
-        if (degSlope <= 0 || degSlope >= 90)
-            throw new FogException("Ugyldig vinkel", "Vidde kan ikke beregnes for vinkler på 0 eller derunder ELLER på 90 eller derover.");
-        return width / Math.cos(Math.toRadians(degSlope));
+        try
+        {
+            // stopping conditions er <= 0 og >= 90.
+            if (degSlope <= 0 || degSlope >= 90)
+                throw new Exception("Vidde kan ikke beregnes for vinkler på 0 eller derunder ELLER på 90 eller derover.");
+            return width / Math.cos(Math.toRadians(degSlope));
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Ugyldig vinkel.", e.getMessage(), e);
+        }
     }
 }

@@ -43,38 +43,23 @@ public class RooftypeDAO extends AbstractDAO
      * @return 
      */
     protected List<RooftypeDTO> getRooftypes() throws FogException
-    {
-        PreparedStatement pstm = null;
+    {        
         List<RooftypeDTO> rooftypes = new ArrayList();
         try
-        {   
-            // Opret sql og kør.
-            pstm = connection.prepareStatement(GET_ROOFTYPES_SQL);
-            try(ResultSet rs = pstm.executeQuery()) // ResultSet implementerer AutoCloseable og lukkes automatisk.
-            {
-                rooftypes = mapRooftypes(rs);                
-            }            
-        }
+        (
+            // ResultSet og PreparedStatement implementerer AutoCloseable og lukkes automatisk.
+            PreparedStatement pstm = connection.prepareStatement(GET_ROOFTYPES_SQL);
+            ResultSet rs = pstm.executeQuery();
+        ) 
+        {
+            rooftypes = mapRooftypes(rs);                
+        }            
+
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde tagtyper.", e.getMessage());
+            throw new FogException("Der er sket en fejl og systemet kan ikke hente tagtyper.", e.getMessage(), e);
         }
-        finally
-        {            
-            try
-            {
-                pstm.close();
-            }
-            catch(Exception s)
-            {
-                if (rooftypes.isEmpty()) // Ingen tagtyper fundet, kast fejl.
-                    throw new FogException("Systemet kan ikke finde tagtyper.", s.getMessage());
-                else
-                {
-                    // log at pstm ej blev lukket.
-                }
-            }            
-        }
+     
         return rooftypes;
     }
     

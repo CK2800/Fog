@@ -5,6 +5,7 @@
  */
 package jc.fog.data;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,9 +33,8 @@ public class DbConnector
     /**
      * Establishes the connection to the database with the connection properties
      * read from db.properties ressource file.
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @return Connection som er forbindelse til databasen.
+     * @throws jc.fog.exceptions.FogException     
      */
     public static Connection getConnection() throws FogException 
     {
@@ -50,20 +50,30 @@ public class DbConnector
                 connection = DriverManager.getConnection(dbProperties.getProperty("URL"), 
                                                          dbProperties.getProperty("USERNAME"), 
                                                          dbProperties.getProperty("PASSWORD"));                
-            }
+            }            
             catch(Exception e)
             {
-                System.out.println("Fejl v. etablering af db. forbindelse: " + e.getMessage());
+                throw new FogException("Fejl v. etablering af db. forbindelse.", e.getMessage(), e);
             }
         }
         return connection;
     }
     
-    public static void closeConnection() throws SQLException
+    public static void closeConnection() throws FogException
     {
+        
         if (connection != null)
-            connection.close();
-        connection = null;
+        {
+            try
+            {
+                connection.close();
+            }
+            catch(SQLException s)
+            {
+                throw new FogException("Forbindelse til databasen fejlede.", "Db forbindelse ej lukket: " + s.getMessage(), s);
+            }
+            connection = null;
+        }
     }
     
     /**

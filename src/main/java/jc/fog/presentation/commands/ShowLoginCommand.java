@@ -16,25 +16,18 @@ public class ShowLoginCommand extends Command {
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
-        try
+    {   
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
+        // Har vi en user i session, er denne logget ind, gå til index side.
+        if(user != null && user.getId() > 0)
         {
-            HttpSession session = request.getSession();
-            UsersDTO user = (UsersDTO)session.getAttribute("user");
-            // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getId() > 0)
-            {
-                return Pages.INDEX;
-            }        
+            return Pages.INDEX;
+        }        
 
-            // Ingen user i session => dan login formular og vis login side.
-            request.setAttribute("login", login());
-            return Pages.LOGIN;
-        }
-        catch(Exception e)
-        {
-            throw new FogException("Login side kan ikke vises, prøv igen.", e.getMessage());
-        }
+        // Ingen user i session => dan login formular og vis login side.
+        request.setAttribute("login", login());
+        return Pages.LOGIN;
     }
     
     /**

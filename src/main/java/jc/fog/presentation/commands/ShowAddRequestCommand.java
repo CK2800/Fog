@@ -41,9 +41,15 @@ public class ShowAddRequestCommand extends Command
         boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         
         if (createRequest)
+<<<<<<< HEAD
         {
             //skal find ud af om man er online med session eller ej?
             return new ShowRequestsCommand().execute(request, response);
+=======
+        {            
+            // Kald ShowRequestCommand.execute.
+            return new ShowRequestsCommand().execute(request, response);            
+>>>>>>> FeatureClaus
         }
         else
         {

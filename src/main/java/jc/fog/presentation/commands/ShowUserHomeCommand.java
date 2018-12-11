@@ -23,9 +23,14 @@ public class ShowUserHomeCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
-        try
+    {   
+        //sikker sig at man har den rigtigt rank for at kun se det her område.
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
+        // Har vi en user i session, er denne logget ind, gå til index side.
+        if(user != null && user.getRank() < 0)
         {
+<<<<<<< HEAD
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
@@ -43,6 +48,19 @@ public class ShowUserHomeCommand extends Command
         {
             throw new FogException("Den ikke vise forsiden til bruger - " + e.getMessage());
         }
+=======
+            return Pages.INDEX;
+        } 
+
+        //Få fat i vores id på user som vi skal brug til, at fremvise navn på konto siden.
+        int userid = user.getId();
+
+        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+        String getName = dataFacade.returnUserName(userid);//få bruges navn tilbage her.
+
+        request.setAttribute("getUserName", getName);
+        return Pages.USER_HOME;
+>>>>>>> FeatureClaus
     }
     
 }

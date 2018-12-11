@@ -43,14 +43,15 @@ public class ShowRegisterCommand extends Command {
 
             //Fremviser form for opret bruger delen.
             request.setAttribute("register", register(zipcodes));
-
-            //Siden som skal bliver vist.
+            
+               //Siden som skal bliver vist.
             return Pages.REGISTER;
         }
         catch(Exception e)
         {
-            throw new FogException("Opret bruger side kan ikke vises, prøv igen.", e.getMessage());
+            throw new FogException("Opret bruger side kan ikke vises, prøv igen.", e.getMessage(), e);
         }
+        
     }
     
     /**

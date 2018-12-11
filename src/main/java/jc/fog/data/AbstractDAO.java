@@ -6,7 +6,6 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import jc.fog.exceptions.FogException;
 
 /**
  *
@@ -16,7 +15,7 @@ public class AbstractDAO
 {    
     protected static Connection connection = null;
     
-    public AbstractDAO(Connection connection) throws FogException
+    public AbstractDAO(Connection connection) 
     {
         this.connection = connection;
     }   

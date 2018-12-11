@@ -6,10 +6,11 @@
 package jc.fog.data;
 
 import java.sql.Connection;
-import java.util.Random;
 import jc.fog.exceptions.FogException;
+import jc.fog.exceptions.RecordNotFoundException;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -72,5 +73,19 @@ public class UserDAOIntegrationTest {
         boolean deleteUser = userdao.deleteUser(userId);
         
         assertTrue(deleteUser);
-    }    
+    } 
+    
+    @Test(expected = FogException.class)    
+    public void testGetUserName() throws FogException
+    {
+        // Assert
+        UserDAO userdao = new UserDAO(connection);
+        
+        // Act
+        String username = userdao.returnUserName(500);
+        
+        // Assert
+        assertEquals(username, "testuser");
+                
+    }
 }

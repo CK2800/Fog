@@ -18,8 +18,7 @@ public class UnknownCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
-        // throw an exception.
-        throw new FogException("Sorry, the system does not understand the requested command", "Unknown command request." + UnknownCommand.class.toString());
+    {        
+        throw new FogException("Den ønskede side kan ikke vises.", "Unknown command request.", null);
     }
 }

@@ -20,9 +20,13 @@ public class ShowUserPasswordCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
-        try
+    {        
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
+        // Har vi en user i session, er denne logget ind, gå til index side.
+        if(user != null && user.getId() < 0)
         {
+<<<<<<< HEAD
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
@@ -30,16 +34,14 @@ public class ShowUserPasswordCommand extends Command
             {
                 return Pages.INDEX;
             }        
+=======
+            return Pages.INDEX;
+        }        
+>>>>>>> FeatureClaus
 
-            // Ingen user i session => dan login formular og vis login side.
-            request.setAttribute("updateAdgangskode", updatePassword());
-            return Pages.USER_PASSWORD;
-        }
-        catch(Exception e)
-        {
-            throw new FogException("opdater adgangskode side kan ikke vises, prøv igen.", e.getMessage());
-        }
-        
+        // Ingen user i session => dan login formular og vis login side.
+        request.setAttribute("updateAdgangskode", updatePassword());
+        return Pages.USER_PASSWORD;
     }
     
     

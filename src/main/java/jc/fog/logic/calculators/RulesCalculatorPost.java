@@ -51,7 +51,7 @@ public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
         }
         catch(Exception e)
         {
-            throw new FogException("Stolper kunne ikke beregnes.", e.getMessage());
+            throw new FogException("Stolper kunne ikke beregnes.", e.getMessage(), e);
         }
     }    
 

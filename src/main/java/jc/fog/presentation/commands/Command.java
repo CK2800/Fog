@@ -5,20 +5,8 @@
  */
 package jc.fog.presentation.commands;
 
-import jc.fog.presentation.commands.ShowAddRegisterCommand;
-import jc.fog.presentation.commands.ShowAddRequestCommand;
-import jc.fog.presentation.commands.ShowBillCommand;
-import jc.fog.presentation.commands.ShowCarPortCommand;
-import jc.fog.presentation.commands.ShowDrawingCommand;
-import jc.fog.presentation.commands.ShowLoginCheckCommand;
-import jc.fog.presentation.commands.ShowLoginCommand;
-import jc.fog.presentation.commands.ShowMaterialsCommand;
-import jc.fog.presentation.commands.ShowRegisterCommand;
-import jc.fog.presentation.commands.ShowRequestsCommand;
-import jc.fog.presentation.commands.ShowSingleMaterialeCommand;
-import jc.fog.presentation.commands.ShowUpdateRequestCommand;
-import jc.fog.presentation.commands.UnknownCommand;
 import java.util.HashMap;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.exceptions.FogException;
@@ -36,7 +24,7 @@ public abstract class Command
 {
     // placeholder.
     public static String command;
-    
+            
     /**
      * HashMap of available commands.
      */
@@ -103,7 +91,5 @@ public abstract class Command
      * @return String
      * @throws FogException 
      */
-    abstract public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException;
-            
-    
+    abstract public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException;    
 }

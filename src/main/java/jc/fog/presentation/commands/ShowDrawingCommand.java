@@ -57,9 +57,15 @@ public class ShowDrawingCommand extends Command{
 
             return Pages.SINGLE_DRAW;
         }
-        catch(Exception e)
+        catch(NumberFormatException n)
         {
-            throw new FogException("Tegning kunne ikke blive vist. " , e.getMessage());
+            throw new FogException("Tegning kunne ikke vises." , n.getMessage(), n);
         }
+        catch(FogException f)
+        {
+            // kastes bare videre.
+            throw f;
+        }
+            
     }
 }

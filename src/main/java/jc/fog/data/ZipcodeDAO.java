@@ -8,7 +8,6 @@ package jc.fog.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -20,51 +19,35 @@ import jc.fog.logic.ZipcodeDTO;
  */
 public class ZipcodeDAO extends AbstractDAO {
     
-    static final String GET_ZIPCODES_SQL = "SELECT zip, city FROM Zipcodes";
-    
+    static final String GET_ZIPCODES_SQL = "SELECT zip, city FROM Zipcodes";    
     
     public ZipcodeDAO(Connection connection) throws FogException {
         super(connection);
-    }
-    
+    }   
     
     
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
-        PreparedStatement pstm = null;
-        List<ZipcodeDTO> getZipcodes = new ArrayList<ZipcodeDTO>();
+        
+        List<ZipcodeDTO> getZipcodes = new ArrayList();
         
         try
-        {   
-            pstm = connection.prepareStatement(GET_ZIPCODES_SQL);
-            try(ResultSet rs = pstm.executeQuery())
+        (
+            PreparedStatement pstm = connection.prepareStatement(GET_ZIPCODES_SQL);
+            ResultSet rs = pstm.executeQuery();
+        )
+        {
+            while(rs.next())
             {
-                while(rs.next())
-                {
-                    getZipcodes.add(new ZipcodeDTO(rs.getInt("zip"), rs.getString("city"))); 
-                }
-            }                      
-        }
+                getZipcodes.add(new ZipcodeDTO(rs.getInt("zip"), rs.getString("city"))); 
+            }
+        }                      
+        
         catch(Exception e)
         {
-            throw new FogException("Kunne ikke fremvise Postnr: " + e.getMessage());
+            throw new FogException("Kunne ikke finde postnumre.", e.getMessage(), e);
         }
-        finally
-        {
-            try
-            {
-                pstm.close();                
-            }
-            catch(Exception s)
-            {
-                if (getZipcodes.isEmpty()) // Ingen zipcodes, kast exception.
-                    throw new FogException("Kunne ikke fremvise Postnr.", s.getMessage());
-                else
-                {
-                    // TODO log at pstm ej blev lukket.
-                }
-            }
-        }
+        
         return getZipcodes;
     }
     

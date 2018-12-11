@@ -46,10 +46,15 @@ public class ShowSingleMaterialeCommand extends Command {
 
             return Pages.SINGLE_MATERIAL;
         }
-        catch(Exception e)
+        catch(NumberFormatException n)
         {
-            throw new FogException("" + e.getMessage());
+            throw new FogException("Materialet kan ikke vises.", n.getMessage(), n);
         }     
+        catch(FogException f)
+        {
+            // kastes blot videre.
+            throw f;
+        }        
     }
     
     private String materialToForm(MaterialDTO item)
