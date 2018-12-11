@@ -51,7 +51,7 @@ public class RulesCalculatorHead extends RulesCalculator implements RulesDrawer
         }        
         catch(Exception e)
         {
-            throw new FogException("Beregning af spærtræ fejlede.", e.getMessage());
+            throw new FogException("Beregning af spærtræ fejlede.", e.getMessage(), e);
         }        
     }    
     
@@ -121,7 +121,7 @@ public class RulesCalculatorHead extends RulesCalculator implements RulesDrawer
         }
         catch(Exception e)
         {
-            throw new FogException("Rektangler for rem kan ikke udregnes.", e.getMessage());
+            throw new FogException("Rektangler for rem kan ikke udregnes.", e.getMessage(), e);
         }
     }
 }

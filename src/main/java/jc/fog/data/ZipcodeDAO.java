@@ -23,8 +23,7 @@ public class ZipcodeDAO extends AbstractDAO {
     
     public ZipcodeDAO(Connection connection) throws FogException {
         super(connection);
-    }
-    
+    }   
     
     
     public List<ZipcodeDTO> getZipcodes() throws FogException
@@ -46,7 +45,7 @@ public class ZipcodeDAO extends AbstractDAO {
         
         catch(Exception e)
         {
-            throw new FogException("Kunne ikke fremvise Postnr: " + e.getMessage());
+            throw new FogException("Kunne ikke finde postnumre.", e.getMessage(), e);
         }
         
         return getZipcodes;

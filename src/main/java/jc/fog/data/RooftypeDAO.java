@@ -58,7 +58,7 @@ public class RooftypeDAO extends AbstractDAO
 
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde tagtyper.", e.getMessage());
+            throw new FogException("Der er sket en fejl og systemet kan ikke hente tagtyper.", e.getMessage(), e);
         }
      
         return rooftypes;

@@ -57,46 +57,55 @@ public class DataFacadeImpl implements DataFacade
         }
     }
     
+    @Override
     public CarportRequestDTO getCarport(int id) throws FogException
     {
         return carportRequestDAO.getCarportRequest(id);
     }
     
+    @Override
     public MaterialDTO getMaterial(int id) throws FogException
     {
         return materialDAO.getMaterial(id);        
     }
     
+    @Override
     public List<MaterialDTO> getMaterials() throws FogException
     {
         return materialDAO.getMaterials();
     }
     
+    @Override
     public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException
     {
         return materialDAO.createMaterial(materialeTypeId, name, length, unit, price);
     }
     
+    @Override
     public List<RooftypeDTO> getRooftypes() throws FogException
     {
         return rooftypeDAO.getRooftypes();
     }
     
+    @Override
     public boolean updateRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
         return carportRequestDAO.updateCarPortRequest(id, shedId, shedCheck, slope, width, length, shedWidth, shedLength, rooftypeId, remark);
     }
     
+    @Override
     public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
     {
         return carportRequestDAO.createCarportRequest(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }
     
+    @Override
     public int createUser(String email, String password, String name, int phone, int zipcode) throws FogException
     {
         return userDAO.createUser(email, password, name, phone, zipcode);
     }
     
+    @Override
     public UsersDTO login(String email, String password) throws FogException
     {
         return userDAO.login(email, password);
@@ -107,6 +116,7 @@ public class DataFacadeImpl implements DataFacade
         return userDAO.forgotPassword(email);
     }
     
+    @Override
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
         return zipcodeDAO.getZipcodes();

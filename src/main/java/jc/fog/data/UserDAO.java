@@ -68,7 +68,7 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             if (result == 0)
-                throw new FogException("Bruger kunne ikke blive oprettet." + e.getMessage());
+                throw new FogException("Bruger kunne ikke blive oprettet.", e.getMessage(), e);
             else
             {
                 // log fejlen.
@@ -112,13 +112,8 @@ public class UserDAO extends AbstractDAO
         }
         catch(Exception e)
         {   
-            // Fandt vi ingen user, kaster vi exception videre.
-            if (user == null) 
-                throw new FogException("Kunne ikke logge ind.. " + e.getMessage());
-            else
-            {
-                // log hvad fejlen var...
-            }
+            // Fandt vi ingen user, kaster vi exception videre.            
+            throw new FogException("Kunne ikke logge ind.. ", e.getMessage(), e);            
         }        
         return user;
     }
@@ -135,8 +130,8 @@ public class UserDAO extends AbstractDAO
             success = pstm.executeUpdate() == 1;
         }
         catch(Exception e)
-        {
-            throw new FogException("..." + e.getMessage());
+        {            
+            throw new FogException("Kodeord blev ikke nulstillet.", e.getMessage(), e);            
         }
         return success;
     }

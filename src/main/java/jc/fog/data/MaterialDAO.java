@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
+import jc.fog.exceptions.RecordNotFoundException;
+import jc.fog.exceptions.RecordNotFoundException.Table;
 import jc.fog.logic.MaterialDTO;
 
 /**
@@ -47,18 +49,17 @@ public class MaterialDAO extends AbstractDAO
     /**
      * Konstruktør som kræver et Connection objekt.
      * Connection objektet gemmes i AbstractDAO.
-     * @param connection
-     * @throws FogException 
+     * @param connection     
      */
-    public MaterialDAO(Connection connection) throws FogException
+    public MaterialDAO(Connection connection)
     {
        super(connection);
     }
     
     /**
      * Henter alle materialer.
-     * @return List af MaterialDTO objekter. Hvis ingen materialer findes, returneres tom liste.
-     * @throws FogException 
+     * @return List af MaterialDTO objekter. Hvis ingen materialer findes, returneres tom liste.     
+     * @throws jc.fog.exceptions.FogException     
      */
     public List<MaterialDTO> getMaterials() throws FogException
     {        
@@ -69,10 +70,9 @@ public class MaterialDAO extends AbstractDAO
         {
             materials = mapMaterials(rs);            
         }
-        
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde materialer.", e.getMessage());
+            throw new FogException("Der er sket en fejl og materialerne kunne ikke hentes.", e.getMessage(), e);
         }
                 
         return materials;
@@ -128,7 +128,7 @@ public class MaterialDAO extends AbstractDAO
      * @param unit stk, mtr, kg osv.
      * @param price enhedspris.
      * @return true hvis oprettelse lykkedes, ellers false.
-     * @throws FogException 
+     * @throws jc.fog.exceptions.FogException     
      */
     public boolean createMaterial(int materialtypeId, String name, int length, String unit, float price) throws FogException
     {
@@ -147,15 +147,12 @@ public class MaterialDAO extends AbstractDAO
             
             success = pstm.executeUpdate() == 1;            
         }
-        catch(Exception e)
+        catch(SQLException s)
         {
-            if (!success) // noget uventet er sket efter executeUpdate...
-                throw new FogException("Materiale blev ikke oprettet.", e.getMessage());
-            else
-            {
-                // log hændelsen, materialet ER oprettet.
-            }
+            if (!success)
+                throw new FogException("Materialet blev ikke oprettet.", s.getMessage(), s);
         }
+        
         return success;
     }
     
@@ -181,11 +178,17 @@ public class MaterialDAO extends AbstractDAO
                 {
                     material = mapMaterial(rs);                                        
                 }
+                else
+                {
+                    
+                    throw new RecordNotFoundException(Table.SHEDS, "id", id);
+                }
             }
         }
+        
         catch(Exception e)
         {
-            throw new FogException("Systemet kan ikke finde det ønskede materiale.", e.getMessage());
+            throw new FogException("Systemet kan ikke finde det ønskede materiale.", e.getMessage(), e);
         }
         
         return material;

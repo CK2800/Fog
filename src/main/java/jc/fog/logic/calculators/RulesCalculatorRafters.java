@@ -103,7 +103,7 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
         }
         catch(Exception e)
         {
-            throw new FogException("Spær kan ikke tegnes.", e.getMessage());
+            throw new FogException("Spær kan ikke tegnes.", e.getMessage(), e);
         }
     }
     
@@ -153,7 +153,7 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
         }
         catch(Exception e)
         {
-            throw new FogException("Materialer til spær kan ikke udregnes.", e.getMessage());
+            throw new FogException("Materialer til spær kan ikke udregnes.", e.getMessage(), e);
         }
     }
     

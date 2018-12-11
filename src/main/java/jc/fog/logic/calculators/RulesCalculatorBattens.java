@@ -44,7 +44,7 @@ public class RulesCalculatorBattens extends RulesCalculator
         }
         catch(Exception e)
         {
-            throw new FogException("Lægter kunne ikke beregnes.", e.getMessage());
+            throw new FogException("Lægter kunne ikke beregnes.", e.getMessage(), e);
         }
     }    
 }

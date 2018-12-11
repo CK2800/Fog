@@ -11,6 +11,7 @@ import jc.fog.logic.Rules;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
+import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.logic.BillItem;
 import jc.fog.logic.CarportRequestDTO;
 import jc.fog.logic.MaterialDTO;
@@ -54,14 +55,17 @@ public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
                 if (plank != null)
                     result.add(new BillItem(plank, noLength + noWidth, CarportPart.PLANKS, "skur brædder 1 på 2"));
                 else // Intet materiale medfører exception.
-                    throw new FogException("Skurbeklædning kunne ikke beregnes.", "Ingen planker fundet.");
-                
+                    throw new RecordNotFoundException(RecordNotFoundException.Table.MATERIALS, "name and length", "19x100 mm and 210");
             }
             return result;
         }
+        catch(RecordNotFoundException r)
+        {
+            throw new FogException("Skurbeklædning kunne ikke beregnes.", "Ingen planker fundet med " + r.getColumn() + " = " + r.getCriteria(), r);
+        }
         catch(Exception e)
         {
-            throw new FogException("Skurbeklædning kunne ikke beregnes.", e.getMessage());
+            throw new FogException("Skurbeklædning kunne ikke beregnes.", e.getMessage(), e);
         }
     }
 
@@ -81,7 +85,7 @@ public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
         }
         catch(Exception e)
         {
-            throw new FogException("Skur kan ikke tegnes.", e.getMessage());
+            throw new FogException("Skur kan ikke tegnes.", e.getMessage(), e);
         }
     }
     

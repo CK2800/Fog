@@ -68,7 +68,7 @@ public class RulesCalculatorRoof extends RulesCalculator
             }
             catch(Exception e)
             {
-                throw new FogException("Tagbelægning, fladt tag, kan ikke beregnes.", e.getMessage());
+                throw new FogException("Tagbelægning, fladt tag, kan ikke beregnes.", e.getMessage(), e);
             } 
         }
         else // taget har hældning.

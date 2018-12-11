@@ -41,16 +41,9 @@ public class ShowAddRequestCommand extends Command
         boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
         
         if (createRequest)
-        {
-            try
-            {
-                // Kald ShowRequestCommand.execute.
-                return new ShowRequestsCommand().execute(request, response);
-            }
-            catch(Exception e)
-            {
-                throw new FogException("Listen med forespørgsler kan ikke vises, ring til Jesper", e.getMessage());
-            }
+        {            
+            // Kald ShowRequestCommand.execute.
+            return new ShowRequestsCommand().execute(request, response);            
         }
         else
         {
