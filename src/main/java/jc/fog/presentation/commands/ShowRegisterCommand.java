@@ -62,7 +62,7 @@ public class ShowRegisterCommand extends Command {
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<form action=\"FrontController\" method=\"POST\">");
-        stringBuilder.append("E-mail (Brugernavn):<br /><input type=\"email\" required name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
+        stringBuilder.append("E-mail (Brugernavn):<br /><input type=\"email\" pattern=\"[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}\" required name=\"email\" class=\"form-control\" placeholder=\"Din Email\" /><br />");
         stringBuilder.append("Adgangskode<br /><input type=\"password\" required name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
         stringBuilder.append("Navn:<br /><input type=\"text\" name=\"name\" minLength=\"2\" required class=\"form-control\" placeholder=\"Dit navn\" /><br />");
         stringBuilder.append("Telefon nr:<br /><input type=\"number\" minLength=\"8\" maxLength=\"8\" required name=\"phone\" class=\"form-control\" placeholder=\"Dit telefon nr - fx 11111111\" /><br />");
