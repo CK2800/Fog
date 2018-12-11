@@ -29,6 +29,9 @@
                 </li>
             <% } %>
             <li class="nav-item">
+                <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.USER_HOME %>">Konto</a>
+            </li> 
+            <li class="nav-item">
                 <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.LOGOUT %>">Log ud</a>
             </li> 
         <% } else { %>

@@ -37,7 +37,7 @@ public class ShowAdminUsersCommand extends Command
                 return Pages.INDEX;
             } 
             
-            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+            DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
             List<UsersDTO> getAllUsers = dataFacade.getAllUsers();
             request.setAttribute("usersTable", userTable(getAllUsers, user));
         

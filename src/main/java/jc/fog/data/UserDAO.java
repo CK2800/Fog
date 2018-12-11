@@ -35,6 +35,10 @@ public class UserDAO extends AbstractDAO
     final static String ADD_NEW_RANK_SQL ="UPDATE Users SET rank = ? WHERE id = ?";
     
     final static String DELETE_USER_SQL ="DELETE FROM Users WHERE id = ?";
+    
+    final static String UPDATE_USER_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE id = ?";
+    
+    final static String GET_USER_NAME_SQL = "SELECT name FROM Users WHERE id = ?";
 
        
     public UserDAO(Connection connection) throws FogException {
@@ -198,6 +202,65 @@ public class UserDAO extends AbstractDAO
         catch(Exception e)
         {
             throw new FogException("Der sket en fejl ved opdater ranken. " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Den her skal opdater den enkelt brugers adgangskode til det som man har skrevet.
+     * @param password
+     * @param id
+     * @return
+     * @throws FogException 
+     */
+    public boolean updateUserPassword(String password, int id) throws FogException
+    {
+        try
+        {
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(UPDATE_USER_PASSWORD_SQL);
+            pstm.setString(1, password);
+            pstm.setInt(2, id);
+            
+            return pstm.executeUpdate() == 1;
+        }
+        catch (Exception e)
+        {
+            throw new FogException("Der gik noget galt da man skulle opdater adgangskode. " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Den skal sende navn tilbage som kan blive vist frem til bruger
+     * @param id
+     * @return
+     * @throws FogException 
+     */
+    public String returnUserName(int id) throws FogException
+    {
+        try 
+        {
+            PreparedStatement pstm;
+            
+            pstm = connection.prepareStatement(GET_USER_NAME_SQL);
+            pstm.setInt(1, id);
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            if(rs.next())
+            {
+                //Får fat i både Id og rank
+                return rs.getString("name");
+            }
+            else
+            {
+                //Hvad skal der ske hvis den ikke findes?
+                throw new FogException("Den findes desværre ikke");
+            }
+        }
+        catch (Exception e)
+        {
+            throw new FogException("Der er sket en fejl ved fremvis af navn.. " + e.getMessage());
         }
     }
     

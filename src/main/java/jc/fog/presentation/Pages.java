@@ -31,6 +31,12 @@ public final class Pages
     public static final String REGISTER = "/WEB-INF/register.jsp";
     
     
+    public static final String USER_PASSWORD = "/WEB-INF/userPassword.jsp";
+    public static final String USER_HOME = "/WEB-INF/user.jsp";
+    
+    
     public static final String ADMIN_USER = "/WEB-INF/adminUsers.jsp";
+    
+    
     
 }

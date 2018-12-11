@@ -51,6 +51,13 @@ public final class Commands
     /** Command som viser styklisten. */
     public static final String SHOW_BILL = "showBill";
     
+    /** Command til, at vise form til, at kunne opdater password */
+    public static final String USER_PASSWORD = "userPassword";
+    /** Command til, at vise form til, at kunne opdater password */
+    public static final String USER_UPDATEPASSWORD = "userUpdatePassword";
+    /** Command til, at vise form til, at vise ens "egen" side */
+    public static final String USER_HOME = "user";
+    
     
     /** Command som viser tegning af carport. */
     public static final String SINGLEDRAW = "singledraw";

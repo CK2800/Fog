@@ -34,4 +34,6 @@ public interface DataFacade
     public boolean setNewRankUser(int id, int rank) throws FogException;
     public List<UsersDTO> getAllUsers() throws FogException;
     public boolean deleteUser(int id) throws FogException;
+    public boolean updateUserPassword(String password, int id) throws FogException;
+    public String returnUserName(int id) throws FogException;
 }

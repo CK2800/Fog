@@ -28,6 +28,8 @@ public class ShowRequestsCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
+        //skal find ud af hvorfor man ikke bliver smidt over på index hvis man ingen session har.... VIGTIGT!!!
+        
         try {
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();

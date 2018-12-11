@@ -70,6 +70,9 @@ public abstract class Command
         commands.put(Commands.LOGOUT, new LogoutCommand());
         commands.put(Commands.FORGET_PASSWORD, new ForgetPassword());
         commands.put(Commands.ADMIN_DELETE_USER, new ShowAdminDeleteUserCommand());
+        commands.put(Commands.USER_HOME, new ShowUserHomeCommand());
+        commands.put(Commands.USER_PASSWORD, new ShowUserPasswordCommand());
+        commands.put(Commands.USER_UPDATEPASSWORD, new ShowUserPasswordUpdate());
     }
     
     /**

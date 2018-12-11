@@ -7,6 +7,7 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jc.fog.data.DataFacade;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
@@ -27,7 +28,7 @@ public class ShowAddRegisterCommand extends Command
         int phone = Integer.parseInt(request.getParameter("phone"));
         int zipcode = Integer.parseInt(request.getParameter("zipcode"));
         
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         
         int createUser = dataFacade.createUser(email, password, name, phone, zipcode);
         
