@@ -64,8 +64,15 @@ public abstract class Command
         commands.put(Commands.LOGIN_CHECK, new ShowLoginCheckCommand());
         commands.put(Commands.REGISTER, new ShowRegisterCommand());
         commands.put(Commands.ADD_REGISTER, new ShowAddRegisterCommand());
+        commands.put(Commands.ADMIN_USERS, new ShowAdminUsersCommand());
+        commands.put(Commands.ADMIN_PASSWORD, new ShowAdminNewPasswordCommand());
+        commands.put(Commands.ADMIN_RANK, new ShowAdminUpdateRankCommand());
         commands.put(Commands.LOGOUT, new LogoutCommand());
-        commands.put(Commands.FORGOT, new ForgotPassword());
+        commands.put(Commands.FORGET_PASSWORD, new ForgetPassword());
+        commands.put(Commands.ADMIN_DELETE_USER, new ShowAdminDeleteUserCommand());
+        commands.put(Commands.USER_HOME, new ShowUserHomeCommand());
+        commands.put(Commands.USER_PASSWORD, new ShowUserPasswordCommand());
+        commands.put(Commands.USER_UPDATEPASSWORD, new ShowUserPasswordUpdate());
     }
     
     /**

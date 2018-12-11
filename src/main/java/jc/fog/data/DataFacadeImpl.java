@@ -36,11 +36,7 @@ public class DataFacadeImpl implements DataFacade
         zipcodeDAO = new ZipcodeDAO(connection);
         userDAO = new UserDAO(connection);
     }
-    public boolean deleteUser(int id)
-    {
-        // todo by jespe.
-        throw new UnsupportedOperationException("kommer snart");
-    }
+
     /**
      * Get all requests (forespørgsler).
      * @return List of CarportRequestDTO objects.
@@ -115,15 +111,36 @@ public class DataFacadeImpl implements DataFacade
     {
         return userDAO.forgotPassword(email);
     }
+
+    public boolean deleteUser(int id) throws FogException
+    {
+        return userDAO.deleteUser(id);
+    }
     
-    @Override
+    public boolean updateUserPassword(String email, int id) throws FogException
+    {
+        return userDAO.updateUserPassword(email, id);
+    }
+    
+    public boolean setNewRankUser(int id, int rank) throws FogException
+    {
+        return userDAO.setNewRankUser(id, rank);
+    }
+    
+    public List<UsersDTO> getAllUsers() throws FogException
+    {
+        return userDAO.getAllUsers();
+    }
+    
+    public String returnUserName(int id) throws FogException
+    {
+        return userDAO.returnUserName(id);
+    }
+
     public List<ZipcodeDTO> getZipcodes() throws FogException
     {
         return zipcodeDAO.getZipcodes();
     }
     
-//    public List<UsersDTO> getAllUsers() throws FogException
-//    {
-//        return userDAO.
-//    }
+    
 }

@@ -7,39 +7,39 @@ package jc.fog.presentation.commands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.presentation.Pages;
+import jc.fog.logic.UsersDTO;
 
 /**
  *
  * @author Jespe
  */
-public class ShowAddRegisterCommand extends Command
+public class ShowUserPasswordUpdate extends Command
 {
-    
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        int phone = Integer.parseInt(request.getParameter("phone"));
-        int zipcode = Integer.parseInt(request.getParameter("zipcode"));
-        
-        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        
-        int createUser = dataFacade.createUser(email, password, name, phone, zipcode);
-        
-        if(createUser > 0)
-        {        
-            return new ShowLoginCommand().execute(request, response);
-        }
-        else
-        {
-            return new ShowRegisterCommand().execute(request, response);
-        }
-    }
+    {        
+        //Session bruges til, at kun opdater ens konto med ny adgangskode.
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
 
+        //Få fat i id på user via session
+        int id = user.getId();
+
+        //få fat i den værdi som der er skrevet i input.
+        String password = request.getParameter("password");
+
+
+        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+        boolean succesPassword = dataFacade.updateUserPassword(password, id);
+
+        if(succesPassword)
+            return new ShowUserHomeCommand().execute(request, response);
+        else
+            return new ShowUserHomeCommand().execute(request, response);
+    }
 }

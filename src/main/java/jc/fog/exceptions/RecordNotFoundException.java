@@ -41,7 +41,8 @@ public class RecordNotFoundException extends Exception
      */    
     public RecordNotFoundException(Table table, String column, Object criteria)
     {
-        super("Record ej fundet");
+        super("Record i tabel '$1' med $2 = $3 ej fundet.".replace("$1", table.name()).replace("$2", column).replace("$3", criteria.toString()));        
+        
         this.table = table;    
         this.criteria = criteria;
         this.column = column;

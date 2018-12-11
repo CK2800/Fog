@@ -4,9 +4,10 @@
     Author     : Claus
 --%>
 
+<%@page import="jc.fog.presentation.Fields"%>
 <%
     String title = "Velkommen til FOG";
-    //String errorText = request.getAttribute(Fields.ERROR_TEXT) != null ? (String)request.getAttribute(Fields.ERROR_TEXT): "No errors!";
+    String errorText = request.getAttribute(Fields.ERROR_TEXT) != null ? (String)request.getAttribute(Fields.ERROR_TEXT): "No errors!";
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
     <body>
             <jsp:include page="WEB-INF/view/Header.jsp"></jsp:include> <%-- Header her ---%>
             <div class="container" style="min-height: 500px;">
-                
+                <%= errorText %>
             </div>
             
             <jsp:include page="WEB-INF/view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>

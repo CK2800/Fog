@@ -61,7 +61,7 @@ public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
         }
         catch(RecordNotFoundException r)
         {
-            throw new FogException("Skurbeklædning kunne ikke beregnes.", "Ingen planker fundet med " + r.getColumn() + " = " + r.getCriteria(), r);
+            throw new FogException("Skurbeklædning kunne ikke beregnes.", r.getMessage(), r);
         }
         catch(Exception e)
         {

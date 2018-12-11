@@ -48,6 +48,8 @@ public class ShowAddRequestCommand extends Command
         else
         {
             // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
+            
+            //skal find ud af om vi skal lave den her om.
             return Pages.SINGLE_CARPORTVIEW;
         }
     }

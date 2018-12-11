@@ -1,6 +1,7 @@
 <%
     String title = "Log ind på Fog";
     String login = (String) request.getAttribute("login");
+    
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

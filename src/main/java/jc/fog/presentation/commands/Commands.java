@@ -24,11 +24,12 @@ public final class Commands
     /** Command til at tjek om man er bruger eller ej?*/
     public static final String LOGIN_CHECK = "loginCheck";
     
-    public static final String FORGOT = "forgot";
     /** Command til at opret bruger */
     public static final String REGISTER = "register";
     /** Command til send/smide bruger oplysning op */
     public static final String ADD_REGISTER = "addRegister";
+    /** Command til at fortælle man har glemt adgangskode! */
+    public static final String FORGET_PASSWORD = "forget";
     
     
     /** Command som viser alle forespørgsler. */
@@ -50,11 +51,24 @@ public final class Commands
     /** Command som viser styklisten. */
     public static final String SHOW_BILL = "showBill";
     
+    /** Command til, at vise form til, at kunne opdater password */
+    public static final String USER_PASSWORD = "userPassword";
+    /** Command til, at vise form til, at kunne opdater password */
+    public static final String USER_UPDATEPASSWORD = "userUpdatePassword";
+    /** Command til, at vise form til, at vise ens "egen" side */
+    public static final String USER_HOME = "user";
+    
     
     /** Command som viser tegning af carport. */
     public static final String SINGLEDRAW = "singledraw";
     
-    
+    /** Command som viser alle bruger. */
     public static final String ADMIN_USERS ="adminUsers";
+    /** Command til at tildel ny rank. */
+    public static final String ADMIN_RANK ="adminRank";
+    /** Command til at giv ny adgangskode. */
+    public static final String ADMIN_PASSWORD ="adminPassword";
+    /** Command til, at slet bruger */
+    public static final String ADMIN_DELETE_USER = "adminDeleteUser";
     
 }

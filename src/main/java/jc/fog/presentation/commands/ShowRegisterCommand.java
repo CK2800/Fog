@@ -8,10 +8,12 @@ package jc.fog.presentation.commands;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacade;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.UsersDTO;
 import jc.fog.logic.ZipcodeDTO;
 import jc.fog.presentation.Pages;
 
@@ -24,16 +26,32 @@ public class ShowRegisterCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+        try
+        {
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user != null && user.getId() > 0)
+            {
+                return Pages.INDEX;
+            } 
+            
+            DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+
+            //får fast i zipcodes.
+            List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();
+
+            //Fremviser form for opret bruger delen.
+            request.setAttribute("register", register(zipcodes));
+            
+               //Siden som skal bliver vist.
+            return Pages.REGISTER;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Opret bruger side kan ikke vises, prøv igen.", e.getMessage(), e);
+        }
         
-        //får fast i zipcodes.
-        List<ZipcodeDTO> zipcodes = dataFacade.getZipcodes();
-        
-        //Fremviser form for opret bruger delen.
-        request.setAttribute("register", register(zipcodes));
-        
-        //Siden som skal bliver vist.
-        return Pages.REGISTER;
     }
     
     /**

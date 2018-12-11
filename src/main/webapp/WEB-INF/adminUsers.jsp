@@ -1,6 +1,6 @@
 <%
-    String title = "Carport";
-    String requestForm = (String) request.getAttribute("requestForm");
+    String title = "Alle bruger";
+    String tableView = (String)request.getAttribute("usersTable");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,13 +12,8 @@
     </head>
     <body>
             <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
-            
             <div class="container" style="min-height: 500px;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <%= requestForm %>
-                    </div>
-                </div>
+                <%= tableView %>
             </div>
             
             <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>

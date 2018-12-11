@@ -27,6 +27,14 @@ public class UsersDTO {
         this.name = name;
         this.email = email;
     }
+
+    /**
+     * Konstruktør til konto område ved vise af navn
+     * @param name 
+     */
+    public UsersDTO(String name) {
+        this.name = name;
+    }
     
     /**
      * Konstruktør bruges til login området. 
