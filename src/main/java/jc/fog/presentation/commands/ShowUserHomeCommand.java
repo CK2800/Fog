@@ -30,7 +30,7 @@ public class ShowUserHomeCommand extends Command
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getRank() < 0)
+            if(user == null)
             {
                 return Pages.INDEX;
             } 
@@ -41,10 +41,7 @@ public class ShowUserHomeCommand extends Command
             DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
             String getName = dataFacade.returnUserName(userid);//få bruges navn tilbage her.
             
-            
-            
             request.setAttribute("getUserName", getName);
-            
             
             return Pages.USER_HOME;
         }

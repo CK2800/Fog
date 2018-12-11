@@ -26,7 +26,7 @@ public class ShowUserPasswordCommand extends Command
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getId() < 0)
+            if(user == null)
             {
                 return Pages.INDEX;
             }        
@@ -47,7 +47,7 @@ public class ShowUserPasswordCommand extends Command
     {
         StringBuilder stringbuilder = new StringBuilder();
         stringbuilder.append("<form action=\"FrontController\" method=\"POST\">");
-        stringbuilder.append("Adgangskode<br /><input type=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
+        stringbuilder.append("Adgangskode<br /><input type=\"password\" required name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
         stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.USER_UPDATEPASSWORD + "\" class=\"btn btn-info btn-block\" value=\"Opdater adgangskode\" \">");
         stringbuilder.append("</form><br/>");
         

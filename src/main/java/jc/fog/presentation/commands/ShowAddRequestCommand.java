@@ -42,6 +42,7 @@ public class ShowAddRequestCommand extends Command
         
         if (createRequest)
         {
+            //skal find ud af om man er online med session eller ej?
             return new ShowRequestsCommand().execute(request, response);
         }
         else

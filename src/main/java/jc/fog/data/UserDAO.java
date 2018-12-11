@@ -165,7 +165,7 @@ public class UserDAO extends AbstractDAO
         try
         {
             //Henter vores random som sender tal + bogstaver tilbage som bruges til password.
-            String password = Rules.randomPassword();
+            String password = Rules.RandomPassword();
             
             PreparedStatement pstm;
             

@@ -60,7 +60,7 @@ public class ShowBillCommand extends Command
             boolean addSked = "1".equals(request.getParameter("addSked"));
             
             // nap parametre fra requests og dan CarportRequestDTO.
-            int rooftypeId = 1; //Integer.parseInt(request.getParameter("rooftypeId"));
+            int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
             int slope = Integer.parseInt(request.getParameter("slope"));
             int width = Integer.parseInt(request.getParameter("width"));
             int height = Integer.parseInt(request.getParameter("height"));

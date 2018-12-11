@@ -28,14 +28,12 @@ public class ShowRequestsCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        //skal find ud af hvorfor man ikke bliver smidt over på index hvis man ingen session har.... VIGTIGT!!!
-        
         try {
             //sikker sig at man har den rigtigt rank for at kun se det her område.
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getRank() > 1)
+            if(user == null || user != null && user.getRank() > 1)
             {
                 return Pages.INDEX;
             } 

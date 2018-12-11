@@ -13,6 +13,7 @@ import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.UsersDTO;
+import jc.fog.presentation.Pages;
 
 /**
  *
@@ -28,6 +29,11 @@ public class ShowUserPasswordUpdate extends Command
             //Session bruges til, at kun opdater ens konto med ny adgangskode.
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user == null)
+            {
+                return Pages.INDEX;
+            } 
             
             //Få fat i id på user via session
             int id = user.getId();
