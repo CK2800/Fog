@@ -106,7 +106,7 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" placeholder=\"Kommentar til forespørgelse\" /><br />");
         
         //Dropdown i forhold til type af tag.
-        String dropdown = "Type:<br /><select class=\"form-control\" name=\"rooftypeId\"><option>V&aelig;lg tagtype:</option>$body</select>";
+        String dropdown = "Type:<br /><select required class=\"form-control\" name=\"rooftypeId\"><option value>V&aelig;lg tagtype:</option>$body</select>";
         String rows = "";
         String selectedCheck = "";//Bruges til, at fortælle option hvilken værdi man har valgt.
         rows = rooftypeDropdown(Rooftypes, item, selectedCheck, rows);

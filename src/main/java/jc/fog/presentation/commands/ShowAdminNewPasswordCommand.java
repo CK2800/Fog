@@ -23,7 +23,7 @@ public class ShowAdminNewPasswordCommand extends Command {
         String email = request.getParameter("email");
         
         DataFacade dataFacede = new DataFacadeImpl(DbConnector.getConnection());
-        boolean newPassword = dataFacede.forgotPassword(email);
+        boolean newPassword = dataFacede.forgotPassword(email, null);
         if(newPassword)
             return new ShowAdminUsersCommand().execute(request, response);
         else

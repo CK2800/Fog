@@ -35,15 +35,11 @@ public class ShowUserPasswordUpdate extends Command
                 return Pages.INDEX;
             } 
             
-            //Få fat i id på user via session
-            int id = user.getId();
-            
             //få fat i den værdi som der er skrevet i input.
-            String password = request.getParameter("password");
-            
+            String password = request.getParameter("password");            
             
             DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-            boolean succesPassword = dataFacade.updateUserPassword(password, id);
+            boolean succesPassword = dataFacade.forgotPassword(user.getEmail(), password);
             
             if(succesPassword)
                 return new ShowUserHomeCommand().execute(request, response);

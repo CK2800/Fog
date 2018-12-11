@@ -11,39 +11,15 @@ package jc.fog.logic;
  */
 public class UsersDTO {
     private int id, phone, rank, zip;
-    private String name, email, password;
-
+    private String name, email, password;   
     
-    /**
-     * Konstruktør bruges til, at fremvis en list over dvs bruger oplysninger.
-     * @param id
-     * @param rank
-     * @param name
-     * @param email 
-     */
-    public UsersDTO(int id, int rank, String name, String email) {
+    public UsersDTO(int id, int phone, int rank, int zip, String name, String email) {
         this.id = id;
+        this.phone = phone;
         this.rank = rank;
+        this.zip = zip;
         this.name = name;
         this.email = email;
-    }
-
-    /**
-     * Konstruktør til konto område ved vise af navn
-     * @param name 
-     */
-    public UsersDTO(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * Konstruktør bruges til login området. 
-     * @param id
-     * @param rank 
-     */
-    public UsersDTO(int id, int rank) {
-        this.id = id;
-        this.rank = rank;
     }
 
     public int getId() {

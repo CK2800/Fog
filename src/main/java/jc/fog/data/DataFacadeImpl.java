@@ -98,19 +98,14 @@ public class DataFacadeImpl implements DataFacade
         return userDAO.login(email, password);
     }
     
-    public boolean forgotPassword(String email) throws FogException
+    public boolean forgotPassword(String email, String password) throws FogException
     {
-        return userDAO.forgotPassword(email);
+        return userDAO.forgotPassword(email, password);
     }
     
     public boolean deleteUser(int id) throws FogException
     {
         return userDAO.deleteUser(id);
-    }
-    
-    public boolean updateUserPassword(String email, int id) throws FogException
-    {
-        return userDAO.updateUserPassword(email, id);
     }
     
     public boolean setNewRankUser(int id, int rank) throws FogException
@@ -121,11 +116,6 @@ public class DataFacadeImpl implements DataFacade
     public List<UsersDTO> getAllUsers() throws FogException
     {
         return userDAO.getAllUsers();
-    }
-    
-    public String returnUserName(int id) throws FogException
-    {
-        return userDAO.returnUserName(id);
     }
     
     public List<ZipcodeDTO> getZipcodes() throws FogException

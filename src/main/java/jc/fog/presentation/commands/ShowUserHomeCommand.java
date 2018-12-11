@@ -35,13 +35,7 @@ public class ShowUserHomeCommand extends Command
                 return Pages.INDEX;
             } 
             
-            //Få fat i vores id på user som vi skal brug til, at fremvise navn på konto siden.
-            int userid = user.getId();
-            
-            DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-            String getName = dataFacade.returnUserName(userid);//få bruges navn tilbage her.
-            
-            request.setAttribute("getUserName", getName);
+            request.setAttribute("getUserName", user.getName());//bruger session med ens navn.
             
             return Pages.USER_HOME;
         }
