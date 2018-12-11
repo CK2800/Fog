@@ -73,16 +73,4 @@ public class UserDAOIntegrationTest {
         
         assertTrue(deleteUser);
     }    
-    
-//    @Test
-//    public void testLoginUser() throws FogException
-//    {
-//        // Arrange
-//        UserDAO userDAO = new UserDAO(connection);
-//        
-//        
-//        // Act
-//        
-//        // Assert
-//    }
 }

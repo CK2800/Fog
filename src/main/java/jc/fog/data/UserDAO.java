@@ -128,6 +128,12 @@ public class UserDAO extends AbstractDAO
         }
     }
     
+    /**
+     * Den her gør det muligt at slet bruger.
+     * @param userid
+     * @return
+     * @throws FogException 
+     */
     public boolean deleteUser(int userid) throws FogException
     {
         try {

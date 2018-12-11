@@ -73,7 +73,8 @@ public class ShowAdminUsersCommand extends Command
             row = row.replace("$2", String.valueOf(item.getEmail()));
             row = row.replace("$3", String.valueOf(item.getRank() == 1 ? "Admin" : "Alm bruger"));
             row = row.replace("$4", (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_RANK + "&id=" + item.getId() + "&rank=" + item.getRank() + "\" class=\"btn btn-info btn-sm\">" + (item.getRank() == 5 ? "Gør til Admin" : "Gør til alm bruger") + "</a> " : "") + 
-                                    (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_PASSWORD + "&email=" + item.getEmail()+ "\" class=\"btn btn-info btn-sm\">Ny kode</a>" : ""));
+                                    (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_PASSWORD + "&email=" + item.getEmail()+ "\" class=\"btn btn-info btn-sm\">Ny kode</a>" : "") + 
+                                    (userInfo.getId() != item.getId() ? "<a href=\"FrontController?command=" + Commands.ADMIN_DELETE_USER + "&id=" + item.getId() + "\" class=\"btn btn-danger btn-sm\">Slet bruger</a>" : ""));
             stringBuilder.append(row);
         }
         

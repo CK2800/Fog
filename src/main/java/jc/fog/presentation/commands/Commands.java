@@ -61,5 +61,7 @@ public final class Commands
     public static final String ADMIN_RANK ="adminRank";
     /** Command til at giv ny adgangskode. */
     public static final String ADMIN_PASSWORD ="adminPassword";
+    /** Command til, at slet bruger */
+    public static final String ADMIN_DELETE_USER = "adminDeleteUser";
     
 }

@@ -69,6 +69,7 @@ public abstract class Command
         commands.put(Commands.ADMIN_RANK, new ShowAdminUpdateRankCommand());
         commands.put(Commands.LOGOUT, new LogoutCommand());
         commands.put(Commands.FORGET_PASSWORD, new ForgetPassword());
+        commands.put(Commands.ADMIN_DELETE_USER, new ShowAdminDeleteUserCommand());
     }
     
     /**

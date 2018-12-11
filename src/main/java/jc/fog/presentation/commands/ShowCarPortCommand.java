@@ -84,6 +84,14 @@ public class ShowCarPortCommand  extends Command
         anyIDs(item, stringBuilder);
         
         //Bruger oplysning skal opret sig her hvis man er oprettet.
+        if(user.getId() == 0)
+        {
+            //skal opret sig som bruger første.
+        }
+        else
+        {
+            //Er man admin eller bruger?
+        }
         
         //Carport information her
         stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" placeholder=\"Længde på carport\" /><br />");
