@@ -283,16 +283,27 @@ public class UserDAO extends AbstractDAO
     public List<UsersDTO> getAllUsers() throws FogException
     {
         List<UsersDTO> users = new ArrayList<UsersDTO>();
-        try {
-            PreparedStatement pstm = connection.prepareStatement(GET_ALL_USERS_SQL);
-            try(ResultSet rs = pstm.executeQuery())
-            {
-                while(rs.next())
+        try
+        (   
+            PreparedStatement pstm = createPreparedStatement(connection, GET_ALL_USERS_SQL, Statement.NO_GENERATED_KEYS, null);
+            ResultSet rs = pstm.executeQuery();
+        )
+        {
+            while(rs.next())
                 {
                     users.add(new UsersDTO(rs.getInt("id"), rs.getInt("rank"), rs.getString("name"), rs.getString("email")));
                 }
-            }                      
         }
+//        try {
+//            PreparedStatement pstm = connection.prepareStatement(GET_ALL_USERS_SQL);
+//            try(ResultSet rs = pstm.executeQuery())
+//            {
+//                while(rs.next())
+//                {
+//                    users.add(new UsersDTO(rs.getInt("id"), rs.getInt("rank"), rs.getString("name"), rs.getString("email")));
+//                }
+//            }                      
+//        }
         catch(Exception e)
         {
             throw new FogException("Brugere blev ikke fundet.", e.getMessage(), e);

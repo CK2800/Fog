@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
@@ -160,15 +161,15 @@ public class MaterialDAO extends AbstractDAO
     public MaterialDTO getMaterial(int id) throws FogException
     {
         MaterialDTO material = null;
+        Pair<Integer, Object> pair = new Pair<>(1, id);
         
-        try(PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);)
+        try
+        (
+            PreparedStatement pstm = createPreparedStatement(connection, GET_MATERIAL_SQL, Statement.NO_GENERATED_KEYS, pair);
+            ResultSet rs = pstm.executeQuery();
+        )
         {
-            pstm.setInt(1, id);
-
-            //try with ressources.
-            try(ResultSet rs = pstm.executeQuery()) // rs lukkes automatisk, da ResultSet implementerer AutoCloseable.
-            {
-                if(rs.next())
+            if(rs.next())
                 {
                     material = mapMaterial(rs);                                        
                 }
@@ -177,8 +178,26 @@ public class MaterialDAO extends AbstractDAO
                     
                     throw new RecordNotFoundException(Table.SHEDS, "id", id);
                 }
-            }
         }
+        
+//        try(PreparedStatement pstm = connection.prepareStatement(GET_MATERIAL_SQL);)
+//        {
+//            pstm.setInt(1, id);
+//
+//            //try with ressources.
+//            try(ResultSet rs = pstm.executeQuery()) // rs lukkes automatisk, da ResultSet implementerer AutoCloseable.
+//            {
+//                if(rs.next())
+//                {
+//                    material = mapMaterial(rs);                                        
+//                }
+//                else
+//                {
+//                    
+//                    throw new RecordNotFoundException(Table.SHEDS, "id", id);
+//                }
+//            }
+//        }
         
         catch(Exception e)
         {

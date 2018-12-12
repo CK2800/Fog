@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import javafx.util.Pair;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
@@ -54,35 +55,63 @@ public class CarportRequestDAO extends AbstractDAO{
     public CarportRequestDTO getCarportRequest(int id) throws FogException
     {
         CarportRequestDTO carportRequest = null;
-        try(PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL))
+        Pair<Integer, Object> pair1 = new Pair<>(1, id);
+        try
+        (
+            PreparedStatement pstm = createPreparedStatement(connection, GET_CPREQUEST_SQL, Statement.NO_GENERATED_KEYS, pair1);
+            ResultSet rs = pstm.executeQuery();
+        )
         {
-            pstm.setInt(1, id);
-        
-            //try with ressources.
-            try(ResultSet rs = pstm.executeQuery())
+            if(rs.next())
             {
-                if(rs.next())
-                {
-                    //System.out.println("rs:" + rs.toString());
-                    carportRequest = new CarportRequestDTO(
-                                rs.getInt("id"),
-                                rs.getInt("rooftypeId"),
-                                rs.getInt("slope"),
-                                rs.getInt("shedId"),
-                                rs.getInt("width"),
-                                rs.getInt("height"),
-                                rs.getInt("length"),
-                                rs.getString("remark"),
-                                rs.getInt("shedLength"),
-                                rs.getInt("shedWidth")
-                    );                     
-                }
-                else // record ej fundet.
-                {
-                    throw new RecordNotFoundException(Table.CARPORTREQUESTS, "id", id);
-                }
+                //System.out.println("rs:" + rs.toString());
+                carportRequest = new CarportRequestDTO(
+                            rs.getInt("id"),
+                            rs.getInt("rooftypeId"),
+                            rs.getInt("slope"),
+                            rs.getInt("shedId"),
+                            rs.getInt("width"),
+                            rs.getInt("height"),
+                            rs.getInt("length"),
+                            rs.getString("remark"),
+                            rs.getInt("shedLength"),
+                            rs.getInt("shedWidth")
+                );                     
             }
-        }    
+            else // record ej fundet.
+            {
+                throw new RecordNotFoundException(Table.CARPORTREQUESTS, "id", id);
+            }
+        }
+//        try(PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL))
+//        {
+//            pstm.setInt(1, id);
+//        
+//            //try with ressources.
+//            try(ResultSet rs = pstm.executeQuery())
+//            {
+//                if(rs.next())
+//                {
+//                    //System.out.println("rs:" + rs.toString());
+//                    carportRequest = new CarportRequestDTO(
+//                                rs.getInt("id"),
+//                                rs.getInt("rooftypeId"),
+//                                rs.getInt("slope"),
+//                                rs.getInt("shedId"),
+//                                rs.getInt("width"),
+//                                rs.getInt("height"),
+//                                rs.getInt("length"),
+//                                rs.getString("remark"),
+//                                rs.getInt("shedLength"),
+//                                rs.getInt("shedWidth")
+//                    );                     
+//                }
+//                else // record ej fundet.
+//                {
+//                    throw new RecordNotFoundException(Table.CARPORTREQUESTS, "id", id);
+//                }
+//            }
+//        }    
         catch(RecordNotFoundException r)
         {
             throw new FogException("Forespørgslen kunne ikke findes.", "CarportRequest med id: " + id + " blev ikke fundet.", r);
@@ -300,12 +329,12 @@ public class CarportRequestDAO extends AbstractDAO{
     private boolean updateShed(int shedWidth, int shedLength, int shedId) throws SQLException, RecordNotFoundException {
         
         boolean success = false;
+        Pair<Integer, Object> p1 = new Pair(1, shedWidth);
+        Pair<Integer, Object> p2 = new Pair(2, shedLength);
+        Pair<Integer, Object> p3 = new Pair(3, shedId);
         
-        try(PreparedStatement pstm = connection.prepareStatement(UPDATE_SHED_SQL);)
+        try(PreparedStatement pstm = createPreparedStatement(connection, UPDATE_SHED_SQL, Statement.NO_GENERATED_KEYS, p1, p2, p3 );)
         {
-            pstm.setInt(1, shedWidth);
-            pstm.setInt(2, shedLength);
-            pstm.setInt(3, shedId);
             //gem i databasen
             success = pstm.executeUpdate() == 1;
             if (!success)
@@ -313,6 +342,19 @@ public class CarportRequestDAO extends AbstractDAO{
                 throw new RecordNotFoundException(Table.SHEDS, "id", shedId);
             }
         }
+        
+//        try(PreparedStatement pstm = connection.prepareStatement(UPDATE_SHED_SQL);)
+//        {
+//            pstm.setInt(1, shedWidth);
+//            pstm.setInt(2, shedLength);
+//            pstm.setInt(3, shedId);
+//            //gem i databasen
+//            success = pstm.executeUpdate() == 1;
+//            if (!success)
+//            {
+//                throw new RecordNotFoundException(Table.SHEDS, "id", shedId);
+//            }
+//        }
         
         return success;        
     }
@@ -389,20 +431,33 @@ public class CarportRequestDAO extends AbstractDAO{
     private int createShed(int length, int width) throws SQLException
     {
         int id = 0;
-        try(PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );)
-        {
-            pstm.setInt(1, length);
-            pstm.setInt(2, width);
-            pstm.executeUpdate();
-            try(ResultSet rs = pstm.getGeneratedKeys();)
+        Pair<Integer, Object> pair1 = new Pair<>(1, length);
+        Pair<Integer, Object> pair2 = new Pair<>(2, width);
+        
+        try(
+                PreparedStatement pstm = createPreparedStatement(connection, CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS, pair1, pair2);
+                ResultSet rs = updateAndGetKeys(pstm);
+            )                
             {
-                // Move the cursor to first record.
-                rs.next();            
-                id = rs.getInt(1); 
+                rs.next();
+                id = rs.getInt(1);
             }
-        }       
+        
+//        try(PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );)
+//        {
+//            pstm.setInt(1, length);
+//            pstm.setInt(2, width);
+//            pstm.executeUpdate();
+//            // indlejret try, da vi må køre executeUpdate før resultset er tilgængeligt.
+//            try(ResultSet rs = pstm.getGeneratedKeys();)
+//            {
+//                // Move the cursor to first record.
+//                rs.next();            
+//                id = rs.getInt(1); 
+//                // eksplicit kald til close, da nogle drivers ikke lukker resultset når statement, som oprettede det, lukkes (her pstm).
+//                rs.close();
+//            }
+//        }       
         return id;
-    }
-    
-    
+    }  
 }
