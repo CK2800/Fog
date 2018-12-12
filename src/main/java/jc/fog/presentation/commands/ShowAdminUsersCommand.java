@@ -26,7 +26,6 @@ public class ShowAdminUsersCommand extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-<<<<<<< HEAD
     {
         try{
             //sikker sig at man har den rigtigt rank for at kun se det her område.
@@ -45,23 +44,9 @@ public class ShowAdminUsersCommand extends Command
             return Pages.ADMIN_USER;
         }
         catch(Exception e)
-=======
-    {        
-        //sikker sig at man har den rigtigt rank for at kun se det her område.
-        HttpSession session = request.getSession();
-        UsersDTO user = (UsersDTO)session.getAttribute("user");
-        // Har vi en user i session, er denne logget ind, gå til index side.
-        if(user != null && user.getRank() > 1)
->>>>>>> FeatureClaus
         {
-            return Pages.INDEX;
-        } 
-
-        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        List<UsersDTO> getAllUsers = dataFacade.getAllUsers();
-        request.setAttribute("usersTable", userTable(getAllUsers, user));
-
-        return Pages.ADMIN_USER;
+            throw new FogException("Der gik noget galt da den skulle finde bruger." + e.getMessage());
+        }
     }
     
     

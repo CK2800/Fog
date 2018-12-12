@@ -23,7 +23,6 @@ public class ShowUserPasswordUpdate extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-<<<<<<< HEAD
     {
         try
         {
@@ -51,26 +50,5 @@ public class ShowUserPasswordUpdate extends Command
         {
             throw new FogException("Der gik noget galt da den skulle opdater password" + e.getMessage());
         }
-=======
-    {        
-        //Session bruges til, at kun opdater ens konto med ny adgangskode.
-        HttpSession session = request.getSession();
-        UsersDTO user = (UsersDTO)session.getAttribute("user");
-
-        //Få fat i id på user via session
-        int id = user.getId();
-
-        //få fat i den værdi som der er skrevet i input.
-        String password = request.getParameter("password");
-
-
-        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        boolean succesPassword = dataFacade.updateUserPassword(password, id);
-
-        if(succesPassword)
-            return new ShowUserHomeCommand().execute(request, response);
-        else
-            return new ShowUserHomeCommand().execute(request, response);
->>>>>>> FeatureClaus
     }
 }

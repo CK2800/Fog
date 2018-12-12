@@ -24,20 +24,10 @@ public class ShowUserPasswordCommand extends Command
         HttpSession session = request.getSession();
         UsersDTO user = (UsersDTO)session.getAttribute("user");
         // Har vi en user i session, er denne logget ind, gå til index side.
-        if(user != null && user.getId() < 0)
+        if(user == null)
         {
-<<<<<<< HEAD
-            HttpSession session = request.getSession();
-            UsersDTO user = (UsersDTO)session.getAttribute("user");
-            // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user == null)
-            {
-                return Pages.INDEX;
-            }        
-=======
             return Pages.INDEX;
-        }        
->>>>>>> FeatureClaus
+        }       
 
         // Ingen user i session => dan login formular og vis login side.
         request.setAttribute("updateAdgangskode", updatePassword());
