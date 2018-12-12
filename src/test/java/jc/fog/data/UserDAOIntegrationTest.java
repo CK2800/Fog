@@ -75,17 +75,4 @@ public class UserDAOIntegrationTest {
         assertTrue(deleteUser);
     } 
     
-    @Test(expected = FogException.class)    
-    public void testGetUserName() throws FogException
-    {
-        // Assert
-        UserDAO userdao = new UserDAO(connection);
-        
-        // Act
-        String username = userdao.returnUserName(500);
-        
-        // Assert
-        assertEquals(username, "testuser");
-                
-    }
 }
