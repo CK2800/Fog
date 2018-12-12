@@ -8,7 +8,7 @@ package jc.fog.data;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;

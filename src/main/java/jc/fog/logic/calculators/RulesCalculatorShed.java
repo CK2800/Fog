@@ -13,10 +13,10 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.logic.BillItem;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rectangle;
-import jc.fog.logic.ShedDTO;
+import jc.fog.logic.dto.ShedDTO;
 
 /**
  * Udvidelse af RulesCalculator for udregning af skurets beklædning.

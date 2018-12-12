@@ -5,6 +5,8 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.calculators.RulesCalculatorPost;
 import jc.fog.logic.calculators.RulesCalculatorShed;
 import jc.fog.logic.calculators.RulesCalculatorHead;

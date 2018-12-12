@@ -16,7 +16,7 @@ import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
 import jc.fog.logic.Rules;
-import jc.fog.logic.UsersDTO;
+import jc.fog.logic.dto.UsersDTO;
 
 /**
  *

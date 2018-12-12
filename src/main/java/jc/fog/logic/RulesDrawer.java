@@ -6,7 +6,7 @@
 package jc.fog.logic;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.logic.Rectangle;
 
 /**

@@ -15,7 +15,7 @@ import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
-import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.dto.MaterialDTO;
 
 /**
  *

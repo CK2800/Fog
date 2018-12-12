@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.presentation.Pages;
 
 /**

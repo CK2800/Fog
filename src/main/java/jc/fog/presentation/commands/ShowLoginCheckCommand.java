@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.UsersDTO;
+import jc.fog.logic.dto.UsersDTO;
 import jc.fog.presentation.Pages;
 
 /**

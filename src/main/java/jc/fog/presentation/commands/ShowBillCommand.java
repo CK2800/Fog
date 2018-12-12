@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.LogicFacade;
-import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.LogicFacadeImpl;
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.BillItem;
+import jc.fog.logic.LogicFacade;
 import jc.fog.presentation.Pages;
 
 /**
@@ -29,7 +30,7 @@ public class ShowBillCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        
+        LogicFacade logicFacade = new LogicFacadeImpl();
         // Se om der er en id i request, for så skal vi hente carportrequest fra db.
         int id = 0;
         CarportRequestDTO carportRequestDTO;
@@ -86,7 +87,7 @@ public class ShowBillCommand extends Command
         // get materials.
         List<MaterialDTO> materials = dataFacade.getMaterials();
         // Calculate the bill of materials.
-        List<BillItem> bill = LogicFacade.calculateBill(carportRequestDTO, materials);
+        List<BillItem> bill = logicFacade.calculateBill(carportRequestDTO, materials);
         // Calculate string with carport dimensions.
         String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
         

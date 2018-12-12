@@ -5,6 +5,8 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.MaterialDTO;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;

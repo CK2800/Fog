@@ -1,4 +1,4 @@
-package jc.fog.logic;
+package jc.fog.logic.dto;
 
 /**
  *

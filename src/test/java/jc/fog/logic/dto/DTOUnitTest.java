@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic;
+package jc.fog.logic.dto;
 
+import jc.fog.logic.dto.MaterialtypeDTO;
+import jc.fog.logic.dto.MaterialDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

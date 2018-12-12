@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rules.CarportPart;
 
 /**

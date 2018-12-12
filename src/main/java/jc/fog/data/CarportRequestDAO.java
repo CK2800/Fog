@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
-import jc.fog.logic.CarportRequestDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
 
 /**
  *

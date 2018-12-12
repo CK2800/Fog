@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.UsersDTO;
+import jc.fog.logic.dto.UsersDTO;
 import jc.fog.presentation.Pages;
 
 /**

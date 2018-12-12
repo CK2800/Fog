@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.BillItem;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.MaterialDTO;
 
 /**
  *

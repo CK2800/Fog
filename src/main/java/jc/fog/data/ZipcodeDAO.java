@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.ZipcodeDTO;
+import jc.fog.logic.dto.ZipcodeDTO;
 
 /**
  *

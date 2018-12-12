@@ -7,11 +7,11 @@ package jc.fog.data;
 
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.CarportRequestDTO;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.RooftypeDTO;
-import jc.fog.logic.UsersDTO;
-import jc.fog.logic.ZipcodeDTO;
+import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.MaterialDTO;
+import jc.fog.logic.dto.RooftypeDTO;
+import jc.fog.logic.dto.UsersDTO;
+import jc.fog.logic.dto.ZipcodeDTO;
 
 /**
  *

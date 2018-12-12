@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialDTO;
-import jc.fog.logic.RooftypeDTO;
+import jc.fog.logic.dto.MaterialDTO;
+import jc.fog.logic.dto.RooftypeDTO;
 
 /**
  *

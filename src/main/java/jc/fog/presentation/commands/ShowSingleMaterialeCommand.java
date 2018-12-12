@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacadeImpl;
-import jc.fog.logic.UsersDTO;
+import jc.fog.logic.dto.UsersDTO;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.MaterialDTO;
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.presentation.Pages;
 
 
