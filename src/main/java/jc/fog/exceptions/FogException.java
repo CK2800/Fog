@@ -23,6 +23,10 @@ public class FogException extends Exception
     private static final Logger LOGGER = FogLogger.getLogger(jc.fog.exceptions.FogException.class.getName(), false);
     
     private Exception causingException;
+
+    public FogException(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * The exception that caused this FogException to be thrown.
      * Look here for the stack trace.
