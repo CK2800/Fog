@@ -42,14 +42,9 @@ endif;
 |Fog - carport server.|
 :Modtager bekræftigelse;
 :Bekræftigelse persisteres;
-
-|Fog - carport afd.|
-
-:Forespørgsel åbnes;
-:Ordrebekræftigelse udfærdiges;
-:Materiale inkl. stykliste, samlevejledning pakkes;
-:Plukliste oprettes;
+:Stykliste, plukliste, samlevejledning dannes;
 |Fog - trælast|
+:Plukliste åbnes;
 :Varer plukkes;
 |Fog - kørselsdisponent|
 :Afsender lastbil;
