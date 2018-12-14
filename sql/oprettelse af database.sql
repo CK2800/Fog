@@ -66,6 +66,9 @@ CREATE TABLE Rooftypes(
     `type` VARCHAR(50) NOT NULL
 );
 -- Info om hvilke materialer der indgår i en tagtype. F.eks. røde rygningssten og røde belægningssten til rødt tegltag. 
+-- Tabellen findes, fordi en tagtype kan have flere materialer, og disse kan være af forskellig materialetype. Koden må 
+-- afgøre hvordan materialeantallet beregnes. V. flade tage kan man se efter materialets dimension, v. tag m. rejsning 
+-- må man kigge efter materialets materialetype, f.eks. enten rygsten eller tagsten, og så beregne antallet.
 CREATE TABLE RooftypeMaterials(
 	rooftypeId int,
     materialId int,
@@ -100,5 +103,9 @@ CREATE TABLE Carportrequests(
 	CONSTRAINT fk_Carportrequests_Sheds
 	FOREIGN KEY(shedId)
 	REFERENCES Sheds(id)
-	ON DELETE SET NULL-- slettes skuret, skal referencen til det fjernes.
+	ON DELETE SET NULL, -- slettes skuret, skal referencen til det fjernes.
+    CONSTRAINT fk_Carportrequests_Rooftypes
+    FOREIGN KEY (rooftypeId)
+    REFERENCES Rooftypes(id)
+    ON DELETE NO ACTION -- en tagtype, som refereres af en carport forespørgsel, må ikke slettes.
 );
