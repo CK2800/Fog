@@ -27,23 +27,16 @@ public class UserDAO extends AbstractDAO
     final static String CREATE_USER_SQL = "INSERT INTO Users (name, zip, phone, email, password) VALUES (?,?,?,?,?)";
     
     //skal måske ha lavet navnet om på den her.
-    final static String GET_USER_SQL = "SELECT id, rank FROM Users WHERE email=? AND password=?";
-    
-    final static String UPDATE_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
-    
+    final static String GET_USER_SQL = "SELECT id, name, zip, phone, email, rank FROM Users WHERE email=? AND password=?";
+        
     final static String GET_ALL_USERS_SQL = "SELECT * FROM Users";
 
-    final static String FORGOT_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
+    final static String UPDATE_USER_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE email = ?";
     
     final static String ADD_NEW_RANK_SQL ="UPDATE Users SET rank = ? WHERE id = ?";
     
     final static String DELETE_USER_SQL ="DELETE FROM Users WHERE id = ?";
-    
-    final static String UPDATE_USER_PASSWORD_SQL = "UPDATE Users SET password = ? WHERE id = ?";
-    
-    final static String GET_USER_NAME_SQL = "SELECT name FROM Users WHERE id = ?";
-
-       
+           
     public UserDAO(Connection connection) throws FogException {
         super(connection);
     } 
@@ -97,12 +90,9 @@ public class UserDAO extends AbstractDAO
     }
     
     /**
-<<<<<<< HEAD
      * Logger en bruger ind med angivet email og password.
-=======
      * Bruges til, at find ud af om man har opretter sig på siden
      * Hvis man findes i db så vil man få adgang til siden.
->>>>>>> FeatureJesper
      * @param email
      * @param password
      * @return UsersDTO objekt som repræsenterer den indloggede bruger, eller null ved fejlet login.
@@ -118,17 +108,23 @@ public class UserDAO extends AbstractDAO
         try(PreparedStatement pstm = connection.prepareStatement(GET_USER_SQL))
         {            
             pstm.setString(1, email);
-            pstm.setString(2, password);
-            
+
             try (ResultSet rs = pstm.executeQuery())
             {
                 if(rs.next())
                 {
                     //Får fat i både Id og rank
-                    int userId = rs.getInt("id");
-                    int rank = rs.getInt("rank");                                
-                    
-                    user = new UsersDTO(userId, rank);
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    int zip = rs.getInt("zip");
+                    int phone = rs.getInt("phone");
+                    String emailValue = rs.getString("email");
+                    int rank = rs.getInt("rank"); 
+
+                    //id, name, zip, phone, email, rank
+                    user = new UsersDTO(id, phone, rank, zip, name, emailValue);
+                    user.setId(id);
+                    return user;
                 }
             }
         }
@@ -165,32 +161,6 @@ public class UserDAO extends AbstractDAO
         }
         return success;
     }
-
-    /**
-     * Skal tildele bruger med denne email ny adgangskode.
-     * @param email
-     * @return
-     * @throws FogException 
-     */
-    public boolean forgotPassword(String email) throws FogException
-    {
-        boolean success = false;
-        try (PreparedStatement pstm = connection.prepareStatement(FORGOT_PASSWORD_SQL);)
-        {
-            //Henter vores random som sender tal + bogstaver tilbage som bruges til password.
-            String password = Rules.randomPassword();
-         
-            pstm.setString(1, password);
-            pstm.setString(2, email);
-            
-            success = pstm.executeUpdate() == 1;
-        }
-        catch(Exception e)
-        {            
-            throw new FogException("Kodeord blev ikke nulstillet.", e.getMessage(), e);            
-        }
-        return success;
-    }
     
     /**
      * Tildeler den ny rank til brugeren.
@@ -217,62 +187,34 @@ public class UserDAO extends AbstractDAO
     }
     
     /**
-     * Den her skal opdater den enkelt brugers adgangskode til det som man har skrevet.
-     * @param password
-     * @param id
+     * Skal tildele bruger med denne email ny adgangskode.
+     * @param email
      * @return
      * @throws FogException 
      */
-    public boolean updateUserPassword(String password, int id) throws FogException
+    public boolean forgotPassword(String email, String password) throws FogException
     {
+        boolean success = false;
         try
         {
+            //Henter vores random som sender tal + bogstaver tilbage som bruges til password.
+            if(password == null)
+                password = Rules.RandomPassword();
+            
             PreparedStatement pstm;
             
             pstm = connection.prepareStatement(UPDATE_USER_PASSWORD_SQL);
+
             pstm.setString(1, password);
-            pstm.setInt(2, id);
+            pstm.setString(2, email);
             
-            return pstm.executeUpdate() == 1;
+            success = pstm.executeUpdate() == 1;
         }
-        catch (Exception e)
-        {
-            throw new FogException("Adgangskoden blev ikke opdateret.", e.getMessage(), e);
+        catch(Exception e)
+        {            
+            throw new FogException("Kodeord blev ikke nulstillet.", e.getMessage(), e);            
         }
-    }
-    
-    /**
-     * Den skal sende navn tilbage som kan blive vist frem til bruger
-     * @param id
-     * @return
-     * @throws FogException 
-     */
-    public String returnUserName(int id) throws FogException
-    {
-        try 
-        {
-            PreparedStatement pstm;
-            
-            pstm = connection.prepareStatement(GET_USER_NAME_SQL);
-            pstm.setInt(1, id);
-            
-            ResultSet rs = pstm.executeQuery();
-            
-            if(rs.next())
-            {
-                //Får fat i både Id og rank
-                return rs.getString("name");
-            }
-            else
-            {
-                //Hvad skal der ske hvis den ikke findes?
-                throw new RecordNotFoundException(Table.USERS, "id", id);
-            }
-        }
-        catch(SQLException | RecordNotFoundException e)
-        {
-            throw new FogException("Brugernavn ej fundet.", e.getMessage(), e);
-        }
+        return success;
     }
     
     /**
@@ -291,7 +233,7 @@ public class UserDAO extends AbstractDAO
         {
             while(rs.next())
                 {
-                    users.add(new UsersDTO(rs.getInt("id"), rs.getInt("rank"), rs.getString("name"), rs.getString("email")));
+                    users.add(new UsersDTO(rs.getInt("id"),rs.getInt("phone"),rs.getInt("rank"),rs.getInt("zip"),rs.getString("name"),rs.getString("email")));
                 }
         }
 //        try {

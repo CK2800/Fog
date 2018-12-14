@@ -50,6 +50,12 @@ public class ShowCarPortCommand  extends Command
         // Fandt vi et gyldigt id på requestet (dvs. > 0)
         if(id > 0)
         {
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user == null || user != null && user.getRank() > 1)
+            {
+                return Pages.INDEX;
+            }        
+            
             //Det her skal bliver vist hvis man skal updater indhold.
             CarportRequestDTO carportRequestDTO = dataFacade.getCarport(id);
             // Create HTML form with request's data and set it on http request.
@@ -84,31 +90,22 @@ public class ShowCarPortCommand  extends Command
         anyIDs(item, stringBuilder);
         
         //Bruger oplysning skal opret sig her hvis man er oprettet.
-//        if(user.getId() == 0)
-//        {
-//            //skal opret sig som bruger første.
-//        }
-//        else
-//        {
-//            //Er man admin eller bruger?
-//        }
         
         //Carport information her
-        stringBuilder.append("L&aelig;ngde:<br /><input type=\"text\" name=\"length\" class=\"form-control\" value=\"$carport1\" placeholder=\"Længde på carport\" /><br />");
-        stringBuilder.append("Bredde:<br /><input type=\"text\" name=\"width\" class=\"form-control\" value=\"$carport2\" placeholder=\"Bredde på carport\" /><br />");
-        stringBuilder.append("H&oslash;jde:<br /><input type=\"text\" class=\"form-control\" name=\"height\" value=\"$carport3\" placeholder=\"Højde\" /><br />");
-        stringBuilder.append("H&aelig;ldning:<br /><input type=\"text\" class=\"form-control\" name=\"slope\" value=\"$carport4\" placeholder=\"Hældning på taget\" /><br />");
+        stringBuilder.append("L&aelig;ngde:<br /><input type=\"number\" maxlength=\"3\" required min=\"300\" max=\"900\" name=\"length\" class=\"form-control\" value=\"$carport1\" placeholder=\"Længde på carport\" /><br />");
+        stringBuilder.append("Bredde:<br /><input type=\"number\" maxlength=\"3\" required min=\"300\" max=\"900\" name=\"width\" class=\"form-control\" value=\"$carport2\" placeholder=\"Bredde på carport\" /><br />");
+        stringBuilder.append("H&aelig;ldning:<br /><input type=\"number\" maxlength=\"2\" required min=\"0\" max=\"40\" class=\"form-control\" name=\"slope\" value=\"$carport4\" placeholder=\"Hældning på taget\" /><br />");
         
         //Shed information her
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $shed1 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"text\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"text\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"number\" maxlength=\"3\" max=\"900\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"number\" maxlength=\"3\" max=\"900\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
         
         //Kommentar fra kunden.
         stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" placeholder=\"Kommentar til forespørgelse\" /><br />");
         
         //Dropdown i forhold til type af tag.
-        String dropdown = "Type:<br /><select class=\"form-control\" name=\"rooftypeId\"><option>V&aelig;lg tagtype:</option>$body</select>";
+        String dropdown = "Type:<br /><select required class=\"form-control\" name=\"rooftypeId\"><option value>V&aelig;lg tagtype:</option>$body</select>";
         String rows = "";
         String selectedCheck = "";//Bruges til, at fortælle option hvilken værdi man har valgt.
         rows = rooftypeDropdown(Rooftypes, item, selectedCheck, rows);

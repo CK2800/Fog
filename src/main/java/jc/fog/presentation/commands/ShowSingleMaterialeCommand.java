@@ -33,10 +33,10 @@ public class ShowSingleMaterialeCommand extends Command {
             HttpSession session = request.getSession();
             UsersDTO user = (UsersDTO)session.getAttribute("user");
             // Har vi en user i session, er denne logget ind, gå til index side.
-            if(user != null && user.getRank() > 1)
+            if(user == null || user != null && user.getRank() > 1)
             {
                 return Pages.INDEX;
-            } 
+            }
             
             int getId = Integer.parseInt(request.getParameter("id"));
             DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
@@ -60,18 +60,17 @@ public class ShowSingleMaterialeCommand extends Command {
     private String materialToForm(MaterialDTO item)
     {
         StringBuilder stringBuilder = new StringBuilder("<form action=\"#\" method=\"POST\">");
-        
-        stringBuilder.append("Id:<br /><input type=\"text\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" /><br />");
-        stringBuilder.append("Navn:<br /><input type=\"text\" class=\"form-control\" name=\"navn\" value=\"").append(item.getName()).append("\" /><br />");
-        stringBuilder.append("Enhed:<br /><input type=\"text\" class=\"form-control\" name=\"enhed\" value=\"").append(item.getUnit()).append("\" /><br />");
-        stringBuilder.append("Materiale Type:<br /><input type=\"text\" class=\"form-control\" name=\"materialeType\" value=\"").append(item.getMaterialtypeDTO().getType()).append("\" /><br />");
-        stringBuilder.append("Længde:<br /><input type=\"text\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
+        stringBuilder.append("<input type=\"hidden\" class=\"form-control\" disabled name=\"id\" readonly value=\"").append(item.getId()).append("\" />");
+        stringBuilder.append("Navn:<br /><input type=\"text\" required class=\"form-control\" name=\"navn\" value=\"").append(item.getName()).append("\" /><br />");
+        stringBuilder.append("Enhed:<br /><input type=\"text\" required class=\"form-control\" name=\"enhed\" value=\"").append(item.getUnit()).append("\" /><br />");
+        stringBuilder.append("Materiale Type:<br /><input type=\"text\" required class=\"form-control\" name=\"materialeType\" value=\"").append(item.getMaterialtypeDTO().getType()).append("\" /><br />");
+        stringBuilder.append("Længde:<br /><input type=\"number\" max=\"900\" class=\"form-control\" name=\"laengde\" value=\"").append(item.getLength()).append("\" /><br />");
 
         stringBuilder.append("<br/>");
         stringBuilder.append("<input type=\"submit\" value=\"Gem\" class=\"btn btn-success btn-block\" />");
         stringBuilder.append("</form>");
         
-        stringBuilder.append("<a href=\"FrontController?command=showmateriale\">Tilbage..</a>");
+        
         
         return stringBuilder.toString();
     }

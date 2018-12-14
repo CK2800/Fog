@@ -13,6 +13,8 @@ import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.UsersDTO;
+import jc.fog.presentation.Pages;
+
 
 /**
  *
@@ -22,24 +24,32 @@ public class ShowUserPasswordUpdate extends Command
 {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {        
-        //Session bruges til, at kun opdater ens konto med ny adgangskode.
-        HttpSession session = request.getSession();
-        UsersDTO user = (UsersDTO)session.getAttribute("user");
-
-        //Få fat i id på user via session
-        int id = user.getId();
-
-        //få fat i den værdi som der er skrevet i input.
-        String password = request.getParameter("password");
-
-
-        DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        boolean succesPassword = dataFacade.updateUserPassword(password, id);
-
-        if(succesPassword)
-            return new ShowUserHomeCommand().execute(request, response);
-        else
-            return new ShowUserHomeCommand().execute(request, response);
+    {
+        try
+        {
+            //Session bruges til, at kun opdater ens konto med ny adgangskode.
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user == null)
+            {
+                return Pages.INDEX;
+            } 
+            
+            //få fat i den værdi som der er skrevet i input.
+            String password = request.getParameter("password");            
+            
+            DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+            boolean succesPassword = dataFacade.forgotPassword(user.getEmail(), password);
+            
+            if(succesPassword)
+                return new ShowUserHomeCommand().execute(request, response);
+            else
+                return new ShowUserHomeCommand().execute(request, response);
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Der gik noget galt da den skulle opdater password" + e.getMessage());
+        }
     }
 }

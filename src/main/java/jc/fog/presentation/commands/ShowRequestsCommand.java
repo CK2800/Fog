@@ -28,26 +28,30 @@ public class ShowRequestsCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        //skal find ud af hvorfor man ikke bliver smidt over på index hvis man ingen session har.... VIGTIGT!!!
-                
-        //sikker sig at man har den rigtigt rank for at kun se det her område.
-        HttpSession session = request.getSession();
-        UsersDTO user = (UsersDTO)session.getAttribute("user");
-        // Har vi en user i session, er denne logget ind, gå til index side.
-        if(user != null && user.getRank() > 1)
+        try {
+            //sikker sig at man har den rigtigt rank for at kun se det her område.
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user == null || user != null && user.getRank() > 1)
+            {
+                return Pages.INDEX;
+            } 
+
+            // Get the list of requests.
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+            List<CarportRequestDTO> requests = dataFacade.getCarports();
+
+            // Convert the requests to a nicely formattet HTML table and save on request.
+            request.setAttribute("requestsTable", requestsToHtml(requests));
+
+            // Return the page showing all requests.
+            return Pages.ALL_CARPORTS;
+        }
+        catch(Exception e)
         {
-            return Pages.INDEX;
-        } 
-
-        // Get the list of requests.
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        List<CarportRequestDTO> requests = dataFacade.getCarports();
-
-        // Convert the requests to a nicely formattet HTML table and save on request.
-        request.setAttribute("requestsTable", requestsToHtml(requests));
-
-        // Return the page showing all requests.
-        return Pages.ALL_CARPORTS;
+            throw new FogException("Der gik noget galt da man vil se carport forespørgelse.." + e.getMessage());
+        }
     }
     
     /**

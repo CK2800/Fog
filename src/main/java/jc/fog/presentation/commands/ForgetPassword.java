@@ -25,7 +25,7 @@ public class ForgetPassword extends Command
         String email = request.getParameter("email");
         
         DataFacade dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        boolean password = dataFacade.forgotPassword(email);
+        boolean password = dataFacade.forgotPassword(email, null);
         if(password)            
             return new ShowLoginCommand().execute(request, response);
         else

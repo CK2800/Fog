@@ -26,22 +26,28 @@ public class ShowMaterialsCommand extends Command {
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
-    {        
-        //sikker sig at man har den rigtigt rank for at kun se det her område.
-        HttpSession session = request.getSession();
-        UsersDTO user = (UsersDTO)session.getAttribute("user");
-        // Har vi en user i session, er denne logget ind, gå til index side.
-        if(user != null && user.getRank() > 1)
+    {
+        try
         {
-            return Pages.INDEX;
-        } 
-
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        List<MaterialDTO> materials = dataFacade.getMaterials();
-        request.setAttribute("materialTable", materialsToHtml(materials));
-
-        return Pages.ALL_MATERIALS;
-                
+            //sikker sig at man har den rigtigt rank for at kun se det her område.
+            HttpSession session = request.getSession();
+            UsersDTO user = (UsersDTO)session.getAttribute("user");
+            // Har vi en user i session, er denne logget ind, gå til index side.
+            if(user == null || user != null && user.getRank() > 1)
+            {
+                return Pages.INDEX;
+            }
+            
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+            List<MaterialDTO> materials = dataFacade.getMaterials();
+            request.setAttribute("materialTable", materialsToHtml(materials));
+        
+            return Pages.ALL_MATERIALS;
+        }
+        catch(Exception e)
+        {
+            throw new FogException("Der gik noget galt ved fremvis af materials" + e.getMessage());
+        }
     }
     
     private String materialsToHtml(List<MaterialDTO> materials)
