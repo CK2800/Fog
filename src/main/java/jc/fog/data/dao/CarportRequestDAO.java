@@ -1,4 +1,4 @@
-package jc.fog.data;
+package jc.fog.data.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,18 +20,16 @@ public class CarportRequestDAO extends AbstractDAO{
     
        
 
-    final static String GET_CPREQUESTS_SQL = "SELECT c.id, c.rooftypeId, c.slope, c.shedId, c.width, c.height, c.length, c.remark, "
-                                           + "s.length AS shedLength, s.width AS shedWidth "
-                                           + "FROM Carportrequests c LEFT OUTER JOIN Sheds s ON c.shedId = s.id";
+    final static String GET_CPREQUESTS_SQL = "SELECT c.id, c.rooftypeId, c.slope, c.width, c.height, c.length, c.remark, "
+                                           + "s.id AS shedId, s.length AS shedLength, s.width AS shedWidth "
+                                           + "FROM Carportrequests c LEFT OUTER JOIN Sheds s ON c.id = s.carportRequestId";
     final static String GET_CPREQUEST_SQL = GET_CPREQUESTS_SQL + " WHERE c.id = ?";
     
-    final static String CREATE_CPREQUEST_SQL = "INSERT INTO Carportrequests(rooftypeId, slope, shedId, width, height, length, remark) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
+    final static String CREATE_CPREQUEST_SQL = "INSERT INTO Carportrequests(rooftypeId, slope, width, height, length, remark) VALUES (?, ?, ?, ?, ?, ?)"; 
     
-    final static String CREATE_SHED_SQL = "INSERT INTO Sheds(length, width) VALUES(?,?)";
+    final static String CREATE_SHED_SQL = "INSERT INTO Sheds(carportRequestId, length, width) VALUES(?, ?, ?)";
     
-    final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, shedId = ?, width = ?, length = ?, rooftypeId = ?, remark = ? WHERE id = ?";
-    
-    final static String UPDATE_SHEDID_SQL = "UPDATE Carportrequests SET shedId = ? WHERE id = ?";
+    final static String UPDATE_CARPORT_SQL = "UPDATE Carportrequests SET slope = ?, width = ?, length = ?, rooftypeId = ?, remark = ? WHERE id = ?";        
     
     final static String UPDATE_SHED_SQL = "UPDATE Sheds SET width = ?, length = ? WHERE id = ?";
               
@@ -83,35 +81,7 @@ public class CarportRequestDAO extends AbstractDAO{
                 throw new RecordNotFoundException(Table.CARPORTREQUESTS, "id", id);
             }
         }
-//        try(PreparedStatement pstm = connection.prepareStatement(GET_CPREQUEST_SQL))
-//        {
-//            pstm.setInt(1, id);
-//        
-//            //try with ressources.
-//            try(ResultSet rs = pstm.executeQuery())
-//            {
-//                if(rs.next())
-//                {
-//                    //System.out.println("rs:" + rs.toString());
-//                    carportRequest = new CarportRequestDTO(
-//                                rs.getInt("id"),
-//                                rs.getInt("rooftypeId"),
-//                                rs.getInt("slope"),
-//                                rs.getInt("shedId"),
-//                                rs.getInt("width"),
-//                                rs.getInt("height"),
-//                                rs.getInt("length"),
-//                                rs.getString("remark"),
-//                                rs.getInt("shedLength"),
-//                                rs.getInt("shedWidth")
-//                    );                     
-//                }
-//                else // record ej fundet.
-//                {
-//                    throw new RecordNotFoundException(Table.CARPORTREQUESTS, "id", id);
-//                }
-//            }
-//        }    
+
         catch(RecordNotFoundException r)
         {
             throw new FogException("Forespørgslen kunne ikke findes.", "CarportRequest med id: " + id + " blev ikke fundet.", r);
@@ -180,41 +150,51 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws jc.fog.exceptions.FogException
           
      */
-    public boolean createCarportRequest(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
+    public boolean createCarportRequestAndShed(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {
+        int carportRequestId = 0, shedId = 0;
         // Fjern whitespace foran og bagved.
-        remark = remark.trim();
+        remark = remark.trim();        
         boolean success = false;
-        try(PreparedStatement pstm = connection.prepareStatement(CREATE_CPREQUEST_SQL);)
+        try
         {
-            // Start transaktion, da BÅDE skur (hvis valgt) OG carport skal oprettes.
+            // Start transaktion, da BÅDE carport OG skur (hvis valgt) skal oprettes.
             connection.setAutoCommit(false);
             
-            int shedId = 0;
-            // Først oprettes skur, hvis det ønskes.
-            if (shedLength > 0 && shedWidth > 0) // skur ønskes.
-                shedId = createShed(shedLength, shedWidth);                
+            // Først oprettes forespørgsel.
+            carportRequestId = createCarportRequest(rooftypeId, slope, width, height, length, remark);
+            // hvis skur dimensioner er angivet, oprettes det nu.
+            if (shedLength > 0 && shedWidth > 0)
+                shedId = createShed(carportRequestId, shedLength, shedWidth);
             
-            // Opret forespørgsel, evt. med skur.
-            pstm.setInt(1, rooftypeId);
-            pstm.setInt(2, slope);           
-            // Hvis skur ønskes, sættes dets id i sql...
-            if (shedId != 0)
-                pstm.setInt(3, shedId);                
-            else // ... intet skur medfører null i sql.
-                pstm.setNull(3, Types.INTEGER);
-
-            pstm.setInt(4, width);
-            pstm.setInt(5, height);
-            pstm.setInt(6, length);
-            pstm.setString(7, remark);
+            
+            
+            
+//            int shedId = 0;
+//            // Først oprettes skur, hvis det ønskes.
+//            if (shedLength > 0 && shedWidth > 0) // skur ønskes.
+//                shedId = createShed(shedLength, shedWidth);                
+//            
+//            // Opret forespørgsel, evt. med skur.
+//            pstm.setInt(1, rooftypeId);
+//            pstm.setInt(2, slope);           
+//            // Hvis skur ønskes, sættes dets id i sql...
+//            if (shedId != 0)
+//                pstm.setInt(3, shedId);                
+//            else // ... intet skur medfører null i sql.
+//                pstm.setNull(3, Types.INTEGER);
+//
+//            pstm.setInt(4, width);
+//            pstm.setInt(5, height);
+//            pstm.setInt(6, length);
+//            pstm.setString(7, remark);
 
             connection.commit();
             // Reset autocommit på forbindelsen.
             connection.setAutoCommit(true);
 
             // If exactly one row was affected, return true.
-            success = pstm.executeUpdate() == 1;                                
+            success = carportRequestId > 0; //pstm.executeUpdate() == 1;                                
         }
         catch(SQLException s)
         {
@@ -270,7 +250,7 @@ public class CarportRequestDAO extends AbstractDAO{
             // Intet skurId, men checkbox tilvalgt => opret skur.
             else if(shedId == 0 && "on".equals(shedCheck))
             {                
-                int addShedId = createShed(shedLength, shedWidth);
+                int addShedId = createShed(id, shedLength, shedWidth);
                 if (addShedId > 0)
                     ok = updateCarPort(slope, addShedId, width, length, rooftypeId, remark, id);
                 else
@@ -420,44 +400,50 @@ public class CarportRequestDAO extends AbstractDAO{
         }
         return success;
     }
+    
+    private int createCarportRequest(int rooftypeId, int slope, int width, int height, int length, String remark) throws SQLException
+    {
+        // Opret Pair objekter som byttes ind i SQL.
+        Pair<Integer, Object> pair1 = new Pair<>(1, rooftypeId);
+        Pair<Integer, Object> pair2 = new Pair<>(2, slope);
+        Pair<Integer, Object> pair3 = new Pair<>(3, width);
+        Pair<Integer, Object> pair4 = new Pair<>(4, height);
+        Pair<Integer, Object> pair5 = new Pair<>(5, length);
+        Pair<Integer, Object> pair6 = new Pair<>(6, remark);
+        
+        try
+        (
+            PreparedStatement pstm = createPreparedStatement(connection, CREATE_CPREQUEST_SQL, Statement.RETURN_GENERATED_KEYS, pair1, pair2, pair3, pair4, pair5, pair6);
+            ResultSet rs = updateAndGetKeys(pstm);
+        )
+        {
+            rs.next();
+            return rs.getInt(1);
+        }
+    }
 
     /**
      * Hjælpemetode som opretter skuret. 
+     * @param carportRequestId Id på carport forespørgsel som skuret hører til.
      * @param length skurets længde.
      * @param width skurets bredde.
-     * @return id på det nyoprettede skur, hvis skuret ikke oprettes, returneres 0.
+     * @return id på det nyoprettede skur.
      * @throws SQLException Hvis der opstår fejl undervejs i oprettelsen, kastes SQLException.
      */
-    private int createShed(int length, int width) throws SQLException
-    {
-        int id = 0;
-        Pair<Integer, Object> pair1 = new Pair<>(1, length);
-        Pair<Integer, Object> pair2 = new Pair<>(2, width);
+    private int createShed(int carportRequestId, int length, int width) throws SQLException
+    {        
+        Pair<Integer, Object> pair1 = new Pair<>(1, carportRequestId);
+        Pair<Integer, Object> pair2 = new Pair<>(2, length);
+        Pair<Integer, Object> pair3 = new Pair<>(3, width);
         
-        try(
-                PreparedStatement pstm = createPreparedStatement(connection, CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS, pair1, pair2);
-                ResultSet rs = updateAndGetKeys(pstm);
-            )                
-            {
-                rs.next();
-                id = rs.getInt(1);
-            }
-        
-//        try(PreparedStatement pstm = connection.prepareStatement(CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS );)
-//        {
-//            pstm.setInt(1, length);
-//            pstm.setInt(2, width);
-//            pstm.executeUpdate();
-//            // indlejret try, da vi må køre executeUpdate før resultset er tilgængeligt.
-//            try(ResultSet rs = pstm.getGeneratedKeys();)
-//            {
-//                // Move the cursor to first record.
-//                rs.next();            
-//                id = rs.getInt(1); 
-//                // eksplicit kald til close, da nogle drivers ikke lukker resultset når statement, som oprettede det, lukkes (her pstm).
-//                rs.close();
-//            }
-//        }       
-        return id;
+        try
+        (
+            PreparedStatement pstm = createPreparedStatement(connection, CREATE_SHED_SQL, Statement.RETURN_GENERATED_KEYS, pair1, pair2, pair3);
+            ResultSet rs = updateAndGetKeys(pstm);
+        )                
+        {
+            rs.next();
+            return rs.getInt(1);
+        }        
     }  
 }

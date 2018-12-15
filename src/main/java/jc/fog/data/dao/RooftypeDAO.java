@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.data;
+package jc.fog.data.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +42,7 @@ public class RooftypeDAO extends AbstractDAO
      * Henter tagtyper fra databasen.
      * @return 
      */
-    protected List<RooftypeDTO> getRooftypes() throws FogException
+    public List<RooftypeDTO> getRooftypes() throws FogException
     {        
         List<RooftypeDTO> rooftypes = new ArrayList();
         try

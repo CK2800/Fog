@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.data;
+package jc.fog.data.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -108,6 +108,7 @@ public class UserDAO extends AbstractDAO
         try(PreparedStatement pstm = connection.prepareStatement(GET_USER_SQL))
         {            
             pstm.setString(1, email);
+            pstm.setString(2, password);
 
             try (ResultSet rs = pstm.executeQuery())
             {

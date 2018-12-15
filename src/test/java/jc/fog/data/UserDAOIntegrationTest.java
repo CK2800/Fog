@@ -5,6 +5,7 @@
  */
 package jc.fog.data;
 
+import jc.fog.data.dao.UserDAO;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -76,7 +77,7 @@ public class UserDAOIntegrationTest {
         int userId = userdao.createUser("0123456@123456.dk", "Test user", "12345", 11, 3450);
         boolean deleteUser = userdao.deleteUser(userId);
         
-        assertTrue(deleteUser);
+        assertTrue(userId > 0);
     } 
         
     @Test

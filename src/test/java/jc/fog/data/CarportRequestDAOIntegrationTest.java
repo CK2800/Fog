@@ -5,6 +5,7 @@
  */
 package jc.fog.data;
 
+import jc.fog.data.dao.CarportRequestDAO;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -158,7 +159,7 @@ public class CarportRequestDAOIntegrationTest
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
          // luk forbindelsen så vi får fejl.
         DbConnector.closeConnection();
-        boolean success = carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Denne carport request skal fejle.");        
+        boolean success = carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Denne carport request skal fejle.");        
         // Genåbn forbindelsen.
         connection = DbConnector.getConnection();
         
@@ -170,7 +171,7 @@ public class CarportRequestDAOIntegrationTest
     {   
         // Opret carportdao som opretter forbindelse, hvis den mangler.
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);         
-        boolean success = carportDAO.createCarportRequest(3, 0, 600, 210, 1000, 275, 125, "600 x 1000 m skur 275 x 125, fladt tag.");
+        boolean success = carportDAO.createCarportRequestAndShed(3, 0, 600, 210, 1000, 275, 125, "600 x 1000 m skur 275 x 125, fladt tag.");
         assertTrue(success);        
     }
     
@@ -178,7 +179,7 @@ public class CarportRequestDAOIntegrationTest
     public void testOpretForespoergselUdenSkur() throws FogException
     {
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
-        boolean success = carportDAO.createCarportRequest(2, 30, 500, 125, 750,0,0,"500 x 750, 30 graders taghældning, uden skur");
+        boolean success = carportDAO.createCarportRequestAndShed(2, 30, 500, 125, 750,0,0,"500 x 750, 30 graders taghældning, uden skur");
         assertTrue(success);
     }
     
@@ -186,7 +187,7 @@ public class CarportRequestDAOIntegrationTest
     public void testHentAlleForespoergsler() throws FogException
     {        
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
-        carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         List<CarportRequestDTO> requests = carportDAO.getCarportRequests();
         assertTrue(requests.size() > 0);        
     }
@@ -195,7 +196,7 @@ public class CarportRequestDAOIntegrationTest
     public void testHentEnkeltForespørgsel() throws FogException
     {
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
-        carportDAO.createCarportRequest(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
         CarportRequestDTO request = carportDAO.getCarportRequest(1);
         assertTrue(request != null);
     }

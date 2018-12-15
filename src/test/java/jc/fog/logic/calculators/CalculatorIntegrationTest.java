@@ -8,7 +8,7 @@ package jc.fog.logic.calculators;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.data.DbConnector;
-import jc.fog.data.MaterialDAO;
+import jc.fog.data.dao.MaterialDAO;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.BillItem;
 import jc.fog.logic.dto.CarportRequestDTO;

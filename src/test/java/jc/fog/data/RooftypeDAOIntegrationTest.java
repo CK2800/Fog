@@ -5,6 +5,7 @@
  */
 package jc.fog.data;
 
+import jc.fog.data.dao.RooftypeDAO;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;

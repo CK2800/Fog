@@ -35,7 +35,7 @@ public class CarportRequestDTO {
         this.remark = remark;
         
         if (shedId != 0)
-            this.shedDTO = new ShedDTO(shedId, shedLength, shedWidth);
+            this.shedDTO = new ShedDTO(shedId, id, shedLength, shedWidth);
     }
     
     /**
@@ -60,9 +60,9 @@ public class CarportRequestDTO {
         this.length = length;
         this.remark = remark;
         
-        // Since shed id is unknown, if sheds width and length are provided, pass in zero as id.
+        // Since shed id is unknown, if sheds width and length are provided, pass in zeros as ids.
         if (shedLength > 0 && shedWidth > 0)
-            this.shedDTO = new ShedDTO(0, shedLength, shedWidth);
+            this.shedDTO = new ShedDTO(0, 0, shedLength, shedWidth);
     }
     
     

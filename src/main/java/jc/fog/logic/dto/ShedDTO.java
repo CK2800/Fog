@@ -12,18 +12,31 @@ package jc.fog.logic.dto;
 public class ShedDTO
 {
     private int id;
+    private int carportRequestId;
     private int length;
     private int width;
     
+    
     // getters
     public int getId(){ return id; }
+    public int carportRequestId(){return carportRequestId;}
     public int getLength() { return length; }
     public int getWidth() { return width; }
-            
-    public ShedDTO(int id, int length, int width)
+    
+    /**
+     * Konstruktør for skur.
+     * @param id
+     * @param carportRequestId
+     * @param length
+     * @param width 
+     */
+    public ShedDTO(int id, int carportRequestId, int length, int width)
     {
         this.id = id;
+        this.carportRequestId = carportRequestId;
         this.length = length;
         this.width = width;
     }
+    
+    
 }

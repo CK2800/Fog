@@ -5,14 +5,11 @@
  */
 package jc.fog.presentation.commands;
 
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.presentation.Pages;
 
 /**
@@ -32,7 +29,7 @@ public class ShowUpdateRequestCommand extends Command
         int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
         int slope = Integer.parseInt(request.getParameter("slope"));
         int width = Integer.parseInt(request.getParameter("width"));
-        int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
+        //int height = Integer.parseInt(request.getParameter("height"));//Bliver taget væk på et tidspunkt da vi mener at vi ikke kommer til, at bruge den.
         int length = Integer.parseInt(request.getParameter("length"));
         String remark = request.getParameter("remark");
 

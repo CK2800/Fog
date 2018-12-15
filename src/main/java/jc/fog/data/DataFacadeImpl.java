@@ -5,6 +5,11 @@
  */
 package jc.fog.data;
 
+import jc.fog.data.dao.MaterialDAO;
+import jc.fog.data.dao.UserDAO;
+import jc.fog.data.dao.RooftypeDAO;
+import jc.fog.data.dao.CarportRequestDAO;
+import jc.fog.data.dao.ZipcodeDAO;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
@@ -92,7 +97,7 @@ public class DataFacadeImpl implements DataFacade
     @Override
     public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
     {
-        return carportRequestDAO.createCarportRequest(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
+        return carportRequestDAO.createCarportRequestAndShed(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }
     
     @Override

@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import jc.fog.data.DbConnector;
-import jc.fog.data.MaterialDAO;
+import jc.fog.data.dao.MaterialDAO;
 import jc.fog.exceptions.FogException;
 import org.junit.After;
 import org.junit.AfterClass;
