@@ -74,8 +74,9 @@ CREATE TABLE RooftypeMaterials(
     materialId int,
     materialtypeId int NOT NULL,
     slope boolean,    
-    -- PRIMARY KEY(rooftypeId, materialTypeId), -- kombination af tagets type og materialets type sikrer, at der eks. kun er 1 belægningstype for hver tagtype. Duer ikke v. plasttag mv. pga flere dimensioner for samme materialetype.
-    PRIMARY KEY(rooftypeId, materialId), -- kun 
+    -- PRIMARY KEY(rooftypeId, materialTypeId), -- kombination af tagets type og materialets type sikrer, at der f.eks. kun 
+    -- er 1 belægningstype for hver tagtype. MEN: Duer ikke v. plasttag mv. pga flere dimensioner for samme materialetype.
+    PRIMARY KEY(rooftypeId, materialId),
     CONSTRAINT fk_RooftypeMaterials_Rooftypes
     FOREIGN KEY(rooftypeId)
     REFERENCES Rooftypes(id)
