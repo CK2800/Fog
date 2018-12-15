@@ -44,9 +44,9 @@ create table Zipcodes(
 CREATE TABLE Users(
 	id int primary key auto_increment,
     `name` varchar(200) not null,
-    zip smallint not null,
+    zip smallint not null, -- 14 bits til 9999 ==> 16 bits eller 2 bytes ==> smallint.
     phone int not null,
-    email varchar(200) not null unique,
+    email varchar(200) not null unique, 
     `password` varchar(200) not null ,
     rank int not null DEFAULT 5,
     CONSTRAINT fk_Users_Zipcodes
