@@ -219,7 +219,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @return
      * @throws jc.fog.exceptions.FogException    
      */
-    public boolean updateCarPortRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
+    public boolean updateCarPortRequestAndShed(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException
     {
         boolean success = false, ok = false;
         try
@@ -233,7 +233,7 @@ public class CarportRequestDAO extends AbstractDAO{
                 //Skal opdater værdi hos skur. til de nye værdier.
                 ok = updateShed(shedWidth, shedLength, shedId);
                 if (ok) // skur opdateret ok, nu opdateres carport.
-                    ok = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);
+                    ok = updateCarPort(slope, width, length, rooftypeId, remark, id);
 
                 success = ok;
             }
@@ -243,24 +243,25 @@ public class CarportRequestDAO extends AbstractDAO{
                 //Skal slet det enkelt skur.
                 ok = deleteShed(shedId);
                 if (ok) //Updater carport delen                
-                    updateCarPort(slope, 0, width, length, rooftypeId, remark, id);
+                    ok = updateCarPort(slope, width, length, rooftypeId, remark, id);
 
                 success = ok;
             }
             // Intet skurId, men checkbox tilvalgt => opret skur.
             else if(shedId == 0 && "on".equals(shedCheck))
             {                
-                int addShedId = createShed(id, shedLength, shedWidth);
-                if (addShedId > 0)
-                    ok = updateCarPort(slope, addShedId, width, length, rooftypeId, remark, id);
-                else
-                    ok = false;
+                ok = updateCarPort(slope, width, length, rooftypeId, remark, id);
+                int addShedId = 0;
+                if (ok)
+                    addShedId = createShed(id, shedLength, shedWidth);
+                
+                ok = addShedId > 0;                
 
                 success = ok;
             }
             else // Intet skurId og intet flueben i checkbox => opdater carportens værdier.
             {   
-                ok = updateCarPort(slope, shedId, width, length, rooftypeId, remark, id);                
+                ok = updateCarPort(slope, width, length, rooftypeId, remark, id);                
                 success = ok;
             }
 
@@ -342,8 +343,7 @@ public class CarportRequestDAO extends AbstractDAO{
     /**
      * Skal updater carport værdi til de nye værdier.
      * Er carportforespørgslens skur blevet slettet, angives 0 som shedId.
-     * @param slope
-     * @param shedId Skurets id eller 0 ved intet skur.
+     * @param slope     
      * @param width
      * @param length
      * @param rooftypeId
@@ -353,22 +353,18 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws SQLException Hvis PreparedStatement fejler, kastes denne exception.
      * @throws RecordNotFoundException Hvis record med id ikke findes, kastes denne exception.
      */
-    private boolean updateCarPort(int slope, int shedId, int width, int length, int rooftypeId, String remark, int id) throws SQLException, RecordNotFoundException {
+    private boolean updateCarPort(int slope, int width, int length, int rooftypeId, String remark, int id) throws SQLException, RecordNotFoundException {
         
         boolean success = false;
         
         try(PreparedStatement pstm = connection.prepareStatement(UPDATE_CARPORT_SQL);)
         {
-            pstm.setInt(1, slope);
-            if (shedId != 0)
-                pstm.setInt(2, shedId);                
-            else // ... intet skur medfører null i sql.
-                pstm.setNull(2, Types.INTEGER);        
-            pstm.setInt(3, width);
-            pstm.setInt(4, length);
-            pstm.setInt(5, rooftypeId);
-            pstm.setString(6, remark);
-            pstm.setInt(7, id);
+            pstm.setInt(1, slope);                  
+            pstm.setInt(2, width);
+            pstm.setInt(3, length);
+            pstm.setInt(4, rooftypeId);
+            pstm.setString(5, remark);
+            pstm.setInt(6, id);
             success = pstm.executeUpdate() == 1;
             
             if (!success)
