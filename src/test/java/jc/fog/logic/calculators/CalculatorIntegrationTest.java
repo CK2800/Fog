@@ -104,7 +104,7 @@ public class CalculatorIntegrationTest
         MaterialDAO dao = new MaterialDAO(connection); // forbindelse
         List<MaterialDTO> materials = dao.getMaterials(); // materialer
         List<BillItem> stykliste; // tom stykliste 
-        CarportRequestDTO forespoergsel = new CarportRequestDTO(1, 45, 600, 210, 800, "carport 600 x 800 cm, skur 210 x 600 cm, 45 graders hældning på tag.", 210, 600);
+        CarportRequestDTO forespoergsel = new CarportRequestDTO(2, 45, 600, 210, 800, "carport 600 x 800 cm, skur 210 x 600 cm, 45 graders hældning på tag.", 210, 600);
         RulesCalculator.initializeMaterials(materials);
         RulesCalculatorRoof roofCalculator = new RulesCalculatorRoof();
         

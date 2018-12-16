@@ -41,7 +41,7 @@ public class ShowUserHomeCommand extends Command
         }
         catch(Exception e)
         {
-            throw new FogException("Den ikke vise forsiden til bruger - " + e.getMessage());
+            throw new FogException("Den ikke vise forsiden til bruger - ", e.getMessage(), e);
         }
     }
     

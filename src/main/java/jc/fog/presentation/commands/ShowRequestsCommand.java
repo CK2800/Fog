@@ -50,7 +50,7 @@ public class ShowRequestsCommand extends Command
         }
         catch(Exception e)
         {
-            throw new FogException("Der gik noget galt da man vil se carport forespørgelse.." + e.getMessage());
+            throw new FogException("Der gik noget galt da man vil se carport forespørgelse..", e.getMessage(), e);
         }
     }
     

@@ -151,23 +151,19 @@ public class CarportRequestDAO extends AbstractDAO{
           
      */
     public boolean createCarportRequestAndShed(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
-    {
-        int carportRequestId = 0, shedId = 0;
+    {        
         // Fjern whitespace foran og bagved.
-        remark = remark.trim();        
-        boolean success = false;
+        remark = remark.trim();             
         try
         {
             // Start transaktion, da BÅDE carport OG skur (hvis valgt) skal oprettes.
             connection.setAutoCommit(false);
-            
+                        
             // Først oprettes forespørgsel.
-            carportRequestId = createCarportRequest(rooftypeId, slope, width, height, length, remark);
+            int carportRequestId = createCarportRequest(rooftypeId, slope, width, height, length, remark);
             // hvis skur dimensioner er angivet, oprettes det nu.
             if (shedLength > 0 && shedWidth > 0)
-                shedId = createShed(carportRequestId, shedLength, shedWidth);
-            
-            
+                createShed(carportRequestId, shedLength, shedWidth);
             
             
 //            int shedId = 0;
@@ -194,14 +190,22 @@ public class CarportRequestDAO extends AbstractDAO{
             connection.setAutoCommit(true);
 
             // If exactly one row was affected, return true.
-            success = carportRequestId > 0; //pstm.executeUpdate() == 1;                                
+            //pstm.executeUpdate() == 1;                                
+            return true;
         }
         catch(SQLException s)
         {
+            try
+            {
+                connection.rollback();
+            }
+            catch(SQLException se)
+            {
+                throw new FogException("Forespørgslen blev ikke oprettet.", se.getMessage(), se);
+            }
+                
             throw new FogException("Forespørgslen blev ikke oprettet.", s.getMessage(), s);
         }
-        
-        return success;
     }
     
     /**
@@ -397,6 +401,18 @@ public class CarportRequestDAO extends AbstractDAO{
         return success;
     }
     
+    /**
+     * Opretter en carport forespørgsel og returnerer dens id.
+     * Metoden lukker de ressourcer der bruges ifm. oprettelsen i databasen vha. try-with-ressources.
+     * @param rooftypeId Tagtypens id.
+     * @param slope Hældningsgrad.
+     * @param width Vidde
+     * @param height Højde
+     * @param length Længde
+     * @param remark evt. bemærkninger.
+     * @return int Carportens id i databasen.
+     * @throws SQLException Hvis oprettelsen slår fejl, kastes en SQLException.
+     */
     private int createCarportRequest(int rooftypeId, int slope, int width, int height, int length, String remark) throws SQLException
     {
         // Opret Pair objekter som byttes ind i SQL.
@@ -420,6 +436,7 @@ public class CarportRequestDAO extends AbstractDAO{
 
     /**
      * Hjælpemetode som opretter skuret. 
+     * Metoden lukker de ressourcer der bruges ifm. oprettelsen i databasen vha. try-with-ressources.
      * @param carportRequestId Id på carport forespørgsel som skuret hører til.
      * @param length skurets længde.
      * @param width skurets bredde.

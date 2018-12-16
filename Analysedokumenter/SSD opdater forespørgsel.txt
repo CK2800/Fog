@@ -1,0 +1,51 @@
+@startuml
+autonumber
+title "Opdatering af carport forespørgsel - Sequence Diagram"
+
+actor User
+
+box "presentation" #PowderBlue
+boundary "Pages.SINGLE_CARPORTVIEW" as GUI
+control "FrontController" as FC
+entity Command as COM
+entity ShowUpdateRequestCommand as SURC
+entity ShowRequestsCommand as SRC
+end box
+
+box "data" #LightBlue
+entity DataFacadeImpl as DF
+entity carportRequestDAO as crDAO
+end box
+
+database DB
+
+User -> GUI : Opdater forespørgsel
+GUI -> FC : Commands.UPDATE_REQUEST
+FC -> COM : from()
+COM -->FC : ShowUpdateRequestCommand
+FC -> SURC: execute()
+SURC-> DF : updateRequest()
+DF->crDAO : updateCarPortRequestAndShed()
+crDAO->crDAO: createCarportRequest()
+crDAO-> DB: SQL
+crDAO->crDAO: createShed()
+crDAO-> DB: SQL
+alt success
+crDAO-->DF: true
+else
+crDAO-->DF: FogException
+end
+alt success
+DF -->SURC: true
+else
+DF -->SURC: FogException
+end
+alt success
+SURC-> SRC : execute()
+SRC --> FC : Pages.ALL_CARPORTS
+else
+SURC-->FC : Pages.SINGLE_CARPORTVIEW
+end
+FC -->GUI : HTTP Response
+
+@enduml

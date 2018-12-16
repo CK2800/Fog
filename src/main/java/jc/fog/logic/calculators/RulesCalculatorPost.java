@@ -58,25 +58,38 @@ public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
     @Override
     public List<Rectangle> draw(CarportRequestDTO carportRequest) throws FogException
     {
-        MaterialCount materialCount = calculateMaterials(carportRequest);
+        // Udregn materialer først, som sættes på denne instans.
+        calculateMaterials(carportRequest);
+        // Placeholder for rektangler.
         rectangles = new ArrayList();
+        // Hent skur fra forespørgsel.
         ShedDTO shed = carportRequest.getShedDTO();
+        
         // Opret increments for matrice af stolper.        
-        int wSpacing = carportRequest.getWidth() / mcRafters.getCount(); // Under hvert spær skal stå en stolpe i start, slut og v. hver rem brud.
-        int hSpacing = (carportRequest.getLength() - 2 * Rules.OVERHANG) / mcHeads.getCount(); 
+        int widthSpacing = carportRequest.getWidth() / mcRafters.getCount(); /* widthSpacing angiver mellemrum mellem stolper i carportens vidde. 
+                                                                                Under hvert spær brud (v. mcRafters.getCount() > 1) skal være en rem. 
+                                                                                Under hver rem skal stå en stolpe i start, slut og v. hvert rem brud. */
+
+        int lengthSpacing = (carportRequest.getLength() - 2 * Rules.OVERHANG) / mcHeads.getCount(); /* lengthSpacing angiver mellemrum stolper i carportens længde.
+                                                                                                       Under hvert rem brud (v. mcHeads.getCount() > 1) skal være en stolpe. */
+        
         // Stolpens halve godstykkelse bruges til at rykke stolpen korrekt under rem mv.
         int halfPostHeight = (int)Math.ceil(POST_HEIGHT/2);
+        // Udregn positioner for stolper på tegningen.
         for(int x = 0; x <= mcRafters.getCount(); x++)
         {            
-            int xPos = x * wSpacing - (int)Math.ceil(POST_HEIGHT/2);
-            if (x == 0)
+            // Udregn x positioner for stolper, x * mellemrum - halv godstykkelse.
+            int xPos = x * widthSpacing - (int)Math.ceil(POST_HEIGHT/2);
+            if (x == 0) // Første stolpe rykkes ind med udhængets længde, så stolpe står under rem.
                 xPos += Rules.OVERHANG;
-            if (x == mcRafters.getCount())
+            if (x == mcRafters.getCount()) // sidste stolpe placeres i carport vidde minus udhæng minus halv godstykkelse.
                 xPos = carportRequest.getWidth() - Rules.OVERHANG - halfPostHeight;
             
+            // Udregn y positioner.
             for(int y = 0; y <= mcHeads.getCount(); y++)
             {
-                int yPos = Rules.OVERHANG + (y * hSpacing) - halfPostHeight;
+                // y positioner følger mellemrum i carportens længderetning minus udhæng og halv godstykkelse.
+                int yPos = Rules.OVERHANG + (y * lengthSpacing) - halfPostHeight;
                 rectangles.add(new Rectangle(xPos, yPos, POST_HEIGHT, POST_HEIGHT, "ffaa44" ));
             }
         }

@@ -45,7 +45,7 @@ public class ShowAdminUsersCommand extends Command
         }
         catch(Exception e)
         {
-            throw new FogException("Der gik noget galt da den skulle finde bruger." + e.getMessage());
+            throw new FogException("Der gik noget galt da den skulle finde bruger.", e.getMessage(), e);
         }
     }
     

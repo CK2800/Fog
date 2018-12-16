@@ -46,7 +46,7 @@ public class ShowMaterialsCommand extends Command {
         }
         catch(Exception e)
         {
-            throw new FogException("Der gik noget galt ved fremvis af materials" + e.getMessage());
+            throw new FogException("Der gik noget galt ved fremvis af materials", e.getMessage(), e);
         }
     }
     
