@@ -81,9 +81,28 @@ public class RulesCalculatorRoof extends RulesCalculator
             // Find antal rygningsten:
             int noRidge = (int)Math.ceil(carportRequestDTO.getLength() / Rules.RIDGETILE_LENGTH);
             
-            // Opret bill items for hver sten.
-            result.add(new BillItem(sheetings.get(0), noRows*noCols, CarportPart.SHEETING, "teglsten."));
-            result.add(new BillItem(ridges.get(0), noRidge, CarportPart.RIDGE, "rygning sten."));
+            // Opret bill items for hver sten der hører til tagtypen.
+            MaterialDTO sheeting = null, ridge = null;
+            for(MaterialDTO material : sheetings)
+            {
+                if (material.getRooftypeId() == carportRequestDTO.getRooftypeId())
+                    sheeting = material;
+            }
+            for(MaterialDTO material : ridges)
+            {
+                if (material.getRooftypeId() == carportRequestDTO.getRooftypeId())
+                    ridge = material;
+            }
+            
+            // Ingen materialer fundet, med samme tagtype => exception.
+            if (sheeting == null || ridge == null)
+            {
+                // Q&D kast exception.
+                throw new FogException("Tagbelægning, tag med rejsning, kan ikke beregnes.", "Sheeting eller ridge for tagtypen ej fundet.", new Exception());
+            }
+            
+            result.add(new BillItem(sheeting, noRows*noCols, CarportPart.SHEETING, "teglsten."));
+            result.add(new BillItem(ridge, noRidge, CarportPart.RIDGE, "rygning sten."));
             return result;            
         }        
     }
