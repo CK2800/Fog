@@ -87,7 +87,11 @@ public class ShowCarPortCommand  extends Command
                 + "<input type=\"hidden\" name=\"command\" value=\"" + Commands.SHOW_BILL + "\">");
         
         //Det er shedid og forespørgelse id som fremkommer her.
-        anyIDs(item, stringBuilder);
+        if(item != null)
+        {
+            stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
+            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
+        }
         
         //Bruger oplysning skal opret sig her hvis man er oprettet.
         
@@ -98,8 +102,8 @@ public class ShowCarPortCommand  extends Command
         
         //Shed information her
         stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $shed1 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"number\" maxlength=\"3\" min=\"150\" max=\"900\" class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"number\" maxlength=\"3\" min=\"150\" max=\"900\" name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"number\" pattern=\".{150,900}\" required class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"number\" pattern=\".{150,900}\" required name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
         
         //Kommentar fra kunden.
         stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" placeholder=\"Kommentar til forespørgelse\" /><br />");
@@ -115,7 +119,7 @@ public class ShowCarPortCommand  extends Command
         
         
         //Her kommer submit som skal updatere eller beregn styklisten
-        if(user != null && user.getRank() == 1)
+        if(user != null && item != null && item.getId() > 0 && user.getRank() == 1)
         {
             stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.UPDATE_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         }
@@ -132,7 +136,7 @@ public class ShowCarPortCommand  extends Command
         if (item != null)
         {
             //Id'er til det angivet punkt/område i forhold til hvis det skal opdatere.
-            text = text.replace("$shedId", String.valueOf(item.getShedId()));       
+            text = text.replace("$shedId", String.valueOf(item.getShedId()));   
             text = text.replace("$id", String.valueOf(item.getId()));
             
             //Carport område
@@ -142,8 +146,6 @@ public class ShowCarPortCommand  extends Command
             text = text.replace("$carport4", String.valueOf(item.getSlope()));
             
             //Shed område
-            
-            
             if(item.getShedId() != 0)
             {
                 text = text.replace("$shed2", String.valueOf(item.getShedDTO().getLength()));
@@ -217,19 +219,6 @@ public class ShowCarPortCommand  extends Command
             rows += row;
         }
         return rows;
-    }
-
-    /**
-     * Tilføj to værdi til hvilken forespørgelse og samtidig skurid i shedId
-     * @param item
-     * @param stringBuilder 
-     */
-    private void anyIDs(CarportRequestDTO item, StringBuilder stringBuilder) {
-        if(item != null)
-        {
-            stringBuilder.append("<input type=\"hidden\" name=\"shedId\" value=\"$shedId\" />");
-            stringBuilder.append("<input type=\"hidden\" name=\"carportId\" value=\"$id\" />");
-        }
     }
 
 }
