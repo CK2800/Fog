@@ -8,9 +8,11 @@ package jc.fog.presentation.commands;
 import jc.fog.presentation.commands.ShowRequestsCommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.dto.UsersDTO;
 import jc.fog.presentation.Pages;
 
 /**
@@ -25,6 +27,9 @@ public class ShowAddRequestCommand extends Command
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         // Later we will validate a logged in user
+        //sikker sig at man har den rigtigt rank for at kun se det her område.
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
 
         // nap parametre fra requests og dan CarportRequestDTO.
         int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
@@ -43,8 +48,12 @@ public class ShowAddRequestCommand extends Command
         if (createRequest)
         {            
             // Kald ShowRequestCommand.execute.
-            return new ShowRequestsCommand().execute(request, response);            
-
+            
+            //Er man admin?
+            if(user.getRank() == 1)
+                return new ShowRequestsCommand().execute(request, response);            
+            else
+                return Pages.INDEX;
         }
         else
         {
