@@ -36,6 +36,10 @@ DB -->mDAO: ResultSet
 mDAO -->DF: List<MaterialDTO>
 DF -->SBC : List<MaterialDTO>
 SBC -> LF : calculateBill()
+LF -> Calc: New()
+Calc-> RC : initializeMaterials()
+Calc->Calc: initializeRuleCalculators()
+Calc--> LF
 LF -> Calc: calculateBill()
 Calc-> RC : calculate()
 RC  -> RC : calculateMaterials()

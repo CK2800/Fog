@@ -38,7 +38,21 @@ public class DbConnector
      */
     public static Connection getConnection() throws FogException 
     {
-        if ( connection == null ) {
+        // Hvis connection er etableret, se om den er lukket.
+        if (connection != null)
+        {
+            try
+            {
+                if (connection.isClosed())                     
+                    connection = null;                
+            }
+            catch(SQLException s)
+            {                
+                // Får vi exception ved isClosed, fjern reference så den kan garbage collectes.
+                connection = null;
+            }
+        }
+        if ( connection == null) {
             try
             {
                 Class.forName( DRIVER_CLASS );
@@ -72,7 +86,10 @@ public class DbConnector
             {
                 throw new FogException("Forbindelse til databasen fejlede.", "Db forbindelse ej lukket: " + s.getMessage(), s);
             }
-            connection = null;
+            finally
+            {
+                connection = null;
+            }
         }
     }
     

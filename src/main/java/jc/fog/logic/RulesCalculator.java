@@ -63,8 +63,7 @@ public abstract class RulesCalculator extends Rules
         catch(Exception e)
         {
             throw new FogException("Materialer blev ikke initialiseret", e.getMessage(), e);
-        }
-        
+        }        
     }
     
     /**

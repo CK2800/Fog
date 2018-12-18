@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import javafx.util.Pair;
+import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.exceptions.RecordNotFoundException;
 import jc.fog.exceptions.RecordNotFoundException.Table;
@@ -201,6 +202,8 @@ public class CarportRequestDAO extends AbstractDAO{
             }
             catch(SQLException se)
             {
+                // rollback failed, lad os lukke forbindelsen.
+                DbConnector.closeConnection();
                 throw new FogException("Forespørgslen blev ikke oprettet.", se.getMessage(), se);
             }
                 
