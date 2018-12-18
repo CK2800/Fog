@@ -12,7 +12,6 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.UsersDTO;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -71,7 +70,7 @@ public class UserDaoITest {
     }
 
     @Test
-    public void testCreateUser() throws FogException
+    public void createUser() throws FogException
     {      
         UserDAO userdao = new UserDAO(connection);
         int userId = userdao.createUser("0123456@123456.dk", "Test user", "12345", 11, 3450);
@@ -81,9 +80,9 @@ public class UserDaoITest {
     } 
         
     @Test
-    public void testGetAllUsers() throws FogException
+    public void getAllUsers() throws FogException
     {
-        // Assert
+        // Arrange
         UserDAO userDAO = new UserDAO(connection);        
         int id = userDAO.createUser("0123456@123456.dk", "Test user", "12345", 11, 3450); //  lav test user
         // Act
@@ -93,5 +92,4 @@ public class UserDaoITest {
         // Assert
         assertTrue(!users.isEmpty());
     }
-
 }

@@ -76,7 +76,7 @@ public class CalculatorUTest
         assertEquals(mc.getCount(), 57);         
     }
     
-    /** Tester fejlet udregning af materialer for stolper. */
+    /** Tester fejlet udregning af materialer for stolper. Fejlårsag er at spærtræets længde er 0. */
     @Test(expected = FogException.class)
     public void postCalculateMaterialFail() throws FogException
     {
@@ -155,7 +155,7 @@ public class CalculatorUTest
         assertEquals(mc.getCount() * calculator.getRaftersCount(), expected);        
     }
     
-    /** Tester om udregning af materialer for spær til fladt tag fejler. */
+    /** Tester om udregning af materialer for spær til fladt tag fejler. Her pga. negativ længde. */
     @Test(expected = FogException.class)
     public void raftersCalculateMaterialFail() throws FogException
     {        

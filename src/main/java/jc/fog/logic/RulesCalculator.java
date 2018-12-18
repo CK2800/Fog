@@ -14,10 +14,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.BillItem;
+import jc.fog.logic.BillItem;
 import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.MaterialCount;
 import jc.fog.logic.MaterialCount;
 import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rectangle;
+import jc.fog.logic.Rectangle;
+import jc.fog.logic.Rules;
 
 /**
  *

@@ -69,10 +69,15 @@ public class MaterialDaoITest
 
     
     @Test
-    public void testCreateMaterial() throws FogException
+    public void createMaterial() throws FogException
     {
+        // Arrange.
         MaterialDAO dao = new MaterialDAO(connection);
+        
+        // Act.
         boolean succes = dao.createMaterial(2, "5x5 mm", 6, "stk", 78.95F);
+        
+        // Assert.
         assertTrue(succes);
     }
     
@@ -80,26 +85,41 @@ public class MaterialDaoITest
     @Test
     public void testGetSingleMaterial() throws FogException
     {
+        // Arrange.
         MaterialDAO dao = new MaterialDAO(connection);
-        MaterialDTO request = dao.getMaterial(1);
+        
+        // Act.
+        MaterialDTO request = dao.getMaterial(1); // Kræver dog at materialet findes. Bedre hvis vi kan få id tilbage fra createMaterial(...).
+        
+        // Assert.
         assertTrue(request != null);
     }
     
     @Test
     public void testGetMaterials() throws FogException
     {           
+        // Arrange.
         MaterialDAO dao = new MaterialDAO(connection);
+        dao.createMaterial(2, "5x5 mm", 6, "stk", 78.95F);
+        
+        // Act.
         List<MaterialDTO> materials = dao.getMaterials();        
+        
+        // Assert.
         assertTrue(materials.size() > 0);
     }
     
     @Test(expected = FogException.class)
     public void testGetMaterialsFails() throws Exception
     {
-        MaterialDAO dao = new MaterialDAO(connection);
+        // Arrange.
+        MaterialDAO dao = new MaterialDAO(connection);        
         DbConnector.closeConnection();
+        
+        // Act.
         List<MaterialDTO> materials = dao.getMaterials();
         
+        // Assert.
         assertTrue(materials.size() > 0);
     }
 }

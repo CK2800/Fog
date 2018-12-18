@@ -66,10 +66,13 @@ public class RooftypeDaoITest
     }
 
     @Test
-    public void testGetRooftypes() throws FogException
+    public void getRooftypes() throws FogException
     {
-        RooftypeDAO dao = new RooftypeDAO(connection);
+        // Arrange
+        RooftypeDAO dao = new RooftypeDAO(connection);        
+        // Act
         List<RooftypeDTO> rooftypes = dao.getRooftypes();
+        // Assert
         Assert.assertTrue(rooftypes.size() > 0);
     }
 }

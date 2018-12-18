@@ -5,6 +5,7 @@
  */
 package jc.fog.logic.calculators;
 
+import jc.fog.logic.RulesCalculator;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.data.DbConnector;
@@ -13,7 +14,6 @@ import jc.fog.exceptions.FogException;
 import jc.fog.logic.BillItem;
 import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.logic.dto.MaterialDTO;
-import jc.fog.logic.RulesCalculator;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;

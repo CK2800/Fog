@@ -46,20 +46,22 @@ public class ShowAddRequestCommand extends Command
         //husk at fjern højde som er 200
         try
         {
+//            boolean success = dataFacade.createCarPort...
             int id = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
            
             //Er man admin?
-            if(user.getRank() == 1)
+            if(user != null && user.getRank() == 1)
                 return new ShowRequestsCommand().execute(request, response);            
             else
                 return Pages.INDEX;
         }
         catch(FogException f)        
-        {
+        {            
             // Er vi her, er der sket en fejl. Gem besked i request. Returner til indtastningsside igen.
             request.setAttribute(Fields.ERROR_TEXT, f.getFriendlyMessage());
-            //skal find ud af om vi skal lave den her om.
-            return Pages.SINGLE_CARPORTVIEW;
+            // vis formular igen med fejltekst.
+            return new ShowCarPortCommand().execute(request, response);
+            
         }
     }
 }

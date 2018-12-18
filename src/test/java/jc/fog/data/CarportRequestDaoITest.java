@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.CarportRequestDTO;
+import jc.fog.logic.dto.ShedDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;
@@ -89,7 +90,7 @@ public class CarportRequestDaoITest
     
     /** Tester DataFacadeImpl ved at hente alle carport forespørgsler. */
     @Test
-    public void GetCarports() throws FogException
+    public void getCarports() throws FogException
     {
         // Arrange
         DataFacadeImpl df = new DataFacadeImpl(connection);
@@ -136,19 +137,22 @@ public class CarportRequestDaoITest
         assertTrue(carport != null);        
     }
         
-    
+    @Test
     public void updateRequest() throws FogException
     {        
         // Arrange
         DataFacadeImpl df = new DataFacadeImpl(connection);
-        CarportRequestDTO carport = df.getCarport(1);
+        int id = df.createCarPort(1, 15, 1000, 600, 210, 300, 500, "Test carport.");                
+        CarportRequestDTO carport = df.getCarport(id);
         carport.setRemark(carport.getRemark() + " ændret i integration test");
-        
+                
         // Act
-        //df.updateRequest(carport.getId(), carport.getShedId(), shedCheck, 0, 0, 0, 0, 0, 0, remark);
+        ShedDTO shed = carport.getShedDTO();
+        boolean success = df.updateRequest(carport.getId(), carport.getShedId(), "on", carport.getSlope(), carport.getWidth(), 
+                carport.getLength(), shed.getWidth(), shed.getLength(), carport.getRooftypeId(), carport.getRemark());
         
-        
-        
+        // Assert
+        assertTrue(success);        
     }
     
     /************************* CarportRequestDAO tests *************************/
@@ -170,7 +174,7 @@ public class CarportRequestDaoITest
     }
     
     @Test
-    public void testOpretForespoergselMedSkur() throws Exception
+    public void createRequestWithShed() throws Exception
     {   
         // Opret carportdao som opretter forbindelse, hvis den mangler.
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
@@ -180,7 +184,7 @@ public class CarportRequestDaoITest
     }
     
     @Test
-    public void testOpretForespoergselUdenSkur() throws FogException
+    public void createRequestNoShed() throws FogException
     {
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
         int id = 0;
@@ -189,7 +193,7 @@ public class CarportRequestDaoITest
     }
     
     @Test
-    public void testHentAlleForespoergsler() throws FogException
+    public void getRequests() throws FogException
     {        
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
         carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
@@ -198,11 +202,11 @@ public class CarportRequestDaoITest
     }
     
     @Test
-    public void testHentEnkeltForespørgsel() throws FogException
+    public void getRequest() throws FogException
     {
         CarportRequestDAO carportDAO = new CarportRequestDAO(connection);
-        carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
-        CarportRequestDTO request = carportDAO.getCarportRequest(1);
+        int id = carportDAO.createCarportRequestAndShed(1,15,1000,250, 600, 300, 500, "Det bliver spændende");
+        CarportRequestDTO request = carportDAO.getCarportRequest(id);
         assertTrue(request != null);
     }
 }

@@ -5,8 +5,8 @@
  */
 package jc.fog.logic.calculators;
 
-import jc.fog.logic.RulesDrawer;
 import jc.fog.logic.RulesCalculator;
+import jc.fog.logic.RulesDrawer;
 import jc.fog.logic.Rules;
 import java.util.ArrayList;
 import java.util.List;
