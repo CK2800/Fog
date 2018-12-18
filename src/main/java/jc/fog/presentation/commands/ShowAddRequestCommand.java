@@ -13,6 +13,7 @@ import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.UsersDTO;
+import jc.fog.presentation.Fields;
 import jc.fog.presentation.Pages;
 
 /**
@@ -43,22 +44,20 @@ public class ShowAddRequestCommand extends Command
         
         DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         //husk at fjern højde som er 200
-        boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
-        
-        if (createRequest)
-        {            
-            // Kald ShowRequestCommand.execute.
-            
+        try
+        {
+            int id = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
+           
             //Er man admin?
             if(user.getRank() == 1)
                 return new ShowRequestsCommand().execute(request, response);            
             else
                 return Pages.INDEX;
         }
-        else
+        catch(FogException f)        
         {
-            // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
-            
+            // Er vi her, er der sket en fejl. Gem besked i request. Returner til indtastningsside igen.
+            request.setAttribute(Fields.ERROR_TEXT, f.getFriendlyMessage());
             //skal find ud af om vi skal lave den her om.
             return Pages.SINGLE_CARPORTVIEW;
         }

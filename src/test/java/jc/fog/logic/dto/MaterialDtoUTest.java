@@ -18,10 +18,10 @@ import static org.junit.Assert.*;
  *
  * @author Claus
  */
-public class DTOUnitTest
+public class MaterialDtoUTest
 {
     
-    public DTOUnitTest()
+    public MaterialDtoUTest()
     {
     }
     

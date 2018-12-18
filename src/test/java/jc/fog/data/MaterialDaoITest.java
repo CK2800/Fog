@@ -21,10 +21,10 @@ import org.junit.Test;
  *
  * @author Claus
  */
-public class MaterialDAOIntegrationTest
+public class MaterialDaoITest
 {
     static Connection connection = null;
-    public MaterialDAOIntegrationTest()
+    public MaterialDaoITest()
     {
     }
     

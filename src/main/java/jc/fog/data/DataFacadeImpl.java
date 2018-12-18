@@ -95,7 +95,7 @@ public class DataFacadeImpl implements DataFacade
     }
     
     @Override
-    public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
+    public int createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
     {
         return carportRequestDAO.createCarportRequestAndShed(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }

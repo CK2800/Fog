@@ -151,7 +151,7 @@ public class CarportRequestDAO extends AbstractDAO{
      * @throws jc.fog.exceptions.FogException
           
      */
-    public boolean createCarportRequestAndShed(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
+    public int createCarportRequestAndShed(int rooftypeId, int slope, int width, int height, int length, int shedLength, int shedWidth, String remark) throws FogException
     {        
         // Fjern whitespace foran og bagved.
         remark = remark.trim();             
@@ -165,26 +165,6 @@ public class CarportRequestDAO extends AbstractDAO{
             // hvis skur dimensioner er angivet, oprettes det nu.
             if (shedLength > 0 && shedWidth > 0)
                 createShed(carportRequestId, shedLength, shedWidth);
-            
-            
-//            int shedId = 0;
-//            // Først oprettes skur, hvis det ønskes.
-//            if (shedLength > 0 && shedWidth > 0) // skur ønskes.
-//                shedId = createShed(shedLength, shedWidth);                
-//            
-//            // Opret forespørgsel, evt. med skur.
-//            pstm.setInt(1, rooftypeId);
-//            pstm.setInt(2, slope);           
-//            // Hvis skur ønskes, sættes dets id i sql...
-//            if (shedId != 0)
-//                pstm.setInt(3, shedId);                
-//            else // ... intet skur medfører null i sql.
-//                pstm.setNull(3, Types.INTEGER);
-//
-//            pstm.setInt(4, width);
-//            pstm.setInt(5, height);
-//            pstm.setInt(6, length);
-//            pstm.setString(7, remark);
 
             connection.commit();
             // Reset autocommit på forbindelsen.
@@ -192,7 +172,7 @@ public class CarportRequestDAO extends AbstractDAO{
 
             // If exactly one row was affected, return true.
             //pstm.executeUpdate() == 1;                                
-            return true;
+            return carportRequestId;
         }
         catch(SQLException s)
         {

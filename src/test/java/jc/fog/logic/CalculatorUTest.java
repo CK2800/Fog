@@ -26,9 +26,9 @@ import org.junit.Test;
  *
  * @author Claus
  */
-public class CalculatorUnitTest
+public class CalculatorUTest
 {   
-    public CalculatorUnitTest()
+    public CalculatorUTest()
     {
     }
     

@@ -95,7 +95,7 @@ public class UserDAO extends AbstractDAO
         {
             if (result == 0)
                 throw new FogException("Bruger kunne ikke blive oprettet.", e.getMessage(), e);
-            else
+            else // her er bruger oprettet.
             {
                 // log fejlen.
             }

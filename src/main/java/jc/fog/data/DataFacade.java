@@ -27,7 +27,7 @@ public interface DataFacade
     public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException;
     public List<RooftypeDTO> getRooftypes() throws FogException;
     public boolean updateRequest(int id, int shedId, String shedCheck, int slope, int width, int length, int shedWidth, int shedLength, int rooftypeId, String remark) throws FogException;
-    public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException;
+    public int createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException;
     public List<ZipcodeDTO> getZipcodes() throws FogException;
     public UsersDTO login(String email, String password) throws FogException;
     public boolean forgotPassword(String email, String password) throws FogException;

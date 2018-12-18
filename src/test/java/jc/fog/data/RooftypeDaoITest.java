@@ -3,37 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic;
+package jc.fog.data;
 
-import jc.fog.logic.dto.CarportRequestDTO;
-import jc.fog.logic.dto.MaterialDTO;
+import jc.fog.data.dao.RooftypeDAO;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
-import jc.fog.data.DbConnector;
-import jc.fog.data.dao.MaterialDAO;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.dto.RooftypeDTO;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Claus
  */
-public class CalculatorIntegrationTest
+public class RooftypeDaoITest 
 {
-    private static Connection connection;
-    
-    public CalculatorIntegrationTest()
-    {
+    static Connection connection = null;    
+    public RooftypeDaoITest() {
     }
     
     @BeforeClass
-    public static void setUpClass()
+    public static void setUpClass() 
     {
         
     }
@@ -67,29 +62,14 @@ public class CalculatorIntegrationTest
     }
     
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
     }
 
-      
     @Test
-    public void testCalculators() throws FogException
+    public void testGetRooftypes() throws FogException
     {
-        // Arrange
-        MaterialDAO dao = new MaterialDAO(connection);
-        List<MaterialDTO> materials = dao.getMaterials();        
-        List<BillItem> stykliste = new ArrayList<>();
-        // Skur i fuld vidde af carport, 500 cm.
-        int shedWidth = 500;
-        CarportRequestDTO carportRequest = new CarportRequestDTO(
-                2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);
-        // Opret calculator.
-        Calculator calculator = new Calculator(materials);
-        
-        // Act        
-        stykliste = calculator.calculateBill(carportRequest);
-        
-        // Assert
-        assertTrue(stykliste.size() > 0);
+        RooftypeDAO dao = new RooftypeDAO(connection);
+        List<RooftypeDTO> rooftypes = dao.getRooftypes();
+        Assert.assertTrue(rooftypes.size() > 0);
     }
 }

@@ -26,11 +26,11 @@ import static org.junit.Assert.*;
  *
  * @author Claus
  */
-public class CalculatorIntegrationTest
+public class RulesCalculatorITest
 {
     static Connection connection;
     
-    public CalculatorIntegrationTest()
+    public RulesCalculatorITest()
     {
     }
     

@@ -5,26 +5,31 @@
  */
 package jc.fog.data;
 
-import jc.fog.data.dao.RooftypeDAO;
+import jc.fog.data.dao.UserDAO;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.exceptions.FogException;
-import jc.fog.logic.dto.RooftypeDTO;
+import jc.fog.logic.dto.UsersDTO;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  *
- * @author Claus
+ * @author Jespe
  */
-public class RooftypeDAOIntegrationTest 
-{
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class UserDaoITest {
+    
     static Connection connection = null;    
-    public RooftypeDAOIntegrationTest() {
+    public UserDaoITest()
+    {
     }
     
     @BeforeClass
@@ -66,10 +71,27 @@ public class RooftypeDAOIntegrationTest
     }
 
     @Test
-    public void testGetRooftypes() throws FogException
+    public void testCreateUser() throws FogException
+    {      
+        UserDAO userdao = new UserDAO(connection);
+        int userId = userdao.createUser("0123456@123456.dk", "Test user", "12345", 11, 3450);
+        boolean deleteUser = userdao.deleteUser(userId);
+        
+        assertTrue(userId > 0);
+    } 
+        
+    @Test
+    public void testGetAllUsers() throws FogException
     {
-        RooftypeDAO dao = new RooftypeDAO(connection);
-        List<RooftypeDTO> rooftypes = dao.getRooftypes();
-        Assert.assertTrue(rooftypes != null && rooftypes.size() > 0);
+        // Assert
+        UserDAO userDAO = new UserDAO(connection);        
+        int id = userDAO.createUser("0123456@123456.dk", "Test user", "12345", 11, 3450); //  lav test user
+        // Act
+        List<UsersDTO> users = userDAO.getAllUsers();
+        userDAO.deleteUser(id); // oprydning af test user.
+        
+        // Assert
+        assertTrue(!users.isEmpty());
     }
+
 }
