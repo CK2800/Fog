@@ -4,14 +4,14 @@ title "Beregn stykliste - Sequence Diagram"
 
 actor User
 
-box "presentation" #PowderBlue
+box "presentation" #b0e6d1
 boundary "Pages.ALL_CARPORTS" as GUI
 control "FrontController" as FC
 entity Command as COM
 entity ShowBillCommand as SBC
 end box
 
-box "data" #LightBlue
+box "data" #b0c5e6
 entity DataFacadeImpl as DF
 entity MaterialDAO as mDAO
 end box

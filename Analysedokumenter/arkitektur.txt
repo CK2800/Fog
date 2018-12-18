@@ -1,0 +1,109 @@
+@startuml
+
+title Packages - Class Diagram
+
+package jc.fog{
+    package exceptions{
+    }
+    package presentation{
+        package commands{
+                Class Command{
+                }
+                Class Commands{
+                    LOGIN : String
+                    LOGOUT : String
+                    SHOW_REQUESTS : String
+                    ...
+                    USER_HOME : String
+                }
+                Class LogoutCommand 
+                {
+                    execute() : String
+                }
+            }
+            Class FrontController{
+                GET : String
+                POST : String
+                LOGIN : String
+                LOGOUT : String
+                INVOICE : String
+                CHECKOUT : String
+                CREATE_USER : String
+                CREATE_ORDER : String
+                ADD_TO_BASKET : String
+            }
+        
+            Class Pages{
+                ADMIN_USER : String
+                BILL : String
+                LOGIN : String
+                INDEX : String
+                ALL_CARPORTS : String
+                ...
+                USER_PASSWORD : String
+                
+            }
+        }
+    package data{
+        package dao{
+        Class OrderDAO{
+            CREATE_ORDER_SQL : String
+            GET_USER_ORDERS_SQL : String
+            INSERT_LINE_ITEM_SQL : String
+            mapOrder(ResultSet) : OrderDTO
+            createOrder(UserDTO, ArrayList<LineItemDTO>) : boolean
+            getUserOrders(UserDTO) : ArrayList<OrderDTO>
+        }
+        Class ProductDAO
+        Class UserDAO
+        }
+        
+        Class DBConnection{
+            DB_URL : String
+            DB_USERNAME : String
+            DB_PASSWORD : String
+            DB_DRIVER_CLASS : String
+            getConnection() : Connection
+        } 
+        
+
+    package logic{
+        Class LogicFacade
+        Class RulesCalculator
+        Class Rectangle
+        Class Drawer
+        Class Calculator
+        
+        package calculators{
+            Class RulesCalculatorHead
+            Class RulesCalculatorPost
+        }
+        package dto{
+            Class MaterialDTO
+            Class ShedDTO
+            Class CarportRequestDTO
+            
+        }
+        
+        
+    }
+
+    Command <|- LogoutCommand
+    FrontController o-- Command
+    
+    
+    FrontController o-- UserDAO
+    FrontController o-- OrderDAO
+    FrontController o-- ProductDAO
+
+    UserDAO *-- UserDTO
+    OrderDAO *-- OrderDTO
+    OrderDAO *-- LineItemDTO
+    ProductDAO *-- ProductDTO
+
+    UserDAO o-- DBConnection
+    OrderDAO o-- DBConnection
+    ProductDAO o-- DBConnection
+}
+
+@enduml
