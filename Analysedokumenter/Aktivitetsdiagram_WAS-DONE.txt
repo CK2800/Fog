@@ -1,0 +1,27 @@
+@startuml
+
+title Activity Diagram \n
+
+
+|Kunde|
+start
+:Side f. carporte besøges;
+:Indtaster dimensioner;
+:Tagbelægning vælges;
+:Forespørgsel sendes;
+|Fog - carport server.|
+:Forespørgsel modtages;
+:Forespørgsel persisteres;
+
+|Fog - carport afd.|
+:Åbner forespørgsel;
+if (Er dimensioner OK) then (ja)
+else (nej)
+:Mål tilrettes;
+endif;
+|Fog - carport server.|
+:Stykliste, tegning dannes (v. klik);
+
+stop
+
+@enduml
