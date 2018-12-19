@@ -4,6 +4,9 @@ title Packages - Class Diagram
 
 package jc.fog{
     package exceptions{
+    Class FogException{
+            friendlyMessage : String
+            }
     }
     package presentation{
         package commands{
@@ -16,11 +19,12 @@ package jc.fog{
                     ...
                     USER_HOME : String
                 }
-                Class LogoutCommand 
+                Class ShowBillCommand 
                 {
                     execute() : String
                 }
             }
+            Object requests.jsp
             Class FrontController{
                 GET : String
                 POST : String
@@ -45,30 +49,28 @@ package jc.fog{
             }
         }
     package data{
-        package dao{
-        Class OrderDAO{
-            CREATE_ORDER_SQL : String
-            GET_USER_ORDERS_SQL : String
-            INSERT_LINE_ITEM_SQL : String
-            mapOrder(ResultSet) : OrderDTO
-            createOrder(UserDTO, ArrayList<LineItemDTO>) : boolean
-            getUserOrders(UserDTO) : ArrayList<OrderDTO>
-        }
-        Class ProductDAO
-        Class UserDAO
-        }
-        
-        Class DBConnection{
+        Class DBConnector{
             DB_URL : String
             DB_USERNAME : String
             DB_PASSWORD : String
             DB_DRIVER_CLASS : String
             getConnection() : Connection
-        } 
-        
+        }
+        Class DataFacade
+        Class DataFacadeImpl
+        package dao{
+        Class CarportRequestDAO{
+            CREATE_CPREQUEST_SQL : String
+            createCarportRequest : int
+            createShed : int
+            getCarportRequest(id) : CarportRequestDTO
+            }
+        }
+    }
 
     package logic{
         Class LogicFacade
+        Class LogicFacadeImpl
         Class RulesCalculator
         Class Rectangle
         Class Drawer
@@ -87,23 +89,36 @@ package jc.fog{
         
         
     }
-
-    Command <|- LogoutCommand
+    
+    requests.jsp -- Command
+    
+    Command <|- ShowBillCommand
     FrontController o-- Command
+    RulesCalculator <|- RulesCalculatorHead
+    RulesCalculator <|- RulesCalculatorPost
+    
+    Calculator *-- RulesCalculator
+    Drawer *-- RulesCalculator
+    RulesCalculator *-- MaterialDTO
     
     
-    FrontController o-- UserDAO
-    FrontController o-- OrderDAO
-    FrontController o-- ProductDAO
+    
+    LogicFacade <|- LogicFacadeImpl
+    DataFacade <|- DataFacadeImpl
+    LogicFacadeImpl *-- Calculator
+    LogicFacadeImpl *-- Drawer
+    RulesCalculatorHead o-- Rectangle
+    RulesCalculatorPost o-- Rectangle
+    DataFacadeImpl *-- CarportRequestDAO
+    DBConnector -- Command
+    ShowBillCommand *-- DataFacade
+    ShowBillCommand *-- LogicFacade
+    CarportRequestDAO o-- FogException
+    ShowBillCommand o-- FogException
 
-    UserDAO *-- UserDTO
-    OrderDAO *-- OrderDTO
-    OrderDAO *-- LineItemDTO
-    ProductDAO *-- ProductDTO
-
-    UserDAO o-- DBConnection
-    OrderDAO o-- DBConnection
-    ProductDAO o-- DBConnection
+    CarportRequestDAO *-- CarportRequestDTO
+    CarportRequestDTO o-- ShedDTO
+    
 }
 
 @enduml

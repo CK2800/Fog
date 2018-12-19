@@ -14,7 +14,7 @@ import java.util.Properties;
 import jc.fog.exceptions.FogException;
 
 /**
- *
+ * Konfigurerer forbindelse til databasen og implementerer forbindelsen som singleton.
  * @author Claus
  */
 public class DbConnector
@@ -22,8 +22,11 @@ public class DbConnector
     /**
     * Class of the database driver.
     */
-    public final static String DRIVER_CLASS = "com.mysql.jdbc.Driver";        
-
+    private final static String DRIVER_CLASS = "com.mysql.jdbc.Driver";    
+    private static String URL = null;
+    private static String USERNAME = null;
+    private static String PASSWORD = null;
+    
     /**
      * Statisk, deles på tværs af alle instanser af DbConnector. 
      * Singleton.
@@ -31,8 +34,7 @@ public class DbConnector
     private static Connection connection;
     
     /**
-     * Establishes the connection to the database with the connection properties
-     * read from db.properties ressource file.
+     * Etablerer forbindelse til databasen.     
      * @return Connection som er forbindelse til databasen.
      * @throws jc.fog.exceptions.FogException     
      */
@@ -56,14 +58,18 @@ public class DbConnector
             try
             {
                 Class.forName( DRIVER_CLASS );
-
-                // Read the properties of the database connection from target/classes/db.properties
-                Properties dbProperties = new Properties();
-                InputStream inputStream = DbConnector.class.getResourceAsStream("/db.properties");
-                dbProperties.load(inputStream);                
-                connection = DriverManager.getConnection(dbProperties.getProperty("URL"), 
-                                                         dbProperties.getProperty("USERNAME"), 
-                                                         dbProperties.getProperty("PASSWORD"));                
+                
+                // Read the properties of the database connection from target/classes/db.properties if fields are empty.
+                if (URL == null || USERNAME == null || PASSWORD == null)
+                {
+                    Properties dbProperties = new Properties();
+                    InputStream inputStream = DbConnector.class.getResourceAsStream("/db.properties");
+                    dbProperties.load(inputStream);                
+                    URL = dbProperties.getProperty("URL");
+                    USERNAME = dbProperties.getProperty("USERNAME");
+                    PASSWORD = dbProperties.getProperty("PASSWORD");
+                }
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);                
             }            
             catch(Exception e)
             {
@@ -73,6 +79,10 @@ public class DbConnector
         return connection;
     }
     
+    /**
+     * Lukker forbindelsen.
+     * @throws FogException 
+     */
     public static void closeConnection() throws FogException
     {
         
@@ -94,7 +104,7 @@ public class DbConnector
     }
     
     /**
-     * Klassemetode til at sætte en ny forbindelse.
+     * Sæt en forbindelse manuelt.
      * Brug denne hvis systemet skal testes mod en anden database.
      * @param connection 
      */
