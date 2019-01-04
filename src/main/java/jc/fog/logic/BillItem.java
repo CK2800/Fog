@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rules.CarportPart;
 
 /**
@@ -43,12 +44,5 @@ public class BillItem
         this.count = count;
         this.carportPart = carportPart;
         this.remarks = remarks;
-    }
-    
-    /**
-     * Adds value to count.
-     * @param value 
-     */
-    public void add(int value){this.count += value;}
-    
+    }    
 }

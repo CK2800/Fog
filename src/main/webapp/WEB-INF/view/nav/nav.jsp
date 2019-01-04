@@ -1,5 +1,5 @@
-<%@page import="jc.fog.logic.UsersDTO"%>
-<%@page import="jc.fog.presentation.Commands"%>
+<%@page import="jc.fog.presentation.commands.Commands"%>
+<%@page import="jc.fog.logic.dto.UsersDTO"%>
 <%
     UsersDTO user = (UsersDTO)session.getAttribute("user");
 %>
@@ -24,7 +24,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_REQUESTS %>">Forspørgelse</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.ADMIN_USERS %>">Admin bruger</a>
+                </li>
             <% } %>
+            <li class="nav-item">
+                <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.USER_HOME %>">Konto</a>
+            </li> 
             <li class="nav-item">
                 <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.LOGOUT %>">Log ud</a>
             </li> 

@@ -1,0 +1,55 @@
+@startuml
+
+title Activity Diagram \n
+
+
+|Kunde|
+start
+:Side f. carporte besøges;
+:Evt. filtre vælges;
+:Carport vælges;
+:Beskrivelse vises;
+if (Egne mål ønskes) then (ja)
+:Indtaster dimensioner;
+else(nej)
+
+endif;
+:Beklædning vælges;
+:Tagbelægning vælges;
+:Forespørgsel sendes;
+|Fog - carport server.|
+:Forespørgsel modtages;
+:Forespørgsel persisteres;
+
+|Fog - carport afd.|
+
+:Åbner forespørgsel;
+:Evt. fejl markeres automatisk;
+:Kunde kontaktes;
+if (Er dimensioner OK) then (ja)
+else (nej)
+:Mål tilrettes;
+endif;
+
+:Tilbud udregnes;
+:Tilbud afsendes;
+|Fog - carport server.|
+:Tilbud persisteres;
+:Mail afsendes;
+|Kunde|
+:Modtager mail;
+:Bekræfter tilbud;
+|Fog - carport server.|
+:Modtager bekræftigelse;
+:Bekræftigelse persisteres;
+:Stykliste, plukliste, samlevejledning dannes;
+|Fog - trælast|
+:Plukliste åbnes;
+:Varer plukkes;
+|Fog - kørselsdisponent|
+:Afsender lastbil;
+|Kunde|
+:Modtager varer;
+stop
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+autonumber
+title "Beregn stykliste - Sequence Diagram"
+
+actor User
+
+box "presentation" #b0e6d1
+boundary "Pages.ALL_CARPORTS" as GUI
+control "FrontController" as FC
+entity Command as COM
+entity ShowBillCommand as SBC
+end box
+
+box "data" #b0c5e6
+entity DataFacadeImpl as DF
+entity MaterialDAO as mDAO
+end box
+
+box "logic" #LightSkyBlue
+entity LogicFacadeImpl as LF
+entity Calculator as Calc
+entity RulesCalculator as RC
+end box
+
+database DB
+
+User -> GUI : Beregn stykliste
+GUI -> FC : Commands.SHOW_BILL
+FC -> COM : from()
+COM -->FC : ShowBillCommand
+FC -> SBC : execute()
+SBC -> DF : getMaterials()
+DF -> mDAO: getMaterials()
+mDAO -> DB: SQL
+DB -->mDAO: ResultSet
+mDAO -->DF: List<MaterialDTO>
+DF -->SBC : List<MaterialDTO>
+SBC -> LF : calculateBill()
+LF -> Calc: New()
+Calc-> RC : initializeMaterials()
+Calc->Calc: initializeRuleCalculators()
+Calc--> LF
+LF -> Calc: calculateBill()
+Calc-> RC : calculate()
+RC  -> RC : calculateMaterials()
+RC -> Calc: List<BillItem>
+Calc-->LF : List<BillItem>
+LF -->SBC : List<BillItem>
+SBC -> SBC: BillToHtml()
+SBC -->FC : Pages.BILL
+FC -->GUI : HTTP Response
+
+@enduml
