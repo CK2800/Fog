@@ -8,9 +8,12 @@ package jc.fog.presentation.commands;
 import jc.fog.presentation.commands.ShowRequestsCommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.dto.UsersDTO;
+import jc.fog.presentation.Fields;
 import jc.fog.presentation.Pages;
 
 /**
@@ -25,6 +28,9 @@ public class ShowAddRequestCommand extends Command
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
         // Later we will validate a logged in user
+        //sikker sig at man har den rigtigt rank for at kun se det her område.
+        HttpSession session = request.getSession();
+        UsersDTO user = (UsersDTO)session.getAttribute("user");
 
         // nap parametre fra requests og dan CarportRequestDTO.
         int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
@@ -38,20 +44,24 @@ public class ShowAddRequestCommand extends Command
         
         DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
         //husk at fjern højde som er 200
-        boolean createRequest = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
-        
-        if (createRequest)
-        {            
-            // Kald ShowRequestCommand.execute.
-            return new ShowRequestsCommand().execute(request, response);            
-
-        }
-        else
+        try
         {
-            // Er vi her, er der sket en fejl. Returner til indtastningsside igen.
+//            boolean success = dataFacade.createCarPort...
+            int id = dataFacade.createCarPort(rooftypeId, slope, width, length, 200, shedWidth, shedLength, remark);
+           
+            //Er man admin?
+            if(user != null && user.getRank() == 1)
+                return new ShowRequestsCommand().execute(request, response);            
+            else
+                return Pages.INDEX;
+        }
+        catch(FogException f)        
+        {            
+            // Er vi her, er der sket en fejl. Gem besked i request. Returner til indtastningsside igen.
+            request.setAttribute(Fields.ERROR_TEXT, f.getFriendlyMessage());
+            // vis formular igen med fejltekst.
+            return new ShowCarPortCommand().execute(request, response);
             
-            //skal find ud af om vi skal lave den her om.
-            return Pages.SINGLE_CARPORTVIEW;
         }
     }
 }

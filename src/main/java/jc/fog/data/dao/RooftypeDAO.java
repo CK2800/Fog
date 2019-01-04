@@ -40,6 +40,7 @@ public class RooftypeDAO extends AbstractDAO
     
     /**
      * Henter tagtyper fra databasen.
+     * Findes ingen tagtyper, returneres en tom liste.
      * @return 
      */
     public List<RooftypeDTO> getRooftypes() throws FogException

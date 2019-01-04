@@ -43,8 +43,10 @@ public class DataFacadeImpl implements DataFacade
     }
 
     /**
-     * Get all requests (forespørgsler).
-     * @return List of CarportRequestDTO objects.
+     * 
+     * Henter alle carport forespørgsler.
+     * @return - List af CarportRequestDTO objekter. Fandtes ingen forespørgsler, returneres tom liste.
+     * @throws jc.fog.exceptions.FogException     
      */
     public List<CarportRequestDTO> getCarports() throws FogException
     {
@@ -70,18 +72,38 @@ public class DataFacadeImpl implements DataFacade
         return materialDAO.getMaterial(id);        
     }
     
+    /**
+     * Henter alle materialer.
+     * @return List af MaterialDTO objekter. Hvis ingen materialer findes, returneres tom liste.     
+     * @throws jc.fog.exceptions.FogException     
+     */
     @Override
     public List<MaterialDTO> getMaterials() throws FogException
     {
         return materialDAO.getMaterials();
     }
     
+    /**
+     * Opretter et materiale i databasen.
+     * @param materialeTypeId id for materialets type.
+     * @param name materialets navn.
+     * @param length
+     * @param unit stk, mtr, kg osv.
+     * @param price enhedspris.
+     * @return true hvis oprettelse lykkedes, ellers false.
+     * @throws jc.fog.exceptions.FogException     
+     */
     @Override
     public boolean createMaterial(int materialeTypeId, String name, int length, String unit, float price) throws FogException
     {
         return materialDAO.createMaterial(materialeTypeId, name, length, unit, price);
     }
     
+    /**
+     * Henter tagtyper fra databasen.
+     * Findes ingen tagtyper, returneres en tom liste.
+     * @return 
+     */
     @Override
     public List<RooftypeDTO> getRooftypes() throws FogException
     {
@@ -95,7 +117,7 @@ public class DataFacadeImpl implements DataFacade
     }
     
     @Override
-    public boolean createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
+    public int createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException
     {
         return carportRequestDAO.createCarportRequestAndShed(rooftypeId, slope, width, height, length, shedWidth, shedLength, remark);
     }

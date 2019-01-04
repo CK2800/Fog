@@ -8,14 +8,13 @@ package jc.fog.data.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
+import java.util.Random;
+import java.util.UUID;
+import javafx.util.Pair;
 import jc.fog.exceptions.FogException;
-import jc.fog.exceptions.RecordNotFoundException;
-import jc.fog.exceptions.RecordNotFoundException.Table;
-import jc.fog.logic.Rules;
 import jc.fog.logic.dto.UsersDTO;
 
 /**
@@ -59,27 +58,44 @@ public class UserDAO extends AbstractDAO
         // placeholders.
         int result = 0; // 0 indikerer at ingen ny bruger blev oprettet.
         
-        try(PreparedStatement pstm = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS))
+        Pair<Integer, Object> pair1 = new Pair<>(1, name);
+        Pair<Integer, Object> pair2 = new Pair<>(2, zipcode);
+        Pair<Integer, Object> pair3 = new Pair<>(3, phone);
+        Pair<Integer, Object> pair4 = new Pair<>(4, email);
+        Pair<Integer, Object> pair5 = new Pair<>(5, password);
+        try
+        (
+            PreparedStatement pstm = createPreparedStatement(connection, CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS, pair1, pair2, pair3, pair4, pair5);
+            ResultSet rs = updateAndGetKeys(pstm);
+        )
         {
-            pstm.setString(1, name);
-            pstm.setInt(2, zipcode);
-            pstm.setInt(3, phone);
-            pstm.setString(4, email);
-            pstm.setString(5, password);
-            // udfør opdatering.
-            pstm.executeUpdate();
-            // Hent id for netop oprettet bruger.
-            try (ResultSet rs = pstm.getGeneratedKeys())
-            {
-                if (rs.next())
-                    result = rs.getInt(1);
-            }
+            if (rs.next())
+                result = rs.getInt(1);
         }
+        
+        
+        
+//        try(PreparedStatement pstm = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS))
+//        {
+//            pstm.setString(1, name);
+//            pstm.setInt(2, zipcode);
+//            pstm.setInt(3, phone);
+//            pstm.setString(4, email);
+//            pstm.setString(5, password);
+//            // udfør opdatering.
+//            pstm.executeUpdate();
+//            // Hent id for netop oprettet bruger.
+//            try (ResultSet rs = pstm.getGeneratedKeys())
+//            {
+//                if (rs.next())
+//                    result = rs.getInt(1);
+//            }
+//        }
         catch(Exception e)
         {
             if (result == 0)
                 throw new FogException("Bruger kunne ikke blive oprettet.", e.getMessage(), e);
-            else
+            else // her er bruger oprettet.
             {
                 // log fejlen.
             }
@@ -200,7 +216,7 @@ public class UserDAO extends AbstractDAO
         {
             //Henter vores random som sender tal + bogstaver tilbage som bruges til password.
             if(password == null)
-                password = Rules.RandomPassword();
+                password = randomPassword();
             
             PreparedStatement pstm;
             
@@ -253,5 +269,17 @@ public class UserDAO extends AbstractDAO
         }
         return users;
 
+    }
+    /**
+     * Bruges til, at kun giv bruger et "user" ny adgangskode.
+     * @return 
+     */
+    public String randomPassword()
+    {
+        Random rand = new Random();
+        int max = rand.nextInt(10) + 5; //Hvis nextInt bliver "0" så vil den altid tilføj 5.
+        
+        String uniqueText = UUID.randomUUID().toString(); // 0f8fad5bd9cb-469f-a165-70867728950e
+        return uniqueText.replace("-", "").substring(0, max);
     }
 }

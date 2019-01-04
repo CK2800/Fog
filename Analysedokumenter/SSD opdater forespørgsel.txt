@@ -26,9 +26,9 @@ COM -->FC : ShowUpdateRequestCommand
 FC -> SURC: execute()
 SURC-> DF : updateRequest()
 DF->crDAO : updateCarPortRequestAndShed()
-crDAO->crDAO: createCarportRequest()
+crDAO->crDAO: updateCarportRequest()
 crDAO-> DB: SQL
-crDAO->crDAO: createShed()
+crDAO->crDAO: updateShed()
 crDAO-> DB: SQL
 alt success
 crDAO-->DF: true

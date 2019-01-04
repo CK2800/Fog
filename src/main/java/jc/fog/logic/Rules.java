@@ -81,18 +81,4 @@ public class Rules
         RIDGE,
         SHEETING
     }
-    
-    /**
-     * Bruges til, at kun giv bruger et "user" ny adgangskode.
-     * @return 
-     */
-    public static String RandomPassword()
-    {
-        Random rand = new Random();
-        int max = rand.nextInt(10) + 5; //Hvis nextInt bliver "0" så vil den altid tilføj 5.
-        
-        String uniqueText = UUID.randomUUID().toString(); // 0f8fad5bd9cb-469f-a165-70867728950e
-        return uniqueText.replace("-", "").substring(0, max);
-    }
-   
 }

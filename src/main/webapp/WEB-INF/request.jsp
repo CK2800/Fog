@@ -1,5 +1,7 @@
+<%@page import="jc.fog.presentation.Fields"%>
 <%
     String title = "Carport";
+    String errorText = (String)request.getAttribute(Fields.ERROR_TEXT);
     String requestForm = (String) request.getAttribute("requestForm");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,7 +17,8 @@
             
             <div class="container" style="min-height: 500px;">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12">                        
+                        <%= errorText != null ? errorText : "" %>
                         <%= requestForm %>
                     </div>
                 </div>

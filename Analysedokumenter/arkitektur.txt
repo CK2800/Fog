@@ -1,0 +1,124 @@
+@startuml
+
+title Packages - Class Diagram
+
+package jc.fog{
+    package exceptions{
+    Class FogException{
+            friendlyMessage : String
+            }
+    }
+    package presentation{
+        package commands{
+                Class Command{
+                }
+                Class Commands{
+                    LOGIN : String
+                    LOGOUT : String
+                    SHOW_REQUESTS : String
+                    ...
+                    USER_HOME : String
+                }
+                Class ShowBillCommand 
+                {
+                    execute() : String
+                }
+            }
+            Object requests.jsp
+            Class FrontController{
+                GET : String
+                POST : String
+                LOGIN : String
+                LOGOUT : String
+                INVOICE : String
+                CHECKOUT : String
+                CREATE_USER : String
+                CREATE_ORDER : String
+                ADD_TO_BASKET : String
+            }
+        
+            Class Pages{
+                ADMIN_USER : String
+                BILL : String
+                LOGIN : String
+                INDEX : String
+                ALL_CARPORTS : String
+                ...
+                USER_PASSWORD : String
+                
+            }
+        }
+    package data{
+        Class DBConnector{
+            DB_URL : String
+            DB_USERNAME : String
+            DB_PASSWORD : String
+            DB_DRIVER_CLASS : String
+            getConnection() : Connection
+        }
+        Class DataFacade
+        Class DataFacadeImpl
+        package dao{
+        Class CarportRequestDAO{
+            CREATE_CPREQUEST_SQL : String
+            createCarportRequest : int
+            createShed : int
+            getCarportRequest(id) : CarportRequestDTO
+            }
+        }
+    }
+
+    package logic{
+        Class LogicFacade
+        Class LogicFacadeImpl
+        Class RulesCalculator
+        Class Rectangle
+        Class Drawer
+        Class Calculator
+        
+        package calculators{
+            Class RulesCalculatorHead
+            Class RulesCalculatorPost
+        }
+        package dto{
+            Class MaterialDTO
+            Class ShedDTO
+            Class CarportRequestDTO
+            
+        }
+        
+        
+    }
+    
+    requests.jsp -- Command
+    
+    Command <|- ShowBillCommand
+    FrontController o-- Command
+    RulesCalculator <|- RulesCalculatorHead
+    RulesCalculator <|- RulesCalculatorPost
+    
+    Calculator *-- RulesCalculator
+    Drawer *-- RulesCalculator
+    RulesCalculator *-- MaterialDTO
+    
+    
+    
+    LogicFacade <|- LogicFacadeImpl
+    DataFacade <|- DataFacadeImpl
+    LogicFacadeImpl *-- Calculator
+    LogicFacadeImpl *-- Drawer
+    RulesCalculatorHead o-- Rectangle
+    RulesCalculatorPost o-- Rectangle
+    DataFacadeImpl *-- CarportRequestDAO
+    DBConnector -- Command
+    ShowBillCommand *-- DataFacade
+    ShowBillCommand *-- LogicFacade
+    CarportRequestDAO o-- FogException
+    ShowBillCommand o-- FogException
+
+    CarportRequestDAO *-- CarportRequestDTO
+    CarportRequestDTO o-- ShedDTO
+    
+}
+
+@enduml
