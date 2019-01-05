@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><%= title %></title>
-        <jsp:include page="./css/bootstrap.jsp"></jsp:include>
+        <jsp:include page="./css/bootstrap.jsp"></jsp:include>        
     </head>
     <body>
             <jsp:include page="view/Header.jsp"></jsp:include> <%-- Header her ---%>
@@ -25,5 +25,19 @@
             </div>
             
             <jsp:include page="view/footer/footer.jsp"></jsp:include> <%-- Footer her ---%>
+            <script type="text/javascript">           
+                
+                function enableShedInputs(disabled)
+                {
+                    document.getElementById('shedLength').disabled = disabled;
+                    document.getElementById('shedWidth').disabled = disabled;
+                }
+                document.getElementById('shedChkBox').onchange = function()
+                {                
+                    enableShedInputs(!this.checked);
+                };    
+                enableShedInputs(!document.getElementById('shedChkBox').checked);
+            
+            </script>
     </body>
 </html>

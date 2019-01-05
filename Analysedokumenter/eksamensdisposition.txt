@@ -12,7 +12,7 @@ Disposition
 
 6. Demonstrer løsningsmodeller for at kunne frigøre os af indbyrdes afhængigheder i commmands. Enten vha. logik i FC som afgør om bruger må køre et command, eller vha. logik i command som kaster exception hvis f.eks. bruger ikke må køre det.
 
-7. Tråde
+7. Tråde - diagram oprettet, CallableRulesCalculator oprettet, det virker, dog er det ikke ægte trådet, pga invokeAll. Men en god start.
 
 8. Normalformer.
 
