@@ -1,0 +1,21 @@
+Disposition
+1. Use case model
+1. Demonstrer website, start med carportforespørgsel
+
+2. Sekvensdiagram for opret forespørgsel og bruger i samme forretningsgang, som vi har analyseret os frem til på tavlen.
+
+3. Gør carportforespørgslen færdig i demonstrationen hvor man også viser, at formularen tjekker brugerinput'et.
+
+4. Kom ind på at man ikke kan se tegning eller stykliste uden at være logget ind med korrekt rank, vis login siden og log ind.
+
+5. Ved login forsøges først med forkerte brugerdata, så vi kan demonstrere fejlhåndtering i view, f.eks. v. login - kræver dog at vi kaster exception i UserDAO hvis bruger ej findes istedet for at returnere null.
+
+6. Demonstrer løsningsmodeller for at kunne frigøre os af indbyrdes afhængigheder i commmands. Enten vha. logik i FC som afgør om bruger må køre et command, eller vha. logik i command som kaster exception hvis f.eks. bruger ikke må køre det.
+
+7. Tråde
+
+8. Normalformer.
+
+8. Lambda
+
+9. Sporbarhed
