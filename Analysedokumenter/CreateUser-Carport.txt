@@ -1,0 +1,45 @@
+@startuml
+autonumber
+title "Opret Carport forespørgelse + User"
+
+actor User
+
+box "presentation" #b0e6d1
+boundary "Pages.SingleCarportView" as GUI
+control "FrontController" as FC
+entity Command as COM
+entity ShowCreateCarportCommand as SBC
+end box
+
+box "data" #b0c5e6
+entity Data as Data
+entity CarportDAO as cDAO
+entity UserDAO as uDAO
+end box
+
+
+database DB
+
+User -> GUI : Opret forespørgelse
+GUI -> FC : Commands.SHOW_BILL
+FC -> COM : from()
+FC -> SBC : execute()
+SBC -> uDAO : CreateUser
+uDAO -> DB
+DB --> SBC : Id != 0
+SBC -> Data : CreateCarport
+Data -> cDAO : (ingen ide)
+cDAO --> Data : True
+Data --> SBC : true
+SBC -> SBC : Id == 0 (Throw Fogexception)
+
+SBC --> COM : True
+SBC --> COM : Throw Fogexception
+
+COM --> User : Pages.UserPage
+COM --> User : Pages.SinglePageView
+
+
+
+
+@enduml
