@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jc.fog.data.DataFacadeImpl;
 import jc.fog.data.DbConnector;
 import jc.fog.exceptions.FogException;
@@ -17,6 +18,7 @@ import jc.fog.logic.LogicFacadeImpl;
 import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.BillItem;
 import jc.fog.logic.LogicFacade;
+import jc.fog.logic.dto.UsersDTO;
 import jc.fog.presentation.Pages;
 
 /**
@@ -30,77 +32,92 @@ public class ShowBillCommand extends Command
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
-        LogicFacade logicFacade = new LogicFacadeImpl();
-        // Se om der er en id i request, for så skal vi hente carportrequest fra db.
-        int id = 0;
-        CarportRequestDTO carportRequestDTO;
-        // Create DataFacadeImpl
-        DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
-        // Har vi et gyldigt id ?
-        try
+        // Se efter om evt. indlogget bruger har ret til at se stykliste.
+        HttpSession session = request.getSession();
+        UsersDTO user = null;
+        if (session != null)
+            user = (UsersDTO)session.getAttribute("user");
+        if (user != null && user.getRank() == 1)
         {
-            // Findes id ikke på requestet, catcher vi exception
-            id = Integer.parseInt(request.getParameter("id"));
-        }
-        catch(NumberFormatException n){
-            // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
-        }
-        if(id > 0)
-        {        
-            // get request.
-            carportRequestDTO = dataFacade.getCarport(id);
-        }
-        else
-        {            
-            //SKAL HAVE KIGGET PÅ OM HVIS SKUR ER STØRRE END CARPORT HVAD SÅ???
-            
-            
-            int shedLength, shedWidth;
-            
-            //Ønsker man Skur til carport.
-            boolean addSked = "1".equals(request.getParameter("addSked"));
-            
-            // nap parametre fra requests og dan CarportRequestDTO.
-            int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
-            int slope = Integer.parseInt(request.getParameter("slope"));
-            int width = Integer.parseInt(request.getParameter("width"));
-            int height = Integer.parseInt(request.getParameter("height"));
-            int length = Integer.parseInt(request.getParameter("length"));
-            String remark = request.getParameter("remark");
-            
-            //Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
-            if(addSked)
+    //        if (session != null && (UsersDTO)session.getAttribute("user"))
+    //        UserDTO user = (UserDTO)request.gets
+            LogicFacade logicFacade = new LogicFacadeImpl();
+            // Se om der er en id i request, for så skal vi hente carportrequest fra db.
+            int id = 0;
+            CarportRequestDTO carportRequestDTO;
+            // Create DataFacadeImpl
+            DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());
+            // Har vi et gyldigt id ?
+            try
             {
-                shedLength = Integer.parseInt(request.getParameter("shedLength"));
-                shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+                // Findes id ikke på requestet, catcher vi exception
+                id = Integer.parseInt(request.getParameter("id"));
+            }
+            catch(NumberFormatException n){
+                // NumberFormatException er forventet, hvis request ikke har id, som så vil være 0.
+            }
+            if(id > 0)
+            {        
+                // get request.
+                carportRequestDTO = dataFacade.getCarport(id);
             }
             else
-            {
-                shedLength = 0;
-                shedWidth = 0;
+            {            
+                //SKAL HAVE KIGGET PÅ OM HVIS SKUR ER STØRRE END CARPORT HVAD SÅ???
+
+
+                int shedLength, shedWidth;
+
+                //Ønsker man Skur til carport.
+                boolean addSked = "1".equals(request.getParameter("addSked"));
+
+                // nap parametre fra requests og dan CarportRequestDTO.
+                int rooftypeId = Integer.parseInt(request.getParameter("rooftypeId"));
+                int slope = Integer.parseInt(request.getParameter("slope"));
+                int width = Integer.parseInt(request.getParameter("width"));
+                int height = 0;//Integer.parseInt(request.getParameter("height"));
+                int length = Integer.parseInt(request.getParameter("length"));
+                String remark = request.getParameter("remark");
+
+                //Man skal har klikket af ved at man ønsker Skur for at tilføj de værdi med.
+                if(addSked)
+                {
+                    shedLength = Integer.parseInt(request.getParameter("shedLength"));
+                    shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+                }
+                else
+                {
+                    shedLength = 0;
+                    shedWidth = 0;
+                }
+
+                //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
+                carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
+
             }
-            
-            //Den skal gør noget som er med til, at sikker at skur ikke kan blive større end carport..
-            carportRequestDTO = new CarportRequestDTO(rooftypeId, slope, width, height, length, remark, shedLength, shedWidth);
-                
+            // get materials.
+            List<MaterialDTO> materials = dataFacade.getMaterials();
+            // Calculate the bill of materials.
+            List<BillItem> bill = logicFacade.calculateBill(carportRequestDTO, materials);
+            // Calculate string with carport dimensions.
+            String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
+
+            String shed = shedCheck(carportRequestDTO);
+
+
+            // Format the bill of materials nicely for view.
+            request.setAttribute("stykliste", billToHtml(bill));
+            request.setAttribute("totalpris", calculateTotal(bill));
+            request.setAttribute("carportDimensioner", carportDimensions);
+            request.setAttribute("shed", shed);//skal fortælle om der er skur eller ej?
+
+            return Pages.BILL;
         }
-        // get materials.
-        List<MaterialDTO> materials = dataFacade.getMaterials();
-        // Calculate the bill of materials.
-        List<BillItem> bill = logicFacade.calculateBill(carportRequestDTO, materials);
-        // Calculate string with carport dimensions.
-        String carportDimensions = String.valueOf(carportRequestDTO.getWidth()) + " x " + String.valueOf(carportRequestDTO.getLength()) + " cm.";
-        
-        String shed = shedCheck(carportRequestDTO);
-        
-        
-        // Format the bill of materials nicely for view.
-        request.setAttribute("stykliste", billToHtml(bill));
-        request.setAttribute("totalpris", calculateTotal(bill));
-        request.setAttribute("carportDimensioner", carportDimensions);
-        request.setAttribute("shed", shed);//skal fortælle om der er skur eller ej?
-        
-        return Pages.BILL;
+        else // unauthorized access, rank er ikke 1 eller bruger er ikke indlogget.
+        {
+            // Q&D returner resultat af showlogincommand - i v2. kaster vi en exception til FC.
+            return new ShowLoginCommand().execute(request, response);
+        }
     }
 
     private String shedCheck(CarportRequestDTO carportRequestDTO) {

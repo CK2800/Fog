@@ -33,9 +33,7 @@ public class Drawer
         initializeRuleDrawers();
     }
     private void initializeRuleDrawers() throws FogException
-    {
-        
-        // Hent udregning fra RulesCalculatorHead og giv til RulesDrawerHead.        
+    {                       
         drawers.add(new RulesCalculatorHead()); 
         drawers.add(new RulesCalculatorRafters());
         drawers.add(new RulesCalculatorPost());
@@ -46,7 +44,7 @@ public class Drawer
     {
         rectangles = new ArrayList();
         
-        // Gennemløb drawers og tegn.
+        // Gennemløb drawers og dan rektangler.
         for(RulesDrawer drawer : drawers)
             rectangles.addAll(drawer.draw(carportRequest));
         

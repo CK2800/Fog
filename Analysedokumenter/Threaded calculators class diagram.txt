@@ -1,0 +1,28 @@
+@startuml
+
+title Threaded calculators - Class Diagram
+class Calculator
+class ExecutorService{
++List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
+}
+class Callable{
+V call()
+}
+class CallableRulesCalculator{
+List<BillItem> call()
+}
+class RulesCalculator{
+List<BillItem> calculate(carportRequestDTO)
+}
+
+class RulesCalculatorBattens
+class CarportRequestDTO
+
+Calculator "1" *-- "1" ExecutorService : creates an >
+ExecutorService "1" o-- "m" Callable : works on >
+CallableRulesCalculator ..|> Callable : implements >
+CallableRulesCalculator o-- RulesCalculator : has a >
+RulesCalculator o-- CarportRequestDTO : has a >
+RulesCalculator <|-- RulesCalculatorBattens : extends <
+
+@enduml
