@@ -8,11 +8,11 @@ Disposition
 
 4. Kom ind på at man ikke kan se tegning eller stykliste uden at være logget ind med korrekt rank, vis login siden og log ind.
 
-5. Ved login forsøges først med forkerte brugerdata, så vi kan demonstrere fejlhåndtering i view, f.eks. v. login - kræver dog at vi kaster exception i UserDAO hvis bruger ej findes istedet for at returnere null.
+5. Efter login kan man se styklister og tegninger. Prøv med styklister nederst i listen, som giver en fogexception som håndteres i viewet fordi tagtype og hældning ikke passer sammen.
 
 6. Demonstrer løsningsmodeller for at kunne frigøre os af indbyrdes afhængigheder i commmands. Enten vha. logik i FC som afgør om bruger må køre et command, eller vha. logik i command som kaster exception hvis f.eks. bruger ikke må køre det.
 
-7. Tråde - diagram oprettet, CallableRulesCalculator oprettet, det virker, dog er det ikke ægte trådet, pga invokeAll. Men en god start.
+7. Tråde - diagram oprettet, CallableRulesCalculator oprettet, det virker, (dog er det ikke ægte trådet, pga invokeAll.) Men en god start.
 
 8. Normalformer.
 
