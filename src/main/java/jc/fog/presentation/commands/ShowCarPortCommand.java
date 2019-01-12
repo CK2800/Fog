@@ -128,7 +128,7 @@ public class ShowCarPortCommand  extends Command
             stringBuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.ADD_REQUEST + "\" value=\"$submit1\" class=\"btn btn-success btn-block\" />");
         }
         
-        stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\" \"><br/>");
+        stringBuilder.append("<input type=\"submit\" class=\"btn btn-info btn-block\" value=\"$submit2\"><br/>");
         stringBuilder.append("</form><br/>");
         
         String text = stringBuilder.toString();
