@@ -59,7 +59,7 @@ public class RulesCalculatorRoof extends RulesCalculator
                     }
                 }
                 // Find antal.
-                int count = (int)Math.ceil(carportRequestDTO.getWidth() / 109F); // ecolite plader er 109 cm.
+                int count = (int)Math.ceil(carportRequestDTO.getWidth() / 109F); // ecolite plader er 109 cm.                
                 result.add(new BillItem(longest, count, CarportPart.SHEETING,  "lang tagflade"));
                 result.add(new BillItem(shortest, count, CarportPart.SHEETING, "kort tagflade"));
                 return result;

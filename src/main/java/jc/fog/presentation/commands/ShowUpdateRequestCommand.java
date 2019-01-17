@@ -33,8 +33,8 @@ public class ShowUpdateRequestCommand extends Command
         int length = Integer.parseInt(request.getParameter("length"));
         String remark = request.getParameter("remark");
 
-        int shedLength = Integer.parseInt(request.getParameter("shedLength"));
-        int shedWidth = Integer.parseInt(request.getParameter("shedWidth"));
+        int shedLength = request.getParameter("shedLength") != null ? Integer.parseInt(request.getParameter("shedLength")) : 0;
+        int shedWidth = request.getParameter("shedWidth") != null ? Integer.parseInt(request.getParameter("shedWidth")) : 0;
 
 
         DataFacadeImpl dataFacade = new DataFacadeImpl(DbConnector.getConnection());

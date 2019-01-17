@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rules.CarportPart;
 
@@ -37,9 +38,13 @@ public class BillItem
      * @param count
      * @param carportPart
      * @param remarks 
+     * @throws FogException Hvis material er null, er materialet ikke fundet, derfor ikke en gyldig BillItem.
      */
-    public BillItem(MaterialDTO material, int count, CarportPart carportPart, String remarks)
+    public BillItem(MaterialDTO material, int count, CarportPart carportPart, String remarks) throws FogException
     {
+        // material kan ikke være null.
+        if (material == null)
+            throw new FogException("Materialet blev ikke fundet.", "BillItem fik MaterialDTO null pointer i konstruktøren.", null);
         this.material = material;
         this.count = count;
         this.carportPart = carportPart;
