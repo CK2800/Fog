@@ -5,7 +5,6 @@
  */
 package jc.fog.logic.calculators;
 
-import jc.fog.logic.RulesCalculator;
 import jc.fog.logic.RulesDrawer;
 import jc.fog.logic.Rules;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import jc.fog.logic.dto.ShedDTO;
 public class RulesCalculatorShed extends RulesCalculator implements RulesDrawer
 {    
     @Override
-    protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
+    public List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
     {  
         try
         {

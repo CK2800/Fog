@@ -5,9 +5,6 @@
  */
 package jc.fog.logic;
 
-import java.util.Random;
-import java.util.UUID;
-
 /**
  * Statiske konstanter til brug ved udregninger af styklisten.
  * @author Claus

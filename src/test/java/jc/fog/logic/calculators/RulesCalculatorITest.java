@@ -5,7 +5,6 @@
  */
 package jc.fog.logic.calculators;
 
-import jc.fog.logic.RulesCalculator;
 import java.sql.Connection;
 import java.util.List;
 import jc.fog.data.DbConnector;

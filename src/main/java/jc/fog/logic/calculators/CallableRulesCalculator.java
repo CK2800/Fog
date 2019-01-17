@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic;
+package jc.fog.logic.calculators;
 
+import jc.fog.logic.calculators.RulesCalculator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.BillItem;
 import jc.fog.logic.dto.CarportRequestDTO;
 
 /**

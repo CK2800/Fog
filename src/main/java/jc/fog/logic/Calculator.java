@@ -5,6 +5,8 @@
  */
 package jc.fog.logic;
 
+import jc.fog.logic.calculators.CallableRulesCalculator;
+import jc.fog.logic.calculators.RulesCalculator;
 import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.calculators.RulesCalculatorPost;
@@ -70,9 +72,8 @@ public class Calculator
         }
         
         try
-        {
-                        
-            // Af demo-hensyn, laver vi et blokerende kald (invokeAll) som reelt overflødiggør flere tråde. 
+        {                        
+            // Af demo-hensyn, laver vi et blokerende kald (invokeAll) som (vel) reelt overflødiggør flere tråde. 
             // I v2 kunne man forestille sig at ajax/xhr kunne hente resultatet når det foreligger.
             List<Future<List<BillItem>>> futures = executorService.invokeAll(callables);            
             executorService.shutdown();

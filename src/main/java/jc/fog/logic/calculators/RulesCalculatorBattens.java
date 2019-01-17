@@ -5,7 +5,6 @@
  */
 package jc.fog.logic.calculators;
 
-import jc.fog.logic.RulesCalculator;
 import jc.fog.logic.Rules;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import jc.fog.logic.dto.MaterialDTO;
 public class RulesCalculatorBattens extends RulesCalculator
 {        
     @Override
-    protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
+    public List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
     {
         try
         {

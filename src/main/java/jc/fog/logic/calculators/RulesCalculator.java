@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jc.fog.logic;
+package jc.fog.logic.calculators;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jc.fog.exceptions.FogException;
+import jc.fog.logic.BillItem;
+import jc.fog.logic.MaterialCount;
+import jc.fog.logic.Rectangle;
+import jc.fog.logic.Rules;
 import jc.fog.logic.dto.CarportRequestDTO;
 import jc.fog.logic.dto.MaterialDTO;
 
@@ -31,7 +35,7 @@ public abstract class RulesCalculator extends Rules
      * @return
      * @throws FogException 
      */
-    protected abstract List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException;            
+    public abstract List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException;            
     /**
      * Samling af Rectangle objekter til tegning af carport.
      */
@@ -123,7 +127,8 @@ public abstract class RulesCalculator extends Rules
                         actualCount = count;
                         materialeDTO = m;                
                     }
-                    // Hvis
+                    // Hvis et tidl. materiale er fundet, som har større længde end det vi tester (m),
+                    // vælger vi det vi tester (m), da det giver mindre spild.
                     else if (actualCount == count)
                     {
                         if (materialeDTO != null && materialeDTO.getLength() > m.getLength())
@@ -151,7 +156,7 @@ public abstract class RulesCalculator extends Rules
      * @return Hypotenusens længde.
      * @throws jc.fog.exceptions.FogException 
      */
-    protected double calculateSlopedWidth(double width, int degSlope) throws FogException
+    public double calculateSlopedWidth(double width, int degSlope) throws FogException
     {
         try
         {

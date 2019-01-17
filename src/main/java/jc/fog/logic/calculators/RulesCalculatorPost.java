@@ -5,7 +5,6 @@
  */
 package jc.fog.logic.calculators;
 
-import jc.fog.logic.RulesCalculator;
 import jc.fog.logic.RulesDrawer;
 import jc.fog.logic.Rules;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class RulesCalculatorPost extends RulesCalculator implements RulesDrawer
     private int noHeads;
     
     @Override
-    protected List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
+    public List<BillItem> calculate(CarportRequestDTO carportRequest) throws FogException
     {
         List<BillItem> result = new ArrayList();
         try
