@@ -13,16 +13,16 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_FORM_REQUEST %>">Opret forespørgelse</a>
+                <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_FORM_REQUEST %>">Opret forespørgsel</a>
             </li> 
         <% if(user != null) { %>
         
             <% if(user.getRank() == 1) { %>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_MATERIALS %>">Materiale</a>
+                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_MATERIALS %>">Materialer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_REQUESTS %>">Forspørgelse</a>
+                    <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.SHOW_REQUESTS %>">Forspørgsler</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Fog/FrontController?command=<%= Commands.ADMIN_USERS %>">Admin bruger</a>
