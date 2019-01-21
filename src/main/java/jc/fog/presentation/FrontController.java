@@ -42,9 +42,16 @@ public class FrontController extends HttpServlet
             
             // Get the view by executing the command.
             view = command.execute(request, response);
-            // Forward the request to the resulting servlet that must reside in WEB-INF folder.             
-            // Remember, jsp is compiled, run and the result sent to browser.
-            request.getRequestDispatcher(view).forward(request, response);
+            
+            // redirect or forward?
+            if (command.redirectClient())
+                response.sendRedirect(view);
+            else
+            {
+                // Forward the request to the resulting servlet that must reside in WEB-INF folder.             
+                // Remember, jsp is compiled, run and the result sent to browser.
+                request.getRequestDispatcher(view).forward(request, response);
+            }
         }
         catch(FogException e)
         {

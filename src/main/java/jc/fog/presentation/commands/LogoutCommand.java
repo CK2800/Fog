@@ -5,7 +5,6 @@
  */
 package jc.fog.presentation.commands;
 
-import jc.fog.presentation.commands.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +17,13 @@ import jc.fog.presentation.Pages;
  */
 public class LogoutCommand extends Command
 {
+    /**
+     * Overskriver Command.execute, fordi både GET og POST requests skal gøre det samme.
+     * @param request
+     * @param response
+     * @return
+     * @throws FogException 
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
     {
@@ -26,4 +32,18 @@ public class LogoutCommand extends Command
 
         return Pages.INDEX;
     }
+
+    @Override
+    protected String doPost(HttpServletRequest request, HttpServletResponse response) throws FogException
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String doGet(HttpServletRequest request, HttpServletResponse response) throws FogException
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }

@@ -6,7 +6,6 @@
 package jc.fog.presentation.commands;
 
 import java.util.HashMap;
-import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jc.fog.exceptions.FogException;
@@ -21,10 +20,20 @@ import jc.fog.exceptions.FogException;
  * @author Claus
  */
 public abstract class Command
-{
-    // placeholder.
-    public static String command;
-            
+{        
+    /**
+     * Indikerer om en klient skal redirectes til en given url.
+     */
+    protected boolean clientRedirect = false;
+    /**
+     * Indikerer om en klient skal redirectes til en given URL.
+     * Bruges til at implementere POST-REDIRECT-GET pattern.
+     * Controller eller anden klasse, som har kørt dette command og fået en URL 
+     * tilbage, kan efterfølgende evaluere om klient skal redirectes eller om 
+     * requestdispatcher kan forwardes til URL.
+     * @return 
+     */
+    public boolean redirectClient(){ return clientRedirect;}
     /**
      * HashMap of available commands.
      */
@@ -56,7 +65,7 @@ public abstract class Command
         commands.put(Commands.ADMIN_PASSWORD, new ShowAdminNewPasswordCommand());
         commands.put(Commands.ADMIN_RANK, new ShowAdminUpdateRankCommand());
         commands.put(Commands.LOGOUT, new LogoutCommand());
-        commands.put(Commands.FORGET_PASSWORD, new ForgetPassword());
+        commands.put(Commands.FORGET_PASSWORD, new ForgetPasswordCommand());
         commands.put(Commands.ADMIN_DELETE_USER, new ShowAdminDeleteUserCommand());
         commands.put(Commands.USER_HOME, new ShowUserHomeCommand());
         commands.put(Commands.USER_PASSWORD, new ShowUserPasswordCommand());
@@ -73,7 +82,7 @@ public abstract class Command
     public static Command from(HttpServletRequest request)
     {
         // Get 'command' parameter from request.
-        command = request.getParameter("command");
+        String command = request.getParameter("command");
         
         // Initialize the hash map if needed.
         if (commands == null)
@@ -85,11 +94,37 @@ public abstract class Command
     }  
     
     /**
-     * Abstract method execute must be implemented in children.
+     * Metode som afgør om requestet er sendt vha. POST eller GET og håndterer det i
+     * enten doPost()- eller doGet()-metoden.     
+     * Kan overskrives i nedarvninger, så der ikke skelnes mellem POST og GET, hvis der
+     * i begge tilfælde skal udføres det samme kode.
      * @param request
      * @param response
      * @return String
      * @throws FogException 
      */
-    abstract public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException;    
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws FogException
+    {
+        if ("POST".equals(request.getMethod()))
+            return doPost(request, response);
+        else
+            return doGet(request, response);    
+    }  
+        
+    /**
+     * Håndterer et POST request.
+     * @param request
+     * @param response
+     * @return
+     * @throws FogException 
+     */
+    abstract protected String doPost(HttpServletRequest request, HttpServletResponse response) throws FogException;
+    /**
+     * Håndterer et GET request.
+     * @param request
+     * @param response
+     * @return
+     * @throws FogException 
+     */
+    abstract protected String doGet(HttpServletRequest request, HttpServletResponse response) throws FogException;
 }

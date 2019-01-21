@@ -30,6 +30,14 @@ public interface DataFacade
     public int createCarPort(int rooftypeId, int slope, int width, int length, int height, int shedWidth, int shedLength, String remark) throws FogException;
     public List<ZipcodeDTO> getZipcodes() throws FogException;
     public UsersDTO login(String email, String password) throws FogException;
+    
+    /**
+     * Opretter nyt password for bruger med angivne email.
+     * @param email
+     * @param password
+     * @return 
+     * @throws FogException 
+     */
     public boolean forgotPassword(String email, String password) throws FogException;
     public boolean setNewRankUser(int id, int rank) throws FogException;
     public List<UsersDTO> getAllUsers() throws FogException;

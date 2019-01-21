@@ -40,8 +40,8 @@ public class ShowLoginCommand extends Command {
         stringbuilder.append("<form action=\"FrontController\" method=\"POST\">");
         stringbuilder.append("E-mail (Brugernavn):<br /><input type=\"email\" pattern=\"[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}\" name=\"email\" required class=\"form-control\" placeholder=\"Din Email\" /><br />");
         stringbuilder.append("Adgangskode<br /><input type=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Din adgangskode\" /><br />");
-        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.LOGIN_CHECK + "\" class=\"btn btn-info btn-block\" value=\"Login\" \">");
-        stringbuilder.append("<input type=\"submit\"formaction=\"/Fog/FrontController?command=" + Commands.FORGET_PASSWORD + "\" class=\"btn btn-info btn-block\" value=\"Ny adgangskode\" \">");
+        stringbuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.LOGIN_CHECK + "\" class=\"btn btn-info btn-block\" value=\"Login\" \">");
+        stringbuilder.append("<input type=\"submit\" formaction=\"/Fog/FrontController?command=" + Commands.FORGET_PASSWORD + "\" class=\"btn btn-info btn-block\" value=\"Ny adgangskode\" \">");
         stringbuilder.append("</form><br/>");
         
         return stringbuilder.toString();

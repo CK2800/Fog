@@ -154,7 +154,8 @@ public class DataFacadeImpl implements DataFacade
         return zipcodeDAO.getZipcodes();
     }
 
-    @Override
+    
+    @Override    
     public boolean forgotPassword(String email, String password) throws FogException {
         return userDAO.forgotPassword(email, password);
     }
