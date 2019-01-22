@@ -1,0 +1,23 @@
+@startuml
+title PRG pattern
+boundary Webpage as UI
+control FrontController as FC
+entity ConcreteCommand as CC
+
+UI -> FC: Command.CONCRETE_COMMAND
+FC -> CC: execute(request, response)
+CC -> CC: clientRedirect = "POST".equals(request.getMethod());
+alt clientRedirect == true
+    CC -> CC: doPost()
+else 
+    CC -> CC: doGet()
+end
+CC -> FC: url
+FC -> CC: redirectClient()
+CC -> FC: boolean clientRedirect
+alt clientRedirect == true
+    FC -> UI: response.redirect(url)
+else
+    FC -> UI: requestDispatcher.forward(url)
+end
+@enduml

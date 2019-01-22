@@ -1,0 +1,27 @@
+@startuml
+title PRG pattern
+
+Class FrontController
+Class Command{
+{field}-boolean clientRedirect
+{method}+boolean redirectClient()
+{method}+String execute(request, response)
+{abstract}#String doGet(request, response)
+{abstract}#String doPost(request, response)
+}
+Class Concrete1Command{
+{method}#String doGet(request, response)
+{method}#String doPost(request, response)
+}
+Class LogOutCommand{
+{method}+String execute(request, response)
+{method}#String doGet(request, response)
+{method}#String doPost(request, response)
+}
+FrontController *-- Command : contains >
+Command <|-- Concrete1Command : < extends
+Command <|-- LogOutCommand : < extends
+
+note right of Command : execute er ikke final;\nkan overskrives i subklasser.
+note top of LogOutCommand : Overskriver super's execute\nda adskillelse af POST og GET\nikke er nødvendigt.
+@enduml
