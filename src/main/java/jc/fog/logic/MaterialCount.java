@@ -9,6 +9,7 @@ import jc.fog.logic.dto.MaterialDTO;
 
 /**
  * Pure fabrication som kan fortælle hvor mange MaterialDTO objekter der skal bruges
+ * samt hvilket MaterialDTO objekt der skal bruges,
  * for at dække en given længde ifm. udregninger af styklister.
  * @author Claus
  */

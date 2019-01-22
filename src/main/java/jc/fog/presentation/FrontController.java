@@ -49,7 +49,7 @@ public class FrontController extends HttpServlet
         catch(FogException e)
         {
             // save error message in request.
-            request.setAttribute(Fields.ERROR_TEXT, e.getMessage());
+            request.setAttribute(Fields.ERROR_TEXT, e.getMessage()); // Vi kunne også sige getFriendlyMessage(), det er det samme, da friendly findes på super.
         
             // If we are here, a FogException has happened, attributes are set in request, go to INDEX.
             view = Pages.INDEX;

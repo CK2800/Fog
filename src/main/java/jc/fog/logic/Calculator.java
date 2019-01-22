@@ -43,6 +43,7 @@ public class Calculator
         calculators.add(new RulesCalculatorShed()); // Udregner skurets beklædning.
         calculators.add(new RulesCalculatorBattens()); // Udregner lægter.
         calculators.add(new RulesCalculatorRoof()); // Udregner tagbelægning.
+        
     }
             
     protected List<BillItem> calculateBill(CarportRequestDTO carportRequest) throws FogException

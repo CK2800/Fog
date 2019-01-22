@@ -18,17 +18,15 @@ entity UserDAO as uDAO
 end box
 
 
-database DB
-
 User -> GUI : Opret forespørgelse
 GUI -> FC : Commands.SHOW_BILL
 FC -> COM : from()
 FC -> SBC : execute()
-SBC -> uDAO : CreateUser
-uDAO -> DB
-DB --> SBC : Id != 0
+SBC -> Data : CreateUser
+Data -> uDAO : CreateUser
+uDAO --> SBC : Id != 0
 SBC -> Data : CreateCarport
-Data -> cDAO : (ingen ide)
+Data -> cDAO : CreateCarport
 cDAO --> Data : True
 Data --> SBC : true
 SBC -> SBC : Id == 0 (Throw Fogexception)
