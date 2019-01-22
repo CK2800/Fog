@@ -92,7 +92,7 @@ public class RulesCalculatorRafters extends RulesCalculator implements RulesDraw
                 {
                     // y position er i 0 + udhæng + mellemrum ml. spær - halv spær tykkelse.
                     int yPos = Rules.OVERHANG + (i * raftersSpacing) + (int)HEAD_HEIGHT/2; 
-                    if (i == raftersCount-1) // sidste spær lægges så bagkant flugter rem.
+                    if (i == raftersCount-1) // sidste spær lægges så bagkant flugter rem, i v2 tager vi højde for godstykkelse.
                         yPos = carportRequest.getLength() - Rules.OVERHANG - HEAD_HEIGHT;
                     
                     rectangles.add(new Rectangle(a * materialLength, yPos, HEAD_HEIGHT, materialLength, "995522"));

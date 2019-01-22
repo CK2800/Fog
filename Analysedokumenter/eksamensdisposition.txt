@@ -1,0 +1,32 @@
+Disposition
+1. Use case model
+* Vigtig, første model.
+* Frembringer aktører, kandidatklasser og associationer mellem disse.
+* Leder til domænemodel og designmodel (interaktionsdiagram(sekvensdiag)).
+
+2. [DEMO] Demonstrer website, start med carportforespørgsel
+* Kan oprettes af anonym og indlogget bruger.
+* Bruger oprettes ikke pt.
+
+3. Sekvensdiagram for opret forespørgsel og bruger i samme forretningsgang, som vi har analyseret os frem til på tavlen.
+* Alternativt flow hvis eksisterede bruger skal opdateres.
+
+4. [DEMO] Færdiggør carportforespørgslen, vis også validering af brugerinput.
+
+5. [DEMO] Log ind for at se tegning og stykliste. Fortæl om rank.
+
+6. Fortæl om håndtering af FogException i views. [DEMO] Prøv med styklister nederst i listen => Tagtype/hældning giver FogException.
+
+7. Vis løsningsmodeller for at undgå indbyrdes afhængigheder i commmands. 
+* Logik i FC som afgør om bruger må køre et command.
+* Logik i command som kaster exception hvis bruger ikke må køre det.
+
+8. Trådede beregnere.
+* Vis diagram / kode.
+* Forklar hvorfor Ajax/XHR ville være bedre.
+
+9. Normalformer.
+
+10. Lambda
+
+11. Sporbarhed

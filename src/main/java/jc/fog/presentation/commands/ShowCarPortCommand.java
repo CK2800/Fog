@@ -101,9 +101,9 @@ public class ShowCarPortCommand  extends Command
         stringBuilder.append("H&aelig;ldning:<br /><input type=\"number\" maxlength=\"2\" required min=\"0\" max=\"40\" class=\"form-control\" name=\"slope\" value=\"$carport4\" placeholder=\"Hældning på taget\" /><br />");
         
         //Shed information her
-        stringBuilder.append("Skur:<br /><input type=\"checkbox\" name=\"addSked\" $shed1 /><br />");
-        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"number\" pattern=\".{150,900}\" required class=\"form-control\" name=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
-        stringBuilder.append("Skur Bredde:<br /><input type=\"number\" pattern=\".{150,900}\" required name=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
+        stringBuilder.append("Skur:<br /><input type=\"checkbox\" id=\"shedChkBox\" name=\"addSked\" $shed1 /><br />");
+        stringBuilder.append("Skur L&aelig;ngde:<br /><input type=\"number\" min=\"150\" max=\"900\" required class=\"form-control\" name=\"shedLength\" id=\"shedLength\" value=\"$shed2\" placeholder=\"Skur længde\" /><br />");
+        stringBuilder.append("Skur Bredde:<br /><input type=\"number\" min=\"150\" max=\"900\" required name=\"shedWidth\" id=\"shedWidth\" class=\"form-control\" value=\"$shed3\" placeholder=\"Skur bredde\" /><br />");
         
         //Kommentar fra kunden.
         stringBuilder.append("Kommentar:<br /><input type=\"text\" name=\"remark\" class=\"form-control\" value=\"$carport5\" placeholder=\"Kommentar til forespørgelse\" /><br />");
