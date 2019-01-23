@@ -82,7 +82,7 @@ public class CalculatorITest
         // Skur i fuld vidde af carport, 500 cm.
         int shedWidth = 500;
         CarportRequestDTO carportRequest = new CarportRequestDTO(
-                2, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);
+                3, 0, shedWidth, 210, 800, "blabla", 120, shedWidth);
         // Opret calculator.
         Calculator calculator = new Calculator(materials);
         

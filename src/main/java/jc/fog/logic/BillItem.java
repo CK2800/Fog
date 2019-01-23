@@ -5,6 +5,7 @@
  */
 package jc.fog.logic;
 
+import jc.fog.exceptions.FogException;
 import jc.fog.logic.dto.MaterialDTO;
 import jc.fog.logic.Rules.CarportPart;
 
@@ -38,8 +39,12 @@ public class BillItem
      * @param carportPart
      * @param remarks 
      */
-    public BillItem(MaterialDTO material, int count, CarportPart carportPart, String remarks)
+    public BillItem(MaterialDTO material, int count, CarportPart carportPart, String remarks) throws FogException
     {
+        if(material == null)
+        {
+            new FogException("Der sket en fejl", "Material er null - det kan være der er noget som ikke passer sammen", null);
+        }
         this.material = material;
         this.count = count;
         this.carportPart = carportPart;
