@@ -4,20 +4,20 @@
 'UTF-8'
 -protected
 -sourcepath
-'D:/Users/Claus/Documents/NetBeansProjects/Fog/src/main/java'
+'C:/Users/Claus/Documents/NetBeansProjects/Fog/src/main/java'
 -author
 -bottom
-'Copyright &#169; 2018. All rights reserved.'
+'Copyright &#169; 2019. All rights reserved.'
 -charset
 'UTF-8'
 -d
-'D:/Users/Claus/Documents/NetBeansProjects/Fog/target/site/apidocs'
+'C:/Users/Claus/Documents/NetBeansProjects/Fog/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
 'Fog 1.0-SNAPSHOT API'
 -linkoffline
-'https://docs.oracle.com/javase/8/docs/api' 'D:/Users/Claus/Documents/NetBeansProjects/Fog/target/javadoc-bundle-options'
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/Claus/Documents/NetBeansProjects/Fog/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
